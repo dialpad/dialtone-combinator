@@ -1,1 +1,1 @@
-export * from './src/components/test_component';
+export { default as TestComponent } from './src/components/test_component.vue';

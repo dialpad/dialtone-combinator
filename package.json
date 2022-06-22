@@ -2,12 +2,9 @@
   "name": "dialtone-sandbox",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "run-p type-check build-only",
-    "preview": "vite preview --port 4173",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit"
+    "dev": "vite"
   },
+  "main": "index.js",
   "dependencies": {
     "@dialpad/dialtone": "^6.31.0",
     "@dialpad/dialtone-vue": "^3.3.0",
