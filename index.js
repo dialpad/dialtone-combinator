@@ -1,0 +1,1 @@
+export * from './src/components/test_component';

@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-  import TestComponent from '@/components/TestComponent.vue';
+  import TestComponent from '@/components/test_component.vue';
   import { DtButton } from '@dialpad/dialtone-vue';
   import { ref } from "vue";
 
