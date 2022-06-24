@@ -2,7 +2,8 @@
   "name": "dialtone-sandbox",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite"
+    "dev": "vite",
+    "test": "cd test; vite"
   },
   "main": "index.js",
   "dependencies": {

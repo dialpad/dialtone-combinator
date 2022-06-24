@@ -12,4 +12,4 @@
   const count = ref(0);
 </script>
 
-<style type="less" src="/src/assets/main.less" />
+<style type="less" src="@/assets/dialtone.less" />
