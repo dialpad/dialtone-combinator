@@ -2,6 +2,7 @@
   "name": "dialtone-sandbox-test",
   "version": "0.0.0",
   "dependencies": {
-    "dialtone-sandbox": "file:.."
+    "dialtone-sandbox": "file:..",
+    "vue-router": "^4.0.16"
   }
 }
