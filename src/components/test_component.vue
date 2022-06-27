@@ -7,12 +7,12 @@
 </template>
 
 <script>
-import { DtButton } from '@dialpad/dialtone-vue';
+  import { DtButton } from '@dialpad/dialtone-vue';
 
-export default {
-  name: "TestComponent",
-  components: {
-    DtButton
+  export default {
+    name: "TestComponent",
+    components: {
+      DtButton
+    }
   }
-}
 </script>
