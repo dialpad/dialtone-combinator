@@ -13,7 +13,6 @@
         {{ component.name }}
       </dt-list-item>
     </router-link>
-
   </ul>
 </template>
 
