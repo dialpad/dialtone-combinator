@@ -1,13 +1,9 @@
 <template>
-
+  <div />
 </template>
 
 <script>
 export default {
-  name: 'Combinator'
-}
+  name: 'DcCombinator',
+};
 </script>
-
-<style scoped>
-
-</style>
