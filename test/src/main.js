@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import * as VueRouter from 'vue-router';
-import components from 'dialtone-combinator';
+import * as components from 'dialtone-combinator';
 
 const router = VueRouter.createRouter({
   history: VueRouter.createWebHashHistory(),

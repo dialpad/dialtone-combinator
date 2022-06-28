@@ -21,5 +21,6 @@ module.exports = {
     'vue/comma-dangle': ['error', 'always-multiline'],
     'vue/comma-spacing': ['error', { before: false, after: true }],
     'vue/comma-style': ['error', 'last'],
+    'import/no-named-default': 0,
   },
 };

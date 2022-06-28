@@ -1,12 +1,13 @@
-import TestBase from './src/components/test/test_base.vue';
-import TestDialtone from './src/components/test/test_dialtone.vue';
-import TestDialtoneVue from './src/components/test/test_dialtone_vue.vue';
-import Combinator from './src/components/combinator.vue';
+import DcTestBase from './src/components/test/test_base.vue';
+import DcTestDialtone from './src/components/test/test_dialtone.vue';
+import DcTestDialtoneVue from './src/components/test/test_dialtone_vue.vue';
+import DcCombinator from './src/components/combinator.vue';
 
 export {
-  TestBase,
-  TestDialtone,
-  TestDialtoneVue,
+  DcTestBase,
+  DcTestDialtone,
+  DcTestDialtoneVue,
+  DcCombinator,
 };
 
-export default Combinator;
+export default DcCombinator;
