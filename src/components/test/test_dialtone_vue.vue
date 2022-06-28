@@ -7,13 +7,13 @@
 </template>
 
 <script>
-  import { DtButton, DtCheckbox } from '@dialpad/dialtone-vue';
+import { DtButton, DtCheckbox } from '@dialpad/dialtone-vue';
 
-  export default {
-    name: "TestDialtoneVue",
-    components: {
-      DtButton,
-      DtCheckbox
-    },
-  }
+export default {
+  name: 'DcTestDialtoneVue',
+  components: {
+    DtButton,
+    DtCheckbox,
+  },
+};
 </script>

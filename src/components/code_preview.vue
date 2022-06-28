@@ -1,13 +1,9 @@
 <template>
-
+  <div />
 </template>
 
 <script>
 export default {
-  name: 'CodePreview'
-}
+  name: 'DcCodePreview',
+};
 </script>
-
-<style scoped>
-
-</style>

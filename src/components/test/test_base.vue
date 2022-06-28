@@ -3,7 +3,7 @@
 </template>
 
 <script>
-  export default {
-    name: "TestBase",
-  }
+export default {
+  name: 'DcTestBase',
+};
 </script>

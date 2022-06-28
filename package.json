@@ -3,23 +3,38 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "test": "cd test; vite"
+    "test": "cd test; vite",
+    "lint": "eslint ./"
   },
   "main": "index.js",
-  "dependencies": {
-    "@dialpad/dialtone": "^6.31.0",
-    "@dialpad/dialtone-vue": "^3.3.0",
-    "less": "^4.1.3",
-    "vue": "^3.2.37"
-  },
   "devDependencies": {
+    "@dialpad/dialtone": "^6.32.1",
+    "@dialpad/dialtone-vue": "^3.4.0",
     "@types/node": "^16.11.41",
+    "@typescript-eslint/eslint-plugin": "^5.30.0",
+    "@typescript-eslint/parser": "^5.30.0",
     "@vitejs/plugin-vue": "^2.3.3",
     "@vitejs/plugin-vue-jsx": "^1.3.10",
     "@vue/tsconfig": "^0.1.3",
+    "eslint": "^8.18.0",
+    "eslint-config-semistandard": "^16.0.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "eslint-plugin-vue": "^9.1.1",
+    "eslint-plugin-vuejs-accessibility": "^1.2.0",
+    "less": "^4.1.3",
     "npm-run-all": "^4.1.5",
     "typescript": "~4.7.4",
     "vite": "^2.9.12",
+    "vue": "^3.2.37",
     "vue-tsc": "^0.38.1"
+  },
+  "peerDependencies": {
+    "@dialpad/dialtone": ">=6.32.1",
+    "@dialpad/dialtone-vue": ">=3.4.0",
+    "vue": ">=3.2.37"
   }
 }
