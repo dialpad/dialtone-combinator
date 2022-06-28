@@ -1,5 +1,5 @@
 <template>
-  <h1>Welcome to Dialtone Sandbox!</h1>
+  <h1>Welcome to Dialtone Combinator!</h1>
   <TestComponent />
   <dt-button class="d-d-block" @click="count++">Increment: {{ count }}</dt-button>
 </template>

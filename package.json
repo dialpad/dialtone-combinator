@@ -1,5 +1,5 @@
 {
-  "name": "dialtone-sandbox",
+  "name": "dialtone-combinator",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
