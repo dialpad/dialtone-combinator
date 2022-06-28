@@ -18,9 +18,8 @@
 
 <script setup>
   import { DtListItem } from '@dialpad/dialtone-vue'
-  import components from 'dialtone-sandbox';
   import { RouterLink } from 'vue-router';
+  import components from 'dialtone-sandbox';
 </script>
 
-<style type="less" src="@/assets/dialtone.less" />
-
+<style type="less" src="./assets/dialtone.less" />
