@@ -1,14 +1,12 @@
 <template>
-  <div class="dc-root d-d-grid d-gg16 d-gl-sidebar d-h100p">
-    <div class="dc-root__body d-d-grid d-gg16 d-ga-content d-h100p">
-      <div class="dc-root__top d-bgc-green-200">
-        <dc-renderer />
-      </div>
-      <div class="dc-root__bottom d-bgc-orange-200">
-        <dc-code-preview />
-      </div>
+  <div class="dc-root d-d-grid d-gg8 d-h100p">
+    <div class="dc-root__top d-grs1 d-of-y-auto d-bgc-green-200">
+      <dc-renderer />
     </div>
-    <div class="d-ga-sidebar d-bgc-purple-200">
+    <div class="dc-root__bottom d-grs2 d-of-y-auto d-bgc-orange-200">
+      <dc-code-preview />
+    </div>
+    <div class="dc-root__sidebar d-grs1 d-gr2 d-of-y-auto d-bgc-purple-200">
       <dc-option-bar />
     </div>
   </div>
@@ -31,10 +29,6 @@ export default {
 
 <style lang="less">
 .dc-root {
-  direction: rtl;
-}
-
-.dc-root > * {
-  direction: initial;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
 }
 </style>
