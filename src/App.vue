@@ -1,11 +1,11 @@
 <template>
   <h1>Welcome to Dialtone Combinator!</h1>
-  <TestComponent />
+  <TestBase />
   <dt-button class="d-d-block" @click="count++">Increment: {{ count }}</dt-button>
 </template>
 
 <script setup>
-  import TestComponent from '@/components/test_component.vue';
+  import TestBase from '@/components/test/test_base.vue';
   import { DtButton } from '@dialpad/dialtone-vue';
   import { ref } from "vue";
 
