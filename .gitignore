@@ -1,3 +1,6 @@
+# Distribution
+*.tgz
+
 # Logs
 logs
 *.log

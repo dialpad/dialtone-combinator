@@ -2,7 +2,7 @@
   "name": "dialtone-combinator-test",
   "version": "0.0.0",
   "devDependencies": {
-    "dialtone-combinator": "file:..",
+    "dialtone-combinator": "file:./dialtone-combinator-0.0.0.tgz",
     "vue-router": "^4.0.16"
   }
 }

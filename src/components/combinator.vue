@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import DcRenderer from '@/components/renderer.vue';
-import DcOptionBar from '@/components/option_bar.vue';
-import DcCodePreview from '@/components/code_preview.vue';
+import DcRenderer from './renderer.vue';
+import DcOptionBar from './option_bar.vue';
+import DcCodePreview from './code_preview.vue';
 
 export default {
   name: 'DcCombinator',
