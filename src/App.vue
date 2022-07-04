@@ -1,11 +1,14 @@
 <template>
-  <Combinator :component="DtButton">
+  <Combinator
+    :component-set="components"
+    :component="components.DtButton"
+  >
     Button
   </Combinator>
 </template>
 
 <script setup>
-import { DtButton } from '@dialpad/dialtone-vue';
+import * as components from '@dialpad/dialtone-vue';
 import Combinator from './components/combinator.vue';
 </script>
 

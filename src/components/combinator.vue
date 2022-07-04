@@ -11,7 +11,10 @@
       </dc-renderer>
     </div>
     <div class="dc-root__bottom d-grs2 d-of-y-auto d-bgc-orange-200">
-      <dc-code-preview />
+      <dc-code-preview
+        :component-set="componentSet"
+        :code="'<dt-button>Hi</dt-button>'"
+      />
     </div>
     <div class="dc-root__sidebar d-grs1 d-gr2 d-of-y-auto d-bgc-purple-200">
       <dc-option-bar />
@@ -33,6 +36,14 @@ export default {
   },
   props: {
     component: {
+      type: Object,
+      default: null,
+    },
+
+    /**
+     * Additional components to be rendered.
+     */
+    componentSet: {
       type: Object,
       default: null,
     },
