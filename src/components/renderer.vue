@@ -1,6 +1,12 @@
 <template>
   <div class="dc-renderer">
-    <slot />
+    <component
+      :is="component"
+      v-if="component"
+      v-bind="props"
+    >
+      <slot />
+    </component>
   </div>
 </template>
 
@@ -9,6 +15,10 @@ export default {
   name: 'DcRenderer',
   props: {
     component: {
+      type: Object,
+      default: null,
+    },
+    props: {
       type: Object,
       default: null,
     },

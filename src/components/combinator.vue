@@ -1,15 +1,23 @@
 <template>
   <div class="dc-root d-d-grid d-h100p">
-    <vue-live
-      v-if="!loading"
-      :code="props.code"
-      :components="props.componentSet"
-      :editor-props="{ lineNumbers: true, ignoreTabKey: true }"
-      :layout="layout"
-      check-variable-availability
-    />
+    <div class="dc-root__body_top d-grs1 d-of-y-auto d-bgc-transparent d-ba d-bc-black">
+      <dc-renderer
+        :component="component"
+        :props="options.props"
+      >
+        <slot />
+      </dc-renderer>
+    </div>
+    <div class="dc-root__body_bottom d-grs2 d-of-y-auto d-bgc-black-600">
+      <dc-code-editor>
+        {{ code }}
+      </dc-code-editor>
+    </div>
     <div class="dc-root__sidebar d-grs1 d-gr2 d-of-y-auto d-bgc-orange-200">
-      <dc-option-bar />
+      <dc-option-bar
+        :component="component"
+        @change-props="onChangeProps"
+      />
     </div>
   </div>
 </template>
@@ -19,13 +27,15 @@
 
 import 'vue-live/lib/vue-live.esm.css';
 import DcOptionBar from './option_bar.vue';
-import DcCombinatorBody from './combinator_body.vue';
+import DcRenderer from './renderer.vue';
+import DcCodeEditor from './code_editor.vue';
+import { reactive } from 'vue';
 
-import { VueLive } from 'vue-live';
-import { markRaw, ref, defineProps } from 'vue';
+const options = reactive({
+  props: {},
+});
 
-const layout = markRaw(DcCombinatorBody);
-const props = defineProps({
+defineProps({
   code: {
     type: String,
     default: undefined,
@@ -40,7 +50,10 @@ const props = defineProps({
   },
 });
 
-const loading = ref(false);
+function onChangeProps (props) {
+  console.log(props);
+  options.props = props;
+}
 </script>
 
 <style>

@@ -2,7 +2,7 @@
   <Combinator
     :component-set="components"
     :component="components.DtButton"
-    :code="'<dt-button>Hi</dt-button>'"
+    :code="'<dt-button>Hi</dt-button><dt-button>Ayo</dt-button>'"
   >
     Button
   </Combinator>
