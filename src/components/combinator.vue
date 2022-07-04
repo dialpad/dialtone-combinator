@@ -1,54 +1,46 @@
 <template>
-  <div class="dc-root d-d-grid d-gg8 d-h100p">
-    <div class="dc-root__top d-grs1 d-of-y-auto d-bgc-green-200">
-      <dc-renderer>
-        <component
-          :is="component"
-          v-if="component"
-        >
-          <slot />
-        </component>
-      </dc-renderer>
-    </div>
-    <div class="dc-root__bottom d-grs2 d-of-y-auto d-bgc-orange-200">
-      <dc-code-preview
-        :component-set="componentSet"
-        :code="'<dt-button>Hi</dt-button>'"
-      />
-    </div>
-    <div class="dc-root__sidebar d-grs1 d-gr2 d-of-y-auto d-bgc-purple-200">
+  <div class="dc-root d-d-grid d-h100p">
+    <vue-live
+      v-if="!loading"
+      :code="props.code"
+      :components="props.componentSet"
+      :editor-props="{ lineNumbers: true, ignoreTabKey: true }"
+      :layout="layout"
+      check-variable-availability
+    />
+    <div class="dc-root__sidebar d-grs1 d-gr2 d-of-y-auto d-bgc-orange-200">
       <dc-option-bar />
     </div>
   </div>
 </template>
 
-<script>
-import DcRenderer from './renderer.vue';
+<script setup>
+/* eslint vue/multi-word-component-names: 0 */
+
+import 'vue-live/lib/vue-live.esm.css';
 import DcOptionBar from './option_bar.vue';
-import DcCodePreview from './code_preview.vue';
+import DcCombinatorBody from './combinator_body.vue';
 
-export default {
-  name: 'DcCombinator',
-  components: {
-    DcRenderer,
-    DcOptionBar,
-    DcCodePreview,
-  },
-  props: {
-    component: {
-      type: Object,
-      default: null,
-    },
+import { VueLive } from 'vue-live';
+import { markRaw, ref, defineProps } from 'vue';
 
-    /**
-     * Additional components to be rendered.
-     */
-    componentSet: {
-      type: Object,
-      default: null,
-    },
+const layout = markRaw(DcCombinatorBody);
+const props = defineProps({
+  code: {
+    type: String,
+    default: undefined,
   },
-};
+  component: {
+    type: Object,
+    default: null,
+  },
+  componentSet: {
+    type: Object,
+    default: undefined,
+  },
+});
+
+const loading = ref(false);
 </script>
 
 <style>
