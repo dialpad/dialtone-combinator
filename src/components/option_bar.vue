@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="dtc-option-bar">
     <div class="d-p16">
       <h2>Props</h2>
       <dt-checkbox

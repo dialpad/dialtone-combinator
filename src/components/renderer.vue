@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="dc-renderer"
-  >
+  <div class="dtc-renderer">
     <component
       :is="component"
       v-if="component"

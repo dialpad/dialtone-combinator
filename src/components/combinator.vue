@@ -1,18 +1,18 @@
 <template>
-  <div class="dc-root d-d-grid d-h100p">
-    <div class="dc-root__body_top d-grs1 d-of-y-auto d-bgc-transparent d-ba d-bc-black">
+  <div class="dtc-root d-d-grid d-h100p">
+    <div class="dtc-root__top d-grs1 d-of-y-auto d-bgc-transparent d-ba d-bc-black">
       <dc-renderer
         :component="component"
         :props="options?.props"
         :slots="options?.slots"
       />
     </div>
-    <div class="dc-root__body_bottom d-grs2 d-of-y-auto d-bgc-black-600">
+    <div class="dtc-root__bottom d-grs2 d-of-y-auto d-bgc-black-600">
       <dc-code-editor>
         {{ code }}
       </dc-code-editor>
     </div>
-    <div class="dc-root__sidebar d-grs1 d-gr2 d-of-y-auto d-bgc-orange-200">
+    <div class="dtc-root__sidebar d-grs1 d-gr2 d-of-y-auto d-bgc-orange-200">
       <dc-option-bar
         ref="options"
         :component="component"
@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style>
-.dc-root {
+.dtc-root {
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
 }
 </style>
