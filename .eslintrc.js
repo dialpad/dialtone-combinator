@@ -18,9 +18,11 @@ module.exports = {
     }],
     quotes: ['error', 'single', { allowTemplateLiterals: true }],
     'comma-dangle': ['error', 'always-multiline'],
+    'import/no-named-default': 0,
     'vue/comma-dangle': ['error', 'always-multiline'],
     'vue/comma-spacing': ['error', { before: false, after: true }],
     'vue/comma-style': ['error', 'last'],
-    'import/no-named-default': 0,
+    'vue/no-v-for-template-key': 0,
+    'vue/no-v-html': 0,
   },
 };

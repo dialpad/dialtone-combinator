@@ -9,9 +9,11 @@
     >
       <template
         v-for="(slot, name) in slots"
+        :key="name"
         #[name]
       >
-        {{ slot }}
+        <!-- TODO: XSS Safe? -->
+        <div v-html="slot" />
       </template>
     </component>
   </div>
