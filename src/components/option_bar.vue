@@ -3,6 +3,7 @@
     <div class="d-p16">
       <h2>Props</h2>
       <dt-checkbox
+        :checked="componentActive.props.active"
         @input="onChangeActive"
       >
         active
@@ -28,6 +29,7 @@
 </template>
 
 <script setup>
+import { paramCase } from 'change-case';
 import { DtCheckbox, DtButton, DtInput } from '@dialpad/dialtone-vue';
 import { defineProps, defineEmits, reactive } from 'vue';
 
@@ -40,17 +42,20 @@ const props = defineProps({
 
 const componentActive = reactive({
   props: {
-    active: false,
+    active: true,
   },
 });
 
 const componentSlot = reactive({
   slots: {
-    default: props.component.name,
+    default: paramCase(props.component.name),
   },
 });
 
 const emit = defineEmits(['update']);
+
+onChangeActive(componentActive.props.active);
+onChangeSlot(componentSlot.slots.default);
 
 function onChangeActive (e) {
   componentActive.props.active = e;
