@@ -33,7 +33,7 @@
 <script setup>
 import { paramCase } from 'change-case';
 import { DtCheckbox, DtInput } from '@dialpad/dialtone-vue';
-import { defineProps, defineEmits, reactive } from 'vue';
+import { reactive } from 'vue';
 
 const props = defineProps({
   component: {
@@ -68,4 +68,10 @@ function onChangeSlot (e) {
   componentSlot.slots.default = e;
   emit('update', componentSlot);
 }
+</script>
+
+<script>
+export default {
+  name: 'DtcOptionBar',
+};
 </script>

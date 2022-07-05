@@ -4,6 +4,6 @@
 
 <script>
 export default {
-  name: 'DcTestBase',
+  name: 'DtcTestBase',
 };
 </script>

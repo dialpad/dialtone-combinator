@@ -4,6 +4,12 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: 'DtcCodeEditor',
+};
+</script>
+
 <style>
 .dc-code-editor {
   padding: var(--su16);

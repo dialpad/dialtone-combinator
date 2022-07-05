@@ -20,8 +20,6 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
-
 defineProps({
   component: {
     type: Object,
@@ -36,4 +34,10 @@ defineProps({
     default: null,
   },
 });
+</script>
+
+<script>
+export default {
+  name: 'DtcRenderer',
+};
 </script>

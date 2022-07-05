@@ -55,6 +55,12 @@ function onOptionsUpdate (changes) {
 }
 </script>
 
+<script>
+export default {
+  name: 'DtcCombinator',
+};
+</script>
+
 <style>
 .dc-root {
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);

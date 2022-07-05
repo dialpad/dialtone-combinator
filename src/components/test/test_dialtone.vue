@@ -15,6 +15,6 @@
 
 <script>
 export default {
-  name: 'DcTestDialtone',
+  name: 'DtcTestDialtone',
 };
 </script>

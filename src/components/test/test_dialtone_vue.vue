@@ -6,14 +6,12 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { DtButton, DtCheckbox } from '@dialpad/dialtone-vue';
+</script>
 
+<script>
 export default {
-  name: 'DcTestDialtoneVue',
-  components: {
-    DtButton,
-    DtCheckbox,
-  },
+  name: 'DtcTestDialtoneVue',
 };
 </script>
