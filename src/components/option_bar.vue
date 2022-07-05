@@ -3,8 +3,8 @@
     <div class="d-p16">
       <h2>Props</h2>
       <dt-checkbox
-        :checked="componentActive.props.active"
-        @input="onChangeActive"
+        :checked="options.props.active"
+        @input="e => options.props.active = e"
       >
         active
       </dt-checkbox>
@@ -15,8 +15,8 @@
         label="default"
         class="d-r-none"
         type="textarea"
-        :value="componentSlot.slots.default"
-        @input="onChangeSlot"
+        :value="options.slots.default"
+        @input="e => options.slots.default = e"
       />
     </div>
     <div class="d-p16">
@@ -42,32 +42,19 @@ const props = defineProps({
   },
 });
 
-const componentActive = reactive({
+const options = reactive({
   props: {
     active: true,
   },
-});
-
-const componentSlot = reactive({
   slots: {
     default: paramCase(props.component.name),
   },
 });
 
-const emit = defineEmits(['update']);
-
-onChangeActive(componentActive.props.active);
-onChangeSlot(componentSlot.slots.default);
-
-function onChangeActive (e) {
-  componentActive.props.active = e;
-  emit('update', componentActive);
-}
-
-function onChangeSlot (e) {
-  componentSlot.slots.default = e;
-  emit('update', componentSlot);
-}
+defineExpose({
+  props: options.props,
+  slots: options.slots,
+});
 </script>
 
 <script>
