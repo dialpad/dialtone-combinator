@@ -4,9 +4,8 @@
       <dc-renderer
         :component="component"
         :props="options.props"
-      >
-        <slot />
-      </dc-renderer>
+        :slots="options.slots"
+      />
     </div>
     <div class="dc-root__body_bottom d-grs2 d-of-y-auto d-bgc-black-600">
       <dc-code-editor>
@@ -16,7 +15,7 @@
     <div class="dc-root__sidebar d-grs1 d-gr2 d-of-y-auto d-bgc-orange-200">
       <dc-option-bar
         :component="component"
-        @change-props="onChangeProps"
+        @update="onChangeOptions"
       />
     </div>
   </div>
@@ -33,6 +32,7 @@ import { reactive } from 'vue';
 
 const options = reactive({
   props: {},
+  slots: {},
 });
 
 defineProps({
@@ -44,15 +44,14 @@ defineProps({
     type: Object,
     default: null,
   },
-  componentSet: {
-    type: Object,
-    default: undefined,
-  },
 });
 
-function onChangeProps (props) {
-  console.log(props);
-  options.props = props;
+function onChangeOptions (changes) {
+  for (const optionType in options) {
+    for (const option in changes[optionType]) {
+      options[optionType][option] = changes[optionType][option];
+    }
+  }
 }
 </script>
 

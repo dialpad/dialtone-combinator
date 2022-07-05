@@ -1,11 +1,18 @@
 <template>
-  <div class="dc-renderer">
+  <div
+    class="dc-renderer"
+  >
     <component
       :is="component"
       v-if="component"
       v-bind="props"
     >
-      <slot />
+      <template
+        v-for="(slot, name) in slots"
+        #[name]
+      >
+        {{ slot }}
+      </template>
     </component>
   </div>
 </template>
@@ -19,6 +26,10 @@ export default {
       default: null,
     },
     props: {
+      type: Object,
+      default: null,
+    },
+    slots: {
       type: Object,
       default: null,
     },

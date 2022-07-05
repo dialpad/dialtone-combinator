@@ -2,18 +2,21 @@
   <div>
     <div class="d-p16">
       <h2>Props</h2>
-      <dt-checkbox @input="onInput">
+      <dt-checkbox
+        @input="onChangeActive"
+      >
         active
       </dt-checkbox>
     </div>
     <div class="d-p16">
       <h2>Slots</h2>
       <dt-input
+        label="default"
         class="d-r-none"
         type="textarea"
-      >
-        default
-      </dt-input>
+        :value="componentSlot.slots.default"
+        @input="onChangeSlot"
+      />
     </div>
     <div class="d-p16">
       <h2>Events</h2>
@@ -28,21 +31,34 @@
 import { DtCheckbox, DtButton, DtInput } from '@dialpad/dialtone-vue';
 import { defineProps, defineEmits, reactive } from 'vue';
 
-defineProps({
+const props = defineProps({
   component: {
     type: Object,
     default: null,
   },
 });
 
-const componentProps = reactive({
-  active: false,
+const componentActive = reactive({
+  props: {
+    active: false,
+  },
 });
 
-const emit = defineEmits(['changeProps']);
+const componentSlot = reactive({
+  slots: {
+    default: props.component.name,
+  },
+});
 
-function onInput (e) {
-  componentProps.active = e;
-  emit('changeProps', componentProps);
+const emit = defineEmits(['update']);
+
+function onChangeActive (e) {
+  componentActive.props.active = e;
+  emit('update', componentActive);
+}
+
+function onChangeSlot (e) {
+  componentSlot.slots.default = e;
+  emit('update', componentSlot);
 }
 </script>
