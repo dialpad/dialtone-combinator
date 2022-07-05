@@ -1,5 +1,5 @@
 <template>
-  <div class="dc-code-editor d-bgc-black-500">
+  <div class="dc-code-editor">
     <slot />
   </div>
 </template>
