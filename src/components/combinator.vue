@@ -15,7 +15,7 @@
     <div class="dc-root__sidebar d-grs1 d-gr2 d-of-y-auto d-bgc-orange-200">
       <dc-option-bar
         :component="component"
-        @update="onChangeOptions"
+        @update="onOptionsUpdate"
       />
     </div>
   </div>
@@ -46,7 +46,7 @@ defineProps({
   },
 });
 
-function onChangeOptions (changes) {
+function onOptionsUpdate (changes) {
   for (const optionType in options) {
     for (const option in changes[optionType]) {
       options[optionType][option] = changes[optionType][option];

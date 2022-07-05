@@ -19,22 +19,21 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'DcRenderer',
-  props: {
-    component: {
-      type: Object,
-      default: null,
-    },
-    props: {
-      type: Object,
-      default: null,
-    },
-    slots: {
-      type: Object,
-      default: null,
-    },
+<script setup>
+import { defineProps } from 'vue';
+
+defineProps({
+  component: {
+    type: Object,
+    default: null,
   },
-};
+  props: {
+    type: Object,
+    default: null,
+  },
+  slots: {
+    type: Object,
+    default: null,
+  },
+});
 </script>

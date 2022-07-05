@@ -21,16 +21,18 @@
     </div>
     <div class="d-p16">
       <h2>Events</h2>
-      <dt-button>
-        click
-      </dt-button>
+      <ul>
+        <li>click</li>
+        <li>focusin</li>
+        <li>focusout</li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script setup>
 import { paramCase } from 'change-case';
-import { DtCheckbox, DtButton, DtInput } from '@dialpad/dialtone-vue';
+import { DtCheckbox, DtInput } from '@dialpad/dialtone-vue';
 import { defineProps, defineEmits, reactive } from 'vue';
 
 const props = defineProps({
