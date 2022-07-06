@@ -35,8 +35,8 @@ import DcOptionBar from './option_bar/option_bar.vue';
 import DcRenderer from './renderer/renderer.vue';
 import DcCodeEditor from './code_editor/code_editor.vue';
 
-import { reactive } from 'vue';
 import { paramCase } from 'change-case';
+import { reactive } from 'vue';
 
 const props = defineProps({
   code: {
@@ -48,11 +48,20 @@ const props = defineProps({
 });
 
 const options = reactive({
-  props: {
-    active: true,
-  },
   slots: {
     default: paramCase(props.component.name),
+  },
+  props: {
+    active: false,
+  },
+  attributes: {
+    disabled: false,
+  },
+  getMembers: function () {
+    return {
+      ...this?.props,
+      ...this?.attributes,
+    };
   },
 });
 

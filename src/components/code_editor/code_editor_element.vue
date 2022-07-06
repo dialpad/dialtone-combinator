@@ -4,7 +4,7 @@
       <span>{{ tag }}</span>
       <dtc-code-editor-attributes
         :component="component"
-        :component-props="componentProps"
+        :attributes="options?.getMembers()"
       />
     </dtc-code-editor-tag>
     <slot />
@@ -22,7 +22,7 @@ defineProps({
   component: {
     type: Object,
   },
-  componentProps: {
+  options: {
     type: Object,
   },
   tag: {

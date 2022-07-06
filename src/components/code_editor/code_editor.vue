@@ -2,7 +2,7 @@
   <div class="dtc-code-editor d-bgc-black-600 d-fc-white d-p16">
     <dtc-code-editor-element
       :component="component"
-      :component-props="options?.props"
+      :options="options"
       :tag="tag"
     >
       <dtc-code-editor-slot
@@ -31,7 +31,6 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update-options']);
-
 const tag = computed(() => paramCase(props.component.name));
 </script>
 

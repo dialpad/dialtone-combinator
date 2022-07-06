@@ -1,32 +1,24 @@
 <template>
-  <span v-if="componentProps">
+  <span v-if="attributes">
     <template
-      v-for="(value, key) in componentProps"
+      v-for="(value, key) in attributes"
       :key="key"
     >
       <span>&nbsp;</span>
-      <span>
-        <span>{{ key }}</span>
-        <span>=</span>
-        <span>"</span>
-        <span>{{ value }}</span>
-        <span>"</span>
-      </span>
+      <span>{{ key }}="{{ value }}"</span>
     </template>
   </span>
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   component: {
     type: Object,
   },
-  componentProps: {
+  attributes: {
     type: Object,
   },
 });
-
-console.log(props);
 </script>
 
 <script>
