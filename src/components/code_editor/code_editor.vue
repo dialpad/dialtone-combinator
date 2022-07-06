@@ -1,16 +1,21 @@
 <template>
-  <div class="dtc-code-editor">
+  <div class="dtc-code-editor d-bgc-black-600 d-fc-white d-p16">
     <dtc-code-editor-element :tag="tag">
-      <span>Poggers</span>
+      <dtc-code-editor-slot
+        :slots="options?.slots"
+        name="default"
+        @update-options="e => emit('update-options', e)"
+      />
     </dtc-code-editor-element>
   </div>
 </template>
 
 <script setup>
+import DtcCodeEditorElement from './code_editor_element.vue';
+import DtcCodeEditorSlot from './code_editor_slot.vue';
+
 import { paramCase } from 'change-case';
 import { computed } from 'vue';
-
-import DtcCodeEditorElement from './code_editor_element.vue';
 
 const props = defineProps({
   component: {
@@ -21,6 +26,8 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(['update-options']);
+
 const tag = computed(() => paramCase(props.component.name));
 </script>
 
@@ -29,16 +36,3 @@ export default {
   name: 'DtcCodeEditor',
 };
 </script>
-
-<style>
-.dtc-code-editor {
-  padding: var(--su16);
-  color: white;
-  background-color: hsla(var(--black-600-h) var(--black-600-s) var(--black-600-l) ' / ' var(--bgo));
-  overflow: hidden;
-}
-
-.dtc-code-editor textarea:focus {
-  outline: none;
-}
-</style>

@@ -10,6 +10,7 @@
       <dc-code-editor
         :component="component"
         :options="options"
+        @update-options="updateOptions"
       >
         {{ code }}
       </dc-code-editor>
@@ -18,6 +19,8 @@
       <dc-option-bar
         ref="options"
         :component="component"
+        :options="options"
+        @update-options="updateOptions"
       />
     </div>
   </div>
@@ -32,11 +35,10 @@ import DcOptionBar from './option_bar/option_bar.vue';
 import DcRenderer from './renderer/renderer.vue';
 import DcCodeEditor from './code_editor/code_editor.vue';
 
-import { ref } from 'vue';
+import { reactive } from 'vue';
+import { paramCase } from 'change-case';
 
-const options = ref();
-
-defineProps({
+const props = defineProps({
   code: {
     type: String,
   },
@@ -44,6 +46,19 @@ defineProps({
     type: Object,
   },
 });
+
+const options = reactive({
+  props: {
+    active: true,
+  },
+  slots: {
+    default: paramCase(props.component.name),
+  },
+});
+
+function updateOptions (update) {
+  update(options);
+}
 </script>
 
 <script>

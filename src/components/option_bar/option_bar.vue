@@ -4,7 +4,9 @@
       <h2>Props</h2>
       <dt-checkbox
         :checked="options.props.active"
-        @input="e => options.props.active = e"
+        @input="e => emitUpdate(options => {
+          options.props.active = e;
+        })"
       >
         active
       </dt-checkbox>
@@ -16,7 +18,9 @@
         class="d-r-none"
         type="textarea"
         :value="options.slots.default"
-        @input="e => options.slots.default = e"
+        @input="e => emitUpdate(options => {
+          options.slots.default = e;
+        })"
       />
     </div>
     <div class="d-p16">
@@ -31,29 +35,22 @@
 </template>
 
 <script setup>
-import { paramCase } from 'change-case';
 import { DtCheckbox, DtInput } from '@dialpad/dialtone-vue';
-import { reactive } from 'vue';
 
-const props = defineProps({
+defineProps({
   component: {
+    type: Object,
+  },
+  options: {
     type: Object,
   },
 });
 
-const options = reactive({
-  props: {
-    active: true,
-  },
-  slots: {
-    default: paramCase(props.component.name),
-  },
-});
+const emit = defineEmits(['update-options']);
 
-defineExpose({
-  props: options.props,
-  slots: options.slots,
-});
+function emitUpdate (args) {
+  emit('update-options', args);
+}
 </script>
 
 <script>
