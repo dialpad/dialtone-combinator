@@ -28,9 +28,9 @@
 
 import 'vue-live/lib/vue-live.esm.css';
 
-import DcOptionBar from './option_bar.vue';
-import DcRenderer from './renderer.vue';
-import DcCodeEditor from './code_editor.vue';
+import DcOptionBar from './option_bar/option_bar.vue';
+import DcRenderer from './renderer/renderer.vue';
+import DcCodeEditor from './code_editor/code_editor.vue';
 
 import { ref } from 'vue';
 
