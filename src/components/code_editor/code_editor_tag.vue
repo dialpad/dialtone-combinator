@@ -17,6 +17,6 @@ defineProps({
 
 <script>
 export default {
-  name: 'DtcCodeEditorTag',
+  name: 'DtcCodeEditorAttributes',
 };
 </script>

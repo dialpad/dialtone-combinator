@@ -1,6 +1,10 @@
 <template>
   <div class="dtc-code-editor d-bgc-black-600 d-fc-white d-p16">
-    <dtc-code-editor-element :tag="tag">
+    <dtc-code-editor-element
+      :component="component"
+      :component-props="options?.props"
+      :tag="tag"
+    >
       <dtc-code-editor-slot
         :slots="options?.slots"
         name="default"
