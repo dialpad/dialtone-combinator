@@ -4,7 +4,7 @@
       <span>{{ tag }}</span>
       <dtc-code-editor-attributes
         :component="component"
-        :attributes="options?.getMembers()"
+        :attributes="options?.getMembers?.()"
       />
     </dtc-code-editor-tag>
     <slot />

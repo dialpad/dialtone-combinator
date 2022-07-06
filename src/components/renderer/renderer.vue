@@ -3,7 +3,7 @@
     <component
       :is="component"
       v-if="component"
-      v-bind="options?.getMembers()"
+      v-bind="options?.getMembers?.()"
     >
       <template
         v-for="(slot, name) in options?.slots"
