@@ -1,8 +1,28 @@
 <template>
   <div class="dtc-code-editor">
-    <slot />
+    <dtc-code-editor-element :tag="tag">
+      <span>Poggers</span>
+    </dtc-code-editor-element>
   </div>
 </template>
+
+<script setup>
+import { paramCase } from 'change-case';
+import { computed } from 'vue';
+
+import DtcCodeEditorElement from './code_editor_element.vue';
+
+const props = defineProps({
+  component: {
+    type: Object,
+  },
+  options: {
+    type: Object,
+  },
+});
+
+const tag = computed(() => paramCase(props.component.name));
+</script>
 
 <script>
 export default {

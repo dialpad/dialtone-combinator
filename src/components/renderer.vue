@@ -3,10 +3,10 @@
     <component
       :is="component"
       v-if="component"
-      v-bind="props"
+      v-bind="options?.props"
     >
       <template
-        v-for="(slot, name) in slots"
+        v-for="(slot, name) in options?.slots"
         :key="name"
         #[name]
       >
@@ -21,15 +21,9 @@
 defineProps({
   component: {
     type: Object,
-    default: null,
   },
-  props: {
+  options: {
     type: Object,
-    default: null,
-  },
-  slots: {
-    type: Object,
-    default: null,
   },
 });
 </script>

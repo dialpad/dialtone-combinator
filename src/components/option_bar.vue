@@ -38,7 +38,6 @@ import { reactive } from 'vue';
 const props = defineProps({
   component: {
     type: Object,
-    default: null,
   },
 });
 

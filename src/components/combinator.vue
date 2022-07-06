@@ -3,12 +3,14 @@
     <div class="dtc-root__top d-grs1 d-of-y-auto d-bgc-transparent d-ba d-bc-black">
       <dc-renderer
         :component="component"
-        :props="options?.props"
-        :slots="options?.slots"
+        :options="options"
       />
     </div>
     <div class="dtc-root__bottom d-grs2 d-of-y-auto d-bgc-black-600">
-      <dc-code-editor>
+      <dc-code-editor
+        :component="component"
+        :options="options"
+      >
         {{ code }}
       </dc-code-editor>
     </div>
@@ -25,6 +27,7 @@
 /* eslint vue/multi-word-component-names: 0 */
 
 import 'vue-live/lib/vue-live.esm.css';
+
 import DcOptionBar from './option_bar.vue';
 import DcRenderer from './renderer.vue';
 import DcCodeEditor from './code_editor.vue';
@@ -36,11 +39,9 @@ const options = ref();
 defineProps({
   code: {
     type: String,
-    default: undefined,
   },
   component: {
     type: Object,
-    default: null,
   },
 });
 </script>
