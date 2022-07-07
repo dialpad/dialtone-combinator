@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vue-cli-service serve",
-    "test": "npm run distribute; cd test; vue-cli-service serve",
+    "test": "npm run distribute; cd test; vite",
     "lint": "eslint ./",
     "build": "vue-cli-service build --mode production --target lib --name dialtone-combinator index.js",
     "build:preview": "vue-cli-service build --mode production --name dialtone-combinator",
