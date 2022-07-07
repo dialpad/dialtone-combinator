@@ -10,5 +10,5 @@ Dialtone Combinator is a component that provides an interface for users to inter
 
 ## Links
 
-[Preview](https://dialpad.github.io/dialtone-combinator/)
+[Preview](https://dialpad.github.io/dialtone-combinator/) \
 [Tracker](https://dialpad.atlassian.net/browse/DT-531)
