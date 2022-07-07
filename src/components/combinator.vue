@@ -27,8 +27,6 @@
 <script setup>
 /* eslint vue/multi-word-component-names: 0 */
 
-import 'vue-live/lib/vue-live.esm.css';
-
 import DcOptionBar from './option_bar/option_bar.vue';
 import DcRenderer from './renderer/renderer.vue';
 import DcCodeEditor from './code_editor/code_editor.vue';
