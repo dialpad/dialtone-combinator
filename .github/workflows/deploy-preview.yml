@@ -47,7 +47,7 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@v4.2.5
       with:
         branch: gh-pages
-        folder: dist
+        folder: dist/preview
         target-folder: deploy-previews/pr-${{ github.event.pull_request.number }}
 
     - name: Add message
