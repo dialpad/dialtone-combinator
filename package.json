@@ -2,10 +2,11 @@
   "name": "dialtone-combinator",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "test": "npm run distribute; cd test; vite",
+    "dev": "vue-cli-service serve",
+    "test": "npm run distribute; cd test; vue-cli-service serve",
     "lint": "eslint ./",
     "build": "vue-cli-service build --mode production --target lib --name dialtone-combinator index.js",
+    "build:preview": "vue-cli-service build --mode production --name dialtone-combinator",
     "distribute": "npm run build; npm pack"
   },
   "main": "./dist/dialtone-combinator.umd.js",
@@ -13,7 +14,7 @@
     "./dist/*.js"
   ],
   "devDependencies": {
-    "@dialpad/dialtone": "^6.32.1",
+    "@dialpad/dialtone": "^6.32.2",
     "@dialpad/dialtone-vue": "^3.4.0",
     "@types/node": "^16.11.41",
     "@typescript-eslint/eslint-plugin": "^5.30.0",
@@ -33,6 +34,7 @@
     "eslint-plugin-vue": "^9.1.1",
     "eslint-plugin-vuejs-accessibility": "^1.2.0",
     "less": "^4.1.3",
+    "less-loader": "^11.0.0",
     "npm-run-all": "^4.1.5",
     "typescript": "~4.7.4",
     "vite": "^2.9.12",

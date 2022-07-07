@@ -26,4 +26,4 @@ import { RouterLink } from 'vue-router';
 import * as components from 'dialtone-combinator';
 </script>
 
-<style type="less" src="./assets/dialtone.less" />
+<style lang="less" src="./assets/dialtone.less" />

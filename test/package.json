@@ -2,6 +2,7 @@
   "name": "dialtone-combinator-test",
   "version": "0.0.0",
   "devDependencies": {
+    "@dialpad/dialtone": "^6.32.2",
     "dialtone-combinator": "file:../dialtone-combinator-0.0.0.tgz",
     "vue-router": "^4.0.16"
   }
