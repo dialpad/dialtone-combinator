@@ -38,7 +38,7 @@ jobs:
 
     - name: Install dependencies
       if: steps.npm-cache.outputs.cache-hit != 'true'
-      run: ls -a; npm ci
+      run: cat .npmrc; npm i
 
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4.2.5
