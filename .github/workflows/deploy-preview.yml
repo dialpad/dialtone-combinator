@@ -6,14 +6,14 @@ env:
   # It is impossible to manually delete the cache, so if you are ever in a
   # situation where you need to remove a previous cache just increment
   # the version number
-  DIALTONE_DEPLOY_PREVIEW_CACHE_VERSION: v1
+  DEPLOY_PREVIEW_CACHE_VERSION: v1
 
 jobs:
-
   deploy:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
+      
     runs-on: ubuntu-latest
 
     steps:
@@ -31,14 +31,14 @@ jobs:
       with:
         path: |
           **/node_modules/
-        key: ${{ format('{0}-cache-node-modules-{1}-{2}', runner.os, env.DIALTONE_DEPLOY_PREVIEW_CACHE_VERSION, hashFiles('**/package-lock.json')) }}
+        key: ${{ format('{0}-cache-node-modules-{1}-{2}', runner.os, env.DEPLOY_PREVIEW_CACHE_VERSION, hashFiles('**/package-lock.json')) }}
 
     - name: Authenticate with private NPM package
-      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
+      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
 
     - name: Install dependencies
       if: steps.npm-cache.outputs.cache-hit != 'true'
-      run: cat .npmrc; npm i
+      run: npm ci
 
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4.2.5
@@ -47,7 +47,7 @@ jobs:
         folder: .
         target-folder: deploy-previews/pr-${{ github.event.pull_request.number }}
 
-    - name: Add Message
+    - name: Add message
       uses: mshick/add-pr-comment@v1
       env:
         BUILD_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
@@ -55,6 +55,6 @@ jobs:
       with:
         message: |
           ✔️ Deploy Preview ready!
-          😎 Browse the preview: https://dialpad.design/deploy-previews/pr-${{ github.event.pull_request.number }}
+          😎 Browse the preview: https://dialpad.github.io/dialtone-combinator/deploy-previews/pr-${{ github.event.pull_request.number }}
           🔨 If you experience an SSL issue then wait 2 minutes and try again.
         allow-repeats: true
