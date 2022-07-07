@@ -34,7 +34,7 @@ jobs:
         key: ${{ format('{0}-cache-node-modules-{1}-{2}', runner.os, env.DIALTONE_DEPLOY_PREVIEW_CACHE_VERSION, hashFiles('**/package-lock.json')) }}
 
     - name: Authenticate with private NPM package
-      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
+      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
 
     - name: Install dependencies
       if: steps.npm-cache.outputs.cache-hit != 'true'
