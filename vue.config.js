@@ -1,10 +1,10 @@
 const path = require('path');
+
 module.exports = {
   publicPath: '././',
   lintOnSave: false,
-  css: { extract: false },
-  chainWebpack: config => {
-    config.externals({ '@dialpad/dialtone': '@dialpad/dialtone' });
+  css: {
+    extract: false,
   },
   configureWebpack: {
     resolve: {
@@ -12,11 +12,6 @@ module.exports = {
         vue$: 'vue/dist/vue.esm-browser.js',
         '@': path.join(__dirname, '.'),
       },
-    },
-  },
-  pluginOptions: {
-    webpackBundleAnalyzer: {
-      openAnalyzer: false,
     },
   },
 };

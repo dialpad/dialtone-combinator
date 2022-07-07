@@ -15,7 +15,6 @@
     </div>
     <div class="dtc-root__sidebar d-grs1 d-gr2 d-of-y-auto d-bgc-orange-200">
       <dc-option-bar
-        ref="options"
         :component="component"
         :options="options"
         @update-options="updateOptions"
