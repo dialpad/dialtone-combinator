@@ -11,9 +11,7 @@
         :component="component"
         :options="options"
         @update-options="updateOptions"
-      >
-        {{ code }}
-      </dc-code-editor>
+      />
     </div>
     <div class="dtc-root__sidebar d-grs1 d-gr2 d-of-y-auto d-bgc-orange-200">
       <dc-option-bar
@@ -39,9 +37,6 @@ import { paramCase } from 'change-case';
 import { reactive } from 'vue';
 
 const props = defineProps({
-  code: {
-    type: String,
-  },
   component: {
     type: Object,
   },
