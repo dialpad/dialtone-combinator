@@ -12,9 +12,8 @@ jobs:
   deploy:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
+      runs-on: ubuntu-latest
       cancel-in-progress: true
-      
-    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
