@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-/* eslint vue/multi-word-component-names: 0 */
+import documentation from '@dialpad/dialtone-vue/dist/component-documentation.json';
 
 import DcOptionBar from './option_bar/option_bar.vue';
 import DcRenderer from './renderer/renderer.vue';
@@ -32,6 +32,8 @@ import DcCodeEditor from './code_editor/code_editor.vue';
 
 import { paramCase } from 'change-case';
 import { reactive } from 'vue';
+
+console.log(documentation);
 
 const props = defineProps({
   component: {
