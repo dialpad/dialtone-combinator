@@ -1,22 +1,24 @@
 <template>
-  <span>
+  <div>
     <dtc-code-editor-tag>
-      <span>{{ tag }}</span>
+      <span class="dtc-efc-element">{{ tag }}</span>
       <dtc-code-editor-attributes
         :component="component"
         :attributes="options?.getMembers?.()"
       />
     </dtc-code-editor-tag>
+    <dtc-code-editor-indent />
     <slot />
     <dtc-code-editor-tag closing>
-      <span>{{ tag }}</span>
+      <span class="dtc-efc-element">{{ tag }}</span>
     </dtc-code-editor-tag>
-  </span>
+  </div>
 </template>
 
 <script setup>
 import DtcCodeEditorTag from './code_editor_tag.vue';
 import DtcCodeEditorAttributes from './code_editor_attributes.vue';
+import DtcCodeEditorIndent from './code_editor_indent.vue';
 
 defineProps({
   component: {
@@ -36,3 +38,7 @@ export default {
   name: 'DtcCodeEditorElement',
 };
 </script>
+
+<style>
+
+</style>

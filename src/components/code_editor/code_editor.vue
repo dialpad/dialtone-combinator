@@ -39,3 +39,28 @@ export default {
   name: 'DtcCodeEditor',
 };
 </script>
+
+<style>
+:root {
+  --dtc-editor-color-base: #F8F8F2;
+  --dtc-editor-color-element: #F92672;
+  --dtc-editor-color-attribute: #A6E22E;
+  --dtc-editor-color-string: #E6DB74;
+}
+
+.dtc-efc-base {
+  color: var(--dtc-editor-color-base);
+}
+
+.dtc-efc-element {
+  color: var(--dtc-editor-color-element);
+}
+
+.dtc-efc-attribute {
+  color: var(--dtc-editor-color-attribute);
+}
+
+.dtc-efc-string {
+  color: var(--dtc-editor-color-string);
+}
+</style>
