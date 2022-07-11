@@ -1,16 +1,16 @@
 <template>
   <div>
     <dtc-code-editor-tag>
-      <span class="dtc-efc-element">{{ tag }}</span>
+      <span class="dtc-efc-element">{{ tagName }}</span>
       <dtc-code-editor-attributes
-        :component="component"
+        :info="info"
         :attributes="options?.getMembers?.()"
       />
     </dtc-code-editor-tag>
     <dtc-code-editor-indent />
     <slot />
     <dtc-code-editor-tag closing>
-      <span class="dtc-efc-element">{{ tag }}</span>
+      <span class="dtc-efc-element">{{ tagName }}</span>
     </dtc-code-editor-tag>
   </div>
 </template>
@@ -20,17 +20,19 @@ import DtcCodeEditorTag from './code_editor_tag.vue';
 import DtcCodeEditorAttributes from './code_editor_attributes.vue';
 import DtcCodeEditorIndent from './code_editor_indent.vue';
 
-defineProps({
-  component: {
+import { paramCase } from 'change-case';
+import { computed } from 'vue';
+
+const props = defineProps({
+  info: {
     type: Object,
   },
   options: {
     type: Object,
   },
-  tag: {
-    type: String,
-  },
 });
+
+const tagName = computed(() => paramCase(props.info.displayName));
 </script>
 
 <script>

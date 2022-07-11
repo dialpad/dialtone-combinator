@@ -9,6 +9,7 @@
     <div class="dtc-root__bottom d-grs2 d-of-y-auto d-bgc-black-600">
       <dc-code-editor
         :component="component"
+        :info="info"
         :options="options"
         @update-options="updateOptions"
       />
@@ -24,16 +25,14 @@
 </template>
 
 <script setup>
-import documentation from '@dialpad/dialtone-vue/dist/component-documentation.json';
-
 import DcOptionBar from './option_bar/option_bar.vue';
 import DcRenderer from './renderer/renderer.vue';
 import DcCodeEditor from './code_editor/code_editor.vue';
 
-import { paramCase } from 'change-case';
-import { reactive } from 'vue';
+import documentation from '@dialpad/dialtone-vue/dist/component-documentation.json';
 
-console.log(documentation);
+import { paramCase } from 'change-case';
+import { computed, reactive } from 'vue';
 
 const props = defineProps({
   component: {
@@ -57,6 +56,10 @@ const options = reactive({
       ...this?.attributes,
     };
   },
+});
+
+const info = computed(() => {
+  return documentation.find(componentInfo => componentInfo.displayName === props.component.name);
 });
 
 function updateOptions (update) {

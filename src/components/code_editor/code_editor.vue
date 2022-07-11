@@ -1,9 +1,8 @@
 <template>
   <div class="dtc-code-editor d-bgc-black-600 d-fc-white d-p16">
     <dtc-code-editor-element
-      :component="component"
+      :info="info"
       :options="options"
-      :tag="tag"
     >
       <dtc-code-editor-slot
         :slots="options?.slots"
@@ -18,11 +17,11 @@
 import DtcCodeEditorElement from './code_editor_element.vue';
 import DtcCodeEditorSlot from './code_editor_slot.vue';
 
-import { paramCase } from 'change-case';
-import { computed } from 'vue';
-
 const props = defineProps({
   component: {
+    type: Object,
+  },
+  info: {
     type: Object,
   },
   options: {
@@ -30,8 +29,9 @@ const props = defineProps({
   },
 });
 
+console.log(props.info);
+
 const emit = defineEmits(['update-options']);
-const tag = computed(() => paramCase(props.component.name));
 </script>
 
 <script>
