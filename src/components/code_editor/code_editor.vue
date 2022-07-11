@@ -1,5 +1,5 @@
 <template>
-  <div class="dtc-code-editor d-bgc-black-600 d-fc-white d-p16">
+  <div class="dtc-code-editor d-p16">
     <dtc-code-editor-element
       :info="info"
       :options="options"
@@ -17,7 +17,7 @@
 import DtcCodeEditorElement from './code_editor_element.vue';
 import DtcCodeEditorSlot from './code_editor_slot.vue';
 
-const props = defineProps({
+defineProps({
   component: {
     type: Object,
   },
@@ -29,8 +29,6 @@ const props = defineProps({
   },
 });
 
-console.log(props.info);
-
 const emit = defineEmits(['update-options']);
 </script>
 
@@ -40,27 +38,41 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
+@color-background: rgb(68, 65, 80);
+
 :root {
   --dtc-editor-color-base: #F8F8F2;
   --dtc-editor-color-element: #F92672;
   --dtc-editor-color-attribute: #A6E22E;
   --dtc-editor-color-string: #E6DB74;
+  --dtc-editor-color-background: @color-background;
+  --dtc-editor-color-background-darken: darken(@color-background, 10%);
+  --dtc-editor-color-background-lighten: lighten(@color-background, 10%);
 }
 
-.dtc-efc-base {
-  color: var(--dtc-editor-color-base);
-}
-
-.dtc-efc-element {
+.dtc-fc-editor-element {
   color: var(--dtc-editor-color-element);
 }
 
-.dtc-efc-attribute {
+.dtc-fc-editor-attribute {
   color: var(--dtc-editor-color-attribute);
 }
 
-.dtc-efc-string {
+.dtc-fc-editor-string {
   color: var(--dtc-editor-color-string);
+}
+
+.dtc-code-editor {
+  color: var(--dtc-editor-color-base);
+  background-color: var(--dtc-editor-color-background);
+}
+
+.dtc-code-editor__editable {
+  padding: var(--su2) var(--su4) var(--su2) var(--su4);
+  background-color: var(--dtc-editor-color-background-darken);
+  border: var(--dtc-editor-color-background-lighten) solid var(--su1);
+  border-radius: var(--su6);
+  outline: none;
 }
 </style>

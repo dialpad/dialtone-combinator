@@ -1,7 +1,7 @@
 <template>
   <div>
     <dtc-code-editor-tag>
-      <span class="dtc-efc-element">{{ tagName }}</span>
+      <span class="dtc-fc-editor-element">{{ tagName }}</span>
       <dtc-code-editor-attributes
         :info="info"
         :attributes="options?.getMembers?.()"
@@ -10,7 +10,7 @@
     <dtc-code-editor-indent />
     <slot />
     <dtc-code-editor-tag closing>
-      <span class="dtc-efc-element">{{ tagName }}</span>
+      <span class="dtc-fc-editor-element">{{ tagName }}</span>
     </dtc-code-editor-tag>
   </div>
 </template>

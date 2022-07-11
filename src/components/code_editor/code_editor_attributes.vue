@@ -13,12 +13,12 @@
     >
       <div>
         <dtc-code-editor-indent />
-        <span class="dtc-efc-attribute">{{ attribute }}</span>
+        <span class="dtc-fc-editor-attribute">{{ attribute }}</span>
         <span v-if="!useShortSyntax(value)">
           <span>=</span>
-          <span class="dtc-efc-string">"</span>
-          <span class="dtc-efc-string">{{ value }}</span>
-          <span class="dtc-efc-string">"</span>
+          <span class="dtc-fc-editor-string">"</span>
+          <span class="dtc-fc-editor-string">{{ value }}</span>
+          <span class="dtc-fc-editor-string">"</span>
         </span>
       </div>
     </template>
