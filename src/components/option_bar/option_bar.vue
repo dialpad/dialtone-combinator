@@ -1,6 +1,6 @@
 <template>
-  <div class="dtc-option-bar">
-    <div class="d-p16">
+  <div class="dtc-option-bar d-as-stretch d-w100p d-bgc-orange-200">
+    <section class="d-p16">
       <h2>Slots</h2>
       <dt-input
         label="default"
@@ -11,8 +11,8 @@
           options.slots.default = e;
         })"
       />
-    </div>
-    <div class="d-p16">
+    </section>
+    <section class="d-p16">
       <h2>Props</h2>
       <dt-checkbox
         :checked="options.props.active"
@@ -22,16 +22,16 @@
       >
         active
       </dt-checkbox>
-    </div>
-    <div class="d-p16">
+    </section>
+    <section class="d-p16">
       <h2>Events</h2>
       <ul>
         <li>click</li>
         <li>focusin</li>
         <li>focusout</li>
       </ul>
-    </div>
-    <div class="d-p16">
+    </section>
+    <section class="d-p16">
       <h2>Attributes</h2>
       <dt-checkbox
         :checked="options.attributes.disabled"
@@ -41,7 +41,7 @@
       >
         disabled
       </dt-checkbox>
-    </div>
+    </section>
   </div>
 </template>
 

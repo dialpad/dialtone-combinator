@@ -1,20 +1,22 @@
 <template>
   <div class="dtc-root d-d-grid d-h100p">
-    <div class="dtc-root__top d-grs1 d-of-y-auto d-bgc-transparent d-ba d-bc-black">
+    <div class="dtc-root__top dtc-root-item d-grs1 d-ba d-bc-black">
       <dc-renderer
         :component="component"
         :options="options"
       />
     </div>
-    <div class="dtc-root__bottom d-grs2 d-of-y-auto d-bgc-black-600">
+    <div class="dtc-root__bottom dtc-root-item d-grs2">
       <dc-code-editor
+        scheme="dark"
+        theme="highlight"
         :component="component"
         :info="info"
         :options="options"
         @update-options="updateOptions"
       />
     </div>
-    <div class="dtc-root__sidebar d-grs1 d-gr2 d-of-y-auto d-bgc-orange-200">
+    <div class="dtc-root__sidebar dtc-root-item d-grs1 d-gr2">
       <dc-option-bar
         :component="component"
         :options="options"
@@ -76,5 +78,25 @@ export default {
 <style>
 .dtc-root {
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+}
+
+.dtc-root-item {
+  display: flex;
+  align-items: flex-start;
+  overflow-y: auto;
+}
+</style>
+
+<style lang="less">
+.dtc-root {
+  @import "@/src/assets/themes/scheme/default.less";
+}
+
+.dtc-scheme-dark {
+  @import "@/src/assets/themes/scheme/dark.less";
+}
+
+.dtc-scheme-light {
+  @import "@/src/assets/themes/scheme/light.less";
 }
 </style>

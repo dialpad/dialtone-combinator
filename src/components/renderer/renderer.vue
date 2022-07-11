@@ -10,7 +10,6 @@
         :key="name"
         #[name]
       >
-        <!-- TODO: XSS Safe? -->
         <div v-html="slot" />
       </template>
     </component>
