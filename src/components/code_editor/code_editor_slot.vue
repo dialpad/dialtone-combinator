@@ -1,6 +1,7 @@
 <template>
   <span
     class="dtc-code-editor-editable"
+    spellcheck="false"
     contenteditable
     @input="onInput"
   >
