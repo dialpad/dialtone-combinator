@@ -11,15 +11,19 @@
       class="d-fl-grow1"
     >
       <dtc-code-editor-element
+        ref="element"
         :info="info"
         :members="options.getMembers()"
         :tag-name="tagName"
+        :self-closing="!options.slots.default"
       >
         <dtc-code-editor-slot
+          v-if="options.slots.default"
           name="default"
-          :slots="options.slots"
           @update:options="e => emit('update:options', e)"
-        />
+        >
+          {{ options.slots.default }}
+        </dtc-code-editor-slot>
       </dtc-code-editor-element>
     </div>
     <div class="d-d-flex d-fd-column d-ai-flex-end d-jc-space-between">

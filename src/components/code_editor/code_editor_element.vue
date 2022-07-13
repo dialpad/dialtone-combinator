@@ -1,6 +1,8 @@
 <template>
   <div>
-    <dtc-code-editor-tag>
+    <dtc-code-editor-tag
+      :type="selfClosing ? 'self-closing' : 'default'"
+    >
       <span class="dtc-fc-editor-element">{{ tagName }}</span>
       <slot name="attributes">
         <dtc-code-editor-attributes
@@ -10,7 +12,10 @@
       </slot>
     </dtc-code-editor-tag>
     <slot />
-    <dtc-code-editor-tag closing>
+    <dtc-code-editor-tag
+      v-if="!selfClosing"
+      type="closing"
+    >
       <span class="dtc-fc-editor-element">{{ tagName }}</span>
     </dtc-code-editor-tag>
   </div>
@@ -30,6 +35,9 @@ defineProps({
   tagName: {
     type: String,
   },
+  selfClosing: {
+    type: Boolean,
+  },
 });
 </script>
 
@@ -38,7 +46,3 @@ export default {
   name: 'DtcCodeEditorElement',
 };
 </script>
-
-<style>
-
-</style>

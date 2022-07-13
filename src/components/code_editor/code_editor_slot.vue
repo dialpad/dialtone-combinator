@@ -11,7 +11,7 @@
         v-if="slots"
         @input="onInput"
       >
-        {{ slots[name] }}
+        <slot />
       </dtc-code-editor-input>
     </template>
   </dtc-code-editor-element>
@@ -19,7 +19,7 @@
     v-else
     @input="onInput"
   >
-    {{ slots[name] }}
+    <slot />
   </dtc-code-editor-input>
 </template>
 
@@ -32,9 +32,6 @@ const DEFAULT_SLOT_NAME = 'default';
 const props = defineProps({
   name: {
     type: String,
-  },
-  slots: {
-    type: Object,
   },
 });
 

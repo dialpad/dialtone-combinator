@@ -57,7 +57,7 @@ const options = computedModel(
     attributes: {
       disabled: false,
     },
-    getMembers: function () {
+    getMembers () {
       return {
         ...this?.props,
         ...this?.attributes,
