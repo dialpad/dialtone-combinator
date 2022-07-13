@@ -25,5 +25,6 @@ module.exports = {
     'vue/no-v-for-template-key': 0,
     'vue/no-v-html': 0,
     'vue/require-default-prop': 0,
+    'vue/no-v-model-argument': 0,
   },
 };

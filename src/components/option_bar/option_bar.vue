@@ -6,6 +6,7 @@
         label="default"
         class="d-r-none"
         type="textarea"
+        spellcheck="false"
         :value="options.slots.default"
         @input="e => emitUpdate(options => {
           options.slots.default = e;

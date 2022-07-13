@@ -2,8 +2,8 @@
   <div
     class="dtc-code-editor d-d-flex d-as-stretch d-p16 d-w100p"
     :class="[
-      `dtc-code-editor-theme-${theme}`,
-      `dtc-scheme-${scheme}`,
+      `dtc-theme-${theme}`,
+      `dtc-code-editor-scheme-${scheme}`,
     ]"
   >
     <div
@@ -21,16 +21,17 @@
         />
       </dtc-code-editor-element>
     </div>
-    <div>
+    <div class="d-d-flex d-fd-column d-ai-flex-end d-jc-space-between">
       <dt-popover
         transition="fade"
         :modal="false"
-        :open="showPopover"
+        :open="showCopyPopover"
       >
         <template #anchor="{ attrs }">
           <dt-button
             v-bind="attrs"
-            icon="IconContentCopy"
+            importance="clear"
+            size="lg"
             @click="copy"
           >
             <template #default>
@@ -45,6 +46,12 @@
           <span>Copied to clipboard</span>
         </template>
       </dt-popover>
+      <dtc-code-editor-settings
+        :theme="theme"
+        :scheme="scheme"
+        @update:theme="e => emit('update:theme', e)"
+        @update:scheme="e => emit('update:scheme', e)"
+      />
     </div>
   </div>
 </template>
@@ -52,6 +59,7 @@
 <script setup>
 import DtcCodeEditorElement from './code_editor_element.vue';
 import DtcCodeEditorSlot from './code_editor_slot.vue';
+import DtcCodeEditorSettings from './code_editor_settings.vue';
 
 import IconContentCopy from '@dialpad/dialtone/lib/dist/vue/icons/IconContentCopy.vue';
 import { DtButton, DtPopover } from '@dialpad/dialtone-vue';
@@ -59,7 +67,7 @@ import { ref } from 'vue';
 
 const code = ref();
 
-const showPopover = ref(false);
+const showCopyPopover = ref(false);
 
 defineProps({
   component: {
@@ -71,21 +79,25 @@ defineProps({
   options: {
     type: Object,
   },
-  scheme: {
+  theme: {
     type: String,
   },
-  theme: {
+  scheme: {
     type: String,
   },
 });
 
-const emit = defineEmits(['update-options']);
+const emit = defineEmits([
+  'update-options',
+  'update:theme',
+  'update:scheme',
+]);
 
 async function copy () {
   await navigator.clipboard.writeText(code.value.innerText);
-  showPopover.value = true;
+  showCopyPopover.value = true;
   await new Promise(resolve => setTimeout(resolve, 100));
-  showPopover.value = false;
+  showCopyPopover.value = false;
 }
 </script>
 
@@ -103,7 +115,7 @@ export default {
   outline: none;
 }
 
-.fade-enter-active { transition: opacity 100ms ease-in }
+.fade-enter-active { transition: opacity 100ms ease-in; }
 .fade-leave-active { transition: opacity 1250ms ease-out; }
 
 .fade-enter-from,
@@ -113,8 +125,8 @@ export default {
 </style>
 
 <style lang="less">
-.dtc-code-editor { @import "@/src/assets/themes/code_editor/default.less"; }
-.dtc-code-editor-theme-highlight { @import "@/src/assets/themes/code_editor/highlight.less"; }
+.dtc-code-editor { @import "@/src/assets/themes/scheme_code_editor/default.less"; }
+.dtc-code-editor-scheme-highlight { @import "@/src/assets/themes/scheme_code_editor/highlight.less"; }
 
 .dtc-code-editor {
   color: var(--dtc-theme-color-foreground);
