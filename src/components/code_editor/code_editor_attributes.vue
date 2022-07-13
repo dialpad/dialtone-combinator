@@ -6,7 +6,7 @@
           return prop.name === attribute;
         });
         return prop
-          ? prop?.defaultValue.value !== value.toString()
+          ? prop.defaultValue.value !== value.toString()
           : value;
       })"
       :key="attribute"

@@ -1,5 +1,8 @@
 <template>
-  <div class="dtc-root d-d-grid d-h100p">
+  <div
+    v-if="component && options"
+    class="dtc-root d-d-grid d-h100p"
+  >
     <div class="dtc-root__top dtc-root-item d-grs1 d-ba d-bc-black">
       <dc-renderer
         :component="component"

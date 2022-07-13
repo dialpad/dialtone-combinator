@@ -4,7 +4,7 @@
       <span class="dtc-fc-editor-element">{{ tagName }}</span>
       <dtc-code-editor-attributes
         :info="info"
-        :attributes="options?.getMembers?.()"
+        :attributes="options.getMembers()"
       />
     </dtc-code-editor-tag>
     <dtc-code-editor-indent />

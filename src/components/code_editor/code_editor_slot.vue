@@ -1,11 +1,12 @@
 <template>
   <span
+    v-if="slots"
     class="dtc-code-editor-editable"
     spellcheck="false"
     contenteditable
     @input="onInput"
   >
-    {{ slots?.[name] }}
+    {{ slots[name] }}
   </span>
 </template>
 

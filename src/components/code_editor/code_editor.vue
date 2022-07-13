@@ -16,7 +16,7 @@
       >
         <dtc-code-editor-slot
           name="default"
-          :slots="options?.slots"
+          :slots="options.slots"
           @update:options="e => emit('update:options', e)"
         />
       </dtc-code-editor-element>

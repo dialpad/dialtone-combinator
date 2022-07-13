@@ -2,11 +2,10 @@
   <div class="dtc-renderer">
     <component
       :is="component"
-      v-if="component"
-      v-bind="options?.getMembers?.()"
+      v-bind="options.getMembers()"
     >
       <template
-        v-for="(slot, name) in options?.slots"
+        v-for="(slot, name) in options.slots"
         :key="name"
         #[name]
       >
