@@ -12,7 +12,8 @@
     >
       <dtc-code-editor-element
         :info="info"
-        :options="options"
+        :members="options.getMembers()"
+        :tag-name="tagName"
       >
         <dtc-code-editor-slot
           name="default"
@@ -64,9 +65,10 @@ import { DtButton, DtPopover } from '@dialpad/dialtone-vue';
 import settings from '@/src/settings.json';
 import { CODE_EDITOR_SCHEME_KEY, CODE_EDITOR_THEME_KEY } from '@/src/constants';
 import { cachedRef } from '@/src/lib/utils';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { paramCase } from 'change-case';
 
-defineProps({
+const props = defineProps({
   component: {
     type: Object,
   },
@@ -81,6 +83,8 @@ defineProps({
 const emit = defineEmits([
   'update:options',
 ]);
+
+const tagName = computed(() => paramCase(props.info.displayName));
 
 const theme = cachedRef(CODE_EDITOR_THEME_KEY, settings['code-editor']['default-theme']);
 const scheme = cachedRef(CODE_EDITOR_SCHEME_KEY, settings['code-editor']['default-scheme']);
@@ -128,4 +132,5 @@ export default {
 .dtc-fc-editor-element { color: var(--dtc-theme-color-element); }
 .dtc-fc-editor-attribute { color: var(--dtc-theme-color-attribute); }
 .dtc-fc-editor-string { color: var(--dtc-theme-color-string); }
+.dtc-fc-editor-value { color: var(--dtc-theme-color-value); }
 </style>

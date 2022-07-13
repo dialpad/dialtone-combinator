@@ -1,14 +1,12 @@
 <template>
   <div>
-    <div>
-      <span>&lt;</span>
-      <span v-if="closing">/</span>
-      <slot />
-      <span
-        v-if="closing"
-      >&gt;
-      </span>
-    </div>
+    <span>&lt;</span>
+    <span v-if="closing">/</span>
+    <slot />
+    <span
+      v-if="closing"
+    >&gt;
+    </span>
     <span
       v-if="!closing"
     >&gt;
@@ -26,6 +24,6 @@ defineProps({
 
 <script>
 export default {
-  name: 'DtcCodeEditorAttributes',
+  name: 'DtcCodeEditorTag',
 };
 </script>
