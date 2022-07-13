@@ -8,17 +8,15 @@
     </div>
     <div class="dtc-root__bottom dtc-root-item d-grs2">
       <dc-code-editor
+        v-model:options="options"
         :component="component"
         :info="info"
-        :options="options"
-        @update-options="updateOptions"
       />
     </div>
     <div class="dtc-root__sidebar dtc-root-item d-grs1 d-gr2">
       <dc-option-bar
+        v-model:options="options"
         :component="component"
-        :options="options"
-        @update-options="updateOptions"
       />
     </div>
   </div>
@@ -33,6 +31,7 @@ import documentation from '@dialpad/dialtone-vue/dist/component-documentation.js
 
 import { paramCase } from 'change-case';
 import { computed, reactive } from 'vue';
+import { computedModel } from '@/src/lib/utils';
 
 const props = defineProps({
   component: {
@@ -40,31 +39,30 @@ const props = defineProps({
   },
 });
 
-const options = reactive({
-  slots: {
-    default: paramCase(props.component.name),
-  },
-  props: {
-    active: false,
-  },
-  attributes: {
-    disabled: false,
-  },
-  getMembers: function () {
-    return {
-      ...this?.props,
-      ...this?.attributes,
-    };
-  },
-});
-
 const info = computed(() => {
   return documentation.find(componentInfo => componentInfo.displayName === props.component.name);
 });
 
-function updateOptions (e) {
-  e(options);
-}
+const options = computedModel(
+  reactive({
+    slots: {
+      default: paramCase(props.component.name),
+    },
+    props: {
+      active: false,
+    },
+    attributes: {
+      disabled: false,
+    },
+    getMembers: function () {
+      return {
+        ...this?.props,
+        ...this?.attributes,
+      };
+    },
+  }),
+  (e, model) => e(model),
+);
 </script>
 
 <script>

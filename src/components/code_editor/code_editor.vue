@@ -17,7 +17,7 @@
         <dtc-code-editor-slot
           name="default"
           :slots="options?.slots"
-          @update-options="e => emit('update-options', e)"
+          @update:options="e => emit('update:options', e)"
         />
       </dtc-code-editor-element>
     </div>
@@ -79,7 +79,7 @@ defineProps({
 });
 
 const emit = defineEmits([
-  'update-options',
+  'update:options',
 ]);
 
 const theme = cachedRef(CODE_EDITOR_THEME_KEY, settings['code-editor']['default-theme']);

@@ -19,10 +19,10 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['update-options']);
+const emit = defineEmits(['update:options']);
 
 function onInput (e) {
-  emit('update-options', options => {
+  emit('update:options', options => {
     options.slots[props.name] = e.target.textContent;
   });
 }

@@ -58,10 +58,10 @@ defineProps({
   },
 });
 
-const emit = defineEmits(['update-options']);
+const emit = defineEmits(['update:options']);
 
 function emitUpdate (args) {
-  emit('update-options', args);
+  emit('update:options', args);
 }
 </script>
 

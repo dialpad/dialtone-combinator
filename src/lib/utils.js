@@ -12,3 +12,10 @@ export function cachedRef (key, defaultValue) {
     },
   });
 }
+
+export function computedModel (model, handler) {
+  return computed({
+    get: () => model,
+    set: (e) => handler(e, model),
+  });
+}
