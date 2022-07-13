@@ -8,8 +8,6 @@
     </div>
     <div class="dtc-root__bottom dtc-root-item d-grs2">
       <dc-code-editor
-        v-model:theme="codeEditorTheme"
-        v-model:scheme="codeEditorScheme"
         :component="component"
         :info="info"
         :options="options"
@@ -34,35 +32,7 @@ import DcCodeEditor from './code_editor/code_editor.vue';
 import documentation from '@dialpad/dialtone-vue/dist/component-documentation.json';
 
 import { paramCase } from 'change-case';
-import { computed, reactive, ref } from 'vue';
-
-const DEFAULT_CODE_EDITOR_THEME = 'dark';
-const CODE_EDITOR_THEME_KEY = 'dialtoneCombinatorEditorTheme';
-
-const DEFAULT_CODE_EDITOR_SCHEME = 'highlight';
-const CODE_EDITOR_SCHEME_KEY = 'dialtoneCombinatorEditorScheme';
-
-const codeEditorThemeRef = ref(window.localStorage.getItem(CODE_EDITOR_THEME_KEY) || DEFAULT_CODE_EDITOR_THEME);
-const codeEditorTheme = computed({
-  get () {
-    return codeEditorThemeRef.value;
-  },
-  set (value) {
-    window.localStorage.setItem(CODE_EDITOR_THEME_KEY, value);
-    codeEditorThemeRef.value = value;
-  },
-});
-
-const codeEditorSchemeRef = ref(window.localStorage.getItem(CODE_EDITOR_SCHEME_KEY) || DEFAULT_CODE_EDITOR_SCHEME);
-const codeEditorScheme = computed({
-  get () {
-    return codeEditorSchemeRef.value;
-  },
-  set (value) {
-    window.localStorage.setItem(CODE_EDITOR_SCHEME_KEY, value);
-    codeEditorSchemeRef.value = value;
-  },
-});
+import { computed, reactive } from 'vue';
 
 const props = defineProps({
   component: {

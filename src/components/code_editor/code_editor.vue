@@ -23,7 +23,7 @@
     </div>
     <div class="d-d-flex d-fd-column d-ai-flex-end d-jc-space-between">
       <dt-popover
-        transition="fade"
+        transition="pop"
         :modal="false"
         :open="showCopyPopover"
       >
@@ -47,10 +47,8 @@
         </template>
       </dt-popover>
       <dtc-code-editor-settings
-        :theme="theme"
-        :scheme="scheme"
-        @update:theme="e => emit('update:theme', e)"
-        @update:scheme="e => emit('update:scheme', e)"
+        v-model:theme="theme"
+        v-model:scheme="scheme"
       />
     </div>
   </div>
@@ -60,14 +58,13 @@
 import DtcCodeEditorElement from './code_editor_element.vue';
 import DtcCodeEditorSlot from './code_editor_slot.vue';
 import DtcCodeEditorSettings from './code_editor_settings.vue';
-
 import IconContentCopy from '@dialpad/dialtone/lib/dist/vue/icons/IconContentCopy.vue';
 import { DtButton, DtPopover } from '@dialpad/dialtone-vue';
+
+import settings from '@/src/settings.json';
+import { CODE_EDITOR_SCHEME_KEY, CODE_EDITOR_THEME_KEY } from '@/src/constants';
+import { cachedRef } from '@/src/lib/utils';
 import { ref } from 'vue';
-
-const code = ref();
-
-const showCopyPopover = ref(false);
 
 defineProps({
   component: {
@@ -79,19 +76,17 @@ defineProps({
   options: {
     type: Object,
   },
-  theme: {
-    type: String,
-  },
-  scheme: {
-    type: String,
-  },
 });
 
 const emit = defineEmits([
   'update-options',
-  'update:theme',
-  'update:scheme',
 ]);
+
+const theme = cachedRef(CODE_EDITOR_THEME_KEY, settings['code-editor']['default-theme']);
+const scheme = cachedRef(CODE_EDITOR_SCHEME_KEY, settings['code-editor']['default-scheme']);
+
+const code = ref();
+const showCopyPopover = ref(false);
 
 async function copy () {
   await navigator.clipboard.writeText(code.value.innerText);
@@ -113,14 +108,6 @@ export default {
   border-radius: var(--su6);
   border: solid var(--su1);
   outline: none;
-}
-
-.fade-enter-active { transition: opacity 100ms ease-in; }
-.fade-leave-active { transition: opacity 1250ms ease-out; }
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>
 
