@@ -1,24 +1,17 @@
 <template>
-  <div>
-    <dtc-code-editor-tag
-      :type="selfClosing ? 'self-closing' : 'default'"
-    >
-      <span class="dtc-fc-editor-element">{{ tagName }}</span>
-      <slot name="attributes">
-        <dtc-code-editor-attributes
-          :info="info"
-          :members="members"
-        />
-      </slot>
+  <span>
+    <dtc-code-editor-tag>
+      <span>{{ tag }}</span>
+      <dtc-code-editor-attributes
+        :component="component"
+        :attributes="options?.getMembers?.()"
+      />
     </dtc-code-editor-tag>
     <slot />
-    <dtc-code-editor-tag
-      v-if="!selfClosing"
-      type="closing"
-    >
-      <span class="dtc-fc-editor-element">{{ tagName }}</span>
+    <dtc-code-editor-tag closing>
+      <span>{{ tag }}</span>
     </dtc-code-editor-tag>
-  </div>
+  </span>
 </template>
 
 <script setup>
@@ -26,17 +19,14 @@ import DtcCodeEditorTag from './code_editor_tag.vue';
 import DtcCodeEditorAttributes from './code_editor_attributes.vue';
 
 defineProps({
-  info: {
+  component: {
     type: Object,
   },
-  members: {
+  options: {
     type: Object,
   },
-  tagName: {
+  tag: {
     type: String,
-  },
-  selfClosing: {
-    type: Boolean,
   },
 });
 </script>
