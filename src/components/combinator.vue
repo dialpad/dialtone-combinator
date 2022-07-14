@@ -20,6 +20,7 @@
       <dc-option-bar
         v-model:options="options"
         :component="component"
+        :info="info"
       />
     </div>
   </div>
@@ -45,6 +46,8 @@ const props = defineProps({
 const info = computed(() => {
   return documentation.find(componentInfo => componentInfo.displayName === props.component.name);
 });
+
+console.log(info.value);
 
 const options = computedModel(
   reactive({

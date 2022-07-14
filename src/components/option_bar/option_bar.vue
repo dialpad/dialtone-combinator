@@ -15,14 +15,12 @@
     </section>
     <section class="d-p16">
       <h2>Props</h2>
-      <dt-checkbox
-        :checked="options.props.active"
-        @input="e => emitUpdate(options => {
-          options.props.active = e;
-        })"
-      >
-        active
-      </dt-checkbox>
+      <dtc-option-bar-members
+        :component="component"
+        :options="options"
+        :members="info.props"
+        @update:options="e => emitUpdate(e)"
+      />
     </section>
     <section class="d-p16">
       <h2>Events</h2>
@@ -36,9 +34,7 @@
       <h2>Attributes</h2>
       <dt-checkbox
         :checked="options.attributes.disabled"
-        @input="e => emitUpdate(options => {
-          options.attributes.disabled = e;
-        })"
+        @input="e => emitUpdate(e)"
       >
         disabled
       </dt-checkbox>
@@ -47,7 +43,9 @@
 </template>
 
 <script setup>
+import DtcOptionBarMembers from '@/src/components/option_bar/option_bar_members.vue';
 import { DtCheckbox, DtInput } from '@dialpad/dialtone-vue';
+import { OPTIONS_UPDATE_EVENT } from '@/src/constants';
 
 defineProps({
   component: {
@@ -56,12 +54,15 @@ defineProps({
   options: {
     type: Object,
   },
+  info: {
+    type: Object,
+  },
 });
 
-const emit = defineEmits(['update:options']);
+const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
 
 function emitUpdate (args) {
-  emit('update:options', args);
+  emit(OPTIONS_UPDATE_EVENT, args);
 }
 </script>
 

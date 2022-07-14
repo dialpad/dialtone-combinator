@@ -1,3 +1,5 @@
+export const OPTIONS_UPDATE_EVENT = 'update:options';
+
 export const CODE_EDITOR_THEME_KEY = 'dialtoneCombinatorEditorTheme';
 export const CODE_EDITOR_SCHEME_KEY = 'dialtoneCombinatorEditorScheme';
 
