@@ -15,12 +15,6 @@
 <script setup>
 import DtcCodeEditorIndent from './code_editor_indent.vue';
 
-defineProps({
-  closing: {
-    type: Boolean,
-  },
-});
-
 const emit = defineEmits(['input']);
 </script>
 
