@@ -1,29 +1,22 @@
 <template>
-  <div>
+  <span>
     <span>&lt;</span>
-    <span v-if="type === 'closing'">/</span>
+    <span v-if="closing">/</span>
     <slot />
-    <span v-if="type === 'self-closing'">/</span>
     <span>&gt;</span>
-  </div>
+  </span>
 </template>
 
 <script setup>
-import { CODE_EDITOR_TAG_TYPES } from '@/src/constants';
-
 defineProps({
-  type: {
-    type: String,
-    default: () => CODE_EDITOR_TAG_TYPES[0],
-    validator (value) {
-      return CODE_EDITOR_TAG_TYPES.includes(value);
-    },
+  closing: {
+    type: Boolean,
   },
 });
 </script>
 
 <script>
 export default {
-  name: 'DtcCodeEditorTag',
+  name: 'DtcCodeEditorAttributes',
 };
 </script>

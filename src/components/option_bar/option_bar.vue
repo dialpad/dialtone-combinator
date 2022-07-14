@@ -1,19 +1,18 @@
 <template>
-  <div class="dtc-option-bar d-as-stretch d-w100p d-bgc-orange-200">
-    <section class="d-p16">
+  <div class="dtc-option-bar">
+    <div class="d-p16">
       <h2>Slots</h2>
       <dt-input
         label="default"
         class="d-r-none"
         type="textarea"
-        spellcheck="false"
         :value="options.slots.default"
         @input="e => emitUpdate(options => {
           options.slots.default = e;
         })"
       />
-    </section>
-    <section class="d-p16">
+    </div>
+    <div class="d-p16">
       <h2>Props</h2>
       <dt-checkbox
         :checked="options.props.active"
@@ -23,16 +22,16 @@
       >
         active
       </dt-checkbox>
-    </section>
-    <section class="d-p16">
+    </div>
+    <div class="d-p16">
       <h2>Events</h2>
       <ul>
         <li>click</li>
         <li>focusin</li>
         <li>focusout</li>
       </ul>
-    </section>
-    <section class="d-p16">
+    </div>
+    <div class="d-p16">
       <h2>Attributes</h2>
       <dt-checkbox
         :checked="options.attributes.disabled"
@@ -42,7 +41,7 @@
       >
         disabled
       </dt-checkbox>
-    </section>
+    </div>
   </div>
 </template>
 
@@ -58,10 +57,10 @@ defineProps({
   },
 });
 
-const emit = defineEmits(['update:options']);
+const emit = defineEmits(['update-options']);
 
 function emitUpdate (args) {
-  emit('update:options', args);
+  emit('update-options', args);
 }
 </script>
 
