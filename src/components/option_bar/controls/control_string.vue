@@ -7,7 +7,7 @@ defineProps({
   name: {
     type: String,
   },
-  defaultValue: {
+  value: {
     type: String,
   },
 });

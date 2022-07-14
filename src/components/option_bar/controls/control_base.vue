@@ -1,23 +1,25 @@
 <template>
   <dtc-control-string
     :name="name"
-    :default-value="defaultValue"
+    :value="value"
+    @update:value="e => emit(VALUE_UPDATE_EVENT, e)"
   />
 </template>
 
 <script setup>
 import DtcControlString from './control_string.vue';
+import { VALUE_UPDATE_EVENT } from '@/src/constants';
 
 defineProps({
   name: {
     type: String,
   },
-  defaultValue: {
+  value: {
     type: String,
   },
 });
 
-defineEmits(['update:options']);
+const emit = defineEmits([VALUE_UPDATE_EVENT]);
 </script>
 
 <script>

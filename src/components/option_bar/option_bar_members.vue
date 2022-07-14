@@ -7,8 +7,11 @@
       <dtc-control
         :name="member.name"
         :type-name="member.type.name"
-        :value="options.value"
-        @update:options="e => emit(OPTIONS_UPDATE_EVENT, e)"
+        :value="values[member.name]"
+        @update:value="e => emit(MEMBER_UPDATE_EVENT, {
+          member,
+          value: e,
+        })"
       />
     </template>
   </div>
@@ -16,13 +19,13 @@
 
 <script setup>
 import DtcControl from './controls/control.vue';
-import { OPTIONS_UPDATE_EVENT } from '@/src/constants';
+import { MEMBER_UPDATE_EVENT } from '@/src/constants';
 
 defineProps({
   component: {
     type: Object,
   },
-  options: {
+  values: {
     type: Object,
   },
   members: {
@@ -30,7 +33,7 @@ defineProps({
   },
 });
 
-const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
+const emit = defineEmits([MEMBER_UPDATE_EVENT]);
 </script>
 
 <script>

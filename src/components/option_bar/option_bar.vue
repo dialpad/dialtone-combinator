@@ -17,9 +17,11 @@
       <h2>Props</h2>
       <dtc-option-bar-members
         :component="component"
-        :options="options"
+        :values="options.props"
         :members="info.props"
-        @update:options="e => emitUpdate(e)"
+        @update:member="({member, value}) => emit(OPTIONS_UPDATE_EVENT, (options) => {
+          options.props[member.name] = value;
+        })"
       />
     </section>
     <section class="d-p16">

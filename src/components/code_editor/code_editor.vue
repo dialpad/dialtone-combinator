@@ -20,7 +20,7 @@
         <dtc-code-editor-slot
           v-if="options.slots.default"
           name="default"
-          @update:options="e => emit('update:options', e)"
+          @update:options="e => emit(OPTIONS_UPDATE_EVENT, e)"
         >
           {{ options.slots.default }}
         </dtc-code-editor-slot>
@@ -67,7 +67,7 @@ import IconContentCopy from '@dialpad/dialtone/lib/dist/vue/icons/IconContentCop
 import { DtButton, DtPopover } from '@dialpad/dialtone-vue';
 
 import settings from '@/src/settings.json';
-import { CODE_EDITOR_SCHEME_KEY, CODE_EDITOR_THEME_KEY } from '@/src/constants';
+import { CODE_EDITOR_SCHEME_KEY, CODE_EDITOR_THEME_KEY, OPTIONS_UPDATE_EVENT } from '@/src/constants';
 import { cachedRef } from '@/src/lib/utils';
 import { ref, computed } from 'vue';
 import { paramCase } from 'change-case';
@@ -84,9 +84,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits([
-  'update:options',
-]);
+const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
 
 const tagName = computed(() => paramCase(props.info.displayName));
 

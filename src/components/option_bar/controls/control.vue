@@ -1,31 +1,35 @@
 <template>
-  <component
-    :is="control"
-    :name="name"
-    :value="value"
-    @update:options="e => emit(OPTIONS_UPDATE_EVENT, e)"
-  />
+  <div class="d-py4">
+    <component
+      :is="control"
+      :name="name"
+      :value="value"
+      @update:value="e => emit(VALUE_UPDATE_EVENT, e)"
+    />
+  </div>
 </template>
-ß
+
 <script setup>
 import DtcControlBoolean from './control_boolean.vue';
 import DtcControlString from './control_string.vue';
 import DtcControlBase from './control_base.vue';
 
-import { OPTIONS_UPDATE_EVENT } from '@/src/constants';
+import { VALUE_UPDATE_EVENT } from '@/src/constants';
 import { computed } from 'vue';
 
 const props = defineProps({
   name: {
     type: String,
   },
+  value: {
+    type: undefined,
+  },
   typeName: {
     type: String,
   },
-  value: {
-    type: String,
-  },
 });
+
+const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
 const control = computed(() => {
   switch (props.typeName) {
@@ -34,8 +38,6 @@ const control = computed(() => {
     default: return DtcControlBase;
   }
 });
-
-const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
 </script>
 
 <script>
