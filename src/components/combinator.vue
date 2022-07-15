@@ -74,14 +74,14 @@ export default {
 };
 </script>
 
-<style>
-.dtc-theme-light { @import "@/src/assets/themes/light.less"; }
-.dtc-theme-dark { @import "@/src/assets/themes/dark.less"; }
-
+<style lang="less">
 .dtc-root {
   @import "@/src/assets/themes/default.less";
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
 }
+
+.dtc-theme-light { @import "@/src/assets/themes/light.less"; }
+.dtc-theme-dark { @import "@/src/assets/themes/dark.less"; }
 
 .dtc-root-item {
   display: flex;
