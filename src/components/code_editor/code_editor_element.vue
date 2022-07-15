@@ -21,14 +21,6 @@ import DtcCodeEditorOpeningTag from './code_editor_opening_tag.vue';
 import DtcCodeEditorClosingTag from './code_editor_closing_tag.vue';
 
 defineProps({
-  info: {
-    type: Object,
-    default: undefined,
-  },
-  members: {
-    type: Object,
-    default: undefined,
-  },
   tagName: {
     type: String,
     required: true,
