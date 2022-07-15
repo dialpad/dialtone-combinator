@@ -1,32 +1,26 @@
 <template>
   <div>
-    <dtc-code-editor-tag
-      :type="tagType"
+    <dtc-code-editor-opening-tag
+      :name="tagName"
+      :self-closing="selfClosing"
     >
-      <span class="dtc-fc-editor-element">{{ tagName }}</span>
-      <slot name="attributes">
-        <dtc-code-editor-attributes
-          :info="info"
-          :members="members"
-        />
-      </slot>
-    </dtc-code-editor-tag>
+      <slot name="opening" />
+    </dtc-code-editor-opening-tag>
     <slot />
-    <dtc-code-editor-tag
+    <dtc-code-editor-closing-tag
       v-if="!selfClosing"
-      type="closing"
+      :name="tagName"
     >
-      <span class="dtc-fc-editor-element">{{ tagName }}</span>
-    </dtc-code-editor-tag>
+      <slot name="closing" />
+    </dtc-code-editor-closing-tag>
   </div>
 </template>
 
 <script setup>
-import DtcCodeEditorTag from './code_editor_tag.vue';
-import DtcCodeEditorAttributes from './code_editor_attributes.vue';
-import { computed } from 'vue';
+import DtcCodeEditorOpeningTag from './code_editor_opening_tag.vue';
+import DtcCodeEditorClosingTag from './code_editor_closing_tag.vue';
 
-const props = defineProps({
+defineProps({
   info: {
     type: Object,
     default: undefined,
@@ -43,10 +37,6 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-});
-
-const tagType = computed(() => {
-  return props.selfClosing ? 'self-closing' : 'default';
 });
 </script>
 

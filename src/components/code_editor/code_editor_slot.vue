@@ -3,7 +3,7 @@
     v-if="name !== DEFAULT_SLOT_NAME"
     tag-name="template"
   >
-    <template #attributes>
+    <template #opening>
       <span>&nbsp;#{{ name }}</span>
     </template>
     <template #default>

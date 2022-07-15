@@ -1,7 +1,5 @@
 <template>
-  <span
-    v-html="html"
-  />
+  <span v-html="html" />
 </template>
 
 <script setup>

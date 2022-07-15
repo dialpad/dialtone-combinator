@@ -12,19 +12,24 @@
       class="d-fl-grow1"
     >
       <dtc-code-editor-element
-        ref="element"
-        :info="info"
-        :members="options.getMembers()"
         :tag-name="tagName"
         :self-closing="!options.slots.default"
       >
-        <dtc-code-editor-slot
-          v-if="options.slots.default"
-          name="default"
-          @update:options="e => emit('update:options', e)"
-        >
-          <span class="dtc-theme-popover">{{ options.slots.default }}</span>
-        </dtc-code-editor-slot>
+        <template #opening>
+          <dtc-code-editor-attributes
+            :info="info"
+            :members="options.getMembers()"
+          />
+        </template>
+        <template #default>
+          <dtc-code-editor-slot
+            v-if="options.slots.default"
+            name="default"
+            @update:options="e => emit('update:options', e)"
+          >
+            <span class="dtc-theme-popover">{{ options.slots.default }}</span>
+          </dtc-code-editor-slot>
+        </template>
       </dtc-code-editor-element>
     </div>
     <div class="d-d-flex d-fd-column d-ai-flex-end d-jc-space-between">
@@ -64,6 +69,7 @@
 </template>
 
 <script setup>
+import DtcCodeEditorAttributes from './code_editor_attributes.vue';
 import DtcCodeEditorElement from './code_editor_element.vue';
 import DtcCodeEditorSlot from './code_editor_slot.vue';
 import DtcCodeEditorSettings from './code_editor_settings.vue';

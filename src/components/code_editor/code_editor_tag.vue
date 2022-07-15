@@ -1,23 +1,18 @@
 <template>
   <div>
     <span>&lt;</span>
-    <span v-if="type === 'closing'">/</span>
-    <slot />
-    <span v-if="type === 'self-closing'">/</span>
+    <slot name="start" />
+    <span class="dtc-fc-editor-element">{{ name }}</span>
+    <slot name="end" />
     <span>&gt;</span>
   </div>
 </template>
 
 <script setup>
-import { CODE_EDITOR_TAG_TYPES } from '@/src/constants';
-
 defineProps({
-  type: {
+  name: {
     type: String,
-    default: CODE_EDITOR_TAG_TYPES[0],
-    validator (value) {
-      return CODE_EDITOR_TAG_TYPES.includes(value);
-    },
+    required: true,
   },
 });
 </script>
