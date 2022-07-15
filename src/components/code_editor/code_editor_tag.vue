@@ -14,7 +14,7 @@ import { CODE_EDITOR_TAG_TYPES } from '@/src/constants';
 defineProps({
   type: {
     type: String,
-    default: () => CODE_EDITOR_TAG_TYPES[0],
+    default: CODE_EDITOR_TAG_TYPES[0],
     validator (value) {
       return CODE_EDITOR_TAG_TYPES.includes(value);
     },

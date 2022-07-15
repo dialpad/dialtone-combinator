@@ -26,12 +26,12 @@
 <script setup>
 import DtcCodeEditorElement from './code_editor_element.vue';
 import DtcCodeEditorInput from './code_editor_input.vue';
-
-const DEFAULT_SLOT_NAME = 'default';
+import { DEFAULT_SLOT_NAME } from '@/src/constants';
 
 const props = defineProps({
   name: {
     type: String,
+    default: DEFAULT_SLOT_NAME,
   },
 });
 

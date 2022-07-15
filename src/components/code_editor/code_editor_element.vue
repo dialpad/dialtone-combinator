@@ -1,7 +1,7 @@
 <template>
   <div>
     <dtc-code-editor-tag
-      :type="selfClosing ? 'self-closing' : 'default'"
+      :type="tagType"
     >
       <span class="dtc-fc-editor-element">{{ tagName }}</span>
       <slot name="attributes">
@@ -24,20 +24,29 @@
 <script setup>
 import DtcCodeEditorTag from './code_editor_tag.vue';
 import DtcCodeEditorAttributes from './code_editor_attributes.vue';
+import { computed } from 'vue';
 
-defineProps({
+const props = defineProps({
   info: {
     type: Object,
+    default: undefined,
   },
   members: {
     type: Object,
+    default: undefined,
   },
   tagName: {
     type: String,
+    required: true,
   },
   selfClosing: {
     type: Boolean,
+    default: false,
   },
+});
+
+const tagType = computed(() => {
+  return props.selfClosing ? 'self-closing' : 'default';
 });
 </script>
 

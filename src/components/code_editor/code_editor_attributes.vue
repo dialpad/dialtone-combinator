@@ -1,14 +1,7 @@
 <template>
   <div v-if="members && info">
     <template
-      v-for="[attribute, value] in Object.entries(members).filter(([member, value]) => {
-        const prop = info.props.find(prop => {
-          return prop.name === member;
-        });
-        return prop
-          ? prop.defaultValue.value !== value.toString()
-          : value;
-      })"
+      v-for="[attribute, value] in attributes"
       :key="attribute"
     >
       <div>
@@ -23,7 +16,9 @@
               'dtc-fc-editor-string': !useBindOperator(value),
               'dtc-fc-editor-value': useBindOperator(value),
             }"
-          >{{ value }}</span>
+          >
+            {{ value }}
+          </span>
           <span class="dtc-fc-editor-string">"</span>
         </span>
       </div>
@@ -33,14 +28,28 @@
 
 <script setup>
 import DtcCodeEditorIndent from './code_editor_indent.vue';
+import { computed } from 'vue';
 
-defineProps({
+const props = defineProps({
   info: {
     type: Object,
+    required: true,
   },
   members: {
     type: Object,
+    required: true,
   },
+});
+
+const attributes = computed(() => {
+  return Object.entries(props.members).filter(([member, value]) => {
+    const prop = props.info.props.find(prop => {
+      return prop.name === member;
+    });
+    return prop
+      ? prop.defaultValue.value !== value.toString()
+      : value;
+  });
 });
 
 function useShortSyntax (value) {
@@ -57,7 +66,3 @@ export default {
   name: 'DtcCodeEditorAttributes',
 };
 </script>
-
-<style>
-
-</style>

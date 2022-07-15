@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="editor"
     class="dtc-code-editor d-d-flex d-as-stretch d-p16 d-w100p"
     :class="[
       `dtc-theme-${theme}`,
@@ -22,18 +23,21 @@
           name="default"
           @update:options="e => emit('update:options', e)"
         >
-          {{ options.slots.default }}
+          <span class="dtc-theme-popover">{{ options.slots.default }}</span>
         </dtc-code-editor-slot>
       </dtc-code-editor-element>
     </div>
     <div class="d-d-flex d-fd-column d-ai-flex-end d-jc-space-between">
       <dt-popover
+        :class="`dtc-theme-${theme}`"
+        content-class="dtc-code-editor-popover"
         transition="pop"
         :modal="false"
         :open="showCopyPopover"
       >
         <template #anchor="{ attrs }">
           <dt-button
+            class="dtc-theme__button"
             v-bind="attrs"
             importance="clear"
             size="lg"
@@ -73,14 +77,13 @@ import { ref, computed } from 'vue';
 import { paramCase } from 'change-case';
 
 const props = defineProps({
-  component: {
+  options: {
     type: Object,
+    required: true,
   },
   info: {
     type: Object,
-  },
-  options: {
-    type: Object,
+    required: true,
   },
 });
 
@@ -111,26 +114,32 @@ export default {
 </script>
 
 <style lang="less">
-.dtc-code-editor-editable {
-  padding: var(--su2) var(--su4) var(--su2) var(--su4);
-  border-radius: var(--su6);
-  border: solid var(--su1);
-  outline: none;
-}
-</style>
-
-<style lang="less">
-.dtc-code-editor { @import "@/src/assets/themes/scheme_code_editor/default.less"; }
-.dtc-code-editor-scheme-highlight { @import "@/src/assets/themes/scheme_code_editor/highlight.less"; }
-
 .dtc-code-editor {
+  @import "@/src/assets/themes/scheme_code_editor/default.less";
   color: var(--dtc-theme-color-foreground);
   background-color: var(--dtc-theme-color-background);
 }
 
+.dtc-code-editor-scheme-highlight {
+  @import "@/src/assets/themes/scheme_code_editor/highlight.less";
+}
+
+.dtc-code-editor-popover {
+  color: var(--dtc-theme-color-background);
+  background-color: var(--dtc-theme-color-foreground);
+}
+
+.dtc-code-editor-popover .d-radio__label {
+  color: var(--dtc-theme-color-background);
+}
+
 .dtc-code-editor-editable {
+  padding: var(--su2) var(--su4) var(--su2) var(--su4);
+  border-radius: var(--su6);
+  border: solid var(--su1);
   border-color: var(--dtc-theme-color-background-lighten);
   background-color: var(--dtc-theme-color-background-darken);
+  outline: none;
 }
 
 .dtc-fc-editor-element { color: var(--dtc-theme-color-element); }
