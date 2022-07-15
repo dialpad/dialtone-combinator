@@ -7,10 +7,10 @@
       <div>
         <dtc-code-editor-indent />
         <span v-if="useBindOperator(value)">:</span>
-        <span class="dtc-fc-editor-attribute">{{ attribute }}</span>
+        <span class="dtc-code-editor__attribute">{{ attribute }}</span>
         <span v-if="!useShortSyntax(value)">
           <span>=</span>
-          <span class="dtc-fc-editor-string">"</span>
+          <span class="dtc-code-editor__string">"</span>
           <span
             :class="{
               'dtc-fc-editor-string': !useBindOperator(value),

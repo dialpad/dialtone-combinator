@@ -4,7 +4,7 @@
     class="dtc-code-editor d-d-flex d-as-stretch d-p16 d-w100p"
     :class="[
       `dtc-theme-${theme}`,
-      `dtc-code-editor-scheme-${scheme}`,
+      `dtc-code-editor--scheme-${scheme}`,
     ]"
   >
     <div
@@ -121,25 +121,28 @@ export default {
 
 <style lang="less">
 .dtc-code-editor {
-  @import "@/src/assets/themes/scheme_code_editor/default.less";
   color: var(--dtc-theme-color-foreground);
   background-color: var(--dtc-theme-color-background);
 }
 
-.dtc-code-editor-scheme-highlight {
+.dtc-code-editor--scheme-mono {
+  @import "@/src/assets/themes/scheme_code_editor/default.less";
+}
+
+.dtc-code-editor--scheme-highlight {
   @import "@/src/assets/themes/scheme_code_editor/highlight.less";
 }
 
-.dtc-code-editor-popover {
+.dtc-code-editor__popover {
   color: var(--dtc-theme-color-background);
   background-color: var(--dtc-theme-color-foreground);
 }
 
-.dtc-code-editor-popover .d-radio__label {
+.dtc-code-editor__popover .d-radio__label {
   color: var(--dtc-theme-color-background);
 }
 
-.dtc-code-editor-editable {
+.dtc-code-editor__editable {
   padding: var(--su2) var(--su4) var(--su2) var(--su4);
   border-radius: var(--su6);
   border: solid var(--su1);
@@ -148,8 +151,8 @@ export default {
   outline: none;
 }
 
-.dtc-fc-editor-element { color: var(--dtc-theme-color-element); }
-.dtc-fc-editor-attribute { color: var(--dtc-theme-color-attribute); }
-.dtc-fc-editor-string { color: var(--dtc-theme-color-string); }
-.dtc-fc-editor-value { color: var(--dtc-theme-color-value); }
+.dtc-code-editor__element { color: var(--dtc-theme-color-element); }
+.dtc-code-editor__attribute { color: var(--dtc-theme-color-attribute); }
+.dtc-code-editor__string { color: var(--dtc-theme-color-string); }
+.dtc-code-editor__value { color: var(--dtc-theme-color-value); }
 </style>
