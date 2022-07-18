@@ -1,11 +1,14 @@
 <template>
   <dt-popover
+    :class="`dtc-theme-${theme}`"
+    content-class="dtc-code-editor-popover"
     transition="fade"
     placement="top-end"
     initial-focus-element="dialog"
   >
     <template #anchor="{ attrs }">
       <dt-button
+        class="dtc-theme__button"
         v-bind="attrs"
       >
         <template #icon>
@@ -63,9 +66,11 @@ import {
 defineProps({
   theme: {
     type: String,
+    required: true,
   },
   scheme: {
     type: String,
+    required: true,
   },
 });
 

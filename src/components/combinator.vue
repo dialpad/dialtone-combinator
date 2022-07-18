@@ -12,7 +12,6 @@
     <div class="dtc-root__bottom dtc-root-item d-grs2">
       <dc-code-editor
         v-model:options="options"
-        :component="component"
         :info="info"
       />
     </div>
@@ -40,6 +39,7 @@ import { computedModel } from '@/src/lib/utils';
 const props = defineProps({
   component: {
     type: Object,
+    required: true,
   },
 });
 
@@ -77,20 +77,18 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
 .dtc-root {
+  @import "@/src/assets/themes/default.less";
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
 }
+
+.dtc-theme-light { @import "@/src/assets/themes/light.less"; }
+.dtc-theme-dark { @import "@/src/assets/themes/dark.less"; }
 
 .dtc-root-item {
   display: flex;
   align-items: flex-start;
   overflow-y: auto;
 }
-</style>
-
-<style lang="less">
-.dtc-root { @import "@/src/assets/themes/default.less"; }
-.dtc-theme-dark { @import "@/src/assets/themes/dark.less"; }
-.dtc-theme-light { @import "@/src/assets/themes/light.less"; }
 </style>

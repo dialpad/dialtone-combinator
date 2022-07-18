@@ -3,7 +3,7 @@
     v-if="name !== DEFAULT_SLOT_NAME"
     tag-name="template"
   >
-    <template #attributes>
+    <template #opening>
       <span>&nbsp;#{{ name }}</span>
     </template>
     <template #default>
@@ -26,20 +26,19 @@
 <script setup>
 import DtcCodeEditorElement from './code_editor_element.vue';
 import DtcCodeEditorInput from './code_editor_input.vue';
-import { OPTIONS_UPDATE_EVENT } from '@/src/constants';
-
-const DEFAULT_SLOT_NAME = 'default';
+import { DEFAULT_SLOT_NAME } from '@/src/constants';
 
 const props = defineProps({
   name: {
     type: String,
+    default: DEFAULT_SLOT_NAME,
   },
 });
 
-const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
+const emit = defineEmits(['update:options']);
 
 function onInput (e) {
-  emit(OPTIONS_UPDATE_EVENT, options => {
+  emit('update:options', options => {
     options.slots[props.name] = e.target.textContent;
   });
 }

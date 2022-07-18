@@ -1,15 +1,22 @@
 <template>
-  <span
-    v-html="'&nbsp;'.repeat(spaces)"
-  />
+  <span v-html="html" />
 </template>
 
 <script setup>
-defineProps({
+import { computed } from 'vue';
+
+const props = defineProps({
   spaces: {
     type: Number,
     default: 2,
+    validator (value) {
+      return value > 0;
+    },
   },
+});
+
+const html = computed(() => {
+  return '&nbsp;'.repeat(props.spaces);
 });
 </script>
 
