@@ -10,8 +10,9 @@
 <script setup>
 import DtcControlEvent from './control_event.vue';
 import DtcControlSlot from './control_slot.vue';
-import DtcControlBoolean from './control_boolean.vue';
+import DtcControlNumber from './control_number.vue';
 import DtcControlString from './control_string.vue';
+import DtcControlBoolean from './control_boolean.vue';
 import DtcControlBase from './control_base.vue';
 
 import { VALUE_UPDATE_EVENT } from '@/src/constants';
@@ -35,8 +36,9 @@ const control = computed(() => {
   switch (props.type) {
     case 'event': return DtcControlEvent;
     case 'slot': return DtcControlSlot;
-    case 'boolean': return DtcControlBoolean;
+    case 'number': return DtcControlNumber;
     case 'string': return DtcControlString;
+    case 'boolean': return DtcControlBoolean;
     default: return DtcControlBase;
   }
 });

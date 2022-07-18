@@ -44,7 +44,17 @@ const props = defineProps({
 });
 
 const info = computed(() => {
-  return documentation.find(componentInfo => componentInfo.displayName === props.component.name);
+  const info = documentation.find(componentInfo => componentInfo.displayName === props.component.name);
+  info.props.push({
+    name: 'numberTest',
+    type: {
+      name: 'number',
+    },
+    defaultValue: {
+      value: '',
+    },
+  });
+  return info;
 });
 
 console.log(info.value);
@@ -54,12 +64,8 @@ const options = computedModel(
     slots: {
       default: paramCase(props.component.name),
     },
-    props: {
-      active: false,
-    },
-    attributes: {
-      disabled: false,
-    },
+    props: {},
+    attributes: {},
     events: {},
     getMembers () {
       return {

@@ -47,10 +47,16 @@ const attributes = computed(() => {
       return prop.name === member;
     });
     return matchingProp
-      ? matchingProp.defaultValue.value !== value.toString()
+      ? !isDefaultPropValue(value, matchingProp.defaultValue.value)
       : value;
   });
 });
+
+function isDefaultPropValue (value, defaultValue) {
+  return typeof value !== 'string'
+    ? value.toString() === defaultValue
+    : `'${value}'` === defaultValue;
+}
 
 function useShortSyntax (value) {
   return value === true;
