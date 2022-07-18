@@ -1,22 +1,24 @@
 <template>
-  <span>
+  <div>
     <span>&lt;</span>
-    <span v-if="closing">/</span>
-    <slot />
+    <slot name="start" />
+    <span class="dtc-code-editor__element">{{ name }}</span>
+    <slot name="end" />
     <span>&gt;</span>
-  </span>
+  </div>
 </template>
 
 <script setup>
 defineProps({
-  closing: {
-    type: Boolean,
+  name: {
+    type: String,
+    required: true,
   },
 });
 </script>
 
 <script>
 export default {
-  name: 'DtcCodeEditorAttributes',
+  name: 'DtcCodeEditorTag',
 };
 </script>
