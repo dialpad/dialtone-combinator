@@ -2,14 +2,13 @@
   <div class="dtc-option-bar d-as-stretch d-w100p d-bgc-orange-200">
     <section class="d-p16">
       <h2>Slots</h2>
-      <dt-input
-        label="default"
-        class="d-r-none"
-        type="textarea"
-        spellcheck="false"
-        :value="options.slots.default"
-        @input="e => emitUpdate(options => {
-          options.slots.default = e;
+      <dtc-option-bar-members
+        :component="component"
+        :values="options.slots"
+        :members="info.slots"
+        control-name="slot"
+        @update:member="({member, value}) => emit(OPTIONS_UPDATE_EVENT, (options) => {
+          options.slots[member.name] = value;
         })"
       />
     </section>
@@ -46,7 +45,7 @@
 
 <script setup>
 import DtcOptionBarMembers from '@/src/components/option_bar/option_bar_members.vue';
-import { DtCheckbox, DtInput } from '@dialpad/dialtone-vue';
+import { DtCheckbox } from '@dialpad/dialtone-vue';
 import { OPTIONS_UPDATE_EVENT } from '@/src/constants';
 
 defineProps({

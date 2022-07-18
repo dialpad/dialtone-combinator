@@ -4,15 +4,17 @@
       v-for="member in members"
       :key="member.name"
     >
-      <dtc-control
-        :name="member.name"
-        :type-name="member.type.name"
-        :value="values[member.name]"
-        @update:value="e => emit(MEMBER_UPDATE_EVENT, {
-          member,
-          value: e,
-        })"
-      />
+      <div class="d-py4">
+        <dtc-control
+          :name="member.name"
+          :control-name="controlName || member.type.name"
+          :value="values[member.name]"
+          @update:value="e => emit(MEMBER_UPDATE_EVENT, {
+            member,
+            value: e,
+          })"
+        />
+      </div>
     </template>
   </div>
 </template>
@@ -30,6 +32,10 @@ defineProps({
   },
   members: {
     type: Object,
+  },
+  controlName: {
+    type: String,
+    default: undefined,
   },
 });
 
