@@ -1,8 +1,14 @@
 <template>
-  <div>String: {{ name }}</div>
+  <dt-input
+    :label="name"
+    size="sm"
+    :value="value"
+    @input="e => emit(VALUE_UPDATE_EVENT, e)"
+  />
 </template>
 
 <script setup>
+import { DtInput } from '@dialpad/dialtone-vue';
 import { VALUE_UPDATE_EVENT } from '@/src/constants';
 
 defineProps({
@@ -14,7 +20,7 @@ defineProps({
   },
 });
 
-defineEmits([VALUE_UPDATE_EVENT]);
+const emit = defineEmits([VALUE_UPDATE_EVENT]);
 </script>
 
 <script>

@@ -13,13 +13,13 @@
           <span class="dtc-code-editor__string">"</span>
           <span
             :class="{
-              'dtc-fc-editor-string': !useBindOperator(value),
-              'dtc-fc-editor-value': useBindOperator(value),
+              'dtc-code-editor__string': !useBindOperator(value),
+              'dtc-code-editor__value': useBindOperator(value),
             }"
           >
             {{ value }}
           </span>
-          <span class="dtc-fc-editor-string">"</span>
+          <span class="dtc-code-editor__string">"</span>
         </span>
       </div>
     </template>
