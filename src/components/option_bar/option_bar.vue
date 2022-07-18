@@ -1,5 +1,5 @@
 <template>
-  <div class="dtc-option-bar d-as-stretch d-w100p d-bgc-orange-200">
+  <div class="dtc-option-bar d-as-stretch d-of-y-auto d-w100p d-bgc-orange-200">
     <section class="d-p16">
       <h2>Slots</h2>
       <dtc-option-bar-members
@@ -49,7 +49,7 @@
         :component="component"
         :values="options.events"
         :members="info.events"
-        :control-selector="_ => 'event'"
+        :control-selector="() => 'event'"
         @update:member="({member, value}) => emit(OPTIONS_UPDATE_EVENT, (options) => {
           options.props[member.name] = value;
         })"

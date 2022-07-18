@@ -1,5 +1,5 @@
 <template>
-  <div class="dtc-renderer">
+  <div class="dtc-renderer d-of-auto">
     <component
       :is="component"
       v-bind="options.getMembers()"

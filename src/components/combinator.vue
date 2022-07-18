@@ -90,6 +90,6 @@ export default {
 .dtc-root-item {
   display: flex;
   align-items: flex-start;
-  overflow-y: auto;
+  overflow: hidden;
 }
 </style>
