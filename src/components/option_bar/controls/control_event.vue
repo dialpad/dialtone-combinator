@@ -1,10 +1,8 @@
 <template>
-  <div>String: {{ name }}</div>
+  <li>Event: {{ name }}</li>
 </template>
 
 <script setup>
-import { VALUE_UPDATE_EVENT } from '@/src/constants';
-
 defineProps({
   name: {
     type: String,
@@ -13,12 +11,10 @@ defineProps({
     type: String,
   },
 });
-
-defineEmits([VALUE_UPDATE_EVENT]);
 </script>
 
 <script>
 export default {
-  name: 'DtcControlString',
+  name: 'DtcControlEvent',
 };
 </script>

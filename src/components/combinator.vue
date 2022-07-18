@@ -60,10 +60,11 @@ const options = computedModel(
     attributes: {
       disabled: false,
     },
+    events: {},
     getMembers () {
       return {
-        ...this?.props,
-        ...this?.attributes,
+        ...this.props,
+        ...this.attributes,
       };
     },
   }),

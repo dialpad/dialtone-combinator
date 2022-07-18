@@ -6,8 +6,8 @@
     >
       <div class="d-py4">
         <dtc-control
+          :type="controlSelector(member)"
           :name="member.name"
-          :control-name="controlName || member.type.name"
           :value="values[member.name]"
           @update:value="e => emit(MEMBER_UPDATE_EVENT, {
             member,
@@ -27,15 +27,15 @@ defineProps({
   component: {
     type: Object,
   },
+  members: {
+    type: Array,
+  },
   values: {
     type: Object,
   },
-  members: {
-    type: Object,
-  },
-  controlName: {
-    type: String,
-    default: undefined,
+  controlSelector: {
+    type: Function,
+    default: (member) => undefined,
   },
 });
 

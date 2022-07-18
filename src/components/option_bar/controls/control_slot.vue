@@ -22,7 +22,7 @@ defineProps({
   },
 });
 
-const emit = defineEmits(['update:options']);
+const emit = defineEmits([VALUE_UPDATE_EVENT]);
 </script>
 
 <script>
