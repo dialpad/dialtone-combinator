@@ -30,7 +30,7 @@ import DcOptionBar from './option_bar/option_bar.vue';
 import DcRenderer from './renderer/renderer.vue';
 import DcCodeEditor from './code_editor/code_editor.vue';
 
-import documentation from '@dialpad/dialtone-vue/dist/component-documentation.json';
+import documentation from '@/../dialtone-vue/dist/component-documentation.json';
 
 import { paramCase } from 'change-case';
 import { computed, reactive } from 'vue';

@@ -28,14 +28,7 @@
       <h2>Attributes</h2>
       <dtc-option-bar-members
         :component="component"
-        :members="[
-          {
-            name: 'disabled',
-            type: {
-              name: 'boolean',
-            },
-          },
-        ]"
+        :members="attributes"
         :values="options.attributes"
         :control-selector="attribute => attribute.type.name"
         @update:member="({member, value}) => emit(OPTIONS_UPDATE_EVENT, (options) => {
@@ -61,8 +54,9 @@
 <script setup>
 import DtcOptionBarMembers from '@/src/components/option_bar/option_bar_members.vue';
 import { OPTIONS_UPDATE_EVENT } from '@/src/constants';
+import { computed } from 'vue';
 
-defineProps({
+const props = defineProps({
   component: {
     type: Object,
   },
@@ -75,6 +69,18 @@ defineProps({
 });
 
 const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
+
+const attributes = computed(() => {
+  return props.info.tags.attributes.map(attribute => {
+    const matches = /{(.+)}(.+)*/.exec(attribute.description);
+    return {
+      name: matches[2].trim().toLowerCase(),
+      type: {
+        name: matches[1].trim().toLowerCase(),
+      },
+    };
+  });
+});
 </script>
 
 <script>
