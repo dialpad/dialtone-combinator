@@ -10,9 +10,7 @@
     <dtc-code-editor-closing-tag
       v-if="!selfClosing"
       :name="tagName"
-    >
-      <slot name="closing" />
-    </dtc-code-editor-closing-tag>
+    />
   </div>
 </template>
 

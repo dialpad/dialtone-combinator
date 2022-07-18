@@ -4,7 +4,6 @@
   >
     <template #start>
       <span>/</span>
-      <slot />
     </template>
   </dtc-code-editor-tag>
 </template>

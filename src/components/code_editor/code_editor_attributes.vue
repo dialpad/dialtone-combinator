@@ -30,7 +30,7 @@
 import DtcCodeEditorIndent from './code_editor_indent.vue';
 import { computed } from 'vue';
 
-const props = defineProps({
+const internalProps = defineProps({
   info: {
     type: Object,
     required: true,
@@ -42,12 +42,12 @@ const props = defineProps({
 });
 
 const attributes = computed(() => {
-  return Object.entries(props.members).filter(([member, value]) => {
-    const prop = props.info.props.find(prop => {
+  return Object.entries(internalProps.members).filter(([member, value]) => {
+    const matchingProp = internalProps.info.props.find(prop => {
       return prop.name === member;
     });
-    return prop
-      ? prop.defaultValue.value !== value.toString()
+    return matchingProp
+      ? matchingProp.defaultValue.value !== value.toString()
       : value;
   });
 });
