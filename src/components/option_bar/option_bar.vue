@@ -2,6 +2,7 @@
   <div class="dtc-option-bar d-as-stretch d-of-y-auto d-w100p d-bgc-orange-200">
     <ul class="d-ls-reset">
       <dtc-option-bar-section
+        v-if="info.slots"
         heading="Slots"
       >
         <dtc-option-bar-members
@@ -13,6 +14,7 @@
         />
       </dtc-option-bar-section>
       <dtc-option-bar-section
+        v-if="info.props"
         heading="Props"
       >
         <dtc-option-bar-members
@@ -24,6 +26,7 @@
         />
       </dtc-option-bar-section>
       <dtc-option-bar-section
+        v-if="attributes"
         heading="Attributes"
       >
         <dtc-option-bar-members
@@ -35,14 +38,25 @@
         />
       </dtc-option-bar-section>
       <dtc-option-bar-section
+        v-if="info.events"
         heading="Events"
       >
         <dtc-option-bar-members
           :component="component"
-          :values="options.events"
           :members="info.events"
+          :values="options.events"
           :control-selector="() => 'event'"
-          @update:member="updateEvents"
+        />
+      </dtc-option-bar-section>
+      <dtc-option-bar-section
+        v-if="directives"
+        heading="Directives"
+      >
+        <dtc-option-bar-members
+          :component="component"
+          :members="directives"
+          :values="options.directives"
+          :control-selector="() => 'directive'"
         />
       </dtc-option-bar-section>
     </ul>
@@ -74,9 +88,9 @@ const props = defineProps({
 
 const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
 
-// Get HTML attributes to display from custom attribute tag
+// Get HTML attributes to display from custom tag
 const attributes = computed(() => {
-  return props.info.tags.attributes.map(attribute => {
+  return props.info.tags.attributes?.map(attribute => {
     // eslint-disable-next-line no-unused-vars
     const [attributeName, attributeType] = parseAttributeTag(attribute.description);
     return {
@@ -84,6 +98,15 @@ const attributes = computed(() => {
       type: {
         name: attributeType,
       },
+    };
+  });
+});
+
+// Get directives to display from custom tag
+const directives = computed(() => {
+  return props.info.tags.directives?.map(directive => {
+    return {
+      name: directive.description,
     };
   });
 });
@@ -97,7 +120,6 @@ function updateMember (memberType, { member, value }) {
 function updateSlots (e) { updateMember('slots', e); }
 function updateProps (e) { updateMember('props', e); }
 function updateAttributes (e) { updateMember('attributes', e); }
-function updateEvents (e) { updateMember('events', e); }
 </script>
 
 <script>

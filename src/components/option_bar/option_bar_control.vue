@@ -9,6 +9,7 @@
 </template>
 
 <script setup>
+import DtcControlDirective from '@/src/components/controls/control_directive.vue';
 import DtcControlEvent from '@/src/components/controls/control_event.vue';
 import DtcControlSlot from '@/src/components/controls/control_slot.vue';
 import DtcControlSelection from '@/src/components/controls/control_selection.vue';
@@ -56,6 +57,7 @@ const control = computed(() => {
   }
 
   switch (props.type) {
+    case 'directive': return DtcControlDirective;
     case 'event': return DtcControlEvent;
     case 'slot': return DtcControlSlot;
     case 'number': return DtcControlNumber;

@@ -58,6 +58,7 @@ const options = computedModel(
     props: {},
     attributes: {},
     events: {},
+    directives: {},
     getMembers () {
       return {
         ...this.props,
