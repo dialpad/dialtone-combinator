@@ -1,7 +1,8 @@
 <template>
   <dtc-control-string
-    :name="name"
+    :label="label"
     :value="value"
+    v-bind="args"
     @update:value="e => emit(VALUE_UPDATE_EVENT, e)"
   />
 </template>
@@ -11,11 +12,14 @@ import DtcControlString from './control_string.vue';
 import { VALUE_UPDATE_EVENT } from '@/src/constants';
 
 defineProps({
-  name: {
+  label: {
     type: String,
   },
   value: {
     type: String,
+  },
+  args: {
+    type: Object,
   },
 });
 

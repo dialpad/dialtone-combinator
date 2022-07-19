@@ -3,7 +3,7 @@
     :checked="value"
     @input="e => emit(VALUE_UPDATE_EVENT, e)"
   >
-    {{ name }}
+    {{ label }}
   </dt-checkbox>
 </template>
 
@@ -12,7 +12,7 @@ import { DtCheckbox } from '@dialpad/dialtone-vue';
 import { VALUE_UPDATE_EVENT } from '@/src/constants';
 
 defineProps({
-  name: {
+  label: {
     type: String,
   },
   value: {

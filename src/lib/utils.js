@@ -17,3 +17,9 @@ export function computedModel (model, handler) {
     set: (e) => handler(e, model),
   });
 }
+
+export function isDefaultPropValue (value, defaultValue) {
+  return typeof value !== 'string'
+    ? value.toString() === defaultValue
+    : `'${value}'` === defaultValue;
+}

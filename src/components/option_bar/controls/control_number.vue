@@ -1,6 +1,6 @@
 <template>
   <dt-input
-    :label="name"
+    :label="label"
     size="sm"
     :value="value"
     type="number"
@@ -13,7 +13,7 @@ import { DtInput } from '@dialpad/dialtone-vue';
 import { VALUE_UPDATE_EVENT } from '@/src/constants';
 
 defineProps({
-  name: {
+  label: {
     type: String,
   },
   value: {

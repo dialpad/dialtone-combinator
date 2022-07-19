@@ -28,6 +28,8 @@
 
 <script setup>
 import DtcCodeEditorIndent from './code_editor_indent.vue';
+
+import { isDefaultPropValue } from '@/src/lib/utils';
 import { computed } from 'vue';
 
 const internalProps = defineProps({
@@ -51,12 +53,6 @@ const attributes = computed(() => {
       : value;
   });
 });
-
-function isDefaultPropValue (value, defaultValue) {
-  return typeof value !== 'string'
-    ? value.toString() === defaultValue
-    : `'${value}'` === defaultValue;
-}
 
 function useShortSyntax (value) {
   return value === true;

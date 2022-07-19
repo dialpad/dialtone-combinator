@@ -1,10 +1,10 @@
 <template>
-  <li>Event: {{ name }}</li>
+  <li>Event: {{ label }}</li>
 </template>
 
 <script setup>
 defineProps({
-  name: {
+  label: {
     type: String,
   },
   value: {

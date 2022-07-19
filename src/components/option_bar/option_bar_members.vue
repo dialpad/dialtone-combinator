@@ -11,6 +11,7 @@
           :value="values[member.name]"
           :args="{
             items: member.values,
+            defaultValue: member.defaultValue?.value,
           }"
           @update:value="e => emit(MEMBER_UPDATE_EVENT, {
             member,
@@ -38,7 +39,7 @@ defineProps({
   },
   controlSelector: {
     type: Function,
-    default: (member) => undefined,
+    default: () => undefined,
   },
 });
 
