@@ -1,23 +1,24 @@
 <template>
   <dt-input
-    :label="label"
-    size="sm"
     :value="value"
-    type="number"
-    @input="e => emit(VALUE_UPDATE_EVENT, parseInt(e))"
+    :label="label"
+    class="d-r-none"
+    type="textarea"
+    spellcheck="false"
+    @input="e => emit(VALUE_UPDATE_EVENT, e)"
   />
 </template>
 
 <script setup>
 import { DtInput } from '@dialpad/dialtone-vue';
-import { VALUE_UPDATE_EVENT } from '@/src/constants';
+import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 
 defineProps({
   label: {
     type: String,
   },
   value: {
-    type: Number,
+    type: String,
   },
 });
 
@@ -26,6 +27,6 @@ const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
 <script>
 export default {
-  name: 'DtcControlNumber',
+  name: 'DtcControlSlot',
 };
 </script>

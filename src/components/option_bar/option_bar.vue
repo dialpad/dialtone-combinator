@@ -52,8 +52,8 @@
 </template>
 
 <script setup>
-import DtcOptionBarMembers from '@/src/components/option_bar/option_bar_members.vue';
-import { OPTIONS_UPDATE_EVENT } from '@/src/constants';
+import DtcOptionBarMembers from './option_bar_members.vue';
+import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
 
 const props = defineProps({

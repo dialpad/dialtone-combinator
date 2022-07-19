@@ -77,7 +77,7 @@ import IconContentCopy from '@dialpad/dialtone/lib/dist/vue/icons/IconContentCop
 import { DtButton, DtPopover } from '@dialpad/dialtone-vue';
 
 import settings from '@/src/settings.json';
-import { CODE_EDITOR_SCHEME_KEY, CODE_EDITOR_THEME_KEY } from '@/src/constants';
+import { CODE_EDITOR_SCHEME_KEY, CODE_EDITOR_THEME_KEY } from '@/src/lib/constants';
 import { cachedRef } from '@/src/lib/utils';
 import { ref, computed } from 'vue';
 import { paramCase } from 'change-case';

@@ -9,15 +9,15 @@
 </template>
 
 <script setup>
-import DtcControlEvent from './control_event.vue';
-import DtcControlSlot from './control_slot.vue';
-import DtcControlSelection from './control_selection.vue';
-import DtcControlNumber from './control_number.vue';
-import DtcControlString from './control_string.vue';
-import DtcControlBoolean from './control_boolean.vue';
-import DtcControlBase from './control_base.vue';
+import DtcControlEvent from '@/src/components/controls/control_event.vue';
+import DtcControlSlot from '@/src/components/controls/control_slot.vue';
+import DtcControlSelection from '@/src/components/controls/control_selection.vue';
+import DtcControlNumber from '@/src/components/controls/control_number.vue';
+import DtcControlString from '@/src/components/controls/control_string.vue';
+import DtcControlBoolean from '@/src/components/controls/control_boolean.vue';
+import DtcControlBase from '@/src/components/controls/control_base.vue';
 
-import { VALUE_UPDATE_EVENT } from '@/src/constants';
+import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
 import { paramCase } from 'change-case';
 
@@ -43,7 +43,11 @@ const label = computed(() => {
 });
 
 const control = computed(() => {
-  if (props.args.items && props.type === 'string') {
+  if (props.type === 'boolean') {
+    return DtcControlBoolean;
+  }
+
+  if (props.args.values) {
     return DtcControlSelection;
   }
 
@@ -52,7 +56,6 @@ const control = computed(() => {
     case 'slot': return DtcControlSlot;
     case 'number': return DtcControlNumber;
     case 'string': return DtcControlString;
-    case 'boolean': return DtcControlBoolean;
     default: return DtcControlBase;
   }
 });

@@ -1,15 +1,15 @@
 <template>
-  <dt-input
-    size="sm"
+  <dtc-control-string
     :label="label"
     :value="value"
-    @input="e => emit(VALUE_UPDATE_EVENT, e)"
+    v-bind="args"
+    @update:value="e => emit(VALUE_UPDATE_EVENT, e)"
   />
 </template>
 
 <script setup>
-import { DtInput } from '@dialpad/dialtone-vue';
-import { VALUE_UPDATE_EVENT } from '@/src/constants';
+import DtcControlString from './control_string.vue';
+import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 
 defineProps({
   label: {
@@ -18,6 +18,9 @@ defineProps({
   value: {
     type: String,
   },
+  args: {
+    type: Object,
+  },
 });
 
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
@@ -25,6 +28,6 @@ const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
 <script>
 export default {
-  name: 'DtcControlString',
+  name: 'DtcControlBase',
 };
 </script>

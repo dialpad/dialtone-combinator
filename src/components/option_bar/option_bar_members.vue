@@ -10,7 +10,7 @@
           :name="member.name"
           :value="values[member.name]"
           :args="{
-            items: member.values,
+            values: member.values,
             defaultValue: member.defaultValue?.value,
           }"
           @update:value="e => emit(MEMBER_UPDATE_EVENT, {
@@ -24,8 +24,8 @@
 </template>
 
 <script setup>
-import DtcControl from './controls/control.vue';
-import { MEMBER_UPDATE_EVENT } from '@/src/constants';
+import DtcControl from './option_bar_control.vue';
+import { MEMBER_UPDATE_EVENT } from '@/src/lib/constants';
 
 defineProps({
   component: {

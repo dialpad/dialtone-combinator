@@ -9,7 +9,7 @@
 
 <script setup>
 import { DtCheckbox } from '@dialpad/dialtone-vue';
-import { VALUE_UPDATE_EVENT } from '@/src/constants';
+import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 
 defineProps({
   label: {

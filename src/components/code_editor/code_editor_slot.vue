@@ -26,7 +26,7 @@
 <script setup>
 import DtcCodeEditorElement from './code_editor_element.vue';
 import DtcCodeEditorInput from './code_editor_input.vue';
-import { DEFAULT_SLOT_NAME } from '@/src/constants';
+import { DEFAULT_SLOT_NAME } from '@/src/lib/constants';
 
 const props = defineProps({
   name: {
