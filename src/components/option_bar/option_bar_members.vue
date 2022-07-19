@@ -9,6 +9,9 @@
           :type="controlSelector(member)"
           :name="member.name"
           :value="values[member.name]"
+          :args="{
+            items: member.values,
+          }"
           @update:value="e => emit(MEMBER_UPDATE_EVENT, {
             member,
             value: e,
