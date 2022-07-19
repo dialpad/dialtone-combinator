@@ -6,10 +6,8 @@
         :component="component"
         :members="info.slots"
         :values="options.slots"
-        :control-selector="_ => 'slot'"
-        @update:member="({member, value}) => emit(OPTIONS_UPDATE_EVENT, (options) => {
-          options.slots[member.name] = value;
-        })"
+        :control-selector="() => 'slot'"
+        @update:member="updateSlots"
       />
     </section>
     <section class="d-p16">
@@ -19,9 +17,7 @@
         :members="info.props"
         :values="options.props"
         :control-selector="prop => prop.type.name"
-        @update:member="({member, value}) => emit(OPTIONS_UPDATE_EVENT, (options) => {
-          options.props[member.name] = value;
-        })"
+        @update:member="updateProps"
       />
     </section>
     <section class="d-p16">
@@ -31,9 +27,7 @@
         :members="attributes"
         :values="options.attributes"
         :control-selector="attribute => attribute.type.name"
-        @update:member="({member, value}) => emit(OPTIONS_UPDATE_EVENT, (options) => {
-          options.attributes[member.name] = value;
-        })"
+        @update:member="updateAttributes"
       />
     </section>
     <section class="d-p16">
@@ -43,9 +37,7 @@
         :values="options.events"
         :members="info.events"
         :control-selector="() => 'event'"
-        @update:member="({member, value}) => emit(OPTIONS_UPDATE_EVENT, (options) => {
-          options.props[member.name] = value;
-        })"
+        @update:member="updateEvents"
       />
     </section>
   </div>
@@ -84,6 +76,17 @@ const attributes = computed(() => {
     };
   });
 });
+
+function updateMember (memberType, { member, value }) {
+  emit(OPTIONS_UPDATE_EVENT, (options) => {
+    options[memberType][member.name] = value;
+  });
+}
+
+function updateSlots (e) { updateMember('slots', e); }
+function updateProps (e) { updateMember('props', e); }
+function updateAttributes (e) { updateMember('attributes', e); }
+function updateEvents (e) { updateMember('events', e); }
 </script>
 
 <script>

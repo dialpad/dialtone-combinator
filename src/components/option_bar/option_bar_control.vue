@@ -32,11 +32,11 @@ const props = defineProps({
   },
   value: {
     type: undefined,
-    required: true,
+    default: undefined,
   },
   args: {
     type: Object,
-    required: true,
+    default: () => {},
   },
 });
 

@@ -20,7 +20,7 @@ defineProps({
   },
   value: {
     type: String,
-    required: true,
+    default: undefined,
   },
 });
 

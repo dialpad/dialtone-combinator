@@ -19,7 +19,7 @@ defineProps({
   },
   value: {
     type: Number,
-    required: true,
+    default: undefined,
   },
 });
 
