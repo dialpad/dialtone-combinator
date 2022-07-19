@@ -45,17 +45,7 @@ const props = defineProps({
 });
 
 const info = computed(() => {
-  const info = documentation.find(componentInfo => componentInfo.displayName === props.component.name);
-  info.props.push({
-    name: 'numberTest',
-    type: {
-      name: 'number',
-    },
-    defaultValue: {
-      value: '',
-    },
-  });
-  return info;
+  return documentation.find(componentInfo => componentInfo.displayName === props.component.name);
 });
 
 console.log(info.value);

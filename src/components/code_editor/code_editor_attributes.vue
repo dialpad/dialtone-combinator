@@ -30,8 +30,8 @@
 import DtcCodeEditorIndent from './code_editor_indent.vue';
 
 import { paramCase } from 'change-case';
-import { isDefaultPropValue } from '@/src/lib/utils';
 import { computed } from 'vue';
+import { parseJsonValue } from '@/src/lib/parse';
 
 const internalProps = defineProps({
   info: {
@@ -42,17 +42,24 @@ const internalProps = defineProps({
     type: Object,
     required: true,
   },
+  verbose: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const attributes = computed(() => {
-  return Object.entries(internalProps.members).filter(([member, value]) => {
-    const matchingProp = internalProps.info.props.find(prop => {
-      return prop.name === member;
+  const members = Object.entries(internalProps.members);
+  return internalProps.verbose
+    ? members
+    : members.filter(([member, value]) => {
+      const matchingProp = internalProps.info.props.find(prop => {
+        return prop.name === member;
+      });
+      return matchingProp
+        ? value !== parseJsonValue(matchingProp.defaultValue.value)
+        : value;
     });
-    return matchingProp
-      ? !isDefaultPropValue(value, matchingProp.defaultValue.value)
-      : value;
-  });
 });
 
 function useShortSyntax (value) {

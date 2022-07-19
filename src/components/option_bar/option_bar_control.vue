@@ -18,7 +18,7 @@ import DtcControlBoolean from '@/src/components/controls/control_boolean.vue';
 import DtcControlBase from '@/src/components/controls/control_base.vue';
 
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { paramCase } from 'change-case';
 
 const props = defineProps({
@@ -51,7 +51,7 @@ const control = computed(() => {
     return DtcControlBoolean;
   }
 
-  if (props.args.values) {
+  if (props.args.validValues) {
     return DtcControlSelection;
   }
 
@@ -62,6 +62,10 @@ const control = computed(() => {
     case 'string': return DtcControlString;
     default: return DtcControlBase;
   }
+});
+
+onMounted(() => {
+  emit(VALUE_UPDATE_EVENT, props.value);
 });
 </script>
 

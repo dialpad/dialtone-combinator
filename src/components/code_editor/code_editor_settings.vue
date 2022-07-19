@@ -48,6 +48,14 @@
             </dt-radio>
           </dt-radio-group>
         </section>
+        <section class="d-p8">
+          <dt-checkbox
+            :checked="verbose"
+            @input="e => emit('update:verbose', e)"
+          >
+            Verbose
+          </dt-checkbox>
+        </section>
       </div>
     </template>
   </dt-popover>
@@ -61,6 +69,7 @@ import {
   DtPopover,
   DtRadioGroup,
   DtRadio,
+  DtCheckbox,
 } from '@dialpad/dialtone-vue';
 
 defineProps({
@@ -72,11 +81,16 @@ defineProps({
     type: String,
     required: true,
   },
+  verbose: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 const emit = defineEmits([
   'update:theme',
   'update:scheme',
+  'update:verbose',
 ]);
 </script>
 

@@ -47,6 +47,7 @@
 import DtcOptionBarMembers from './option_bar_members.vue';
 import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
+import { parseAttributeTag } from '@/src/lib/parse';
 
 const props = defineProps({
   component: {
@@ -65,13 +66,15 @@ const props = defineProps({
 
 const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
 
+// Get HTML attributes to display from custom attribute tag
 const attributes = computed(() => {
   return props.info.tags.attributes.map(attribute => {
-    const matches = /{(.+)}(.+)*/.exec(attribute.description);
+    // eslint-disable-next-line no-unused-vars
+    const [attributeName, attributeType] = parseAttributeTag(attribute.description);
     return {
-      name: matches[2].trim().toLowerCase(),
+      name: attributeName,
       type: {
-        name: matches[1].trim().toLowerCase(),
+        name: attributeType,
       },
     };
   });

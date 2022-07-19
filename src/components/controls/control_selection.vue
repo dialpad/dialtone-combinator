@@ -4,7 +4,7 @@
       ref="combobox"
       content-width="anchor"
       :list-aria-label="`${label} valid values`"
-      @select="e => onUpdate(values[e])"
+      @select="e => onUpdate(validValues[e])"
     >
       <template #input="{ inputProps, onInput }">
         <dtc-control-string
@@ -20,14 +20,14 @@
           v-bind="listProps"
         >
           <dt-list-item
-            v-for="(item, i) in values"
+            v-for="(item, i) in validValues"
             :key="item"
             navigation-type="arrow-keys"
             role="option"
             @click="onSelectInternal(i)"
           >
             <template
-              v-if="isDefaultPropValue(item, defaultValue)"
+              v-if="item === defaultValue"
               #right
             >
               <dt-badge color="purple-500">
@@ -46,7 +46,6 @@
 import DtcControlString from './control_string.vue';
 import { DtRecipeComboboxWithPopover, DtListItem, DtBadge } from '@dialpad/dialtone-vue';
 
-import { isDefaultPropValue } from '@/src/lib/utils';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { ref } from 'vue';
 
@@ -59,7 +58,7 @@ defineProps({
     type: String,
     default: undefined,
   },
-  values: {
+  validValues: {
     type: Array,
     required: true,
   },

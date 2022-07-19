@@ -8,10 +8,10 @@
         <dtc-control
           :type="controlSelector(member)"
           :name="member.name"
-          :value="values[member.name]"
+          :value="getMemberValue(member)"
           :args="{
-            values: member.values,
-            defaultValue: member.defaultValue?.value,
+            defaultValue: getMemberDefaultValue(member),
+            validValues: member.values,
           }"
           @update:value="e => emit(MEMBER_UPDATE_EVENT, {
             member,
@@ -26,8 +26,9 @@
 <script setup>
 import DtcControl from './option_bar_control.vue';
 import { MEMBER_UPDATE_EVENT } from '@/src/lib/constants';
+import { parseJsonValue } from '@/src/lib/parse';
 
-defineProps({
+const props = defineProps({
   component: {
     type: Object,
     required: true,
@@ -47,6 +48,16 @@ defineProps({
 });
 
 const emit = defineEmits([MEMBER_UPDATE_EVENT]);
+
+function getMemberValue (member) {
+  return props.values[member.name] ?? getMemberDefaultValue(member);
+}
+
+function getMemberDefaultValue (member) {
+  return member.defaultValue?.value
+    ? parseJsonValue(member.defaultValue.value)
+    : member.defaultValue;
+}
 </script>
 
 <script>

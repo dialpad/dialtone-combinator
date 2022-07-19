@@ -19,6 +19,7 @@
           <dtc-code-editor-attributes
             :info="info"
             :members="options.getMembers()"
+            :verbose="verbose"
           />
         </template>
         <template #default>
@@ -39,7 +40,13 @@
         </template>
       </dtc-code-editor-element>
     </div>
-    <div class="d-d-flex d-fd-column d-ai-flex-end d-jc-space-between">
+    <div
+      class="
+        d-d-flex d-fd-column
+        d-ai-flex-end d-jc-space-between
+        d-ps-sticky d-t0
+      "
+    >
       <dt-popover
         :class="`dtc-theme-${theme}`"
         content-class="dtc-code-editor-popover"
@@ -70,6 +77,7 @@
       <dtc-code-editor-settings
         v-model:theme="theme"
         v-model:scheme="scheme"
+        v-model:verbose="verbose"
       />
     </div>
   </div>
@@ -84,7 +92,7 @@ import IconContentCopy from '@dialpad/dialtone/lib/dist/vue/icons/IconContentCop
 import { DtButton, DtPopover } from '@dialpad/dialtone-vue';
 
 import settings from '@/src/settings.json';
-import { CODE_EDITOR_SCHEME_KEY, CODE_EDITOR_THEME_KEY } from '@/src/lib/constants';
+import { CODE_EDITOR_SCHEME_KEY, CODE_EDITOR_THEME_KEY, CODE_EDITOR_VERBOSE_KEY } from '@/src/lib/constants';
 import { cachedRef } from '@/src/lib/utils';
 import { ref, computed } from 'vue';
 import { paramCase } from 'change-case';
@@ -112,6 +120,7 @@ const slotsEmpty = computed(() => {
 
 const theme = cachedRef(CODE_EDITOR_THEME_KEY, settings['code-editor']['default-theme']);
 const scheme = cachedRef(CODE_EDITOR_SCHEME_KEY, settings['code-editor']['default-scheme']);
+const verbose = cachedRef(CODE_EDITOR_VERBOSE_KEY, false);
 
 const code = ref();
 const showCopyPopover = ref(false);
