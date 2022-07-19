@@ -59,12 +59,15 @@ import { computed } from 'vue';
 const props = defineProps({
   component: {
     type: Object,
+    required: true,
   },
   options: {
     type: Object,
+    required: true,
   },
   info: {
     type: Object,
+    required: true,
   },
 });
 

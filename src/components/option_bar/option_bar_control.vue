@@ -24,15 +24,19 @@ import { paramCase } from 'change-case';
 const props = defineProps({
   type: {
     type: String,
+    required: true,
   },
   name: {
     type: String,
+    required: true,
   },
   value: {
     type: undefined,
+    required: true,
   },
   args: {
     type: Object,
+    required: true,
   },
 });
 

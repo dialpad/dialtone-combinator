@@ -14,9 +14,11 @@ import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 defineProps({
   label: {
     type: String,
+    required: true,
   },
   value: {
     type: Boolean,
+    required: true,
   },
 });
 

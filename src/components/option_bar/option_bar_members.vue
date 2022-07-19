@@ -30,12 +30,15 @@ import { MEMBER_UPDATE_EVENT } from '@/src/lib/constants';
 defineProps({
   component: {
     type: Object,
+    required: true,
   },
   members: {
     type: Array,
+    required: true,
   },
   values: {
     type: Object,
+    required: true,
   },
   controlSelector: {
     type: Function,

@@ -53,15 +53,19 @@ import { ref } from 'vue';
 defineProps({
   label: {
     type: String,
+    required: true,
   },
   value: {
-    type: undefined,
+    type: String,
+    required: true,
   },
   values: {
     type: Array,
+    required: true,
   },
   defaultValue: {
-    type: undefined,
+    type: String,
+    required: true,
   },
 });
 
