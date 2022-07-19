@@ -1,50 +1,58 @@
 <template>
   <div class="dtc-option-bar d-as-stretch d-of-y-auto d-w100p d-bgc-orange-200">
-    <section class="d-p16">
-      <h2>Slots</h2>
-      <dtc-option-bar-members
-        :component="component"
-        :members="info.slots"
-        :values="options.slots"
-        :control-selector="() => 'slot'"
-        @update:member="updateSlots"
-      />
-    </section>
-    <section class="d-p16">
-      <h2>Props</h2>
-      <dtc-option-bar-members
-        :component="component"
-        :members="info.props"
-        :values="options.props"
-        :control-selector="prop => prop.type.name"
-        @update:member="updateProps"
-      />
-    </section>
-    <section class="d-p16">
-      <h2>Attributes</h2>
-      <dtc-option-bar-members
-        :component="component"
-        :members="attributes"
-        :values="options.attributes"
-        :control-selector="attribute => attribute.type.name"
-        @update:member="updateAttributes"
-      />
-    </section>
-    <section class="d-p16">
-      <h2>Events</h2>
-      <dtc-option-bar-members
-        :component="component"
-        :values="options.events"
-        :members="info.events"
-        :control-selector="() => 'event'"
-        @update:member="updateEvents"
-      />
-    </section>
+    <ul class="d-ls-reset">
+      <dtc-option-bar-section
+        heading="Slots"
+      >
+        <dtc-option-bar-members
+          :component="component"
+          :members="info.slots"
+          :values="options.slots"
+          :control-selector="() => 'slot'"
+          @update:member="updateSlots"
+        />
+      </dtc-option-bar-section>
+      <dtc-option-bar-section
+        heading="Props"
+      >
+        <dtc-option-bar-members
+          :component="component"
+          :members="info.props"
+          :values="options.props"
+          :control-selector="prop => prop.type.name"
+          @update:member="updateProps"
+        />
+      </dtc-option-bar-section>
+      <dtc-option-bar-section
+        heading="Attributes"
+      >
+        <dtc-option-bar-members
+          :component="component"
+          :members="attributes"
+          :values="options.attributes"
+          :control-selector="attribute => attribute.type.name"
+          @update:member="updateAttributes"
+        />
+      </dtc-option-bar-section>
+      <dtc-option-bar-section
+        heading="Events"
+      >
+        <dtc-option-bar-members
+          :component="component"
+          :values="options.events"
+          :members="info.events"
+          :control-selector="() => 'event'"
+          @update:member="updateEvents"
+        />
+      </dtc-option-bar-section>
+    </ul>
   </div>
 </template>
 
 <script setup>
 import DtcOptionBarMembers from './option_bar_members.vue';
+import DtcOptionBarSection from './option_bar_section.vue';
+
 import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
 import { parseAttributeTag } from '@/src/lib/parse';

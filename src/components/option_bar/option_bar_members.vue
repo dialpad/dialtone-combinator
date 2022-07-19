@@ -4,7 +4,7 @@
       v-for="member in members"
       :key="member.name"
     >
-      <div class="d-py4">
+      <div class="d-py6">
         <dtc-control
           :type="controlSelector(member)"
           :name="member.name"
