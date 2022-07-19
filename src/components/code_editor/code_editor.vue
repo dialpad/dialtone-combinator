@@ -13,7 +13,7 @@
     >
       <dtc-code-editor-element
         :tag-name="tagName"
-        :self-closing="!options.slots.default"
+        :self-closing="slotsEmpty"
       >
         <template #opening>
           <dtc-code-editor-attributes
@@ -22,13 +22,20 @@
           />
         </template>
         <template #default>
-          <dtc-code-editor-slot
-            v-if="options.slots.default"
-            name="default"
-            @update:options="e => emit('update:options', e)"
-          >
-            <span class="dtc-theme-popover">{{ options.slots.default }}</span>
-          </dtc-code-editor-slot>
+          <div>
+            <template
+              v-for="(value, slot) in options.slots"
+              :key="slot"
+            >
+              <dtc-code-editor-slot
+                v-if="value"
+                :name="slot"
+                @update:options="e => emit('update:options', e)"
+              >
+                <span class="dtc-theme-popover">{{ value }}</span>
+              </dtc-code-editor-slot>
+            </template>
+          </div>
         </template>
       </dtc-code-editor-element>
     </div>
@@ -98,6 +105,10 @@ const emit = defineEmits([
 ]);
 
 const tagName = computed(() => paramCase(props.info.displayName));
+
+const slotsEmpty = computed(() => {
+  return Object.values(props.options.slots).every(slot => !slot);
+});
 
 const theme = cachedRef(CODE_EDITOR_THEME_KEY, settings['code-editor']['default-theme']);
 const scheme = cachedRef(CODE_EDITOR_SCHEME_KEY, settings['code-editor']['default-scheme']);

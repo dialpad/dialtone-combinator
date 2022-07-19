@@ -4,13 +4,11 @@
     tag-name="template"
   >
     <template #opening>
-      <span>&nbsp;#{{ name }}</span>
+      <span>&nbsp;</span>
+      <span class="dtc-code-editor__attribute">#{{ name }}</span>
     </template>
     <template #default>
-      <dtc-code-editor-input
-        v-if="slots"
-        @input="onInput"
-      >
+      <dtc-code-editor-input @input="onInput">
         <slot />
       </dtc-code-editor-input>
     </template>

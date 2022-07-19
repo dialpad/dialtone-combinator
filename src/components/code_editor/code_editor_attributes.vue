@@ -7,7 +7,7 @@
       <div>
         <dtc-code-editor-indent />
         <span v-if="useBindOperator(value)">:</span>
-        <span class="dtc-code-editor__attribute">{{ attribute }}</span>
+        <span class="dtc-code-editor__attribute">{{ paramCase(attribute) }}</span>
         <span v-if="!useShortSyntax(value)">
           <span>=</span>
           <span class="dtc-code-editor__string">"</span>
@@ -29,6 +29,7 @@
 <script setup>
 import DtcCodeEditorIndent from './code_editor_indent.vue';
 
+import { paramCase } from 'change-case';
 import { isDefaultPropValue } from '@/src/lib/utils';
 import { computed } from 'vue';
 
