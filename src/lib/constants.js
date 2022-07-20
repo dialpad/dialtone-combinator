@@ -1,3 +1,4 @@
+export const DEFAULT_PREFIX = 'dtc';
 export const DEFAULT_SLOT_NAME = 'default';
 
 export const OPTIONS_UPDATE_EVENT = 'update:options';

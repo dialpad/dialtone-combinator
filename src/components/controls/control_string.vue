@@ -1,10 +1,12 @@
 <template>
   <dt-input
-    size="sm"
-    :label="label"
     :value="value"
+    size="sm"
     @input="e => emit(VALUE_UPDATE_EVENT, e)"
   >
+    <template #labelSlot>
+      {{ label }}
+    </template>
     <template #rightIcon>
       <slot name="icon" />
     </template>

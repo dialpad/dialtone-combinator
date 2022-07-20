@@ -1,7 +1,7 @@
 <template>
   <div
     ref="editor"
-    class="dtc-code-editor d-d-flex d-as-stretch d-of-auto d-p16 d-w100p"
+    class="dtc-code-editor d-d-flex d-fl-grow1 d-p16"
     :class="[
       `dtc-theme-${theme}`,
       `dtc-code-editor--scheme-${scheme}`,

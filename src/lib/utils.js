@@ -1,4 +1,5 @@
 import { ref, computed } from 'vue';
+import { DEFAULT_PREFIX } from '@/src/lib/constants';
 
 export function cachedRef (key, defaultValue) {
   const reference = ref(JSON.parse(window.localStorage.getItem(key)) || defaultValue);
@@ -24,4 +25,9 @@ export function flatten (obj) {
     result[key] = obj[key];
   }
   return result;
+}
+
+let UNIQUE_ID_COUNTER = 0;
+export function getUniqueString (prefix = DEFAULT_PREFIX) {
+  return `${prefix}${UNIQUE_ID_COUNTER++}`;
 }

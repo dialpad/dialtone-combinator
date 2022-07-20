@@ -2,7 +2,7 @@
   <span>
     <dtc-code-editor-indent />
     <span
-      class="dtc-code-editor__editable"
+      class="dtc-code-editor__editable d-ws-pre-wrap"
       spellcheck="false"
       contenteditable
       @input="e => emit('input', e)"

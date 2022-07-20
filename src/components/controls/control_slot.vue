@@ -1,12 +1,15 @@
 <template>
   <dt-input
     :value="value"
-    :label="label"
     class="d-r-none"
     type="textarea"
     spellcheck="false"
     @input="e => emit(VALUE_UPDATE_EVENT, e)"
-  />
+  >
+    <template #labelSlot>
+      {{ label }}
+    </template>
+  </dt-input>
 </template>
 
 <script setup>

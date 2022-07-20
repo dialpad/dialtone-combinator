@@ -1,11 +1,14 @@
 <template>
   <dt-input
-    :label="label"
-    size="sm"
     :value="value"
     type="number"
+    size="sm"
     @input="e => emit(VALUE_UPDATE_EVENT, parseInt(e))"
-  />
+  >
+    <template #labelSlot>
+      {{ label }}
+    </template>
+  </dt-input>
 </template>
 
 <script setup>
