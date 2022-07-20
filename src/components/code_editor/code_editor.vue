@@ -31,7 +31,7 @@
               <dtc-code-editor-slot
                 v-if="value"
                 :name="slot"
-                @update:options="e => emit('update:options', e)"
+                @update:options="e => emit(OPTIONS_UPDATE_EVENT, e)"
               >
                 <span class="dtc-theme-popover">{{ value }}</span>
               </dtc-code-editor-slot>
@@ -41,11 +41,7 @@
       </dtc-code-editor-element>
     </div>
     <div
-      class="
-        d-d-flex d-fd-column
-        d-ai-flex-end d-jc-space-between
-        d-ps-sticky d-t0
-      "
+      class="d-d-flex d-fd-column d-ps-sticky d-t0"
     >
       <dt-popover
         :class="`dtc-theme-${theme}`"
@@ -74,11 +70,6 @@
           <span>Copied to clipboard</span>
         </template>
       </dt-popover>
-      <dtc-code-editor-settings
-        v-model:theme="theme"
-        v-model:scheme="scheme"
-        v-model:verbose="verbose"
-      />
     </div>
   </div>
 </template>
@@ -87,13 +78,10 @@
 import DtcCodeEditorAttributes from './code_editor_attributes.vue';
 import DtcCodeEditorElement from './code_editor_element.vue';
 import DtcCodeEditorSlot from './code_editor_slot.vue';
-import DtcCodeEditorSettings from './code_editor_settings.vue';
 import IconContentCopy from '@dialpad/dialtone/lib/dist/vue/icons/IconContentCopy.vue';
 import { DtButton, DtPopover } from '@dialpad/dialtone-vue';
 
-import settings from '@/src/settings.json';
-import { CODE_EDITOR_SCHEME_KEY, CODE_EDITOR_THEME_KEY, CODE_EDITOR_VERBOSE_KEY } from '@/src/lib/constants';
-import { cachedRef } from '@/src/lib/utils';
+import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
 import { ref, computed } from 'vue';
 import { paramCase } from 'change-case';
 
@@ -106,10 +94,22 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  theme: {
+    type: String,
+    required: true,
+  },
+  scheme: {
+    type: String,
+    required: true,
+  },
+  verbose: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 const emit = defineEmits([
-  'update:options',
+  OPTIONS_UPDATE_EVENT,
 ]);
 
 const tagName = computed(() => paramCase(props.info.displayName));
@@ -117,10 +117,6 @@ const tagName = computed(() => paramCase(props.info.displayName));
 const slotsEmpty = computed(() => {
   return Object.values(props.options.slots).every(slot => !slot);
 });
-
-const theme = cachedRef(CODE_EDITOR_THEME_KEY, settings['code-editor']['default-theme']);
-const scheme = cachedRef(CODE_EDITOR_SCHEME_KEY, settings['code-editor']['default-scheme']);
-const verbose = cachedRef(CODE_EDITOR_VERBOSE_KEY, false);
 
 const code = ref();
 const showCopyPopover = ref(false);

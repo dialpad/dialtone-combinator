@@ -11,19 +11,11 @@
       />
     </div>
     <div class="dtc-root__bottom dtc-root-item d-grs2">
-      <dtc-code-panel>
-        <template #code>
-          <dtc-code-editor
-            v-model:options="options"
-            :info="info"
-          />
-        </template>
-        <template #console>
-          <dtc-event-console
-            ref="eventConsole"
-          />
-        </template>
-      </dtc-code-panel>
+      <dtc-code-panel
+        ref="codePanel"
+        v-model:options="options"
+        :info="info"
+      />
     </div>
     <div class="dtc-root__sidebar dtc-root-item d-grs1 d-gr2">
       <dtc-option-bar
@@ -38,8 +30,7 @@
 <script setup>
 import DtcOptionBar from './option_bar/option_bar.vue';
 import DtcRenderer from './renderer/renderer.vue';
-import DtcCodePanel from '@/src/components/code_panel';
-import DtcEventConsole from './event_console.vue';
+import DtcCodePanel from '@/src/components/code_panel/code_panel';
 
 // TODO: Temporary for testing
 import documentation from '@/../dialtone-vue/dist/component-documentation.json';
@@ -47,7 +38,6 @@ import documentation from '@/../dialtone-vue/dist/component-documentation.json';
 import { paramCase } from 'change-case';
 import { computed, reactive, ref } from 'vue';
 import { computedModel } from '@/src/lib/utils';
-import DtcCodeEditor from '@/src/components/code_editor/code_editor';
 
 const props = defineProps({
   component: {
@@ -81,10 +71,10 @@ const options = computedModel(
   (e, model) => e(model),
 );
 
-const eventConsole = ref();
+const codePanel = ref();
 
 const eventHooks = ref([
-  (event, value) => eventConsole.value.trigger(event, value),
+  (event, value) => codePanel.value.trigger(event, value),
 ]);
 
 const events = computed(() => {

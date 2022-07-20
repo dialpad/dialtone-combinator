@@ -96,6 +96,6 @@ const emit = defineEmits([
 
 <script>
 export default {
-  name: 'DtcCodeEditorSettings',
+  name: 'DtcCodePanelSettings',
 };
 </script>

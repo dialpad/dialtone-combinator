@@ -17,16 +17,21 @@ const text = ref('');
 
 defineExpose({
   trigger (event, value) {
-    text.value = `${event}: ${stringify(
-      flatten(value),
-      undefined,
-      2,
-      {
-        maxDepth: 1,
-      },
-    )}\n` + text.value;
+    text.value = `${event}\n${text.value}`;
   },
 });
+
+// eslint-disable-next-line no-unused-vars
+function stringifyValue (value) {
+  return stringify(
+    flatten(value),
+    undefined,
+    2,
+    {
+      maxDepth: 1,
+    },
+  );
+}
 </script>
 
 <script>

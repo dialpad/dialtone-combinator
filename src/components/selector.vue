@@ -1,6 +1,6 @@
 <template>
   <dt-tab-group
-    class="d-d-flex d-fd-column d-h100p"
+    class="d-d-flex d-fd-column d-of-y-auto d-h100p"
     :selected="getId(selected)"
     borderless
   >
