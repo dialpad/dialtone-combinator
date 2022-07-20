@@ -41,6 +41,7 @@
         v-if="info.events"
         heading="Events"
       >
+        <slot />
         <dtc-option-bar-members
           :component="component"
           :members="info.events"

@@ -5,6 +5,7 @@
       content-width="anchor"
       :list-aria-label="`${label} valid values`"
       @select="e => onUpdate(validValues[e])"
+      @opened="onOpen"
     >
       <template #input="{ inputProps, onInput }">
         <dtc-control-string
@@ -12,7 +13,12 @@
           :label="label"
           :value="value"
           @input="e => onInputInternal(e, onInput)"
-        />
+        >
+          <template #icon>
+            <icon-collapse v-if="open" />
+            <icon-expand v-else />
+          </template>
+        </dtc-control-string>
       </template>
       <template #list="{ listProps }">
         <ul
@@ -44,6 +50,8 @@
 
 <script setup>
 import DtcControlString from './control_string.vue';
+import IconExpand from '@dialpad/dialtone/lib/dist/vue/icons/IconArrowKeyboardDown.vue';
+import IconCollapse from '@dialpad/dialtone/lib/dist/vue/icons/IconArrowKeyboardUp.vue';
 import { DtRecipeComboboxWithPopover, DtListItem, DtBadge } from '@dialpad/dialtone-vue';
 
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
@@ -83,6 +91,12 @@ function onInputInternal (value, onInput) {
 
 function onUpdate (value) {
   emit(VALUE_UPDATE_EVENT, value);
+}
+
+const open = ref(false);
+
+function onOpen (e) {
+  open.value = e;
 }
 </script>
 

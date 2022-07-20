@@ -17,3 +17,11 @@ export function computedModel (model, handler) {
     set: (e) => handler(e, model),
   });
 }
+
+export function flatten (obj) {
+  const result = {};
+  for (const key in obj) {
+    result[key] = obj[key];
+  }
+  return result;
+}

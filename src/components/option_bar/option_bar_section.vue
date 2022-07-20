@@ -7,7 +7,7 @@
       @click="toggle"
     >
       <template #default>
-        <h2 class="">
+        <h2>
           {{ heading }}
         </h2>
       </template>
@@ -16,17 +16,12 @@
         <icon-expand v-else />
       </template>
     </dt-list-item>
-    <transition
-      name="stretch"
-      mode="out-in"
+    <div
+      v-if="show"
+      class="d-px12"
     >
-      <div
-        v-if="show"
-        class="d-px12"
-      >
-        <slot />
-      </div>
-    </transition>
+      <slot />
+    </div>
   </li>
 </template>
 

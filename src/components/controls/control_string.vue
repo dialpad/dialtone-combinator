@@ -4,7 +4,11 @@
     :label="label"
     :value="value"
     @input="e => emit(VALUE_UPDATE_EVENT, e)"
-  />
+  >
+    <template #rightIcon>
+      <slot name="icon" />
+    </template>
+  </dt-input>
 </template>
 
 <script setup>
