@@ -2,7 +2,7 @@
   <div>
     <span>&lt;</span>
     <slot name="start" />
-    <span class="dtc-code-editor__element">{{ name }}</span>
+    <span class="dtc-scheme__element">{{ name }}</span>
     <slot name="end" />
     <span>&gt;</span>
   </div>

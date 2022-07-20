@@ -5,7 +5,7 @@
   >
     <template #opening>
       <span>&nbsp;</span>
-      <span class="dtc-code-editor__attribute">#{{ name }}</span>
+      <span class="dtc-scheme__attribute">#{{ name }}</span>
     </template>
     <template #default>
       <dtc-code-editor-input @input="onInput">

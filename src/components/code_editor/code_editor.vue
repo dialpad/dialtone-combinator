@@ -1,10 +1,9 @@
 <template>
   <div
     ref="editor"
-    class="dtc-code-editor d-d-flex d-fl-grow1 d-p16"
+    class="dtc-code-editor d-d-flex d-fl-grow1"
     :class="[
-      `dtc-theme-${theme}`,
-      `dtc-code-editor--scheme-${scheme}`,
+      `dtc-code-editor-scheme--${scheme}`,
     ]"
   >
     <div
@@ -40,37 +39,33 @@
         </template>
       </dtc-code-editor-element>
     </div>
-    <div
-      class="d-d-flex d-fd-column d-ps-sticky d-t0"
+    <dt-popover
+      :class="`dtc-theme--${theme} d-ps-sticky d-t0`"
+      content-class="dtc-theme__popover"
+      transition="pop"
+      :modal="false"
+      :open="showCopyPopover"
     >
-      <dt-popover
-        :class="`dtc-theme-${theme}`"
-        content-class="dtc-code-editor-popover"
-        transition="pop"
-        :modal="false"
-        :open="showCopyPopover"
-      >
-        <template #anchor="{ attrs }">
-          <dt-button
-            class="dtc-theme__button"
-            v-bind="attrs"
-            importance="clear"
-            size="lg"
-            @click="copy"
-          >
-            <template #default>
-              Copy
-            </template>
-            <template #icon>
-              <IconContentCopy />
-            </template>
-          </dt-button>
-        </template>
-        <template #content>
-          <span>Copied to clipboard</span>
-        </template>
-      </dt-popover>
-    </div>
+      <template #anchor="{ attrs }">
+        <dt-button
+          class="dtc-theme__button d-ps-sticky d-t0"
+          v-bind="attrs"
+          importance="clear"
+          size="lg"
+          @click="copy"
+        >
+          <template #default>
+            Copy
+          </template>
+          <template #icon>
+            <IconContentCopy />
+          </template>
+        </dt-button>
+      </template>
+      <template #content>
+        <span>Copied to clipboard</span>
+      </template>
+    </dt-popover>
   </div>
 </template>
 
@@ -136,26 +131,14 @@ export default {
 </script>
 
 <style lang="less">
-.dtc-code-editor {
-  color: var(--dtc-theme-color-foreground);
-  background-color: var(--dtc-theme-color-background);
+@import "@/src/assets/themes/scheme/base.less";
+
+.dtc-code-editor-scheme--mono {
+  @import "@/src/assets/themes/scheme/mono.less";
 }
 
-.dtc-code-editor--scheme-mono {
-  @import "@/src/assets/themes/scheme_code_editor/default.less";
-}
-
-.dtc-code-editor--scheme-highlight {
-  @import "@/src/assets/themes/scheme_code_editor/highlight.less";
-}
-
-.dtc-code-editor__popover {
-  color: var(--dtc-theme-color-background);
-  background-color: var(--dtc-theme-color-foreground);
-}
-
-.dtc-code-editor__popover .d-radio__label {
-  color: var(--dtc-theme-color-background);
+.dtc-code-editor-scheme--highlight {
+  @import "@/src/assets/themes/scheme/highlight.less";
 }
 
 .dtc-code-editor__editable {
@@ -166,9 +149,4 @@ export default {
   background-color: var(--dtc-theme-color-background-darken);
   outline: none;
 }
-
-.dtc-code-editor__element { color: var(--dtc-theme-color-element); }
-.dtc-code-editor__attribute { color: var(--dtc-theme-color-attribute); }
-.dtc-code-editor__string { color: var(--dtc-theme-color-string); }
-.dtc-code-editor__value { color: var(--dtc-theme-color-value); }
 </style>

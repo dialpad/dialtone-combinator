@@ -3,10 +3,15 @@
 
 & {
   --dtc-theme-color-foreground: @color-foreground;
-  --dtc-theme-color-foreground-darken: darken(@color-foreground, 10%);
-  --dtc-theme-color-foreground-lighten: lighten(@color-foreground, 10%);
+  --dtc-theme-color-foreground-darken: darken(@color-foreground, 8%);
+  --dtc-theme-color-foreground-lighten: lighten(@color-foreground, 8%);
 
   --dtc-theme-color-background: @color-background;
-  --dtc-theme-color-background-darken: darken(@color-background, 10%);
-  --dtc-theme-color-background-lighten: lighten(@color-background, 10%);
+  --dtc-theme-color-background-darken: darken(@color-background, 2%);
+  --dtc-theme-color-background-lighten: lighten(@color-background, 100%);
+}
+
+.dtc-theme__tabs {
+  background-color: var(--dtc-theme-color-background);
+  box-shadow: 0 1px 6px var(--dtc-theme-color-foreground-lighten);
 }

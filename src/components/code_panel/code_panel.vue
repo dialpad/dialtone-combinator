@@ -1,25 +1,28 @@
 <template>
-  <div class="dtc-code-panel d-w100p d-h100p">
-    <dtc-selector
-      selected="code"
-    >
-      <template #code>
-        <dtc-code-editor
-          :info="info"
-          :options="options"
-          :theme="theme"
-          :scheme="scheme"
-          :verbose="verbose"
-          @update:options="e => emit(OPTIONS_UPDATE_EVENT, e)"
-        />
-      </template>
-      <template #console>
-        <dtc-event-console
-          ref="eventConsole"
-        />
-      </template>
-    </dtc-selector>
-    <div class="d-d-flex d-ai-flex-end d-jc-flex-end d-pe-none">
+  <div
+    class="dtc-code-panel d-w100p d-h100p"
+    :class="`dtc-theme--${theme}`"
+  >
+    <div class="dtc-code-panel__content dtc-theme__canvas">
+      <dtc-selector selected="code">
+        <template #code>
+          <dtc-code-editor
+            :info="info"
+            :options="options"
+            :theme="theme"
+            :scheme="scheme"
+            :verbose="verbose"
+            @update:options="e => emit(OPTIONS_UPDATE_EVENT, e)"
+          />
+        </template>
+        <template #console>
+          <dtc-event-console
+            ref="eventConsole"
+          />
+        </template>
+      </dtc-selector>
+    </div>
+    <div class="dtc-code-panel__overlay d-d-flex d-ai-flex-end d-jc-flex-end d-pe-none">
       <div class="d-pr32 d-pb16 d-pe-auto">
         <dtc-code-panel-settings
           v-model:theme="theme"

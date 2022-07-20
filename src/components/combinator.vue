@@ -3,21 +3,21 @@
     v-if="component && options"
     class="dtc-root d-d-grid d-h100p"
   >
-    <div class="dtc-root__top dtc-root-item d-grs1 d-ba d-bc-black">
+    <div class="dtc-root__top d-grs1 d-ba d-bc-black">
       <dtc-renderer
         :component="component"
         :options="options"
         v-on="events"
       />
     </div>
-    <div class="dtc-root__bottom dtc-root-item d-grs2">
+    <div class="dtc-root__bottom d-grs2">
       <dtc-code-panel
         ref="codePanel"
         v-model:options="options"
         :info="info"
       />
     </div>
-    <div class="dtc-root__sidebar dtc-root-item d-grs1 d-gr2">
+    <div class="dtc-root__sidebar d-grs1 d-gr2">
       <dtc-option-bar
         v-model:options="options"
         :component="component"
@@ -97,15 +97,15 @@ export default {
 </script>
 
 <style lang="less">
+@import "@/src/assets/themes/base.less";
+.dtc-theme--light { @import "@/src/assets/themes/light.less"; }
+.dtc-theme--dark { @import "@/src/assets/themes/dark.less"; }
+
 .dtc-root {
-  @import "@/src/assets/themes/default.less";
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
 }
 
-.dtc-theme-light { @import "@/src/assets/themes/light.less"; }
-.dtc-theme-dark { @import "@/src/assets/themes/dark.less"; }
-
-.dtc-root-item {
+.dtc-root > * {
   display: flex;
   align-items: flex-start;
   overflow: hidden;

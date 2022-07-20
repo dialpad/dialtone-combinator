@@ -7,19 +7,19 @@
       <div>
         <dtc-code-editor-indent />
         <span v-if="useBindOperator(value)">:</span>
-        <span class="dtc-code-editor__attribute">{{ paramCase(attribute) }}</span>
+        <span class="dtc-scheme__attribute">{{ paramCase(attribute) }}</span>
         <span v-if="!useShortSyntax(value)">
           <span>=</span>
-          <span class="dtc-code-editor__string">"</span>
+          <span class="dtc-scheme__string">"</span>
           <span
             :class="{
-              'dtc-code-editor__string': !useBindOperator(value),
-              'dtc-code-editor__value': useBindOperator(value),
+              'dtc-scheme__string': !useBindOperator(value),
+              'dtc-scheme__value': useBindOperator(value),
             }"
           >
             {{ value }}
           </span>
-          <span class="dtc-code-editor__string">"</span>
+          <span class="dtc-scheme__string">"</span>
         </span>
       </div>
     </template>

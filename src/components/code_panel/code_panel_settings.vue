@@ -1,7 +1,7 @@
 <template>
   <dt-popover
-    :class="`dtc-theme-${theme}`"
-    content-class="dtc-code-editor-popover"
+    :class="`dtc-theme--${theme}`"
+    content-class="dtc-theme__popover"
     transition="fade"
     placement="top-end"
     initial-focus-element="dialog"
