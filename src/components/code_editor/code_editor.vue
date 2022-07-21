@@ -71,10 +71,10 @@
 </template>
 
 <script setup>
-import DtcCodeEditorAttributes from './code_editor_attributes.vue';
-import DtcCodeEditorElement from './code_editor_element.vue';
-import DtcCodeEditorSlot from './code_editor_slot.vue';
-import IconCopy from '%/IconContentCopy.vue';
+import DtcCodeEditorAttributes from './code_editor_attributes';
+import DtcCodeEditorElement from './code_editor_element';
+import DtcCodeEditorSlot from './code_editor_slot';
+import IconCopy from '%/IconContentCopy';
 import { DtButton, DtPopover } from '@dialpad/dialtone-vue';
 
 import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';

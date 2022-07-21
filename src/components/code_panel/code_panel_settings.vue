@@ -62,7 +62,7 @@
 </template>
 
 <script setup>
-import IconSettings from '%/IconSettings.vue';
+import IconSettings from '%/IconSettings';
 
 import {
   DtButton,

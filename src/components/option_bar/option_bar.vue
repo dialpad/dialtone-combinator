@@ -64,8 +64,8 @@
 </template>
 
 <script setup>
-import DtcOptionBarMembers from './option_bar_members.vue';
-import DtcOptionBarSection from './option_bar_section.vue';
+import DtcOptionBarMembers from './option_bar_members';
+import DtcOptionBarSection from './option_bar_section';
 
 import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';

@@ -28,8 +28,8 @@
 </template>
 
 <script setup>
-import DtcOptionBar from './option_bar/option_bar.vue';
-import DtcRenderer from './renderer/renderer.vue';
+import DtcOptionBar from './option_bar/option_bar';
+import DtcRenderer from './renderer/renderer';
 import DtcCodePanel from '@/src/components/code_panel/code_panel';
 
 // TODO: Temporary for testing

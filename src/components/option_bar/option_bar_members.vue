@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import DtcControl from './option_bar_control.vue';
+import DtcControl from './option_bar_control';
 import { MEMBER_UPDATE_EVENT } from '@/src/lib/constants';
 import { parseJsonValue } from '@/src/lib/parse';
 

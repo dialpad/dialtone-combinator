@@ -50,9 +50,9 @@
 </template>
 
 <script setup>
-import DtcControlString from './control_string.vue';
-import IconExpand from '%/IconArrowKeyboardDown.vue';
-import IconCollapse from '%/IconArrowKeyboardUp.vue';
+import DtcControlString from './control_string';
+import IconExpand from '%/IconArrowKeyboardDown';
+import IconCollapse from '%/IconArrowKeyboardUp';
 import { DtRecipeComboboxWithPopover, DtListItem, DtBadge } from '@dialpad/dialtone-vue';
 
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';

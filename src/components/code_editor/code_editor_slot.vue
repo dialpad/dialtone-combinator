@@ -22,8 +22,8 @@
 </template>
 
 <script setup>
-import DtcCodeEditorElement from './code_editor_element.vue';
-import DtcCodeEditorInput from './code_editor_input.vue';
+import DtcCodeEditorElement from './code_editor_element';
+import DtcCodeEditorInput from './code_editor_input';
 import { DEFAULT_SLOT_NAME } from '@/src/lib/constants';
 
 const props = defineProps({

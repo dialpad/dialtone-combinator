@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import DtcCodeEditorIndent from './code_editor_indent.vue';
+import DtcCodeEditorIndent from './code_editor_indent';
 
 import { paramCase } from 'change-case';
 import { computed } from 'vue';

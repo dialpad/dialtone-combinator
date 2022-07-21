@@ -9,14 +9,14 @@
 </template>
 
 <script setup>
-import DtcControlDirective from '@/src/components/controls/control_directive.vue';
-import DtcControlEvent from '@/src/components/controls/control_event.vue';
-import DtcControlSlot from '@/src/components/controls/control_slot.vue';
-import DtcControlSelection from '@/src/components/controls/control_selection.vue';
-import DtcControlNumber from '@/src/components/controls/control_number.vue';
-import DtcControlString from '@/src/components/controls/control_string.vue';
-import DtcControlBoolean from '@/src/components/controls/control_boolean.vue';
-import DtcControlBase from '@/src/components/controls/control_base.vue';
+import DtcControlDirective from '@/src/components/controls/control_directive';
+import DtcControlEvent from '@/src/components/controls/control_event';
+import DtcControlSlot from '@/src/components/controls/control_slot';
+import DtcControlSelection from '@/src/components/controls/control_selection';
+import DtcControlNumber from '@/src/components/controls/control_number';
+import DtcControlString from '@/src/components/controls/control_string';
+import DtcControlBoolean from '@/src/components/controls/control_boolean';
+import DtcControlBase from '@/src/components/controls/control_base';
 
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed, onMounted } from 'vue';
