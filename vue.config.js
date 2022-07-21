@@ -10,7 +10,8 @@ module.exports = {
     resolve: {
       alias: {
         vue$: 'vue/dist/vue.esm-browser.js',
-        '@': path.join(__dirname, '.'),
+        '@': path.resolve(__dirname, '.'),
+        '%': path.resolve(__dirname, 'node_modules/@dialpad/dialtone/lib/dist/vue/icons'),
       },
     },
   },

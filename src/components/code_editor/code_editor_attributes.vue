@@ -7,7 +7,7 @@
       <div>
         <dtc-code-editor-indent />
         <span v-if="useBindOperator(value)">:</span>
-        <span class="dtc-scheme__attribute">{{ paramCase(attribute) }}</span>
+        <span class="dtc-scheme__class">{{ paramCase(attribute) }}</span>
         <span v-if="!useShortSyntax(value)">
           <span>=</span>
           <span class="dtc-scheme__string">"</span>

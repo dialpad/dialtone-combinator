@@ -62,7 +62,7 @@
 </template>
 
 <script setup>
-import IconSettings from '@dialpad/dialtone/lib/dist/vue/icons/IconSettings.vue';
+import IconSettings from '%/IconSettings.vue';
 
 import {
   DtButton,

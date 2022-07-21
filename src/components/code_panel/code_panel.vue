@@ -1,7 +1,11 @@
 <template>
   <div
-    class="dtc-code-panel d-w100p d-h100p"
-    :class="`dtc-theme--${theme}`"
+    class="dtc-code-panel dtc-theme d-w100p d-h100p"
+    :class="[
+      `dtc-theme--${theme}`,
+      `dtc-code-panel-scheme--${scheme}`,
+      `dtc-code-panel-scheme--${scheme}--${theme}`,
+    ]"
   >
     <div class="dtc-theme__canvas">
       <dtc-selector
@@ -13,7 +17,6 @@
             :info="info"
             :options="options"
             :theme="theme"
-            :scheme="scheme"
             :verbose="verbose"
             @update:options="e => emit(OPTIONS_UPDATE_EVENT, e)"
           />
@@ -78,7 +81,7 @@ const verbose = cachedRef(CODE_EDITOR_VERBOSE_KEY, false);
 function generateLabel (slot, capitalCase) {
   const label = capitalCase(slot);
   switch (slot) {
-    case 'events': return `${label} (${eventConsole.value?.triggerCount})`;
+    case 'events': return `${label} (${eventConsole.value?.entryCount})`;
     default: return label;
   }
 }
@@ -90,7 +93,21 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
+@import "@/src/assets/themes/scheme/base.less";
+
+.dtc-code-panel-scheme--mono {
+@import "@/src/assets/themes/scheme/mono.less";
+}
+
+.dtc-code-panel-scheme--highlight {
+@import "@/src/assets/themes/scheme/highlight.less";
+}
+
+.dtc-code-panel-scheme--highlight--light {
+@import "@/src/assets/themes/scheme/highlight_light.less";
+}
+
 .dtc-code-panel {
   display: grid;
   grid-template-columns: 1fr;

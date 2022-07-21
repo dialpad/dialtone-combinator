@@ -1,27 +1,52 @@
 <template>
-  <div
-    class="d-r-none d-ws-pre-wrap d-fl-grow1"
-    type="textarea"
-    disabled
-  >
-    {{ text }}
+  <div class="d-ws-pre-wrap">
+    <template
+      v-for="(entry, index) in entries"
+      :key="entry.key"
+    >
+      <dtc-event-console-entry
+        :name="entry.event"
+        :value="index < cacheSize
+          ? entry.value
+          : undefined"
+      >
+        <template #separator>
+          <IconArrowForward
+            class="d-fs10 d-px6 d-ps-relative d-t2"
+          />
+        </template>
+      </dtc-event-console-entry>
+    </template>
   </div>
 </template>
 
 <script setup>
-import { defineExpose, ref } from 'vue';
+import IconArrowForward from '%/IconArrowForward';
+import DtcEventConsoleEntry from '@/src/components/event_console/event_console_entry';
+
+import { computed, defineExpose, ref } from 'vue';
 import { flatten } from '@/src/lib/utils';
 import { stringify } from 'javascript-stringify';
 
-const text = ref('');
-const triggerCount = ref(0);
+defineProps({
+  cacheSize: {
+    type: Number,
+    default: 10,
+  },
+});
 
+const entries = ref([]);
+
+let currentId = 0;
 defineExpose({
   trigger (event, value) {
-    text.value = `${event}\n${text.value}`;
-    triggerCount.value += 1;
+    entries.value.splice(0, 0, {
+      event,
+      value,
+      key: currentId++,
+    });
   },
-  triggerCount,
+  entryCount: computed(() => entries.value.length),
 });
 
 // TODO: Display the information nicely

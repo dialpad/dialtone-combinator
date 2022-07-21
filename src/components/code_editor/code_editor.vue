@@ -2,10 +2,6 @@
   <div
     ref="editor"
     class="dtc-code-editor d-d-flex d-fl-grow1"
-    :class="[
-      `dtc-code-editor-scheme--${scheme}`,
-      `dtc-code-editor-scheme--${scheme}--${theme}`,
-    ]"
   >
     <div
       ref="code"
@@ -63,7 +59,7 @@
             Copy
           </template>
           <template #icon>
-            <IconContentCopy />
+            <IconCopy />
           </template>
         </dt-button>
       </template>
@@ -78,7 +74,7 @@
 import DtcCodeEditorAttributes from './code_editor_attributes.vue';
 import DtcCodeEditorElement from './code_editor_element.vue';
 import DtcCodeEditorSlot from './code_editor_slot.vue';
-import IconContentCopy from '@dialpad/dialtone/lib/dist/vue/icons/IconContentCopy.vue';
+import IconCopy from '%/IconContentCopy.vue';
 import { DtButton, DtPopover } from '@dialpad/dialtone-vue';
 
 import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
@@ -95,10 +91,6 @@ const props = defineProps({
     required: true,
   },
   theme: {
-    type: String,
-    required: true,
-  },
-  scheme: {
     type: String,
     required: true,
   },
@@ -134,28 +126,3 @@ export default {
   name: 'DtcCodeEditor',
 };
 </script>
-
-<style lang="less">
-@import "@/src/assets/themes/scheme/base.less";
-
-.dtc-code-editor-scheme--mono {
-  @import "@/src/assets/themes/scheme/mono.less";
-}
-
-.dtc-code-editor-scheme--highlight {
-  @import "@/src/assets/themes/scheme/highlight.less";
-}
-
-.dtc-code-editor-scheme--highlight--light {
-  @import "@/src/assets/themes/scheme/highlight_light.less";
-}
-
-.dtc-code-editor__editable {
-  padding: var(--su2) var(--su4) var(--su2) var(--su4);
-  border-radius: var(--su6);
-  border: solid var(--su1);
-  border-color: var(--dtc-theme-color-background-lighten);
-  background-color: var(--dtc-theme-color-background-darken);
-  outline: none;
-}
-</style>
