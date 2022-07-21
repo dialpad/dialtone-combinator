@@ -1,6 +1,7 @@
 <template>
   <dt-input
     :value="value"
+    :messages="messages"
     size="sm"
     @input="e => emit(VALUE_UPDATE_EVENT, e)"
   >
@@ -14,10 +15,11 @@
 </template>
 
 <script setup>
-import { DtInput } from '@dialpad/dialtone-vue';
+import { DtInput, VALIDATION_MESSAGE_TYPES } from '@dialpad/dialtone-vue';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
+import { computed } from 'vue';
 
-defineProps({
+const props = defineProps({
   label: {
     type: String,
     required: true,
@@ -26,9 +28,24 @@ defineProps({
     type: String,
     default: undefined,
   },
+  warning: {
+    type: String,
+    default: undefined,
+  },
 });
 
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
+
+const messages = computed(() => {
+  const messages = [];
+  if (props.warning) {
+    messages.push({
+      message: props.warning,
+      type: VALIDATION_MESSAGE_TYPES.WARNING,
+    });
+  }
+  return messages;
+});
 </script>
 
 <script>

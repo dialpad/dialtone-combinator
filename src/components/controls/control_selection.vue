@@ -12,6 +12,7 @@
           v-bind="inputProps"
           :label="label"
           :value="value"
+          :warning="warning"
           @input="e => onInputInternal(e, onInput)"
         >
           <template #icon>
@@ -55,9 +56,11 @@ import IconCollapse from '@dialpad/dialtone/lib/dist/vue/icons/IconArrowKeyboard
 import { DtRecipeComboboxWithPopover, DtListItem, DtBadge } from '@dialpad/dialtone-vue';
 
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
-defineProps({
+const WARNING_MESSAGE = 'Unexpected value';
+
+const props = defineProps({
   label: {
     type: String,
     required: true,
@@ -77,6 +80,12 @@ defineProps({
 });
 
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
+
+const warning = computed(() => {
+  return !props.validValues.includes(props.value)
+    ? WARNING_MESSAGE
+    : undefined;
+});
 
 const combobox = ref();
 

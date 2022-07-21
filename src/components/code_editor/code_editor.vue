@@ -40,7 +40,11 @@
       </dtc-code-editor-element>
     </div>
     <dt-popover
-      :class="`dtc-theme--${theme} d-ps-sticky d-t0`"
+      :class="[
+        `dtc-theme--${theme}`,
+        'd-ps-sticky',
+        'd-t0',
+      ]"
       content-class="dtc-theme__popover"
       transition="pop"
       :modal="false"

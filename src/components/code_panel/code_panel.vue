@@ -3,7 +3,7 @@
     class="dtc-code-panel d-w100p d-h100p"
     :class="`dtc-theme--${theme}`"
   >
-    <div class="dtc-code-panel__content dtc-theme__canvas">
+    <div class="dtc-theme__canvas">
       <dtc-selector selected="code">
         <template #code>
           <dtc-code-editor
@@ -22,7 +22,7 @@
         </template>
       </dtc-selector>
     </div>
-    <div class="dtc-code-panel__overlay d-d-flex d-ai-flex-end d-jc-flex-end d-pe-none">
+    <div class="d-d-flex d-ai-flex-end d-jc-flex-end d-pe-none">
       <div class="d-pr32 d-pb16 d-pe-auto">
         <dtc-code-panel-settings
           v-model:theme="theme"
@@ -35,9 +35,9 @@
 </template>
 
 <script setup>
-import DtcSelector from '@/src/components/selector';
+import DtcSelector from '@/src/components/selector/selector';
 import DtcCodePanelSettings from '@/src/components/code_panel/code_panel_settings';
-import DtcEventConsole from '@/src/components/event_console';
+import DtcEventConsole from '@/src/components/event_console/event_console';
 import DtcCodeEditor from '@/src/components/code_editor/code_editor';
 
 import {

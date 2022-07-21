@@ -1,5 +1,6 @@
 <template>
   <dt-checkbox
+    label-class="dtc-control-boolean"
     :checked="value"
     @input="e => emit(VALUE_UPDATE_EVENT, e)"
   >
@@ -30,3 +31,10 @@ export default {
   name: 'DtcControlBoolean',
 };
 </script>
+
+<style>
+.dtc-control-boolean {
+  color: var(--base--text-color);
+  font-size: var(--base--font-size);
+}
+</style>
