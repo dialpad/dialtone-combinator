@@ -1,0 +1,11 @@
+@color-element: #F92672;
+@color-attribute: #A6E22E;
+@color-string: #E6DB74;
+@color-value: #AE81FF;
+
+& {
+  --dtc-scheme-color-element: darken(@color-element, 10%);
+  --dtc-scheme-color-attribute: darken(@color-attribute, 15%);
+  --dtc-scheme-color-string: spin(darken(@color-string, 20%), -10%);
+  --dtc-scheme-color-value: darken(@color-value, 10%);
+}

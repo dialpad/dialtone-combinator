@@ -4,6 +4,7 @@
     class="dtc-code-editor d-d-flex d-fl-grow1"
     :class="[
       `dtc-code-editor-scheme--${scheme}`,
+      `dtc-code-editor-scheme--${scheme}--${theme}`,
     ]"
   >
     <div
@@ -143,6 +144,10 @@ export default {
 
 .dtc-code-editor-scheme--highlight {
   @import "@/src/assets/themes/scheme/highlight.less";
+}
+
+.dtc-code-editor-scheme--highlight--light {
+  @import "@/src/assets/themes/scheme/highlight_light.less";
 }
 
 .dtc-code-editor__editable {
