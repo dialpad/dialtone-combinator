@@ -4,7 +4,10 @@
     :class="`dtc-theme--${theme}`"
   >
     <div class="dtc-theme__canvas">
-      <dtc-selector selected="code">
+      <dtc-selector
+        selected="code"
+        :generate-label="generateLabel"
+      >
         <template #code>
           <dtc-code-editor
             :info="info"
@@ -15,10 +18,8 @@
             @update:options="e => emit(OPTIONS_UPDATE_EVENT, e)"
           />
         </template>
-        <template #console>
-          <dtc-event-console
-            ref="eventConsole"
-          />
+        <template #events>
+          <dtc-event-console ref="eventConsole" />
         </template>
       </dtc-selector>
     </div>
@@ -74,6 +75,13 @@ const theme = cachedRef(CODE_EDITOR_THEME_KEY, settings['code-editor']['default-
 const scheme = cachedRef(CODE_EDITOR_SCHEME_KEY, settings['code-editor']['default-scheme']);
 const verbose = cachedRef(CODE_EDITOR_VERBOSE_KEY, false);
 
+function generateLabel (slot, capitalCase) {
+  const label = capitalCase(slot);
+  switch (slot) {
+    case 'events': return `${label} (${eventConsole.value?.triggerCount})`;
+    default: return label;
+  }
+}
 </script>
 
 <script>

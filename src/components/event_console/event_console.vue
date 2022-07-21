@@ -14,13 +14,17 @@ import { flatten } from '@/src/lib/utils';
 import { stringify } from 'javascript-stringify';
 
 const text = ref('');
+const triggerCount = ref(0);
 
 defineExpose({
   trigger (event, value) {
     text.value = `${event}\n${text.value}`;
+    triggerCount.value += 1;
   },
+  triggerCount,
 });
 
+// TODO: Display the information nicely
 // eslint-disable-next-line no-unused-vars
 function stringifyValue (value) {
   return stringify(

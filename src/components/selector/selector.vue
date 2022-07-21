@@ -15,7 +15,7 @@
             :id="getId(slot)"
             :panel-id="getId(slot)"
           >
-            {{ capitalCase(slot) }}
+            {{ generateLabel(slot, capitalCase) }}
           </dt-tab>
         </template>
       </div>
@@ -49,6 +49,10 @@ const props = defineProps({
   selected: {
     type: String,
     default: undefined,
+  },
+  generateLabel: {
+    type: Function,
+    default: (slot, capitalCase) => capitalCase(slot),
   },
 });
 
