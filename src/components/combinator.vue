@@ -37,7 +37,7 @@ import documentation from '@/../dialtone-vue/dist/component-documentation.json';
 
 import { paramCase } from 'change-case';
 import { computed, reactive, ref } from 'vue';
-import { computedModel } from '@/src/lib/utils';
+import { computedModel } from '@/src/lib/utils_vue';
 
 const props = defineProps({
   component: {

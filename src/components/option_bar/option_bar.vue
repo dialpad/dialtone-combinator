@@ -48,17 +48,6 @@
           :control-selector="() => 'event'"
         />
       </dtc-option-bar-section>
-      <dtc-option-bar-section
-        v-if="directives"
-        heading="Directives"
-      >
-        <dtc-option-bar-members
-          :component="component"
-          :members="directives"
-          :values="options.directives"
-          :control-selector="() => 'directive'"
-        />
-      </dtc-option-bar-section>
     </ul>
   </div>
 </template>
@@ -98,15 +87,6 @@ const attributes = computed(() => {
       type: {
         name: attributeType,
       },
-    };
-  });
-});
-
-// Get directives to display from custom tag
-const directives = computed(() => {
-  return props.info.tags.directives?.map(directive => {
-    return {
-      name: directive.description,
     };
   });
 });

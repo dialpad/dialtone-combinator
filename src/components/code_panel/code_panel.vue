@@ -51,8 +51,8 @@ import {
   OPTIONS_UPDATE_EVENT,
 } from '@/src/lib/constants';
 import { ref } from 'vue';
-import { cachedRef } from '@/src/lib/utils';
 import settings from '@/src/settings.json';
+import { cachedRef } from '@/src/lib/utils_vue';
 
 defineProps({
   options: {

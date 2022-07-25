@@ -1,7 +1,7 @@
 <template>
   <dtc-control-string
     :label="label"
-    :value="value"
+    :value="value?.toString()"
     v-bind="args"
     @update:value="e => emit(VALUE_UPDATE_EVENT, e)"
   />
@@ -17,7 +17,7 @@ defineProps({
     required: true,
   },
   value: {
-    type: String,
+    type: undefined,
     default: undefined,
   },
   args: {

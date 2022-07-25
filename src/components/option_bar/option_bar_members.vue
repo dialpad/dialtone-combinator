@@ -9,9 +9,12 @@
           :type="controlSelector(member)"
           :name="member.name"
           :value="getMemberValue(member)"
+          :description="member.description"
+          :tags="member.tags"
           :args="{
             defaultValue: getMemberDefaultValue(member),
             validValues: member.values,
+            properties: member.properties,
           }"
           @update:value="e => emit(MEMBER_UPDATE_EVENT, {
             member,
