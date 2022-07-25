@@ -1,5 +1,5 @@
 <template>
-  <div class="dtc-renderer d-of-auto">
+  <div class="dtc-renderer d-of-auto d-d-flex d-jc-center d-ai-center d-w100p d-h100p">
     <component
       :is="component"
       v-bind="options.getMembers()"
@@ -19,9 +19,11 @@
 defineProps({
   component: {
     type: Object,
+    required: true,
   },
   options: {
     type: Object,
+    required: true,
   },
 });
 </script>
