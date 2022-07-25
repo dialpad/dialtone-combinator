@@ -1,6 +1,6 @@
 <template>
   <div class="dtc-root d-d-grid d-ba d-bc-black-900 d-h100p">
-    <div class="dtc-root__top d-grs1">
+    <div class="dtc-root__top d-grs1 d-bb d-bc-black-900">
       <dtc-renderer
         :component="component"
         :options="options"
@@ -14,7 +14,7 @@
         :info="info"
       />
     </div>
-    <div class="dtc-root__sidebar d-grs1 d-gr2">
+    <div class="dtc-root__sidebar d-grs1 d-gr2 d-bl d-bc-black-900">
       <dtc-option-bar
         v-model:options="options"
         :component="component"
