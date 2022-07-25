@@ -1,9 +1,6 @@
 <template>
-  <div
-    v-if="component && options"
-    class="dtc-root d-d-grid d-h100p"
-  >
-    <div class="dtc-root__top d-grs1 d-ba d-bc-black">
+  <div class="dtc-root d-d-grid d-ba d-bc-black-900 d-h100p">
+    <div class="dtc-root__top d-grs1">
       <dtc-renderer
         :component="component"
         :options="options"
@@ -103,6 +100,7 @@ export default {
 
 .dtc-root {
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  grid-template-rows: repeat(2, 1fr);
 }
 
 .dtc-root > * {

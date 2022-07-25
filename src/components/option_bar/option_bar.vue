@@ -1,5 +1,5 @@
 <template>
-  <div class="dtc-option-bar d-as-stretch d-of-y-auto d-w100p d-bgc-orange-200">
+  <div class="dtc-option-bar d-as-stretch d-of-y-auto d-bl d-bc-black-900 d-w100p">
     <ul class="d-ls-reset">
       <dtc-option-bar-section
         v-if="info.slots"
