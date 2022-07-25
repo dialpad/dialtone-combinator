@@ -58,7 +58,6 @@ import DtcOptionBarSection from './option_bar_section';
 
 import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
-import { parseAttributeTag } from '@/src/lib/parse';
 
 const props = defineProps({
   component: {
@@ -79,13 +78,19 @@ const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
 
 // Get HTML attributes to display from custom tag
 const attributes = computed(() => {
-  return props.info.tags.attributes?.map(attribute => {
-    // eslint-disable-next-line no-unused-vars
-    const [attributeName, attributeType] = parseAttributeTag(attribute.description);
+  const properties = props.info.tags.property;
+
+  if (!properties) {
+    return null;
+  }
+
+  return properties.filter(property => {
+    return property.description === 'attribute';
+  }).map(property => {
     return {
-      name: attributeName,
+      name: property.name,
       type: {
-        name: attributeType,
+        name: property.type.name,
       },
     };
   });
