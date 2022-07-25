@@ -3,18 +3,20 @@
     <dt-recipe-combobox-with-popover
       ref="combobox"
       content-width="anchor"
-      :list-aria-label="`${label} valid values`"
+      list-aria-label="Valid values"
       @select="e => onUpdate(validValues[e])"
       @opened="onOpen"
     >
       <template #input="{ inputProps, onInput }">
         <dtc-control-string
           v-bind="inputProps"
-          :label="label"
           :value="value"
           :warning="warning"
           @input="e => onInputInternal(e, onInput)"
         >
+          <template #default>
+            <slot />
+          </template>
           <template #icon>
             <icon-collapse v-if="open" />
             <icon-expand v-else />
@@ -61,10 +63,6 @@ import { computed, ref } from 'vue';
 const WARNING_MESSAGE = 'Unexpected value';
 
 const props = defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
   value: {
     type: String,
     default: undefined,

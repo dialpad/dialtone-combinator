@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-d-flex d-jc-space-between">
-      <span>{{ label }}</span>
+      <slot />
       <template
         v-for="(type, index) in types"
         :key="index"
@@ -21,10 +21,6 @@ import { DtBadge } from '@dialpad/dialtone-vue';
 import { computed } from 'vue';
 
 const props = defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
   properties: {
     type: Object,
     default: undefined,

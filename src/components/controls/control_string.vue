@@ -6,7 +6,9 @@
     @input="e => emit(VALUE_UPDATE_EVENT, e)"
   >
     <template #labelSlot>
-      {{ label }}
+      <span>
+        <slot />
+      </span>
     </template>
     <template #rightIcon>
       <slot name="icon" />
@@ -20,10 +22,6 @@ import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
 
 const props = defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
   value: {
     type: String,
     default: undefined,

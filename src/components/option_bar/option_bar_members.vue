@@ -6,7 +6,7 @@
     >
       <div class="d-py6">
         <dtc-control
-          :type="controlSelector(member)"
+          :types="typeSelector(member)"
           :name="member.name"
           :value="getMemberValue(member)"
           :description="member.description"
@@ -44,9 +44,9 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  controlSelector: {
+  typeSelector: {
     type: Function,
-    default: () => undefined,
+    default: () => [],
   },
 });
 

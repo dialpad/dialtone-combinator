@@ -1,10 +1,11 @@
 <template>
   <dtc-control-string
-    :label="label"
     :value="value?.toString()"
     v-bind="args"
     @update:value="e => emit(VALUE_UPDATE_EVENT, e)"
-  />
+  >
+    <slot />
+  </dtc-control-string>
 </template>
 
 <script setup>
@@ -12,10 +13,6 @@ import DtcControlString from './control_string';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 
 defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
   value: {
     type: undefined,
     default: undefined,

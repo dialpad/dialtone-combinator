@@ -7,7 +7,7 @@
     @input="e => emit(VALUE_UPDATE_EVENT, e)"
   >
     <template #labelSlot>
-      {{ label }}
+      <slot />
     </template>
   </dt-input>
 </template>
@@ -17,10 +17,6 @@ import { DtInput } from '@dialpad/dialtone-vue';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 
 defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
   value: {
     type: String,
     default: undefined,

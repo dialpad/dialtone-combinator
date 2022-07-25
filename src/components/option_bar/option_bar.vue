@@ -9,7 +9,7 @@
           :component="component"
           :members="info.slots"
           :values="options.slots"
-          :control-selector="() => 'slot'"
+          :type-selector="() => ['slot']"
           @update:member="updateSlots"
         />
       </dtc-option-bar-section>
@@ -21,7 +21,7 @@
           :component="component"
           :members="info.props"
           :values="options.props"
-          :control-selector="prop => prop.type.name"
+          :type-selector="prop => extractTypes(prop.type.name)"
           @update:member="updateProps"
         />
       </dtc-option-bar-section>
@@ -33,7 +33,7 @@
           :component="component"
           :members="attributes"
           :values="options.attributes"
-          :control-selector="attribute => attribute.type.name"
+          :type-selector="attribute => extractTypes(attribute.type.name)"
           @update:member="updateAttributes"
         />
       </dtc-option-bar-section>
@@ -45,7 +45,7 @@
           :component="component"
           :members="info.events"
           :values="options.events"
-          :control-selector="() => 'event'"
+          :type-selector="() => ['event']"
         />
       </dtc-option-bar-section>
     </ul>
@@ -76,7 +76,6 @@ const props = defineProps({
 
 const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
 
-// Get HTML attributes to display from custom tag
 const attributes = computed(() => {
   const properties = props.info.tags.property;
 
@@ -96,6 +95,10 @@ const attributes = computed(() => {
   });
 });
 
+function extractTypes (typeString) {
+  return typeString.split('|').map(type => type.trim());
+}
+
 function updateMember (memberType, { member, value }) {
   emit(OPTIONS_UPDATE_EVENT, (options) => {
     options[memberType][member.name] = value;
@@ -112,3 +115,9 @@ export default {
   name: 'DtcOptionBar',
 };
 </script>
+
+<style>
+  .dtc-option-bar {
+    background-color: #FCFCFC;
+  }
+</style>
