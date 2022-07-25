@@ -1,7 +1,7 @@
 <template>
-  <div v-if="members && info">
+  <div>
     <template
-      v-for="[name, { value, prop }] in attributes"
+      v-for="[name, { value, prop }] in visibleMembers"
       :key="name"
     >
       <div>
@@ -50,7 +50,7 @@ const internalProps = defineProps({
   },
 });
 
-const attributes = computed(() => {
+const visibleMembers = computed(() => {
   const attributes = mapAttributes(internalProps.members);
   return attributes.filter(([name, member]) => visible(name, member));
 });
@@ -73,21 +73,13 @@ function visible (name, member) {
 }
 
 function filterProp (value, defaultValue) {
-  if (internalProps.verbose) {
-    return true;
-  }
-
-  if (!defaultValue) {
-    return false;
-  }
+  if (internalProps.verbose) { return true; }
+  if (!defaultValue) { return false; }
 
   return value !== parseJsonValue(defaultValue);
 }
 
 function filterAttribute (value) {
-  if (internalProps.verbose) {
-    return true;
-  }
   return !!value;
 }
 
