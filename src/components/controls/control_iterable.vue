@@ -9,20 +9,24 @@
         :key="getId(index)"
       >
         <div class="d-d-flex">
+          <div class="d-fl-grow1">
+            <dt-list-item
+              navigation-type="tab"
+            >
+              <slot
+                :item="item"
+                :update="(e) => updateItem(index, e)"
+              />
+            </dt-list-item>
+          </div>
           <dt-button
-            class="d-p0 d-ps-relative d-t4"
+            class="d-p0"
             importance="clear"
+            size="xs"
             @click="() => removeItem(index)"
           >
             <IconRemove />
           </dt-button>
-          <div class="d-fl-grow1">
-            <slot
-              :item="item"
-              :update="(e) => updateItem(index, e)"
-            />
-          </div>
-          <span class="d-as-flex-end d-fs28 d-ps-relative d-t8">,</span>
         </div>
       </template>
       <div>
@@ -44,7 +48,7 @@
 <script setup>
 import IconAdd from '%/IconAddCircleOutline';
 import IconRemove from '%/IconRemove';
-import { DtButton } from '@dialpad/dialtone-vue';
+import { DtButton, DtListItem } from '@dialpad/dialtone-vue';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { idMap } from '@/src/lib/utils_vue';
 

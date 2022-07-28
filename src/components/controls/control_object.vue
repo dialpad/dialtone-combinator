@@ -12,15 +12,15 @@
         {
       </template>
       <template #default="{ item, update }">
-        <div>
+        <div class="d-d-flex">
           <dtc-control-string
             :value="item[0]"
-            @update:value="e => updateEntryKey(e, item[1], update)"
+            @update:value="e => updateEntry(e, item[1], update)"
           />
-          <span>:</span>
+          <span class="d-px6 d-ps-relative d-t6">:</span>
           <dtc-control-dynamic
             :value="item[1]"
-            @update:value="e => updateEntryValue(e, item[0], update)"
+            @update:value="e => updateEntry(item[0], e, update)"
           />
         </div>
       </template>
@@ -55,16 +55,21 @@ const entries = computed(() => {
   return Object.entries(props.value);
 });
 
+function generateNextKey () {
+  return Math.max(
+    -1,
+    ...Object.keys(props.value)
+      .map(key => parseInt(key))
+      .filter(key => !isNaN(key)),
+  ) + 1;
+}
+
 function generateEntry () {
-  return [null, null];
+  return [generateNextKey(), null];
 }
 
-function updateEntryKey (e, value, updateItem) {
-  updateItem([e, value]);
-}
-
-function updateEntryValue (e, key, updateItem) {
-  updateItem([key, e]);
+function updateEntry (key, value, updateItem) {
+  updateItem([key, value]);
 }
 
 function updateValue (e) {

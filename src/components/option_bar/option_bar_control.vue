@@ -98,8 +98,9 @@ const control = computed(() => {
 
   if (types.includes('event')) { return DtcControlEvent; }
   if (types.includes('slot')) { return DtcControlSlot; }
-  if (types.includes('object')) { return DtcControlObject; }
   if (types.includes('array')) { return DtcControlArray; }
+  if (types.includes('object')) { return DtcControlObject; }
+
   if (types.includes('number')) { return DtcControlNumber; }
   if (types.includes('boolean')) { return DtcControlBoolean; }
   if (types.includes('string')) {
