@@ -12,7 +12,7 @@
     </div>
     <component
       :is="control"
-      :value="value !== '' ? value : [ 123, 'abc', true, null ]"
+      :value="value"
       v-bind="args"
       @update:value="e => emit(VALUE_UPDATE_EVENT, e)"
     >
@@ -38,6 +38,7 @@
 </template>
 
 <script setup>
+import DtcControlObject from '@/src/components/controls/control_object';
 import DtcControlArray from '@/src/components/controls/control_array';
 import DtcControlEvent from '@/src/components/controls/control_event';
 import DtcControlSlot from '@/src/components/controls/control_slot';
@@ -97,6 +98,7 @@ const control = computed(() => {
 
   if (types.includes('event')) { return DtcControlEvent; }
   if (types.includes('slot')) { return DtcControlSlot; }
+  if (types.includes('object')) { return DtcControlObject; }
   if (types.includes('array')) { return DtcControlArray; }
   if (types.includes('number')) { return DtcControlNumber; }
   if (types.includes('boolean')) { return DtcControlBoolean; }
