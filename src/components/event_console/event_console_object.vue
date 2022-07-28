@@ -11,7 +11,7 @@
         v-for="(field, key) in clone"
         :key="key"
       >
-        <dtc-event-console-entry
+        <dtc-event-console-pair
           :name="key"
           :value="field"
         />
@@ -27,7 +27,7 @@
 <script setup>
 import { flatten } from '@/src/lib/utils';
 import { computed } from 'vue';
-import DtcEventConsoleEntry from '@/src/components/event_console/event_console_entry';
+import DtcEventConsolePair from '@/src/components/event_console/event_console_pair';
 import DtcEventConsoleLazyLoad from '@/src/components/event_console/event_console_lazy_load';
 
 const props = defineProps({

@@ -12,7 +12,7 @@
     </div>
     <component
       :is="control"
-      :value="value"
+      :value="value !== '' ? value : [ 123, 'abc', true, null ]"
       v-bind="args"
       @update:value="e => emit(VALUE_UPDATE_EVENT, e)"
     >
@@ -38,9 +38,10 @@
 </template>
 
 <script setup>
+import DtcControlArray from '@/src/components/controls/control_array';
 import DtcControlEvent from '@/src/components/controls/control_event';
 import DtcControlSlot from '@/src/components/controls/control_slot';
-import DtcControlSelection from '@/src/components/controls/control_selection';
+import DtcControlCombo from '@/src/components/controls/control_combo';
 import DtcControlNumber from '@/src/components/controls/control_number';
 import DtcControlString from '@/src/components/controls/control_string';
 import DtcControlBoolean from '@/src/components/controls/control_boolean';
@@ -94,14 +95,16 @@ const showModelTag = computed(() => {
 const control = computed(() => {
   const types = props.types;
 
-  if (types.includes('boolean')) { return DtcControlBoolean; }
-
-  if (props.args?.validValues) { return DtcControlSelection; }
-
   if (types.includes('event')) { return DtcControlEvent; }
   if (types.includes('slot')) { return DtcControlSlot; }
+  if (types.includes('array')) { return DtcControlArray; }
   if (types.includes('number')) { return DtcControlNumber; }
-  if (types.includes('string')) { return DtcControlString; }
+  if (types.includes('boolean')) { return DtcControlBoolean; }
+  if (types.includes('string')) {
+    return props.args?.validValues
+      ? DtcControlCombo
+      : DtcControlString;
+  }
 
   return DtcControlBase;
 });
@@ -113,6 +116,6 @@ onMounted(() => {
 
 <script>
 export default {
-  name: 'DtcControl',
+  name: 'DtcOptionBarControl',
 };
 </script>

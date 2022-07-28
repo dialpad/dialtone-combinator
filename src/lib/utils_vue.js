@@ -1,5 +1,6 @@
 import { paramCase } from 'change-case';
 import { computed, ref } from 'vue';
+import { getUniqueString } from '@/src/lib/utils';
 
 export function cachedRef (key, defaultValue) {
   const reference = ref(JSON.parse(window.localStorage.getItem(key)) || defaultValue);
@@ -19,10 +20,6 @@ export function computedModel (model, handler) {
   });
 }
 
-export function getTagArray (tags) {
-  return Object.values(tags).flat();
-}
-
 export function getPropLabel (name, tags) {
   if (!tags) {
     return paramCase(name);
@@ -35,6 +32,40 @@ export function getPropLabel (name, tags) {
     : name;
 
   return paramCase(label);
+}
+
+export function idMap (prefix) {
+  const map = [];
+
+  function add () {
+    const id = getUniqueString(prefix);
+    map.push(id);
+    return id;
+  }
+
+  function remove (index) {
+    const [id] = map.splice(index, 1);
+    return id;
+  }
+
+  function get (index) {
+    let id = map[index];
+    if (!id) {
+      id = getUniqueString(prefix);
+      map.splice(index, 0, id);
+    }
+    return id;
+  }
+
+  return {
+    addId: add,
+    removeId: remove,
+    getId: get,
+  };
+}
+
+export function getTagArray (tags) {
+  return Object.values(tags).flat();
 }
 
 export function hasModelTag (tags) {

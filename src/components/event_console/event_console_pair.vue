@@ -56,6 +56,6 @@ const component = computed(() => {
 
 <script>
 export default {
-  name: 'DtcEventConsoleEntry',
+  name: 'DtcEventConsolePair',
 };
 </script>

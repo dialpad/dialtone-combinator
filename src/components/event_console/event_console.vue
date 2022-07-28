@@ -4,7 +4,7 @@
       v-for="(entry, index) in entries"
       :key="entry.key"
     >
-      <dtc-event-console-entry
+      <dtc-event-console-pair
         :name="entry.event"
         :value="index < cacheSize
           ? entry.value
@@ -15,16 +15,16 @@
             class="d-fs10 d-px6 d-ps-relative d-t2"
           />
         </template>
-      </dtc-event-console-entry>
+      </dtc-event-console-pair>
     </template>
   </div>
 </template>
 
 <script setup>
 import IconArrowForward from '%/IconArrowForward';
-import DtcEventConsoleEntry from '@/src/components/event_console/event_console_entry';
+import DtcEventConsolePair from '@/src/components/event_console/event_console_pair';
 
-import { computed, defineExpose, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { flatten } from '@/src/lib/utils';
 import { stringify } from 'javascript-stringify';
 

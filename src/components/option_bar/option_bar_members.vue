@@ -5,7 +5,7 @@
       :key="member.name"
     >
       <div class="d-py6">
-        <dtc-control
+        <DtcOptionBarControl
           :types="typeSelector(member)"
           :name="member.name"
           :value="getMemberValue(member)"
@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import DtcControl from './option_bar_control';
+import DtcOptionBarControl from './option_bar_control';
 import { MEMBER_UPDATE_EVENT } from '@/src/lib/constants';
 import { parseJsonValue } from '@/src/lib/parse';
 

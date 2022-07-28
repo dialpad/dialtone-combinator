@@ -11,7 +11,7 @@
         v-for="(field, key) in value"
         :key="key"
       >
-        <dtc-event-console-entry
+        <dtc-event-console-pair
           :name="key.toString()"
           :value="field"
         />
@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import DtcEventConsoleEntry from '@/src/components/event_console/event_console_entry';
+import DtcEventConsolePair from '@/src/components/event_console/event_console_pair';
 import DtcEventConsoleLazyLoad from '@/src/components/event_console/event_console_lazy_load';
 
 const props = defineProps({
@@ -44,6 +44,6 @@ function onToggle (e) {
 
 <script>
 export default {
-  name: 'DtcEventConsoleObject',
+  name: 'DtcEventConsoleArray',
 };
 </script>

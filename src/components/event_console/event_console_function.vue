@@ -16,6 +16,6 @@ defineProps({
 
 <script>
 export default {
-  name: 'DtcEventConsoleObject',
+  name: 'DtcEventConsoleFunction',
 };
 </script>

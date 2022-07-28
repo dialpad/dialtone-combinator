@@ -42,6 +42,6 @@ function onToggle (e) {
 
 <script>
 export default {
-  name: 'DtcEventConsoleObject',
+  name: 'DtcEventConsoleElement',
 };
 </script>
