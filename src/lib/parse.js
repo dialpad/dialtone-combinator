@@ -5,7 +5,7 @@ export function parseDocDefault (defaultInfo) {
     : parseDocValue(defaultInfo.value);
 }
 
-function parseDocValue (value) {
+export function parseDocValue (value) {
   return JSON.parse(value.replaceAll('\'', '"'));
 }
 

@@ -71,7 +71,6 @@ function updateEntry (key, value, updateItem) {
 function updateValue (e) {
   emit(VALUE_UPDATE_EVENT, Object.fromEntries(e));
 }
-
 </script>
 
 <script>

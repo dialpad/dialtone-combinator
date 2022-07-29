@@ -53,7 +53,8 @@ import { DtBadge, DtButton } from '@dialpad/dialtone-vue';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed, onMounted, ref } from 'vue';
 import { getPropLabel, hasModelTag } from '@/src/lib/utils_vue';
-import { getControlComponent } from '@/src/lib/utils_control';
+import { controlMap, getControlComponent } from '@/src/lib/utils_control';
+import { convert } from '@/src/lib/convert';
 
 const props = defineProps({
   name: {
@@ -136,8 +137,9 @@ function getBadgeColor (type) {
 
 function updateSelectedType (type) {
   if (selectedType.value === type) { return; }
+  const value = convert(selectedType.value, type, props.value) ?? controlMap[type].default;
   selectedType.value = type;
-  updateValue(null);
+  updateValue(value);
 }
 
 function updateValue (e) {
