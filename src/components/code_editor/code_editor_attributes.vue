@@ -33,7 +33,7 @@ import DtcCodeEditorIndent from './code_editor_indent';
 
 import { computed } from 'vue';
 import { getPropLabel } from '@/src/lib/utils_vue';
-import { parseJsonValue } from '@/src/lib/parse';
+import { parseDocDefault } from '@/src/lib/parse';
 
 const internalProps = defineProps({
   info: {
@@ -68,15 +68,18 @@ function mapAttributes (members) {
 
 function visible (name, member) {
   return member.prop
-    ? filterProp(member.value, member.prop.defaultValue.value)
+    ? filterProp(member.value, member.prop.defaultValue)
     : filterAttribute(member.value);
 }
 
-function filterProp (value, defaultValue) {
+function filterProp (value, defaultInfo) {
   if (internalProps.verbose) { return true; }
-  if (!defaultValue) { return false; }
+  if (!defaultInfo) { return false; }
 
-  return value !== parseJsonValue(defaultValue);
+  const defaultString = JSON.stringify(parseDocDefault(defaultInfo));
+  const valueString = JSON.stringify(value);
+
+  return defaultString !== valueString;
 }
 
 function filterAttribute (value) {

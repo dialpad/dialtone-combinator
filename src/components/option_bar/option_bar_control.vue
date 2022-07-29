@@ -2,17 +2,27 @@
   <div>
     <div class="d-pb1">
       <template
-        v-for="type in types"
+        v-for="type in validTypes"
         :key="type"
       >
         <span class="d-pr2">
-          <dt-badge :text="type" />
+          <dt-button
+            class="d-p0"
+            importance="clear"
+            @click="() => updateSelectedType(type)"
+          >
+            <dt-badge
+              :color="getBadgeColor(type)"
+              :text="type"
+            />
+          </dt-button>
         </span>
       </template>
     </div>
     <component
       :is="control"
       :value="value"
+      :valid-values="validValues"
       v-bind="args"
       @update:value="e => emit(VALUE_UPDATE_EVENT, e)"
     >
@@ -38,26 +48,14 @@
 </template>
 
 <script setup>
-import DtcControlObject from '@/src/components/controls/control_object';
-import DtcControlArray from '@/src/components/controls/control_array';
-import DtcControlEvent from '@/src/components/controls/control_event';
-import DtcControlSlot from '@/src/components/controls/control_slot';
-import DtcControlCombo from '@/src/components/controls/control_combo';
-import DtcControlNumber from '@/src/components/controls/control_number';
-import DtcControlString from '@/src/components/controls/control_string';
-import DtcControlBoolean from '@/src/components/controls/control_boolean';
-import DtcControlBase from '@/src/components/controls/control_base';
-import { DtBadge } from '@dialpad/dialtone-vue';
+import { DtBadge, DtButton } from '@dialpad/dialtone-vue';
 
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { getPropLabel, hasModelTag } from '@/src/lib/utils_vue';
+import { getControlComponent } from '@/src/lib/utils_control';
 
 const props = defineProps({
-  types: {
-    type: Array,
-    required: true,
-  },
   name: {
     type: String,
     required: true,
@@ -65,6 +63,14 @@ const props = defineProps({
   value: {
     type: undefined,
     default: undefined,
+  },
+  validValues: {
+    type: Array,
+    default: undefined,
+  },
+  validTypes: {
+    type: Array,
+    required: true,
   },
   description: {
     type: String,
@@ -74,6 +80,10 @@ const props = defineProps({
     type: Object,
     default: undefined,
   },
+
+  /**
+   * Args bind directly to the control.
+   */
   args: {
     type: Object,
     default: undefined,
@@ -93,27 +103,49 @@ const showModelTag = computed(() => {
     : false;
 });
 
-const control = computed(() => {
-  const types = props.types;
+const selectedType = ref(getDefaultType());
 
-  if (types.includes('event')) { return DtcControlEvent; }
-  if (types.includes('slot')) { return DtcControlSlot; }
-  if (types.includes('array')) { return DtcControlArray; }
-  if (types.includes('object')) { return DtcControlObject; }
+function getDefaultType () {
+  const value = props.value;
+  let type = typeof value;
 
-  if (types.includes('number')) { return DtcControlNumber; }
-  if (types.includes('boolean')) { return DtcControlBoolean; }
-  if (types.includes('string')) {
-    return props.args?.validValues
-      ? DtcControlCombo
-      : DtcControlString;
+  switch (type) {
+    case 'object': {
+      type = Array.isArray(value)
+        ? 'array'
+        : 'object';
+    }
   }
 
-  return DtcControlBase;
+  return props.validTypes.includes(type)
+    ? type
+    : props.validTypes[0];
+}
+
+const control = computed(() => {
+  return getControlComponent(selectedType.value, {
+    validValues: props.validValues,
+  });
 });
 
+function getBadgeColor (type) {
+  return type === selectedType.value
+    ? 'purple-100'
+    : null;
+}
+
+function updateSelectedType (type) {
+  if (selectedType.value === type) { return; }
+  selectedType.value = type;
+  updateValue(null);
+}
+
+function updateValue (e) {
+  emit(VALUE_UPDATE_EVENT, e);
+}
+
 onMounted(() => {
-  emit(VALUE_UPDATE_EVENT, props.value);
+  updateValue(props.value);
 });
 </script>
 

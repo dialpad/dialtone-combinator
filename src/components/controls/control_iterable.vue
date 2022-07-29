@@ -8,7 +8,7 @@
         v-for="(item, index) in value"
         :key="getId(index)"
       >
-        <div class="d-d-flex">
+        <div class="d-d-flex d-my1">
           <div class="d-fl-grow1">
             <dt-list-item
               navigation-type="tab"
@@ -65,7 +65,7 @@ const props = defineProps({
 
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
-const { addId, removeId, getId } = idMap();
+const { addId, removeId, getId } = idMap('dtc-control-iterable-item');
 
 function updateItem (index, item) {
   const items = [...props.value];

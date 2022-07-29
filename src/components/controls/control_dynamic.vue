@@ -2,9 +2,9 @@
   <div>
     <div>
       <dtc-control-selection
-        :value="selectedControlType"
+        :value="selectedControlName"
         :selections="controlSelections"
-        @update:value="updateControlType"
+        @update:value="updateControlName"
       />
     </div>
     <div class="d-ta-right">
@@ -20,10 +20,8 @@
 
 <script setup>
 import DtcControlSelection from './control_selection';
-import DtcControlBoolean from './control_boolean';
-import DtcControlNumber from './control_number';
-import DtcControlString from './control_string';
 
+import { controlMap } from '@/src/lib/utils_control';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed, ref } from 'vue';
 
@@ -32,47 +30,43 @@ const props = defineProps({
     type: undefined,
     default: undefined,
   },
-  args: {
-    type: Object,
-    default: undefined,
-  },
 });
 
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
-const controlMap = {
+const validSelections = [
+  'null',
+  'string',
+  'number',
+  'boolean',
+];
+
+const controlSelectionMap = {
   null: {
-    control: null,
-    default: null,
+    control: () => null,
+    default: () => null,
   },
-  string: {
-    control: DtcControlString,
-    default: String(),
-  },
-  number: {
-    control: DtcControlNumber,
-    default: Number(),
-  },
-  boolean: {
-    control: DtcControlBoolean,
-    default: Boolean(),
-  },
+  ...Object.fromEntries(
+    Object.entries(controlMap).filter(([controlName]) => {
+      return validSelections.includes(controlName);
+    }),
+  ),
 };
 
-const controlSelections = computed(() => Object.keys(controlMap));
-const selectedControlType = ref(
+const controlSelections = computed(() => Object.keys(controlSelectionMap));
+const selectedControlName = ref(
   props.value
     ? typeof props.value
     : 'null',
 );
 
 const control = computed(() => {
-  return controlMap[selectedControlType.value].control;
+  return controlSelectionMap[selectedControlName.value].component();
 });
 
-function updateControlType (e) {
-  selectedControlType.value = e;
-  updateValue(controlMap[e].default);
+function updateControlName (e) {
+  selectedControlName.value = e;
+  updateValue(controlSelectionMap[e].default);
 }
 
 function updateValue (e) {

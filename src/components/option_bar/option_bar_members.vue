@@ -6,14 +6,14 @@
     >
       <div class="d-py6">
         <DtcOptionBarControl
-          :types="typeSelector(member)"
           :name="member.name"
           :value="getMemberValue(member)"
+          :valid-values="member.values"
+          :valid-types="typeSelector(member)"
           :description="member.description"
           :tags="member.tags"
           :args="{
             defaultValue: getMemberDefaultValue(member),
-            validValues: member.values,
             properties: member.properties,
           }"
           @update:value="e => emit(MEMBER_UPDATE_EVENT, {
@@ -29,7 +29,7 @@
 <script setup>
 import DtcOptionBarControl from './option_bar_control';
 import { MEMBER_UPDATE_EVENT } from '@/src/lib/constants';
-import { parseJsonValue } from '@/src/lib/parse';
+import { parseDocDefault } from '@/src/lib/parse';
 
 const props = defineProps({
   component: {
@@ -57,9 +57,9 @@ function getMemberValue (member) {
 }
 
 function getMemberDefaultValue (member) {
-  return member.defaultValue?.value
-    ? parseJsonValue(member.defaultValue.value)
-    : member.defaultValue;
+  const defaultInfo = member.defaultValue;
+  if (!defaultInfo) { return undefined; }
+  return parseDocDefault(defaultInfo);
 }
 </script>
 

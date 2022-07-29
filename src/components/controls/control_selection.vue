@@ -31,10 +31,6 @@ const props = defineProps({
     type: Function,
     default: (value) => value.toString(),
   },
-  args: {
-    type: Object,
-    default: undefined,
-  },
 });
 
 const emit = defineEmits([VALUE_UPDATE_EVENT]);

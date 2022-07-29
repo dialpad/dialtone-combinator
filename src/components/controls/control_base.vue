@@ -1,7 +1,6 @@
 <template>
   <dtc-control-string
     :value="value?.toString()"
-    v-bind="args"
     @update:value="e => emit(VALUE_UPDATE_EVENT, e)"
   >
     <slot />
@@ -15,10 +14,6 @@ import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 defineProps({
   value: {
     type: undefined,
-    default: undefined,
-  },
-  args: {
-    type: Object,
     default: undefined,
   },
 });
