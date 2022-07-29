@@ -131,7 +131,7 @@ const control = computed(() => {
 function getBadgeColor (type) {
   return type === selectedType.value
     ? 'purple-100'
-    : null;
+    : 'base';
 }
 
 function updateSelectedType (type) {

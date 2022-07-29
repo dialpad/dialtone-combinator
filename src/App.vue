@@ -1,6 +1,6 @@
 <template>
   <Combinator
-    :component="components.DtButton"
+    :component="components.DtCheckbox"
   />
 </template>
 

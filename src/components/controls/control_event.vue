@@ -1,13 +1,15 @@
 <template>
   <div>
-    <div class="d-d-flex d-jc-space-between">
+    <div>
       <slot />
       <template
         v-for="(type, index) in types"
         :key="index"
       >
-        <span class="d-px6">
-          <dt-badge class="d-ps-relative d-b2">
+        <span class="d-ps-relative d-b2">
+          <dt-badge
+            color="black-700"
+          >
             {{ type }}
           </dt-badge>
         </span>

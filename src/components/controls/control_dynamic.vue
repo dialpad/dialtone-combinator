@@ -43,7 +43,7 @@ const validSelections = [
 
 const controlSelectionMap = {
   null: {
-    control: () => null,
+    component: () => null,
     default: () => null,
   },
   ...Object.fromEntries(
