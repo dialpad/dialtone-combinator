@@ -19,7 +19,7 @@
               'dtc-scheme__value': useBindOperator(value),
             }"
           >
-            {{ stringifyDocValue(value) }}
+            {{ stringifyValue(value) }}
           </span>
           <span class="dtc-scheme__string">"</span>
         </span>
@@ -98,6 +98,12 @@ function useShortSyntax (value) {
 
 function useBindOperator (value) {
   return !useShortSyntax(value) && typeof value !== 'string';
+}
+
+function stringifyValue (value) {
+  return useBindOperator(value)
+    ? stringifyDocValue(value)
+    : value.toString();
 }
 </script>
 
