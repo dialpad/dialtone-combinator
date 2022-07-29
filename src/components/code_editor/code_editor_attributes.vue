@@ -19,7 +19,7 @@
               'dtc-scheme__value': useBindOperator(value),
             }"
           >
-            {{ value }}
+            {{ stringifyDocValue(value) }}
           </span>
           <span class="dtc-scheme__string">"</span>
         </span>
@@ -33,7 +33,7 @@ import DtcCodeEditorIndent from './code_editor_indent';
 
 import { computed } from 'vue';
 import { getPropLabel } from '@/src/lib/utils_vue';
-import { parseDocDefault } from '@/src/lib/parse';
+import { parseDocDefault, stringifyDocValue } from '@/src/lib/parse';
 
 const internalProps = defineProps({
   info: {
