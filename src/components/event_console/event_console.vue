@@ -25,8 +25,6 @@ import IconArrowForward from '%/IconArrowForward';
 import DtcEventConsolePair from '@/src/components/event_console/event_console_pair';
 
 import { computed, ref } from 'vue';
-import { flatten } from '@/src/lib/utils';
-import { stringify } from 'javascript-stringify';
 
 defineProps({
   cacheSize: {
@@ -48,19 +46,6 @@ defineExpose({
   },
   entryCount: computed(() => entries.value.length),
 });
-
-// TODO: Display the information nicely
-// eslint-disable-next-line no-unused-vars
-function stringifyValue (value) {
-  return stringify(
-    flatten(value),
-    undefined,
-    2,
-    {
-      maxDepth: 1,
-    },
-  );
-}
 </script>
 
 <script>

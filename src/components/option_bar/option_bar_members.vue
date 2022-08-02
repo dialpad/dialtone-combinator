@@ -12,9 +12,9 @@
           :valid-types="typeSelector(member)"
           :description="member.description"
           :tags="member.tags"
+          :properties="member.properties"
           :args="{
             defaultValue: getMemberDefaultValue(member),
-            properties: member.properties,
           }"
           @update:value="e => emit(MEMBER_UPDATE_EVENT, {
             member,

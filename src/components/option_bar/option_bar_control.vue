@@ -2,7 +2,7 @@
   <div>
     <div class="d-pb1">
       <template
-        v-for="type in validTypes"
+        v-for="(badge, type) in badges"
         :key="type"
       >
         <span class="d-pr2">
@@ -12,8 +12,8 @@
             @click="() => updateSelectedType(type)"
           >
             <dt-badge
+              :text="badge.label"
               :color="getBadgeColor(type)"
-              :text="type"
             />
           </dt-button>
         </span>
@@ -81,9 +81,12 @@ const props = defineProps({
     type: Object,
     default: undefined,
   },
-
+  properties: {
+    type: Object,
+    default: undefined,
+  },
   /**
-   * Args bind directly to the control.
+   * Args to bind directly to the control.
    */
   args: {
     type: Object,
@@ -95,6 +98,16 @@ const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
 const label = computed(() => {
   return getPropLabel(props.name, props.tags);
+});
+
+const badges = computed(() => {
+  return {
+    ...Object.fromEntries(
+      props.validTypes.map(type => {
+        return [type, getBadge(type)];
+      }),
+    ),
+  };
 });
 
 const showModelTag = computed(() => {
@@ -129,10 +142,27 @@ const control = computed(() => {
   });
 });
 
-function getBadgeColor (type) {
-  return type === selectedType.value
+function getBadge (type) {
+  switch (type) {
+    case 'event': return {
+      label: getPropertyTypes()?.[0],
+    };
+    default: return {
+      label: type,
+    };
+  }
+}
+
+function getBadgeColor (badgeType) {
+  return badgeType === selectedType.value
     ? 'purple-100'
     : 'base';
+}
+
+function getPropertyTypes () {
+  return props.properties?.map(property => {
+    return property.type?.names;
+  }).flat();
 }
 
 function updateSelectedType (type) {

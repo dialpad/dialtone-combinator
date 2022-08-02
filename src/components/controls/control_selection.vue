@@ -27,7 +27,7 @@ const props = defineProps({
     type: Array,
     default: undefined,
   },
-  labelGenerator: {
+  generateLabel: {
     type: Function,
     default: (value) => value.toString(),
   },
@@ -37,7 +37,7 @@ const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
 const options = computed(() => {
   return props.selections.map(selection => {
-    return { value: selection, label: props.labelGenerator(selection) };
+    return { value: selection, label: props.generateLabel(selection) };
   });
 });
 </script>

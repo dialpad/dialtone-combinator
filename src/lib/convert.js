@@ -12,6 +12,16 @@ const convertMap = {
   string: {
     object: parseDocValue,
     array: parseDocValue,
+    number: parseInt,
+    boolean: stringToBoolean,
+  },
+  number: {
+    string: numberToString,
+    boolean: numberToBoolean,
+  },
+  boolean: {
+    string: booleanToString,
+    number: booleanToNumber,
   },
 };
 
@@ -24,8 +34,29 @@ function objectToArray (object) {
 }
 
 function arrayToObject (array) {
-  console.log(array);
   return {
     ...array,
   };
+}
+
+function stringToBoolean (string) {
+  return string === 'true';
+}
+
+function numberToString (number) {
+  return number
+    ? number.toString()
+    : null;
+}
+
+function numberToBoolean (number) {
+  return number === 1;
+}
+
+function booleanToString (boolean) {
+  return boolean ? 'true' : 'false';
+}
+
+function booleanToNumber (boolean) {
+  return boolean ? 1 : 0;
 }
