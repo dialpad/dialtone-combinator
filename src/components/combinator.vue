@@ -30,7 +30,7 @@ import DtcRenderer from './renderer/renderer';
 import DtcCodePanel from '@/src/components/code_panel/code_panel';
 
 // TODO: Temporary for testing
-import documentation from '@/../dialtone-vue/dist/component-documentation.json';
+import documentation from '@/src/assets/component-documentation.json';
 
 import { paramCase } from 'change-case';
 import { computed, reactive, ref } from 'vue';

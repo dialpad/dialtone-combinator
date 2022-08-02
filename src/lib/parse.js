@@ -9,10 +9,9 @@ export function parseDocValue (value) {
   return JSON.parse(value.replaceAll('\'', '"'));
 }
 
-// TODO: IDK better way to do this rn?
-function parseDocFunc (value) {
-  // eslint-disable-next-line no-eval
-  return eval(`(${value})`)();
+// TODO: Properly set default value from func
+function parseDocFunc () {
+  return null;
 }
 
 export function stringifyDocValue (value) {
