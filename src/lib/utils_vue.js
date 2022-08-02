@@ -20,20 +20,6 @@ export function computedModel (model, handler) {
   });
 }
 
-export function getPropLabel (name, tags) {
-  if (!tags) {
-    return paramCase(name);
-  }
-
-  const modelTag = getTagArray(tags).find(tag => tag.title === 'model');
-
-  const label = modelTag
-    ? modelTag.description
-    : name;
-
-  return paramCase(label);
-}
-
 export function idMap (prefix) {
   const map = [];
 
@@ -64,10 +50,6 @@ export function idMap (prefix) {
   };
 }
 
-export function getTagArray (tags) {
-  return Object.values(tags).flat();
-}
-
-export function hasModelTag (tags) {
-  return getTagArray(tags).some(tag => tag.title === 'model');
+export function getPropLabel (name) {
+  return paramCase(name);
 }

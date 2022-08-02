@@ -2,7 +2,7 @@
   <div class="dtc-renderer d-of-auto d-d-flex d-jc-center d-ai-center d-w100p d-h100p">
     <component
       :is="component"
-      v-bind="options.getMembers()"
+      v-bind="members"
     >
       <template
         v-for="(slot, name) in options.slots"
@@ -16,7 +16,9 @@
 </template>
 
 <script setup>
-defineProps({
+import { computed } from 'vue';
+
+const props = defineProps({
   component: {
     type: Object,
     required: true,
@@ -25,6 +27,10 @@ defineProps({
     type: Object,
     required: true,
   },
+});
+
+const members = computed(() => {
+  return props.options.getMembers();
 });
 </script>
 

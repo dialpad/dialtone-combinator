@@ -1,6 +1,6 @@
 <template>
   <dt-select-menu
-    label-class="d-fw-normal d-mb0"
+    label-class="d-fs16 d-fw-normal d-mb0"
     :value="value"
     :options="options"
     size="sm"

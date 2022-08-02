@@ -44,7 +44,17 @@ const props = defineProps({
 });
 
 const info = computed(() => {
-  return documentation.find(componentInfo => componentInfo.displayName === props.component.name);
+  const componentInfo = documentation.find(componentInfo => componentInfo.displayName === props.component.name);
+  const model = componentInfo.props.find(componentProp => {
+    const tags = componentProp.tags;
+    return tags
+      ? 'model' in tags
+      : false;
+  });
+  if (model) {
+    model.name = model.tags.model[0]?.description;
+  }
+  return componentInfo;
 });
 
 console.log(info.value);

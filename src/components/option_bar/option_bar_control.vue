@@ -52,7 +52,7 @@ import { DtBadge, DtButton } from '@dialpad/dialtone-vue';
 
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed, onMounted, ref } from 'vue';
-import { getPropLabel, hasModelTag } from '@/src/lib/utils_vue';
+import { getPropLabel } from '@/src/lib/utils_vue';
 import { controlMap, getControlComponent } from '@/src/lib/utils_control';
 import { convert } from '@/src/lib/convert';
 
@@ -113,7 +113,7 @@ const badges = computed(() => {
 const showModelTag = computed(() => {
   const tags = props.tags;
   return tags
-    ? hasModelTag(tags)
+    ? 'model' in tags
     : false;
 });
 
@@ -121,6 +121,11 @@ const selectedType = ref(getDefaultType());
 
 function getDefaultType () {
   const value = props.value;
+
+  if (value === null) {
+    return 'null';
+  }
+
   let type = typeof value;
 
   switch (type) {
