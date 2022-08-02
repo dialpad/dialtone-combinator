@@ -2,9 +2,9 @@
   <div>
     <div>
       <dtc-control-selection
-        :value="selectedControlName"
+        :value="selectedControl"
         :selections="controlSelections"
-        @update:value="updateControlName"
+        @update:value="updateControl"
       />
     </div>
     <div class="d-ta-right">
@@ -34,38 +34,44 @@ const props = defineProps({
 
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
-const validSelections = [
-  'null',
+const externalControls = [
   'string',
   'number',
-  'boolean',
 ];
 
 const controlSelectionMap = {
   null: {
     component: () => null,
-    default: () => null,
+    get default () { return null; },
   },
   ...Object.fromEntries(
     Object.entries(controlMap).filter(([controlName]) => {
-      return validSelections.includes(controlName);
+      return externalControls.includes(controlName);
     }),
   ),
+  true: {
+    component: () => null,
+    get default () { return true; },
+  },
+  false: {
+    component: () => null,
+    get default () { return false; },
+  },
 };
 
 const controlSelections = computed(() => Object.keys(controlSelectionMap));
-const selectedControlName = ref(
+const selectedControl = ref(
   props.value
     ? typeof props.value
     : 'null',
 );
 
 const control = computed(() => {
-  return controlSelectionMap[selectedControlName.value].component();
+  return controlSelectionMap[selectedControl.value]?.component();
 });
 
-function updateControlName (e) {
-  selectedControlName.value = e;
+function updateControl (e) {
+  selectedControl.value = e;
   updateValue(controlSelectionMap[e].default);
 }
 
