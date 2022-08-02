@@ -145,7 +145,7 @@ const control = computed(() => {
 function getBadge (type) {
   switch (type) {
     case 'event': return {
-      label: getPropertyTypes()?.[0],
+      label: getPropertyTypes()?.[0] ?? 'event',
     };
     default: return {
       label: type,
