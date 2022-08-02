@@ -53,7 +53,9 @@ const props = defineProps({
 const emit = defineEmits([MEMBER_UPDATE_EVENT]);
 
 function getMemberValue (member) {
-  return props.values[member.name] ?? getMemberDefaultValue(member);
+  return member.name in props.values
+    ? props.values[member.name]
+    : getMemberDefaultValue(member);
 }
 
 function getMemberDefaultValue (member) {

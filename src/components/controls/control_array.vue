@@ -1,26 +1,24 @@
 <template>
-  <div>
-    <div>
+  <dtc-control-iterable
+    :value="value"
+    @update:value="e => emit(VALUE_UPDATE_EVENT, e)"
+  >
+    <template #default>
       <slot />
-    </div>
-    <dtc-control-iterable
-      :value="value"
-      @update:value="e => emit(VALUE_UPDATE_EVENT, e)"
-    >
-      <template #prefix>
-        [
-      </template>
-      <template #default="{ item, update }">
-        <dtc-control-dynamic
-          :value="item"
-          @update:value="update"
-        />
-      </template>
-      <template #suffix>
-        ]
-      </template>
-    </dtc-control-iterable>
-  </div>
+    </template>
+    <template #prefix>
+      [
+    </template>
+    <template #item="{ item, update }">
+      <dtc-control-dynamic
+        :value="item"
+        @update:value="update"
+      />
+    </template>
+    <template #suffix>
+      ]
+    </template>
+  </dtc-control-iterable>
 </template>
 
 <script setup>

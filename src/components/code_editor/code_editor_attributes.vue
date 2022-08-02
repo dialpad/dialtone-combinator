@@ -101,6 +101,7 @@ function useBindOperator (value) {
 }
 
 function stringifyValue (value) {
+  if (!value) { return `${value}`; }
   return useBindOperator(value)
     ? stringifyDocValue(value)
     : value.toString();

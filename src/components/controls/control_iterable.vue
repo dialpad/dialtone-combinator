@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div>
+      <slot />
+    </div>
     <div class="d-fs18">
       <slot name="prefix" />
     </div>
@@ -14,6 +17,7 @@
               navigation-type="tab"
             >
               <slot
+                name="item"
                 :item="item"
                 :update="(e) => updateItem(index, e)"
               />

@@ -1,0 +1,50 @@
+<template>
+  <dtc-control-selection
+    :value="selection"
+    :selections="selections"
+    @update:value="updateValue"
+  >
+    <slot />
+  </dtc-control-selection>
+</template>
+
+<script setup>
+import DtcControlSelection from './control_selection';
+import { computed } from 'vue';
+import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
+
+const props = defineProps({
+  value: {
+    type: undefined,
+    default: undefined,
+  },
+});
+
+const emit = defineEmits([VALUE_UPDATE_EVENT]);
+
+const selectionMap = {
+  null: null,
+  undefined,
+  NaN,
+};
+
+const selections = computed(() => {
+  return Object.keys(selectionMap);
+});
+
+const selection = computed(() => {
+  return Object.keys(selectionMap).find(selection => {
+    return Object.is(props.value, selectionMap[selection]);
+  });
+});
+
+function updateValue (e) {
+  emit(VALUE_UPDATE_EVENT, selectionMap[e]);
+}
+</script>
+
+<script>
+export default {
+  name: 'DtcControlNull',
+};
+</script>

@@ -167,7 +167,7 @@ function getPropertyTypes () {
 
 function updateSelectedType (type) {
   if (selectedType.value === type) { return; }
-  const value = convert(selectedType.value, type, props.value) ?? controlMap[type].default;
+  const value = convert(selectedType.value, type, props.value) ?? controlMap[type]?.default;
   selectedType.value = type;
   updateValue(value);
 }

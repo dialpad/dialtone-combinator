@@ -21,7 +21,7 @@
           :component="component"
           :members="info.props"
           :values="options.props"
-          :type-selector="prop => extractTypes(prop.type.name)"
+          :type-selector="prop => getPropTypes(prop.type.name)"
           @update:member="updateProps"
         />
       </dtc-option-bar-section>
@@ -94,6 +94,13 @@ const attributes = computed(() => {
     };
   });
 });
+
+function getPropTypes (typeString) {
+  return [
+    ...extractTypes(typeString),
+    'null',
+  ];
+}
 
 function extractTypes (typeString) {
   return typeString.split('|').map(type => type.trim());

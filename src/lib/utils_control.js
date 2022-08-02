@@ -6,6 +6,7 @@ import DtcControlBoolean from '@/src/components/controls/control_boolean';
 import DtcControlNumber from '@/src/components/controls/control_number';
 import DtcControlCombo from '@/src/components/controls/control_combo';
 import DtcControlString from '@/src/components/controls/control_string';
+import DtcControlNull from '@/src/components/controls/control_null';
 import DtcControlBase from '@/src/components/controls/control_base';
 
 export const controlMap = Object.freeze({
@@ -40,6 +41,10 @@ export const controlMap = Object.freeze({
   boolean: {
     component: () => DtcControlBoolean,
     get default () { return Boolean(); },
+  },
+  null: {
+    component: () => DtcControlNull,
+    get default () { return null; },
   },
   base: {
     component: () => DtcControlBase,
