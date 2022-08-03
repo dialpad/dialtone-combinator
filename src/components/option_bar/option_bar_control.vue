@@ -51,7 +51,7 @@ import { DtBadge, DtButton } from '@dialpad/dialtone-vue';
 import DtcControlNull from '@/src/components/controls/control_null';
 
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted } from 'vue';
 import { getPropLabel } from '@/src/lib/utils_vue';
 import { controlMap, getControlComponent } from '@/src/lib/control';
 import { convert } from '@/src/lib/convert';
@@ -63,17 +63,21 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  value: {
-    type: undefined,
-    default: undefined,
-  },
-  validValues: {
-    type: Array,
-    default: undefined,
+  selectedType: {
+    type: String,
+    required: true,
   },
   validTypes: {
     type: Array,
     required: true,
+  },
+  value: {
+    type: undefined,
+    required: true,
+  },
+  validValues: {
+    type: Array,
+    default: undefined,
   },
   description: {
     type: String,
@@ -96,7 +100,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits([VALUE_UPDATE_EVENT]);
+const emit = defineEmits([VALUE_UPDATE_EVENT, 'update:type']);
 
 const controlValue = computed(() => {
   return (props.value === undefined && control.value === DtcControlNull)
@@ -138,30 +142,8 @@ const showModelTag = computed(() => {
     : false;
 });
 
-const selectedType = ref(getDefaultType());
-
-function getDefaultType () {
-  const value = props.value;
-
-  let type = value == null || value === UNSET
-    ? 'null'
-    : typeof value;
-
-  switch (type) {
-    case 'object': {
-      type = Array.isArray(value)
-        ? 'array'
-        : 'object';
-    }
-  }
-
-  return props.validTypes.includes(type)
-    ? type
-    : props.validTypes[0];
-}
-
 const control = computed(() => {
-  return getControlComponent(selectedType.value, {
+  return getControlComponent(props.selectedType, {
     validValues: props.validValues,
   });
 });
@@ -178,7 +160,7 @@ function getBadge (type) {
 }
 
 function getBadgeColor (badgeType) {
-  return badgeType === selectedType.value
+  return badgeType === props.selectedType
     ? 'purple-100'
     : 'base';
 }
@@ -190,18 +172,16 @@ function getPropertyTypes () {
 }
 
 function updateSelectedType (type) {
-  if (selectedType.value === type) { return; }
+  if (props.selectedType === type) { return; }
 
   let value;
   try {
-    value = convert(selectedType.value, type, props.value);
+    value = convert(props.selectedType, type, props.value);
   } catch {
-    console.warn(`${props.name}: Unable to convert ${selectedType.value} to ${type}`);
+    console.warn(`${props.name}: Unable to convert ${props.selectedType} to ${type}`);
   }
 
-  selectedType.value = type;
-
-  updateValue(value ?? controlMap[type]?.default);
+  updateType(type, value ?? controlMap[type]?.default);
 }
 
 function updateValue (e) {
@@ -210,6 +190,10 @@ function updateValue (e) {
     : e;
 
   emit(VALUE_UPDATE_EVENT, value);
+}
+
+function updateType (e, value) {
+  emit('update:type', e, value);
 }
 
 onMounted(() => {
