@@ -10,8 +10,8 @@ const convertMap = {
     string: stringifyDocValue,
   },
   string: {
-    object: parseDocValue,
-    array: parseDocValue,
+    object: stringToObject,
+    array: stringToArray,
     number: parseInt,
     boolean: stringToBoolean,
   },
@@ -37,6 +37,20 @@ function arrayToObject (array) {
   return {
     ...array,
   };
+}
+
+function stringToObject (string) {
+  const value = parseDocValue(string);
+  return Array.isArray(value)
+    ? arrayToObject(value)
+    : value;
+}
+
+function stringToArray (string) {
+  const value = parseDocValue(string);
+  return Array.isArray(value)
+    ? value
+    : objectToArray(value);
 }
 
 function stringToBoolean (string) {

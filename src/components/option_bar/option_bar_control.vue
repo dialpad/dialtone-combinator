@@ -22,8 +22,7 @@
     <component
       :is="control"
       :value="controlValue"
-      :valid-values="validValues"
-      v-bind="args"
+      v-bind="controlArgs"
       @update:value="updateValue"
     >
       <span>
@@ -54,7 +53,7 @@ import DtcControlNull from '@/src/components/controls/control_null';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed, onMounted, ref } from 'vue';
 import { getPropLabel } from '@/src/lib/utils_vue';
-import { getControlComponent } from '@/src/lib/control';
+import { controlMap, getControlComponent } from '@/src/lib/control';
 import { convert } from '@/src/lib/convert';
 import { UNSET } from '@/src/lib/utils';
 import { sentenceCase } from 'change-case';
@@ -109,6 +108,13 @@ const controlDescription = computed(() => {
   return props.description
     ? sentenceCase(props.description)
     : null;
+});
+
+const controlArgs = computed(() => {
+  return {
+    validValues: props.validValues,
+    ...props.args,
+  };
 });
 
 const label = computed(() => {
@@ -190,12 +196,12 @@ function updateSelectedType (type) {
   try {
     value = convert(selectedType.value, type, props.value);
   } catch {
-    console.warn(`Unable to convert ${selectedType.value} to ${type}`);
+    console.warn(`${props.name}: Unable to convert ${selectedType.value} to ${type}`);
   }
 
   selectedType.value = type;
 
-  updateValue(value);
+  updateValue(value ?? controlMap[type]?.default);
 }
 
 function updateValue (e) {
