@@ -20,11 +20,12 @@
 import { DtInput, VALIDATION_MESSAGE_TYPES } from '@dialpad/dialtone-vue';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
+import { controlMap } from '@/src/lib/control';
 
 const props = defineProps({
   value: {
     type: String,
-    default: undefined,
+    default: () => controlMap.string.default,
   },
   warning: {
     type: String,

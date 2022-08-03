@@ -59,7 +59,7 @@ import { idMap } from '@/src/lib/utils_vue';
 const props = defineProps({
   value: {
     type: Array,
-    default: undefined,
+    required: true,
   },
   generateItem: {
     type: Function,

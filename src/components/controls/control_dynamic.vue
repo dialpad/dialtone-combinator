@@ -21,7 +21,7 @@
 <script setup>
 import DtcControlSelection from './control_selection';
 
-import { controlMap } from '@/src/lib/utils_control';
+import { controlMap } from '@/src/lib/control';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed, ref } from 'vue';
 

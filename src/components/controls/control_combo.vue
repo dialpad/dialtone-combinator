@@ -59,13 +59,14 @@ import { DtRecipeComboboxWithPopover, DtListItem, DtBadge } from '@dialpad/dialt
 
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed, ref } from 'vue';
+import { controlMap } from '@/src/lib/control';
 
 const WARNING_MESSAGE = 'Unexpected value';
 
 const props = defineProps({
   value: {
     type: String,
-    default: undefined,
+    default: () => controlMap.string.default,
   },
   validValues: {
     type: Array,

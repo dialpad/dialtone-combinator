@@ -13,11 +13,12 @@
 <script setup>
 import { DtCheckbox } from '@dialpad/dialtone-vue';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
+import { controlMap } from '@/src/lib/control';
 
 defineProps({
   value: {
     type: Boolean,
-    default: undefined,
+    default: () => controlMap.boolean.default,
   },
 });
 

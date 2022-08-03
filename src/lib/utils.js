@@ -1,5 +1,7 @@
 import { DEFAULT_PREFIX } from '@/src/lib/constants';
 
+export const UNSET = Symbol('unset');
+
 export function flatten (obj) {
   const result = {};
   for (const key in obj) {

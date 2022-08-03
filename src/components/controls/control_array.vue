@@ -25,11 +25,12 @@
 import DtcControlIterable from './control_iterable';
 import DtcControlDynamic from './control_dynamic';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
+import { controlMap } from '@/src/lib/control';
 
 defineProps({
   value: {
     type: Array,
-    default: undefined,
+    default: () => controlMap.array.default,
   },
 });
 

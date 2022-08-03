@@ -21,7 +21,7 @@ import { computed } from 'vue';
 const props = defineProps({
   value: {
     type: undefined,
-    default: undefined,
+    required: true,
   },
   selections: {
     type: Array,

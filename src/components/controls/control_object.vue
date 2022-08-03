@@ -35,11 +35,12 @@ import DtcControlIterable from './control_iterable';
 import DtcControlDynamic from './control_dynamic';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
+import { controlMap } from '@/src/lib/control';
 
 const props = defineProps({
   value: {
     type: Object,
-    default: undefined,
+    default: () => controlMap.object.default,
   },
 });
 

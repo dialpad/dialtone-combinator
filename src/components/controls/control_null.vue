@@ -12,19 +12,21 @@
 import DtcControlSelection from './control_selection';
 import { computed } from 'vue';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
+import { controlMap } from '@/src/lib/control';
+import { UNSET } from '@/src/lib/utils';
 
 const props = defineProps({
   value: {
     type: undefined,
-    default: undefined,
+    default: () => controlMap.null.default,
   },
 });
 
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
 const selectionMap = {
+  undefined: UNSET,
   null: null,
-  undefined,
   NaN,
 };
 

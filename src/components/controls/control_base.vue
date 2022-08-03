@@ -10,11 +10,12 @@
 <script setup>
 import DtcControlString from './control_string';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
+import { controlMap } from '@/src/lib/control';
 
 defineProps({
   value: {
     type: undefined,
-    default: undefined,
+    default: () => controlMap.base.default,
   },
 });
 

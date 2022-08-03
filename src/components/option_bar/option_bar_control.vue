@@ -21,10 +21,10 @@
     </div>
     <component
       :is="control"
-      :value="value"
+      :value="controlValue"
       :valid-values="validValues"
       v-bind="args"
-      @update:value="e => emit(VALUE_UPDATE_EVENT, e)"
+      @update:value="updateValue"
     >
       <span>
         <span class="d-pr6">
@@ -42,19 +42,22 @@
       </span>
     </component>
     <div class="d-description d-p1">
-      {{ description }}
+      {{ controlDescription }}
     </div>
   </div>
 </template>
 
 <script setup>
 import { DtBadge, DtButton } from '@dialpad/dialtone-vue';
+import DtcControlNull from '@/src/components/controls/control_null';
 
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed, onMounted, ref } from 'vue';
 import { getPropLabel } from '@/src/lib/utils_vue';
-import { controlMap, getControlComponent } from '@/src/lib/utils_control';
+import { getControlComponent } from '@/src/lib/control';
 import { convert } from '@/src/lib/convert';
+import { UNSET } from '@/src/lib/utils';
+import { sentenceCase } from 'change-case';
 
 const props = defineProps({
   name: {
@@ -86,7 +89,7 @@ const props = defineProps({
     default: undefined,
   },
   /**
-   * Args to bind directly to the control.
+   * Optional args to bind directly to the control.
    */
   args: {
     type: Object,
@@ -95,6 +98,18 @@ const props = defineProps({
 });
 
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
+
+const controlValue = computed(() => {
+  return (props.value === undefined && control.value === DtcControlNull)
+    ? UNSET
+    : props.value;
+});
+
+const controlDescription = computed(() => {
+  return props.description
+    ? sentenceCase(props.description)
+    : null;
+});
 
 const label = computed(() => {
   return getPropLabel(props.name, props.tags);
@@ -122,11 +137,9 @@ const selectedType = ref(getDefaultType());
 function getDefaultType () {
   const value = props.value;
 
-  if (value === null) {
-    return 'null';
-  }
-
-  let type = typeof value;
+  let type = value == null || value === UNSET
+    ? 'null'
+    : typeof value;
 
   switch (type) {
     case 'object': {
@@ -172,17 +185,29 @@ function getPropertyTypes () {
 
 function updateSelectedType (type) {
   if (selectedType.value === type) { return; }
-  const value = convert(selectedType.value, type, props.value) ?? controlMap[type]?.default;
+
+  let value;
+  try {
+    value = convert(selectedType.value, type, props.value);
+  } catch {
+    console.warn(`Unable to convert ${selectedType.value} to ${type}`);
+  }
+
   selectedType.value = type;
+
   updateValue(value);
 }
 
 function updateValue (e) {
-  emit(VALUE_UPDATE_EVENT, e);
+  const value = e === UNSET
+    ? undefined
+    : e;
+
+  emit(VALUE_UPDATE_EVENT, value);
 }
 
 onMounted(() => {
-  updateValue(props.value);
+  updateValue(controlValue.value);
 });
 </script>
 

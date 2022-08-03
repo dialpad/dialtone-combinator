@@ -7,7 +7,7 @@ export function parseDocDefault (defaultInfo) {
       ? parseDocFunc(defaultInfo.value)
       : parseDocValue(defaultInfo.value);
   } catch (e) {
-    console.warn(`Unable to parse documentation default`);
+    console.warn(`Unable to parse documentation default value`);
     console.warn(defaultInfo);
   }
 
@@ -20,7 +20,7 @@ export function parseDocValue (value) {
 
 // TODO: Properly set default value from func
 function parseDocFunc () {
-  return null;
+  return undefined;
 }
 
 export function stringifyDocValue (value) {
