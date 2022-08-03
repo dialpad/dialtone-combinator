@@ -1,8 +1,17 @@
 export function parseDocDefault (defaultInfo) {
   if (!defaultInfo.value) { return defaultInfo.value; }
-  return defaultInfo.func
-    ? parseDocFunc(defaultInfo.value)
-    : parseDocValue(defaultInfo.value);
+
+  let value;
+  try {
+    value = defaultInfo.func
+      ? parseDocFunc(defaultInfo.value)
+      : parseDocValue(defaultInfo.value);
+  } catch (e) {
+    console.warn(`Unable to parse documentation default`);
+    console.warn(defaultInfo);
+  }
+
+  return value;
 }
 
 export function parseDocValue (value) {
