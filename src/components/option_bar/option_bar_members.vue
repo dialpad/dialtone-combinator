@@ -7,8 +7,8 @@
       <div class="d-py6">
         <DtcOptionBarControl
           :name="member.name"
-          :selected-type="member.type"
-          :valid-types="member.validTypes"
+          :control="member.control"
+          :valid-controls="member.validControls"
           :value="member.value"
           :valid-values="member.values"
           :description="member.description"
@@ -79,13 +79,13 @@ function extractMember (member, values) {
 
   let value = getValue();
 
-  const validTypes = props.typeSelector(member);
-  const type = validTypes.find(type => controlMap[type]?.important) ?? getContextControl(value);
+  const validControls = props.typeSelector(member);
+  const control = validControls.find(control => controlMap[control]?.important) ?? getContextControl(value);
 
   const extracted = {
     ...member,
-    type,
-    validTypes,
+    control,
+    validControls,
     defaultValue,
     get value () { return getValue(); },
   };
@@ -114,16 +114,16 @@ function updateMember (e, key) {
 function updateType (e, key) {
   const member = memberMap[key];
 
-  if (member.type === e) { return; }
+  if (member.control === e) { return; }
 
   let value;
   try {
-    value = convert(member.type, e, member.value);
+    value = convert(member.control, e, member.value);
   } catch {
-    console.warn(`${member.name}: Unable to convert ${member.type} to ${e}`);
+    console.warn(`${member.name}: Unable to convert ${member.control} to ${e}`);
   }
 
-  member.type = e;
+  member.control = e;
 
   updateMember(value ?? controlMap[e]?.default, key);
 }

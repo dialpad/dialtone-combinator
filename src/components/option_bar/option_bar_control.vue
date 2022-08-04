@@ -2,25 +2,25 @@
   <div>
     <div class="d-pb1">
       <template
-        v-for="(badge, type) in badges"
-        :key="type"
+        v-for="(badge, badgeControl) in badges"
+        :key="badgeControl"
       >
         <span class="d-pr2">
           <dt-button
             class="d-p0"
             importance="clear"
-            @click="() => updateType(type)"
+            @click="() => updateType(badgeControl)"
           >
             <dt-badge
               :text="badge.label"
-              :color="getBadgeColor(type)"
+              :color="getBadgeColor(badgeControl)"
             />
           </dt-button>
         </span>
       </template>
     </div>
     <component
-      :is="control"
+      :is="controlComponent"
       :value="controlValue"
       v-bind="controlArgs"
       @update:value="updateValue"
@@ -58,15 +58,11 @@ import { UNSET } from '@/src/lib/utils';
 import { sentenceCase } from 'change-case';
 
 const props = defineProps({
-  name: {
+  control: {
     type: String,
     required: true,
   },
-  selectedType: {
-    type: String,
-    required: true,
-  },
-  validTypes: {
+  validControls: {
     type: Array,
     required: true,
   },
@@ -77,6 +73,10 @@ const props = defineProps({
   validValues: {
     type: Array,
     default: undefined,
+  },
+  name: {
+    type: String,
+    required: true,
   },
   description: {
     type: String,
@@ -99,10 +99,10 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits([VALUE_UPDATE_EVENT, 'update:type']);
+const emit = defineEmits([VALUE_UPDATE_EVENT, TYPE_UPDATE_EVENT]);
 
 const controlValue = computed(() => {
-  return (props.value === undefined && control.value === DtcControlNull)
+  return (props.value === undefined && controlComponent.value === DtcControlNull)
     ? UNSET
     : props.value;
 });
@@ -111,6 +111,10 @@ const controlDescription = computed(() => {
   return props.description
     ? sentenceCase(props.description)
     : null;
+});
+
+const controlComponent = computed(() => {
+  return getControlComponent(props.control, controlArgs);
 });
 
 const controlArgs = computed(() => {
@@ -124,16 +128,6 @@ const label = computed(() => {
   return getPropLabel(props.name, props.tags);
 });
 
-const badges = computed(() => {
-  return {
-    ...Object.fromEntries(
-      props.validTypes.map(type => {
-        return [type, getBadge(type)];
-      }),
-    ),
-  };
-});
-
 const showModelTag = computed(() => {
   const tags = props.tags;
   return tags
@@ -141,25 +135,29 @@ const showModelTag = computed(() => {
     : false;
 });
 
-const control = computed(() => {
-  return getControlComponent(props.selectedType, {
-    validValues: props.validValues,
-  });
+const badges = computed(() => {
+  return {
+    ...Object.fromEntries(
+      props.validControls.map(control => {
+        return [control, getBadge(control)];
+      }),
+    ),
+  };
 });
 
-function getBadge (type) {
-  switch (type) {
+function getBadge (control) {
+  switch (control) {
     case 'event': return {
       label: getPropertyTypes()?.[0] ?? 'event',
     };
     default: return {
-      label: type,
+      label: control,
     };
   }
 }
 
-function getBadgeColor (badgeType) {
-  return badgeType === props.selectedType
+function getBadgeColor (control) {
+  return control === props.control
     ? 'purple-100'
     : 'base';
 }
