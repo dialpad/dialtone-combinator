@@ -97,7 +97,7 @@ function updateControl (e, key) {
 
   let value;
   try {
-    value = convert(member.control, e, member.value);
+    value = convert(member.control, e, getMemberValue(key));
   } catch {
     console.warn(`${member.name}: Unable to convert ${member.control} to ${e}`);
   }
