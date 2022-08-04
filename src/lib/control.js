@@ -19,7 +19,7 @@ export const controlMap = Object.freeze({
   },
   slot: {
     component: () => DtcControlSlot,
-    get default () { return String(); },
+    get default () { return null; },
     important: true,
   },
   object: {

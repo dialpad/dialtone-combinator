@@ -10,13 +10,13 @@
     <div class="dtc-root__bottom d-grs2">
       <dtc-code-panel
         ref="codePanel"
-        v-model:options="optionsModel"
+        v-model:options="options"
         :info="info"
       />
     </div>
     <div class="dtc-root__sidebar d-grs1 d-gr2 d-bl d-bc-black-900">
       <dtc-option-bar
-        v-model:options="optionsModel"
+        v-model:options="options"
         :component="component"
         :info="info"
       />
@@ -41,7 +41,7 @@ const props = defineProps({
   },
 });
 
-const options = reactive({
+const optionsRef = reactive({
   slots: {
     default: paramCase(props.component.name),
   },
@@ -56,20 +56,19 @@ const options = reactive({
   },
 });
 
-const optionsModel = computedModel(
-  options,
+const options = computedModel(
+  optionsRef,
   (e, model) => e(model),
 );
 
 const info = reactive(initializeInfo());
 
 console.log(info);
-console.log(optionsModel.value);
 
 function initializeInfo () {
   const [info, defaults] = getComponentInfo(props.component);
   Object.keys(defaults).forEach(key => {
-    setDefaults(defaults[key], options[key]);
+    setDefaults(defaults[key], optionsRef[key]);
   });
   return info;
 }
@@ -89,6 +88,7 @@ const eventHooks = ref([
 ]);
 
 const events = computed(() => {
+  if (!info.events) { return {}; }
   return Object.fromEntries(
     info.events.map(({ name }) => {
       return [

@@ -12,7 +12,6 @@ export function getComponentInfo (component) {
     ...documentation.find(componentInfo => componentInfo.displayName === component.name),
   };
 
-  console.log(info);
   const defaults = extendInfo(info);
   return [info, defaults];
 }

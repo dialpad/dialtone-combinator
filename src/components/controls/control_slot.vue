@@ -4,7 +4,7 @@
     class="d-r-none"
     type="textarea"
     spellcheck="false"
-    @input="e => emit(VALUE_UPDATE_EVENT, e)"
+    @input="updateValue"
   >
     <template #labelSlot>
       <slot />
@@ -25,6 +25,11 @@ defineProps({
 });
 
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
+
+function updateValue (e) {
+  const value = e || controlMap.slot.default;
+  emit(VALUE_UPDATE_EVENT, value);
+}
 </script>
 
 <script>

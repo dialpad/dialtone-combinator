@@ -5,7 +5,7 @@
       v-bind="members"
     >
       <template
-        v-for="(slot, name) in options.slots"
+        v-for="(slot, name) in validSlots"
         :key="name"
         #[name]
       >
@@ -27,6 +27,13 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+});
+
+const validSlots = computed(() => {
+  if (!props.options.slots) { return null; }
+  return Object.fromEntries(
+    Object.entries(props.options.slots).filter(([_, slot]) => slot),
+  );
 });
 
 const members = computed(() => {
