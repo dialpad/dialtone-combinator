@@ -9,7 +9,7 @@
           <dt-button
             class="d-p0"
             importance="clear"
-            @click="() => updateSelectedType(type)"
+            @click="() => updateType(type)"
           >
             <dt-badge
               :text="badge.label"
@@ -50,11 +50,10 @@
 import { DtBadge, DtButton } from '@dialpad/dialtone-vue';
 import DtcControlNull from '@/src/components/controls/control_null';
 
-import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
-import { computed, onMounted } from 'vue';
+import { TYPE_UPDATE_EVENT, VALUE_UPDATE_EVENT } from '@/src/lib/constants';
+import { computed } from 'vue';
 import { getPropLabel } from '@/src/lib/utils_vue';
-import { controlMap, getControlComponent } from '@/src/lib/control';
-import { convert } from '@/src/lib/convert';
+import { getControlComponent } from '@/src/lib/control';
 import { UNSET } from '@/src/lib/utils';
 import { sentenceCase } from 'change-case';
 
@@ -171,19 +170,6 @@ function getPropertyTypes () {
   }).flat();
 }
 
-function updateSelectedType (type) {
-  if (props.selectedType === type) { return; }
-
-  let value;
-  try {
-    value = convert(props.selectedType, type, props.value);
-  } catch {
-    console.warn(`${props.name}: Unable to convert ${props.selectedType} to ${type}`);
-  }
-
-  updateType(type, value ?? controlMap[type]?.default);
-}
-
 function updateValue (e) {
   const value = e === UNSET
     ? undefined
@@ -192,13 +178,9 @@ function updateValue (e) {
   emit(VALUE_UPDATE_EVENT, value);
 }
 
-function updateType (e, value) {
-  emit('update:type', e, value);
+function updateType (e) {
+  emit(TYPE_UPDATE_EVENT, e);
 }
-
-onMounted(() => {
-  updateValue(controlValue.value);
-});
 </script>
 
 <script>

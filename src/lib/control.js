@@ -9,14 +9,18 @@ import DtcControlString from '@/src/components/controls/control_string';
 import DtcControlNull from '@/src/components/controls/control_null';
 import DtcControlBase from '@/src/components/controls/control_base';
 
+import { UNSET } from '@/src/lib/utils';
+
 export const controlMap = Object.freeze({
   event: {
     component: () => DtcControlEvent,
     get default () { return null; },
+    important: true,
   },
   slot: {
     component: () => DtcControlSlot,
     get default () { return String(); },
+    important: true,
   },
   object: {
     component: () => DtcControlObject,
@@ -54,4 +58,22 @@ export const controlMap = Object.freeze({
 
 export function getControlComponent (name, args) {
   return controlMap[name]?.component(args) ?? controlMap.base.component(args);
+}
+
+export function getContextControl (value) {
+  let control = value == null || value === UNSET
+    ? 'null'
+    : typeof value;
+
+  switch (control) {
+    case 'object': {
+      control = Array.isArray(value)
+        ? 'array'
+        : 'object';
+    }
+  }
+
+  return control in controlMap
+    ? control
+    : 'base';
 }

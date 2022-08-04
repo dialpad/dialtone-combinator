@@ -3,7 +3,7 @@
     label-class="d-fs16 d-fw-normal d-mb0"
     :value="value"
     :options="options"
-    size="sm"
+    size="xs"
     @input="e => emit(VALUE_UPDATE_EVENT, e)"
   >
     <template #label>

@@ -34,6 +34,7 @@
           :members="attributes"
           :values="options.attributes"
           :type-selector="attribute => extractTypes(attribute.type.name)"
+          :on-setup="setupProps"
           @update:member="updateAttributes"
         />
       </dtc-option-bar-section>
@@ -106,9 +107,18 @@ function extractTypes (typeString) {
   return typeString.split('|').map(type => type.trim());
 }
 
+function setupProps (member) {
+  let value = member.value;
+  if (!member.validTypes.includes(member.type)) {
+    member.type = 'null';
+    value = undefined;
+  }
+  return value;
+}
+
 function updateMember (memberType, { member, value }) {
   emit(OPTIONS_UPDATE_EVENT, (options) => {
-    options[memberType][member.name] = value;
+    options[memberType][member] = value;
   });
 }
 

@@ -1,26 +1,24 @@
 <template>
   <div>
     <template
-      v-for="member in members"
-      :key="getMemberKey(member)"
+      v-for="(member, key) in memberMap"
+      :key="key"
     >
       <div class="d-py6">
         <DtcOptionBarControl
           :name="member.name"
-          :selectedType="getMemberType(member)"
-          :valid-types="typeSelector(member)"
-          :value="getMemberValue(member)"
+          :selected-type="member.type"
+          :valid-types="member.validTypes"
+          :value="member.value"
           :valid-values="member.values"
           :description="member.description"
           :tags="member.tags"
           :properties="member.properties"
           :args="{
-            defaultValue: getMemberDefaultValue(member),
+            defaultValue: member.defaultValue,
           }"
-          @update:value="e => emit(MEMBER_UPDATE_EVENT, {
-            member,
-            value: e,
-          })"
+          @update:value="e => updateMember(e, key)"
+          @update:type="e => updateType(e, key)"
         />
       </div>
     </template>
@@ -31,8 +29,9 @@
 import DtcOptionBarControl from './option_bar_control';
 import { MEMBER_UPDATE_EVENT } from '@/src/lib/constants';
 import { parseDocDefault } from '@/src/lib/parse';
-import { UNSET } from '@/src/lib/utils';
 import { reactive } from 'vue';
+import { controlMap, getContextControl } from '@/src/lib/control';
+import { convert } from '@/src/lib/convert';
 
 const props = defineProps({
   component: {
@@ -51,60 +50,82 @@ const props = defineProps({
     type: Function,
     default: () => [],
   },
+  onSetup: {
+    type: Function,
+    default: (member) => member.value,
+  },
 });
 
 const emit = defineEmits([MEMBER_UPDATE_EVENT]);
 
-const memberTypes = reactive({});
+const memberMap = reactive({
+  ...Object.fromEntries(
+    props.members.map(member => {
+      return [getMemberKey(member), extractMember(member, props.values)];
+    }),
+  ),
+});
 
 function getMemberKey (member) {
   return member.name;
 }
 
-function getMemberValue (member) {
-  return member.name in props.values
-    ? props.values[member.name]
-    : getMemberDefaultValue(member);
-}
-
-function getMemberDefaultValue (member) {
-  const defaultInfo = member.defaultValue;
-  if (!defaultInfo) { return undefined; }
-  return parseDocDefault(defaultInfo);
-}
-
-function getMemberType (member) {
+function extractMember (member, values) {
   const key = getMemberKey(member);
 
-  let type = memberTypes[key];
-  if (!type) {
-    type = getMemberDefaultType(member);
-    memberTypes[key] = type;
-  }
+  const defaultValue = member.defaultValue
+    ? parseDocDefault(member.defaultValue)
+    : undefined;
+
+  let value = getValue();
 
   const validTypes = props.typeSelector(member);
+  const type = validTypes.find(type => controlMap[type]?.important) ?? getContextControl(value);
 
-  return validTypes.includes(type)
-    ? type
-    : validTypes[0];
+  const extracted = {
+    ...member,
+    type,
+    validTypes,
+    defaultValue,
+    get value () { return getValue(); },
+  };
+
+  value = props.onSetup(extracted, value);
+
+  // Initialize all default options
+  updateMember(value, key);
+
+  return extracted;
+
+  function getValue () {
+    return key in values
+      ? values[key]
+      : defaultValue;
+  }
 }
 
-function getMemberDefaultType (member) {
-  const value = getMemberValue(member);
+function updateMember (e, key) {
+  emit(MEMBER_UPDATE_EVENT, {
+    member: key,
+    value: e,
+  });
+}
 
-  let type = value == null || value === UNSET
-    ? 'null'
-    : typeof value;
+function updateType (e, key) {
+  const member = memberMap[key];
 
-  switch (type) {
-    case 'object': {
-      type = Array.isArray(value)
-        ? 'array'
-        : 'object';
-    }
+  if (member.type === e) { return; }
+
+  let value;
+  try {
+    value = convert(member.type, e, member.value);
+  } catch {
+    console.warn(`${member.name}: Unable to convert ${member.type} to ${e}`);
   }
 
-  return type;
+  member.type = e;
+
+  updateMember(value ?? controlMap[e]?.default, key);
 }
 </script>
 
