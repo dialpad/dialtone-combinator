@@ -9,7 +9,7 @@
           :name="member.name"
           :control="member.control"
           :valid-controls="member.validControls"
-          :value="member.value"
+          :value="getMemberValue(key)"
           :valid-values="member.values"
           :description="member.description"
           :tags="member.tags"
@@ -18,7 +18,7 @@
             defaultValue: member.defaultValue,
           }"
           @update:value="e => updateMember(e, key)"
-          @update:type="e => updateType(e, key)"
+          @update:control="e => updateControl(e, key)"
         />
       </div>
     </template>
@@ -28,9 +28,8 @@
 <script setup>
 import DtcOptionBarControl from './option_bar_control';
 import { MEMBER_UPDATE_EVENT } from '@/src/lib/constants';
-import { parseDocDefault } from '@/src/lib/parse';
 import { reactive } from 'vue';
-import { controlMap, getContextControl } from '@/src/lib/control';
+import { controlMap, getControlByValue } from '@/src/lib/control';
 import { convert } from '@/src/lib/convert';
 
 const props = defineProps({
@@ -50,10 +49,6 @@ const props = defineProps({
     type: Function,
     default: () => [],
   },
-  onSetup: {
-    type: Function,
-    default: (member) => member.value,
-  },
 });
 
 const emit = defineEmits([MEMBER_UPDATE_EVENT]);
@@ -61,7 +56,7 @@ const emit = defineEmits([MEMBER_UPDATE_EVENT]);
 const memberMap = reactive({
   ...Object.fromEntries(
     props.members.map(member => {
-      return [getMemberKey(member), extractMember(member, props.values)];
+      return [getMemberKey(member), extendMember(member)];
     }),
   ),
 });
@@ -70,38 +65,22 @@ function getMemberKey (member) {
   return member.name;
 }
 
-function extractMember (member, values) {
+function getMemberValue (key) {
+  return props.values[key];
+}
+
+function extendMember (member) {
   const key = getMemberKey(member);
+  const value = getMemberValue(key);
 
-  const defaultValue = member.defaultValue
-    ? parseDocDefault(member.defaultValue)
-    : undefined;
+  const validControls = props.typeSelector(member) ?? [];
+  const control = validControls.find(control => controlMap[control]?.important) ?? getControlByValue(value);
 
-  let value = getValue();
-
-  const validControls = props.typeSelector(member);
-  const control = validControls.find(control => controlMap[control]?.important) ?? getContextControl(value);
-
-  const extracted = {
+  return {
     ...member,
     control,
     validControls,
-    defaultValue,
-    get value () { return getValue(); },
   };
-
-  value = props.onSetup(extracted, value);
-
-  // Initialize all default options
-  updateMember(value, key);
-
-  return extracted;
-
-  function getValue () {
-    return key in values
-      ? values[key]
-      : defaultValue;
-  }
 }
 
 function updateMember (e, key) {
@@ -111,7 +90,7 @@ function updateMember (e, key) {
   });
 }
 
-function updateType (e, key) {
+function updateControl (e, key) {
   const member = memberMap[key];
 
   if (member.control === e) { return; }
@@ -124,7 +103,6 @@ function updateType (e, key) {
   }
 
   member.control = e;
-
   updateMember(value ?? controlMap[e]?.default, key);
 }
 </script>

@@ -10,13 +10,13 @@
     <div class="dtc-root__bottom d-grs2">
       <dtc-code-panel
         ref="codePanel"
-        v-model:options="options"
+        v-model:options="optionsModel"
         :info="info"
       />
     </div>
     <div class="dtc-root__sidebar d-grs1 d-gr2 d-bl d-bc-black-900">
       <dtc-option-bar
-        v-model:options="options"
+        v-model:options="optionsModel"
         :component="component"
         :info="info"
       />
@@ -29,12 +29,10 @@ import DtcOptionBar from './option_bar/option_bar';
 import DtcRenderer from './renderer/renderer';
 import DtcCodePanel from '@/src/components/code_panel/code_panel';
 
-// TODO: Temporary for testing
-import documentation from '@/src/assets/component-documentation.json';
-
 import { paramCase } from 'change-case';
 import { computed, reactive, ref } from 'vue';
 import { computedModel } from '@/src/lib/utils_vue';
+import { getComponentInfo } from '@/src/lib/info';
 
 const props = defineProps({
   component: {
@@ -43,40 +41,46 @@ const props = defineProps({
   },
 });
 
-const info = computed(() => {
-  const componentInfo = documentation.find(componentInfo => componentInfo.displayName === props.component.name);
-  const model = componentInfo.props.find(componentProp => {
-    const tags = componentProp.tags;
-    return tags
-      ? 'model' in tags
-      : false;
-  });
-  if (model) {
-    model.name = model.tags.model[0]?.description;
-  }
-  return componentInfo;
+const options = reactive({
+  slots: {
+    default: paramCase(props.component.name),
+  },
+  props: {},
+  attributes: {},
+  events: {},
+  getMembers () {
+    return {
+      ...this.props,
+      ...this.attributes,
+    };
+  },
 });
 
-console.log(info.value);
-
-const options = computedModel(
-  reactive({
-    slots: {
-      default: paramCase(props.component.name),
-    },
-    props: {},
-    attributes: {},
-    events: {},
-    directives: {},
-    getMembers () {
-      return {
-        ...this.props,
-        ...this.attributes,
-      };
-    },
-  }),
+const optionsModel = computedModel(
+  options,
   (e, model) => e(model),
 );
+
+const info = reactive(initializeInfo());
+
+console.log(info);
+console.log(optionsModel.value);
+
+function initializeInfo () {
+  const [info, defaults] = getComponentInfo(props.component);
+  Object.keys(defaults).forEach(key => {
+    setDefaults(defaults[key], options[key]);
+  });
+  return info;
+}
+
+function setDefaults (defaults, members) {
+  Object.keys(defaults).forEach(key => {
+    if (!(key in members)) {
+      members[key] = defaults[key];
+    }
+  });
+}
 
 const codePanel = ref();
 
@@ -86,7 +90,7 @@ const eventHooks = ref([
 
 const events = computed(() => {
   return Object.fromEntries(
-    info.value.events.map(({ name }) => {
+    info.events.map(({ name }) => {
       return [
         name,
         e => eventHooks.value.forEach(hook => hook(name, e)),
@@ -94,7 +98,6 @@ const events = computed(() => {
     }),
   );
 });
-
 </script>
 
 <script>

@@ -19,3 +19,22 @@ export function getUniqueString (prefix = DEFAULT_PREFIX) {
   }
   return `${prefix}${UNIQUE_ID_MAP[prefix]++}`;
 }
+
+export function typeOfMember (value) {
+  if (value == null) {
+    return null;
+  }
+
+  const type = typeof value;
+  switch (type) {
+    case 'symbol': {
+      return value.toString();
+    }
+    case 'object': {
+      return Array.isArray(value)
+        ? 'array'
+        : 'object';
+    }
+    default: return type;
+  }
+}

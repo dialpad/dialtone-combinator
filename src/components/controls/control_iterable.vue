@@ -53,8 +53,9 @@
 import IconAdd from '%/IconAddCircleOutline';
 import IconRemove from '%/IconRemove';
 import { DtButton, DtListItem } from '@dialpad/dialtone-vue';
-import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
+import { DEFAULT_PREFIX, VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { idMap } from '@/src/lib/utils_vue';
+import { getUniqueString } from '@/src/lib/utils';
 
 const props = defineProps({
   value: {
@@ -69,7 +70,8 @@ const props = defineProps({
 
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
-const { addId, removeId, getId } = idMap('dtc-control-iterable-item');
+const prefix = getUniqueString(`${DEFAULT_PREFIX}-control-iterable`);
+const { addId, removeId, getId } = idMap(`${prefix}-item`);
 
 function updateItem (index, item) {
   const items = [...props.value];

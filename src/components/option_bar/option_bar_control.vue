@@ -2,18 +2,18 @@
   <div>
     <div class="d-pb1">
       <template
-        v-for="(badge, badgeControl) in badges"
-        :key="badgeControl"
+        v-for="(badge, key) in badges"
+        :key="key"
       >
         <span class="d-pr2">
           <dt-button
             class="d-p0"
             importance="clear"
-            @click="() => updateType(badgeControl)"
+            @click="() => updateControl(key)"
           >
             <dt-badge
               :text="badge.label"
-              :color="getBadgeColor(badgeControl)"
+              :color="getBadgeColor(key)"
             />
           </dt-button>
         </span>
@@ -50,7 +50,7 @@
 import { DtBadge, DtButton } from '@dialpad/dialtone-vue';
 import DtcControlNull from '@/src/components/controls/control_null';
 
-import { TYPE_UPDATE_EVENT, VALUE_UPDATE_EVENT } from '@/src/lib/constants';
+import { CONTROL_UPDATE_EVENT, VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
 import { getPropLabel } from '@/src/lib/utils_vue';
 import { getControlComponent } from '@/src/lib/control';
@@ -90,6 +90,7 @@ const props = defineProps({
     type: Object,
     default: undefined,
   },
+
   /**
    * Optional args to bind directly to the control.
    */
@@ -99,7 +100,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits([VALUE_UPDATE_EVENT, TYPE_UPDATE_EVENT]);
+const emit = defineEmits([VALUE_UPDATE_EVENT, CONTROL_UPDATE_EVENT]);
 
 const controlValue = computed(() => {
   return (props.value === undefined && controlComponent.value === DtcControlNull)
@@ -114,7 +115,7 @@ const controlDescription = computed(() => {
 });
 
 const controlComponent = computed(() => {
-  return getControlComponent(props.control, controlArgs);
+  return getControlComponent(props.control, controlArgs.value);
 });
 
 const controlArgs = computed(() => {
@@ -176,8 +177,8 @@ function updateValue (e) {
   emit(VALUE_UPDATE_EVENT, value);
 }
 
-function updateType (e) {
-  emit(TYPE_UPDATE_EVENT, e);
+function updateControl (e) {
+  emit(CONTROL_UPDATE_EVENT, e);
 }
 </script>
 

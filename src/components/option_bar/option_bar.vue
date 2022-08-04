@@ -21,21 +21,19 @@
           :component="component"
           :members="info.props"
           :values="options.props"
-          :type-selector="prop => getPropTypes(prop.type.name)"
-          :on-setup="setupProps"
+          :type-selector="prop => getPropTypes(prop.types)"
           @update:member="updateProps"
         />
       </dtc-option-bar-section>
       <dtc-option-bar-section
-        v-if="attributes"
+        v-if="info.attributes"
         heading="Attributes"
       >
         <dtc-option-bar-members
           :component="component"
-          :members="attributes"
+          :members="info.attributes"
           :values="options.attributes"
-          :type-selector="attribute => extractTypes(attribute.type.name)"
-          :on-setup="setupAttributes"
+          :type-selector="attribute => attribute.types"
           @update:member="updateAttributes"
         />
       </dtc-option-bar-section>
@@ -59,9 +57,8 @@ import DtcOptionBarMembers from './option_bar_members';
 import DtcOptionBarSection from './option_bar_section';
 
 import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
-import { computed } from 'vue';
 
-const props = defineProps({
+defineProps({
   component: {
     type: Object,
     required: true,
@@ -78,48 +75,11 @@ const props = defineProps({
 
 const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
 
-const attributes = computed(() => {
-  const properties = props.info.tags.property;
-
-  if (!properties) {
-    return null;
-  }
-
-  return properties.filter(property => {
-    return property.description === 'attribute';
-  }).map(property => {
-    return {
-      name: property.name,
-      type: {
-        name: property.type.name,
-      },
-    };
-  });
-});
-
-function getPropTypes (typeString) {
+function getPropTypes (types) {
   return [
-    ...extractTypes(typeString),
+    ...types,
     'null',
   ];
-}
-
-function extractTypes (typeString) {
-  return typeString.split('|').map(type => type.trim());
-}
-
-function setupProps (member) {
-  let value = member.value;
-  if (!member.validControls.includes(member.control)) {
-    member.control = 'null';
-    value = undefined;
-  }
-  return value;
-}
-
-function setupAttributes (member) {
-  member.control = member.validControls[0];
-  return member.value;
 }
 
 function updateMember (memberType, { member, value }) {
