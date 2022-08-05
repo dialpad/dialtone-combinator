@@ -12,8 +12,8 @@
           :value="getMemberValue(key)"
           :valid-values="member.values"
           :description="member.description"
+          :types="member.type?.names"
           :tags="member.tags"
-          :properties="member.properties"
           :args="{
             defaultValue: member.defaultValue,
           }"

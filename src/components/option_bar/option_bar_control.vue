@@ -82,11 +82,11 @@ const props = defineProps({
     type: String,
     default: undefined,
   },
-  tags: {
-    type: Object,
+  types: {
+    type: Array,
     default: undefined,
   },
-  properties: {
+  tags: {
     type: Object,
     default: undefined,
   },
@@ -121,6 +121,7 @@ const controlComponent = computed(() => {
 const controlArgs = computed(() => {
   return {
     validValues: props.validValues,
+    tags: props.tags,
     ...props.args,
   };
 });
@@ -148,9 +149,14 @@ const badges = computed(() => {
 
 function getBadge (control) {
   switch (control) {
-    case 'event': return {
-      label: getPropertyTypes()?.[0] ?? 'event',
-    };
+    case 'event': {
+      const eventType = props.types?.[0];
+      return {
+        label: eventType && eventType !== 'undefined'
+          ? eventType
+          : 'event',
+      };
+    }
     default: return {
       label: control,
     };
@@ -161,12 +167,6 @@ function getBadgeColor (control) {
   return control === props.control
     ? 'purple-100'
     : 'base';
-}
-
-function getPropertyTypes () {
-  return props.properties?.map(property => {
-    return property.type?.names;
-  }).flat();
 }
 
 function updateValue (e) {

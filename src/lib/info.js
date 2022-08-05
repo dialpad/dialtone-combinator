@@ -22,6 +22,7 @@ function extendInfo (info) {
   const defaults = {};
 
   if (info.slots) {
+    info.slots = processMembers(info.slots);
     defaults.slots = getDefaults(info.slots);
   }
 
@@ -37,7 +38,7 @@ function extendInfo (info) {
   }
 
   if (info.events) {
-    defaults.events = getDefaults(info.events);
+    info.events = processMembers(info.events);
   }
 
   return defaults;
@@ -90,23 +91,30 @@ function processMembers (members) {
 }
 
 function extendMember (member) {
-  if (member.type) {
-    member.types = extractMemberTypes(member.type.name);
-    delete member.type;
-  }
-
   let defaultValue = member.defaultValue
     ? parseDocDefault(member.defaultValue)
     : undefined;
 
-  let defaultType = typeOfMember(defaultValue);
-  if (defaultType != null && !member.types.includes(defaultType)) {
+  let defaultType;
+  if (member.type?.name) {
+    defaultType = typeOfMember(defaultValue);
+    [defaultValue, defaultType] = extendMemberType(member, defaultValue, defaultType);
+  }
+
+  if (defaultValue !== undefined) { member.defaultValue = defaultValue; }
+  if (defaultType !== undefined) { member.defaultType = defaultType; }
+}
+
+function extendMemberType (member, defaultValue, defaultType) {
+  member.type.names = extractMemberTypes(member.type.name);
+  delete member.type.name;
+
+  if (defaultType != null && !member.type.names.includes(defaultType)) {
     defaultValue = undefined;
     defaultType = undefined;
   }
 
-  member.defaultValue = defaultValue;
-  member.defaultType = defaultType;
+  return [defaultValue, defaultType];
 }
 
 function extractMemberTypes (typeString) {
