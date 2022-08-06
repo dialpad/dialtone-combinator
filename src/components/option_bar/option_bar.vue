@@ -9,7 +9,7 @@
           :component="component"
           :members="info.slots"
           :values="options.slots"
-          :type-selector="() => ['slot']"
+          :control-selector="() => ['slot']"
           @update:member="updateSlots"
         />
       </dtc-option-bar-section>
@@ -21,7 +21,7 @@
           :component="component"
           :members="info.props"
           :values="options.props"
-          :type-selector="prop => getPropTypes(prop.type.names)"
+          :control-selector="prop => getPropTypes(prop.type.names)"
           @update:member="updateProps"
         />
       </dtc-option-bar-section>
@@ -33,7 +33,7 @@
           :component="component"
           :members="info.attributes"
           :values="options.attributes"
-          :type-selector="attribute => attribute.type.names"
+          :control-selector="attribute => attribute.type.names"
           @update:member="updateAttributes"
         />
       </dtc-option-bar-section>
@@ -45,7 +45,7 @@
           :component="component"
           :members="info.events"
           :values="options.events"
-          :type-selector="() => ['event']"
+          :control-selector="() => ['event']"
         />
       </dtc-option-bar-section>
     </ul>

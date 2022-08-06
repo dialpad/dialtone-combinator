@@ -45,7 +45,7 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  typeSelector: {
+  controlSelector: {
     type: Function,
     default: () => [],
   },
@@ -73,8 +73,8 @@ function extendMember (member) {
   const key = getMemberKey(member);
   const value = getMemberValue(key);
 
-  const validControls = props.typeSelector(member) ?? [];
-  const control = validControls.find(control => controlMap[control]?.important) ?? getControlByValue(value);
+  const validControls = props.controlSelector(member);
+  const control = validControls?.find(control => controlMap[control]?.important) ?? getControlByValue(value);
 
   return {
     ...member,
