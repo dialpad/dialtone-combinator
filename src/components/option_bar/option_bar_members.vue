@@ -6,7 +6,7 @@
     >
       <div class="d-py6">
         <DtcOptionBarControl
-          :name="member.name"
+          :label="member.getLabel()"
           :control="member.control"
           :valid-controls="member.validControls"
           :value="getMemberValue(key)"

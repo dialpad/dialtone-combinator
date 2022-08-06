@@ -48,13 +48,14 @@
 
 <script setup>
 import { DtBadge, DtButton } from '@dialpad/dialtone-vue';
-import DtcControlNull from '@/src/components/controls/control_null';
-
 import { CONTROL_UPDATE_EVENT, VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
-import { getPropLabel } from '@/src/lib/utils_vue';
-import { getControlComponent } from '@/src/lib/control';
-import { UNSET } from '@/src/lib/utils';
+import {
+  controlMap,
+  deserializeControlValue,
+  getControlComponent,
+  serializeControlValue,
+} from '@/src/lib/control';
 import { sentenceCase } from 'change-case';
 
 const props = defineProps({
@@ -74,7 +75,7 @@ const props = defineProps({
     type: Array,
     default: undefined,
   },
-  name: {
+  label: {
     type: String,
     required: true,
   },
@@ -96,15 +97,15 @@ const props = defineProps({
    */
   args: {
     type: Object,
-    default: undefined,
+    default: () => {},
   },
 });
 
 const emit = defineEmits([VALUE_UPDATE_EVENT, CONTROL_UPDATE_EVENT]);
 
 const controlValue = computed(() => {
-  return (props.value === undefined && controlComponent.value === DtcControlNull)
-    ? UNSET
+  return controlMap[props.control].serialize
+    ? serializeControlValue(props.value)
     : props.value;
 });
 
@@ -124,10 +125,6 @@ const controlArgs = computed(() => {
     tags: props.tags,
     ...props.args,
   };
-});
-
-const label = computed(() => {
-  return getPropLabel(props.name, props.tags);
 });
 
 const showModelTag = computed(() => {
@@ -170,10 +167,9 @@ function getBadgeColor (control) {
 }
 
 function updateValue (e) {
-  const value = e === UNSET
-    ? undefined
+  const value = controlMap[props.control].serialize
+    ? deserializeControlValue(e)
     : e;
-
   emit(VALUE_UPDATE_EVENT, value);
 }
 

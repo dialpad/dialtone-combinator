@@ -4,6 +4,7 @@ import externalDocumentation from '@dialpad/dialtone-vue/dist/component-document
 import { parseDocDefault, stringifyDocValue } from '@/src/lib/parse';
 import { typeOfMember } from '@/src/lib/utils';
 import { controlMap } from '@/src/lib/control';
+import { paramCase } from 'change-case';
 
 const documentation = internalDocumentation ?? externalDocumentation;
 
@@ -103,6 +104,11 @@ function extendMember (member) {
 
   if (defaultValue !== undefined) { member.defaultValue = defaultValue; }
   if (defaultType !== undefined) { member.defaultType = defaultType; }
+  if (member.name) {
+    member.getLabel = function () {
+      return paramCase(member.name);
+    };
+  }
 }
 
 function extendMemberType (member, defaultValue, defaultType) {

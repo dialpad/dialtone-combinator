@@ -1,14 +1,14 @@
 <template>
   <div>
     <template
-      v-for="[name, { value, prop }] in visibleMembers"
+      v-for="[name, { value, getLabel }] in visibleMembers"
       :key="name"
     >
       <div>
         <dtc-code-editor-indent />
         <span v-if="useBindOperator(value)">:</span>
         <span class="dtc-scheme__class">
-          {{ getLabel(name, prop) }}
+          {{ getLabel() }}
         </span>
         <span v-if="!useShortSyntax(value)">
           <span>=</span>
@@ -32,10 +32,9 @@
 import DtcCodeEditorIndent from './code_editor_indent';
 
 import { computed } from 'vue';
-import { getPropLabel } from '@/src/lib/utils_vue';
 import { stringifyDocValue } from '@/src/lib/parse';
 
-const internalProps = defineProps({
+const props = defineProps({
   info: {
     type: Object,
     required: true,
@@ -51,44 +50,31 @@ const internalProps = defineProps({
 });
 
 const visibleMembers = computed(() => {
-  const attributes = mapAttributes(internalProps.members);
-  return attributes.filter(([name, member]) => visible(name, member));
+  const members = mapMembers(props.members);
+  return members.filter(([name, member]) => visible(name, member));
 });
 
-function mapAttributes (members) {
+const infoMembers = computed(() => {
+  return props.info.getMembers();
+});
+
+function mapMembers (members) {
   return Object.entries(members).map(([name, value]) => {
+    const memberInfo = infoMembers.value.find(member => member.name === name);
     return [name, {
-      prop: internalProps.info.props.find(prop => {
-        return prop.name === name;
-      }),
+      ...memberInfo,
       value,
     }];
   });
 }
 
 function visible (name, member) {
-  return member.prop
-    ? filterProp(member.value, member.prop.defaultValue)
-    : filterAttribute(member.value);
-}
+  if (props.verbose) { return true; }
 
-function filterProp (value, defaultValue) {
-  if (internalProps.verbose) { return true; }
-
-  const defaultString = JSON.stringify(defaultValue);
-  const valueString = JSON.stringify(value);
+  const defaultString = JSON.stringify(member.defaultValue);
+  const valueString = JSON.stringify(member.value);
 
   return defaultString !== valueString;
-}
-
-function filterAttribute (value) {
-  return !!value;
-}
-
-function getLabel (name, prop) {
-  return prop
-    ? getPropLabel(prop.name, prop.tags)
-    : name;
 }
 
 function useShortSyntax (value) {

@@ -1,6 +1,7 @@
 <template>
   <dtc-control-iterable
     :value="value"
+    :generate-item="generateItem"
     @update:value="e => emit(VALUE_UPDATE_EVENT, e)"
   >
     <template #default>
@@ -11,8 +12,8 @@
     </template>
     <template #item="{ item, update }">
       <dtc-control-dynamic
-        :value="item"
-        @update:value="update"
+        :value="serializeControlValue(item)"
+        @update:value="e => update(deserializeControlValue(e))"
       />
     </template>
     <template #suffix>
@@ -25,7 +26,7 @@
 import DtcControlIterable from './control_iterable';
 import DtcControlDynamic from './control_dynamic';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
-import { controlMap } from '@/src/lib/control';
+import { controlMap, serializeControlValue, deserializeControlValue } from '@/src/lib/control';
 
 defineProps({
   value: {
@@ -35,6 +36,10 @@ defineProps({
 });
 
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
+
+function generateItem () {
+  return undefined;
+}
 </script>
 
 <script>

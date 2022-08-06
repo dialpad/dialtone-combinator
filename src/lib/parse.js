@@ -1,3 +1,5 @@
+import { parse, stringify } from 'json5-with-undefined';
+
 export function parseDocDefault (defaultInfo) {
   if (!defaultInfo.value) { return defaultInfo.value; }
 
@@ -14,15 +16,15 @@ export function parseDocDefault (defaultInfo) {
   return value;
 }
 
+export function stringifyDocValue (value) {
+  return stringify(value);
+}
+
 export function parseDocValue (value) {
-  return JSON.parse(value.replaceAll('\'', '"'));
+  return parse(value);
 }
 
 // TODO: Properly set default value from func
 function parseDocFunc () {
   return undefined;
-}
-
-export function stringifyDocValue (value) {
-  return JSON.stringify(value, null, 2).replaceAll('"', '\'');
 }

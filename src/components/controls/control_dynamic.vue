@@ -21,14 +21,15 @@
 <script setup>
 import DtcControlSelection from './control_selection';
 
-import { controlMap } from '@/src/lib/control';
+import { controlMap, getControlByValue } from '@/src/lib/control';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed, ref } from 'vue';
+import { UNSET } from '@/src/lib/utils';
 
 const props = defineProps({
   value: {
     type: undefined,
-    default: undefined,
+    default: () => controlMap.dynamic.default,
   },
 });
 
@@ -40,10 +41,6 @@ const externalControls = [
 ];
 
 const controlSelectionMap = {
-  null: {
-    component: () => null,
-    get default () { return null; },
-  },
   ...Object.fromEntries(
     Object.entries(controlMap).filter(([controlName]) => {
       return externalControls.includes(controlName);
@@ -57,18 +54,45 @@ const controlSelectionMap = {
     component: () => null,
     get default () { return false; },
   },
+  NaN: {
+    component: () => null,
+    get default () { return NaN; },
+  },
+  null: {
+    component: () => null,
+    get default () { return null; },
+  },
+  undefined: {
+    component: () => null,
+    get default () { return UNSET; },
+  },
 };
 
 const controlSelections = computed(() => Object.keys(controlSelectionMap));
-const selectedControl = ref(
-  props.value
-    ? typeof props.value
-    : 'null',
-);
+const selectedControl = ref(getControl());
 
 const control = computed(() => {
   return controlSelectionMap[selectedControl.value]?.component();
 });
+
+function getControl () {
+  const value = props.value;
+
+  switch (value) {
+    case UNSET: return 'undefined';
+    case null: return 'null';
+    case false: return 'false';
+    case true: return 'true';
+  }
+
+  if (Number.isNaN(value)) { return 'NaN'; }
+
+  const control = getControlByValue(value);
+
+  return control === 'base'
+    ? controlMap.dynamic.defaultControl
+    : control;
+}
 
 function updateControl (e) {
   selectedControl.value = e;

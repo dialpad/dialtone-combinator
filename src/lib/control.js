@@ -1,5 +1,6 @@
 import DtcControlEvent from '@/src/components/controls/control_event';
 import DtcControlSlot from '@/src/components/controls/control_slot';
+import DtcControlDynamic from '@/src/components/controls/control_dynamic';
 import DtcControlObject from '@/src/components/controls/control_object';
 import DtcControlArray from '@/src/components/controls/control_array';
 import DtcControlBoolean from '@/src/components/controls/control_boolean';
@@ -21,6 +22,12 @@ export const controlMap = Object.freeze({
     component: () => DtcControlSlot,
     get default () { return null; },
     important: true,
+  },
+  dynamic: {
+    component: () => DtcControlDynamic,
+    get default () { return UNSET; },
+    get defaultControl () { return 'undefined'; },
+    serialize: true,
   },
   object: {
     component: () => DtcControlObject,
@@ -49,6 +56,7 @@ export const controlMap = Object.freeze({
   null: {
     component: () => DtcControlNull,
     get default () { return null; },
+    serialize: true,
   },
   base: {
     component: () => DtcControlBase,
@@ -68,4 +76,16 @@ export function getControlByValue (value) {
   return control in controlMap
     ? control
     : 'base';
+}
+
+export function serializeControlValue (value) {
+  return value === undefined
+    ? UNSET
+    : value;
+}
+
+export function deserializeControlValue (value) {
+  return value === UNSET
+    ? undefined
+    : value;
 }

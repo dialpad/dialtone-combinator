@@ -1,4 +1,3 @@
-import { paramCase } from 'change-case';
 import { computed, ref } from 'vue';
 import { getUniqueString } from '@/src/lib/utils';
 
@@ -48,8 +47,4 @@ export function idMap (prefix) {
     removeId: remove,
     getId: get,
   };
-}
-
-export function getPropLabel (name) {
-  return paramCase(name);
 }

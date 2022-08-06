@@ -64,7 +64,7 @@ const props = defineProps({
   },
   generateItem: {
     type: Function,
-    default: () => null,
+    required: true,
   },
 });
 

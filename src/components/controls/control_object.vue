@@ -1,7 +1,7 @@
 <template>
   <dtc-control-iterable
     :value="entries"
-    :generate-item="generateEntry"
+    :generate-item="generateItem"
     @update:value="updateValue"
   >
     <template #default>
@@ -18,7 +18,7 @@
         />
         <span class="d-px6 d-ps-relative d-t6">:</span>
         <dtc-control-dynamic
-          :value="item[1]"
+          :value="serializeControlValue(item[1])"
           @update:value="e => updateEntry(item[0], e, update)"
         />
       </div>
@@ -35,7 +35,7 @@ import DtcControlIterable from './control_iterable';
 import DtcControlDynamic from './control_dynamic';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
-import { controlMap } from '@/src/lib/control';
+import { controlMap, serializeControlValue, deserializeControlValue } from '@/src/lib/control';
 
 const props = defineProps({
   value: {
@@ -59,12 +59,12 @@ function generateNextKey () {
   ) + 1;
 }
 
-function generateEntry () {
-  return [generateNextKey(), null];
+function generateItem () {
+  return [generateNextKey(), undefined];
 }
 
 function updateEntry (key, value, updateItem) {
-  updateItem([key, value]);
+  updateItem([key, deserializeControlValue(value)]);
 }
 
 function updateValue (e) {

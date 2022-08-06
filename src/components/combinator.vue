@@ -50,8 +50,8 @@ const optionsRef = reactive({
   events: {},
   getMembers () {
     return {
-      ...this.props,
-      ...this.attributes,
+      ...(this.props || {}),
+      ...(this.attributes || {}),
     };
   },
 });
@@ -61,7 +61,15 @@ const options = computedModel(
   (e, model) => e(model),
 );
 
-const info = reactive(initializeInfo());
+const info = reactive({
+  ...initializeInfo(),
+  getMembers () {
+    return [
+      ...(this.props || []),
+      ...(this.attributes || []),
+    ];
+  },
+});
 
 console.log(info);
 
