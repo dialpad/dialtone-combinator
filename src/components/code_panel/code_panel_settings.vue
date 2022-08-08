@@ -62,7 +62,7 @@
 </template>
 
 <script setup>
-import IconSettings from '%/IconSettings';
+import IconSettings from 'icons/IconSettings';
 
 import {
   DtButton,

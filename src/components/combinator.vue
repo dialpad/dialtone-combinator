@@ -61,17 +61,19 @@ const options = computedModel(
   (e, model) => e(model),
 );
 
-const info = reactive({
-  ...initializeInfo(),
-  getMembers () {
-    return [
-      ...(this.props || []),
-      ...(this.attributes || []),
-    ];
-  },
+const info = computed(() => {
+  return {
+    ...initializeInfo(),
+    getMembers () {
+      return [
+        ...(this.props || []),
+        ...(this.attributes || []),
+      ];
+    },
+  };
 });
 
-console.log(info);
+console.log(info.value);
 
 function initializeInfo () {
   const [info, defaults] = getComponentInfo(props.component);
@@ -96,9 +98,9 @@ const eventHooks = ref([
 ]);
 
 const events = computed(() => {
-  if (!info.events) { return {}; }
+  if (!info.value.events) { return {}; }
   return Object.fromEntries(
-    info.events.map(({ name }) => {
+    info.value.events.map(({ name }) => {
       return [
         name,
         e => eventHooks.value.forEach(hook => hook(name, e)),

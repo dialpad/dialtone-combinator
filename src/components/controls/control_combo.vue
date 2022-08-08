@@ -53,8 +53,8 @@
 
 <script setup>
 import DtcControlString from './control_string';
-import IconExpand from '%/IconArrowKeyboardDown';
-import IconCollapse from '%/IconArrowKeyboardUp';
+import IconExpand from 'icons/IconArrowKeyboardDown';
+import IconCollapse from 'icons/IconArrowKeyboardUp';
 import { DtRecipeComboboxWithPopover, DtListItem, DtBadge } from '@dialpad/dialtone-vue';
 
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';

@@ -33,8 +33,8 @@
 </template>
 
 <script setup>
-import IconExpand from '%/IconMenuHorizontal';
-import IconCollapse from '%/IconArrowAccordion';
+import IconExpand from 'icons/IconMenuHorizontal';
+import IconCollapse from 'icons/IconArrowAccordion';
 
 import { DtButton, DtLazyShow } from '@dialpad/dialtone-vue';
 
