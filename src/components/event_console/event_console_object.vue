@@ -1,7 +1,5 @@
 <template>
-  <dtc-event-console-lazy-load
-    @toggle="onToggle"
-  >
+  <dtc-event-console-lazy-load>
     <template #prefix>
       {
     </template>
@@ -40,12 +38,6 @@ const props = defineProps({
 const clone = computed(() => {
   return flatten(props.value);
 });
-
-function onToggle (e) {
-  if (e) {
-    console.log(clone.value);
-  }
-}
 </script>
 
 <script>

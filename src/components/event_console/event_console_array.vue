@@ -1,7 +1,5 @@
 <template>
-  <dtc-event-console-lazy-load
-    @toggle="onToggle"
-  >
+  <dtc-event-console-lazy-load>
     <template #prefix>
       [
     </template>
@@ -28,18 +26,12 @@
 import DtcEventConsolePair from '@/src/components/event_console/event_console_pair';
 import DtcEventConsoleLazyLoad from '@/src/components/event_console/event_console_lazy_load';
 
-const props = defineProps({
+defineProps({
   value: {
-    type: Object,
+    type: Array,
     required: true,
   },
 });
-
-function onToggle (e) {
-  if (e) {
-    console.log(props.value);
-  }
-}
 </script>
 
 <script>

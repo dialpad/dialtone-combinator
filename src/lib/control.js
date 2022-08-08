@@ -69,7 +69,7 @@ export function getControlComponent (name, args) {
 }
 
 export function getControlByValue (value) {
-  const control = value == null || value === UNSET
+  const control = value === undefined || value === null || value === UNSET
     ? 'null'
     : typeOfMember(value);
 

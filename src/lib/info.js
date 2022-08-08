@@ -1,12 +1,9 @@
-import internalDocumentation from '@/src/assets/component-documentation.json';
-import externalDocumentation from '@dialpad/dialtone-vue/dist/component-documentation.json';
+import documentation from '@/src/assets/component-documentation.json';
 
 import { parseDocDefault, stringifyDocValue } from '@/src/lib/parse';
 import { typeOfMember } from '@/src/lib/utils';
 import { controlMap } from '@/src/lib/control';
 import { paramCase } from 'change-case';
-
-const documentation = internalDocumentation ?? externalDocumentation;
 
 export function getComponentInfo (component) {
   const info = {
@@ -115,7 +112,11 @@ function extendMemberType (member, defaultValue, defaultType) {
   member.type.names = extractMemberTypes(member.type.name);
   delete member.type.name;
 
-  if (defaultType != null && !member.type.names.includes(defaultType)) {
+  if (
+    defaultType !== undefined &&
+    defaultType !== null &&
+    !member.type.names.includes(defaultType)
+  ) {
     defaultValue = undefined;
     defaultType = undefined;
   }

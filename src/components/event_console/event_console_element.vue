@@ -1,7 +1,5 @@
 <template>
-  <dtc-event-console-lazy-load
-    @toggle="onToggle"
-  >
+  <dtc-event-console-lazy-load>
     <template #prefix>
       &lt;
     </template>
@@ -32,12 +30,6 @@ const html = computed(() => {
     inline: '',
   });
 });
-
-function onToggle (e) {
-  if (e) {
-    console.log(props.value);
-  }
-}
 </script>
 
 <script>

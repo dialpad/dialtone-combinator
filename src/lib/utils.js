@@ -21,7 +21,7 @@ export function getUniqueString (prefix = DEFAULT_PREFIX) {
 }
 
 export function typeOfMember (value) {
-  if (value == null) {
+  if (value === undefined || value === null) {
     return null;
   }
 

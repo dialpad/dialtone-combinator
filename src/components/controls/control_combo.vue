@@ -90,6 +90,7 @@ const combobox = ref();
 
 function onSelectInternal (i) {
   combobox.value.onSelect(i);
+  combobox.value.closeComboboxList();
 }
 
 function onInputInternal (value, onInput) {

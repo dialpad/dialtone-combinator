@@ -45,9 +45,8 @@ const emit = defineEmits(['toggle']);
 const show = ref(false);
 
 function toggle () {
-  const value = !show.value;
-  show.value = value;
-  emit('toggle', value);
+  show.value = !show.value;
+  emit('toggle', show.value);
 }
 </script>
 

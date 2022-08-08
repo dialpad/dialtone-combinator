@@ -9,7 +9,7 @@
     >
       <dtc-code-editor-element
         :tag-name="tagName"
-        :self-closing="slotsEmpty"
+        :self-closing="hasSlotContent"
       >
         <template #opening>
           <dtc-code-editor-attributes
@@ -106,7 +106,7 @@ const emit = defineEmits([
 
 const tagName = computed(() => paramCase(props.info.displayName));
 
-const slotsEmpty = computed(() => {
+const hasSlotContent = computed(() => {
   return Object.values(props.options.slots).every(slot => !slot);
 });
 

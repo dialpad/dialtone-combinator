@@ -73,8 +73,6 @@ const info = computed(() => {
   };
 });
 
-console.log(info.value);
-
 function initializeInfo () {
   const [info, defaults] = getComponentInfo(props.component);
   Object.keys(defaults).forEach(key => {
