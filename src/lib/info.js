@@ -36,7 +36,7 @@ function extendInfo (info) {
   }
 
   if (info.events) {
-    info.events = processMembers(info.events);
+    info.events = processMembers(info.events, extendEvent);
   }
 
   return defaults;
@@ -52,7 +52,7 @@ function getAttributes (info) {
   return properties.filter(property => {
     return property.description === 'attribute';
   }).map(property => {
-    const type = property.type.name;
+    const type = property.type.name.toLowerCase();
     return {
       name: property.name,
       type: {
@@ -81,11 +81,21 @@ function renameModelProp (info) {
   }
 }
 
-function processMembers (members) {
+function processMembers (members, ...processors) {
   return members?.map(member => {
     extendMember(member);
+    processors.forEach(processor => {
+      processor(member);
+    });
     return member;
   });
+}
+
+function extendEvent (event) {
+  const types = event.type?.names?.[0];
+  if (types) {
+    event.type.names = extractMemberTypes(types);
+  }
 }
 
 function extendMember (member) {
@@ -125,5 +135,5 @@ function extendMemberType (member, defaultValue, defaultType) {
 }
 
 function extractMemberTypes (typeString) {
-  return typeString.split('|').map(type => type.trim());
+  return typeString.split('|').map(type => type.trim().toLowerCase());
 }

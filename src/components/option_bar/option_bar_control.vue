@@ -6,16 +6,21 @@
         :key="key"
       >
         <span class="d-pr2">
-          <dt-button
-            class="d-p0"
-            importance="clear"
-            @click="() => updateControl(key)"
+          <template
+            v-for="badgeLabel in badge.labels"
+            :key="badgeLabel"
           >
-            <dt-badge
-              :text="badge.label"
-              :color="getBadgeColor(key)"
-            />
-          </dt-button>
+            <dt-button
+              class="d-p0"
+              importance="clear"
+              @click="() => updateControl(key)"
+            >
+              <dt-badge
+                :text="badgeLabel"
+                :color="getBadgeColor(key)"
+              />
+            </dt-button>
+          </template>
         </span>
       </template>
     </div>
@@ -147,15 +152,19 @@ const badges = computed(() => {
 function getBadge (control) {
   switch (control) {
     case 'event': {
-      const eventType = props.types?.[0];
+      const eventTypes = props.types;
       return {
-        label: eventType && eventType !== 'undefined'
-          ? eventType
-          : 'event',
+        labels: [
+          ...(eventTypes.map(type => {
+            return type && type !== 'undefined'
+              ? type
+              : 'event';
+          })),
+        ],
       };
     }
     default: return {
-      label: control,
+      labels: [control],
     };
   }
 }
