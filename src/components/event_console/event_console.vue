@@ -38,7 +38,7 @@ const entries = ref([]);
 let currentId = 0;
 defineExpose({
   trigger (event, value) {
-    entries.value.splice(0, 0, {
+    entries.value.unshift({
       event,
       value,
       key: currentId++,
