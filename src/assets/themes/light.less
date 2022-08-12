@@ -1,14 +1,11 @@
-@color-foreground: #444150;
-@color-background: #FCFCFC;
-
 & {
-  --dtc-theme-color-foreground: @color-foreground;
-  --dtc-theme-color-foreground-darken: darken(@color-foreground, 8%);
-  --dtc-theme-color-foreground-lighten: lighten(@color-foreground, 8%);
+  --dtc-theme-color-foreground: var(--black-800);
+  --dtc-theme-color-foreground-darken: var(--black-900);
+  --dtc-theme-color-foreground-lighten: var(--black-700);
 
-  --dtc-theme-color-background: @color-background;
-  --dtc-theme-color-background-darken: darken(@color-background, 2%);
-  --dtc-theme-color-background-lighten: lighten(@color-background, 100%);
+  --dtc-theme-color-background: var(--black-025);
+  --dtc-theme-color-background-darken: var(--black-050);
+  --dtc-theme-color-background-lighten: var(--white);
 
   color-scheme: light;
 }

@@ -95,6 +95,7 @@ export default {
 
 <style lang="less">
 @import "@/src/assets/themes/scheme/base.less";
+@import "@/src/assets/themes/scheme/highlight_variables.less";
 
 .dtc-code-panel-scheme--mono {
 @import "@/src/assets/themes/scheme/mono.less";
