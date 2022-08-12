@@ -93,8 +93,6 @@ function updateMember (e, key) {
 function updateControl (e, key) {
   const member = memberMap[key];
 
-  if (member.control === e) { return; }
-
   let value;
   try {
     value = convert(member.control, e, getMemberValue(key));

@@ -65,6 +65,6 @@ function getId (slot) {
 
 <script>
 export default {
-  name: 'DtcSelector',
+  name: 'DtcTabPanel',
 };
 </script>

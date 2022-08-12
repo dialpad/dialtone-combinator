@@ -23,7 +23,7 @@ const props = defineProps({
     type: undefined,
     required: true,
   },
-  selections: {
+  validValues: {
     type: Array,
     default: undefined,
   },
@@ -36,7 +36,7 @@ const props = defineProps({
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
 const options = computed(() => {
-  return props.selections.map(selection => {
+  return props.validValues.map(selection => {
     return { value: selection, label: props.generateLabel(selection) };
   });
 });

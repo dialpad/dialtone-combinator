@@ -1,7 +1,7 @@
 <template>
   <dtc-control-selection
     :value="selection"
-    :selections="selections"
+    :valid-values="selections"
     @update:value="updateValue"
   >
     <slot />

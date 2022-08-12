@@ -3,7 +3,7 @@
     <div>
       <dtc-control-selection
         :value="selectedControl"
-        :selections="controlSelections"
+        :valid-values="controlSelections"
         @update:value="updateControl"
       />
     </div>

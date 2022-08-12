@@ -52,7 +52,13 @@ const entries = computed(() => {
 
 let currentId = 0;
 function generateNextId () {
-  return currentId++;
+  const keys = Object.keys(props.value);
+
+  while (keys.includes(currentId.toString())) {
+    currentId++;
+  }
+
+  return currentId;
 }
 
 function generateItem () {

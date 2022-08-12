@@ -8,7 +8,7 @@
     ]"
   >
     <div class="dtc-theme__canvas">
-      <dtc-selector
+      <dtc-tab-panel
         selected="code"
         :generate-label="generateLabel"
       >
@@ -24,7 +24,7 @@
         <template #events>
           <dtc-event-console ref="eventConsole" />
         </template>
-      </dtc-selector>
+      </dtc-tab-panel>
     </div>
     <div class="d-d-flex d-ai-flex-end d-jc-flex-end d-pe-none">
       <div class="d-pr32 d-pb16 d-pe-auto">
@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import DtcSelector from '@/src/components/selector/selector';
+import DtcTabPanel from '@/src/components/tools/tab_panel';
 import DtcCodePanelSettings from '@/src/components/code_panel/code_panel_settings';
 import DtcEventConsole from '@/src/components/event_console/event_console';
 import DtcCodeEditor from '@/src/components/code_editor/code_editor';

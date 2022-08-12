@@ -5,7 +5,7 @@ import DtcControlObject from '@/src/components/controls/control_object';
 import DtcControlArray from '@/src/components/controls/control_array';
 import DtcControlBoolean from '@/src/components/controls/control_boolean';
 import DtcControlNumber from '@/src/components/controls/control_number';
-import DtcControlCombo from '@/src/components/controls/control_combo';
+import DtcControlSelection from '@/src/components/controls/control_selection';
 import DtcControlString from '@/src/components/controls/control_string';
 import DtcControlNull from '@/src/components/controls/control_null';
 import DtcControlBase from '@/src/components/controls/control_base';
@@ -40,7 +40,7 @@ export const controlMap = Object.freeze({
   string: {
     component: ({ validValues } = {}) => {
       return validValues
-        ? DtcControlCombo
+        ? DtcControlSelection
         : DtcControlString;
     },
     get default () { return String(); },

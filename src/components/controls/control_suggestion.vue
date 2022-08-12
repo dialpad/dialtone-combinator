@@ -4,7 +4,7 @@
       ref="combobox"
       content-width="anchor"
       list-aria-label="Valid values"
-      @select="e => onUpdate(validValues[e])"
+      @select="e => onUpdate(suggestions[e])"
       @opened="onOpen"
     >
       <template #input="{ inputProps, onInput }">
@@ -29,7 +29,7 @@
           v-bind="listProps"
         >
           <dt-list-item
-            v-for="(item, i) in validValues"
+            v-for="(item, i) in suggestions"
             :key="item"
             navigation-type="arrow-keys"
             role="option"
@@ -68,7 +68,7 @@ const props = defineProps({
     type: String,
     default: () => controlMap.string.default,
   },
-  validValues: {
+  suggestions: {
     type: Array,
     required: true,
   },
@@ -76,12 +76,16 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  warn: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
 const warning = computed(() => {
-  return !props.validValues.includes(props.value)
+  return props.warn && !props.suggestions.includes(props.value)
     ? WARNING_MESSAGE
     : undefined;
 });
@@ -111,6 +115,6 @@ function onOpen (e) {
 
 <script>
 export default {
-  name: 'DtcControlCombo',
+  name: 'DtcControlSuggestion',
 };
 </script>

@@ -1,33 +1,17 @@
 <template>
   <div>
-    <div class="d-pb1">
-      <template
-        v-for="(badge, key) in badges"
-        :key="key"
-      >
-        <span class="d-pr2">
-          <template
-            v-for="badgeLabel in badge.labels"
-            :key="badgeLabel"
-          >
-            <dt-button
-              class="d-p0"
-              importance="clear"
-              @click="() => updateControl(key)"
-            >
-              <dt-badge
-                :text="badgeLabel"
-                :color="getBadgeColor(key)"
-              />
-            </dt-button>
-          </template>
-        </span>
-      </template>
+    <div class="d-pb2">
+      <dtc-option-bar-control-selector
+        :selected="control"
+        :controls="validControls"
+        :types="types"
+        @update:control="updateControl"
+      />
     </div>
     <component
       :is="controlComponent"
       :value="controlValue"
-      v-bind="controlArgs"
+      v-bind="bindArgs"
       @update:value="updateValue"
     >
       <span>
@@ -52,7 +36,7 @@
 </template>
 
 <script setup>
-import { DtBadge, DtButton } from '@dialpad/dialtone-vue';
+import { DtBadge } from '@dialpad/dialtone-vue';
 import { CONTROL_UPDATE_EVENT, VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
 import {
@@ -62,6 +46,7 @@ import {
   serializeControlValue,
 } from '@/src/lib/control';
 import { sentenceCase } from 'change-case';
+import DtcOptionBarControlSelector from '@/src/components/option_bar/option_bar_control_selector';
 
 const props = defineProps({
   control: {
@@ -132,48 +117,29 @@ const controlArgs = computed(() => {
   };
 });
 
+/**
+ * Object containing only the args that are
+ * present on the control component props.
+ *
+ * @type {ComputedRef<Object>}
+ */
+const bindArgs = computed(() => {
+  const component = controlComponent.value;
+  if (!component.props) { return null; }
+  return Object.fromEntries(
+    Object.entries(controlArgs.value).filter(([arg, _]) => {
+      const controlProps = Object.keys(component.props);
+      return controlProps.includes(arg);
+    }),
+  );
+});
+
 const showModelTag = computed(() => {
   const tags = props.tags;
   return tags
     ? 'model' in tags
     : false;
 });
-
-const badges = computed(() => {
-  return {
-    ...Object.fromEntries(
-      props.validControls.map(control => {
-        return [control, getBadge(control)];
-      }),
-    ),
-  };
-});
-
-function getBadge (control) {
-  switch (control) {
-    case 'event': {
-      const eventTypes = props.types;
-      return {
-        labels: [
-          ...(eventTypes.map(type => {
-            return type && type !== 'undefined'
-              ? type
-              : 'event';
-          })),
-        ],
-      };
-    }
-    default: return {
-      labels: [control],
-    };
-  }
-}
-
-function getBadgeColor (control) {
-  return control === props.control
-    ? 'purple-100'
-    : 'base';
-}
 
 function updateValue (e) {
   const value = controlMap[props.control].serialize
