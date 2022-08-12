@@ -62,7 +62,7 @@
 </template>
 
 <script setup>
-import IconSettings from 'icons/IconSettings';
+import IconSettings from 'dialtone-icons/IconSettings';
 
 import {
   DtButton,

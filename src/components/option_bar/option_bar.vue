@@ -27,7 +27,7 @@
       </dtc-option-bar-section>
       <dtc-option-bar-section
         v-if="info.attributes"
-        heading="Attributes"
+        heading="Native HTML Attributes"
       >
         <dtc-option-bar-members
           :component="component"

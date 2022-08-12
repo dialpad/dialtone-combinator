@@ -50,8 +50,8 @@
 </template>
 
 <script setup>
-import IconAdd from 'icons/IconAddCircleOutline';
-import IconRemove from 'icons/IconRemove';
+import IconAdd from 'dialtone-icons/IconAddCircleOutline';
+import IconRemove from 'dialtone-icons/IconRemove';
 import { DtButton, DtListItem } from '@dialpad/dialtone-vue';
 import { DEFAULT_PREFIX, VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { idMap } from '@/src/lib/utils_vue';

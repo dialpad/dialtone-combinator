@@ -26,8 +26,8 @@
 </template>
 
 <script setup>
-import IconExpand from 'icons/IconArrowKeyboardDown';
-import IconCollapse from 'icons/IconArrowKeyboardUp';
+import IconExpand from 'dialtone-icons/IconArrowKeyboardDown';
+import IconCollapse from 'dialtone-icons/IconArrowKeyboardUp';
 import { DtListItem } from '@dialpad/dialtone-vue';
 
 import { ref } from 'vue';

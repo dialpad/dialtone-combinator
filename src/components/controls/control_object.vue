@@ -50,17 +50,13 @@ const entries = computed(() => {
   return Object.entries(props.value);
 });
 
-function generateNextKey () {
-  return Math.max(
-    -1,
-    ...Object.keys(props.value)
-      .map(key => parseInt(key))
-      .filter(key => !isNaN(key)),
-  ) + 1;
+let currentId = 0;
+function generateNextId () {
+  return currentId++;
 }
 
 function generateItem () {
-  return [generateNextKey(), undefined];
+  return [generateNextId().toString(), undefined];
 }
 
 function updateEntry (key, value, updateItem) {

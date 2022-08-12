@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import IconArrowForward from 'icons/IconArrowForward';
+import IconArrowForward from 'dialtone-icons/IconArrowForward';
 import DtcEventConsolePair from '@/src/components/event_console/event_console_pair';
 
 import { computed, ref } from 'vue';
