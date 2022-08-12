@@ -116,7 +116,7 @@ const showCopyPopover = ref(false);
 async function copy () {
   await navigator.clipboard.writeText(code.value.innerText);
   showCopyPopover.value = true;
-  await new Promise(resolve => setTimeout(resolve, 100));
+  await new Promise(resolve => setTimeout(resolve, 1000));
   showCopyPopover.value = false;
 }
 </script>
