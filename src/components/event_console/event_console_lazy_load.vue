@@ -51,6 +51,9 @@ function toggle () {
 </script>
 
 <script>
+/**
+ * The lazy load provides generic functionality to not render content until the expand button is pressed.
+ */
 export default {
   name: 'DtcEventConsoleLazyLoad',
 };

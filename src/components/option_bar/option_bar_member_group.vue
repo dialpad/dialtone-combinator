@@ -10,12 +10,12 @@
           :control="member.control"
           :valid-controls="member.validControls"
           :value="getMemberValue(key)"
-          :valid-values="member.values"
           :description="member.description"
           :types="member.type?.names"
           :tags="member.tags"
           :args="{
             defaultValue: member.defaultValue,
+            validValues: member.values,
           }"
           @update:value="e => updateMember(e, key)"
           @update:control="e => updateControl(e, key)"
@@ -33,21 +33,34 @@ import { controlMap, getControlByValue } from '@/src/lib/control';
 import { convert } from '@/src/lib/convert';
 
 const props = defineProps({
+  /**
+   * Target component.
+   */
   component: {
     type: Object,
     required: true,
   },
+  /**
+   * Array of members to generate controls for.
+   */
   members: {
     type: Array,
     required: true,
   },
+  /**
+   * Map of key-value pairs for each member.
+   */
   values: {
     type: Object,
     required: true,
   },
+  /**
+   * Function that determines the control selections for
+   * a given member by returning an array of valid controls.
+   */
   controlSelector: {
     type: Function,
-    default: () => [],
+    default: (member) => [],
   },
 });
 
@@ -106,7 +119,11 @@ function updateControl (e, key) {
 </script>
 
 <script>
+/**
+ * The member group receives a group of members and their respective values.
+ * It is responsible for rendering 'option bar control' components for each member.
+ */
 export default {
-  name: 'DtcOptionBarMembers',
+  name: 'DtcOptionBarMemberGroup',
 };
 </script>

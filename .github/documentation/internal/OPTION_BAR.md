@@ -46,7 +46,7 @@ a variable control for each member based on its `specialControlType` value_
 
 ## Member Group
 
-The 'member group' component receives a group of members and their respective values. It is responsible
+The member group receives a group of members and their respective values. It is responsible
 for rendering 'option bar control' components for each member.
 
 ### Member Map
@@ -75,7 +75,7 @@ The args prop is an object that contains data to be directly attached to the und
 
 ## Option Bar Control
 
-The 'option bar control' component wraps an underlying 'control' component to provide extended functionality
+The option bar control wraps an underlying 'control' component to provide extended functionality
 and decouple the reliance on the option bar and members from individual 'control' components.
 
 ### Control Component

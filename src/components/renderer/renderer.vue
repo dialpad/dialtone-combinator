@@ -19,10 +19,16 @@
 import { computed } from 'vue';
 
 const props = defineProps({
+  /**
+   * Component to render.
+   */
   component: {
     type: Object,
     required: true,
   },
+  /**
+   * Options data object.
+   */
   options: {
     type: Object,
     required: true,
@@ -42,6 +48,9 @@ const members = computed(() => {
 </script>
 
 <script>
+/**
+ * The renderer is responsible for displaying the target component in its current state.
+ */
 export default {
   name: 'DtcRenderer',
 };

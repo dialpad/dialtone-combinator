@@ -4,7 +4,6 @@
   >
     <template #end>
       <slot />
-      <span v-if="selfClosing">/</span>
     </template>
   </dtc-code-editor-tag>
 </template>

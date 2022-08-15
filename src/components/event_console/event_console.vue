@@ -27,6 +27,9 @@ import DtcEventConsolePair from '@/src/components/event_console/event_console_pa
 import { computed, ref } from 'vue';
 
 defineProps({
+  /**
+   * Amount of objects that are stored for expansion.
+   */
   cacheSize: {
     type: Number,
     default: 10,
@@ -49,6 +52,9 @@ defineExpose({
 </script>
 
 <script>
+/**
+ * The event console displays data about events captured from the target component.
+ */
 export default {
   name: 'DtcEventConsole',
 };

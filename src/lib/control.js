@@ -1,3 +1,7 @@
+/**
+ * See /.github/documentation/internal/CONTROLS.MD
+ * For in-depth information about controls.
+ */
 import DtcControlEvent from '@/src/components/controls/control_event';
 import DtcControlSlot from '@/src/components/controls/control_slot';
 import DtcControlDynamic from '@/src/components/controls/control_dynamic';

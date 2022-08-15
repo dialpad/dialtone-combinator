@@ -49,21 +49,26 @@ import { sentenceCase } from 'change-case';
 import DtcOptionBarControlSelector from '@/src/components/option_bar/option_bar_control_selector';
 
 const props = defineProps({
+  /**
+   * Control representing an entry in the 'control map'.
+   */
   control: {
     type: String,
     required: true,
   },
+  /**
+   * Array of valid controls in the 'control map'.
+   */
   validControls: {
     type: Array,
     required: true,
   },
+  /**
+   * Value for underlying control.
+   */
   value: {
     type: undefined,
     required: true,
-  },
-  validValues: {
-    type: Array,
-    default: undefined,
   },
   label: {
     type: String,
@@ -73,15 +78,20 @@ const props = defineProps({
     type: String,
     default: undefined,
   },
+  /**
+   * Array of valid types for member.
+   */
   types: {
     type: Array,
     default: undefined,
   },
+  /**
+   * Map of member tags.
+   */
   tags: {
     type: Object,
     default: undefined,
   },
-
   /**
    * Optional args to bind directly to the control.
    */
@@ -111,7 +121,6 @@ const controlComponent = computed(() => {
 
 const controlArgs = computed(() => {
   return {
-    validValues: props.validValues,
     tags: props.tags,
     ...props.args,
   };
@@ -154,6 +163,10 @@ function updateControl (e) {
 </script>
 
 <script>
+/**
+ * The 'option bar control' component wraps an underlying 'control' component to provide extended functionality
+ * and decouple the reliance on the option bar and members from individual 'control' components.
+ */
 export default {
   name: 'DtcOptionBarControl',
 };

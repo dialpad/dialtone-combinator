@@ -29,14 +29,23 @@ import { CONTROL_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
 
 const props = defineProps({
+  /**
+   * Selected control.
+   */
   selected: {
     type: String,
     required: true,
   },
+  /**
+   * Array of control selections.
+   */
   controls: {
     type: Array,
     required: true,
   },
+  /**
+   * Array of valid types.
+   */
   types: {
     type: Array,
     default: undefined,

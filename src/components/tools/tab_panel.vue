@@ -42,14 +42,24 @@ import { getUniqueString } from '@/src/lib/utils';
 import { capitalCase } from 'change-case';
 
 const props = defineProps({
+  /**
+   * Unique id for tabs and panels to reference each other.
+   */
   id: {
     type: String,
     default: () => getUniqueString(),
   },
+  /**
+   * The selected slot name.
+   */
   selected: {
     type: String,
     default: undefined,
   },
+  /**
+   * Function that generates a label based on a given slot.
+   * Also provides a 'capitalCase' function to prettify a string.
+   */
   generateLabel: {
     type: Function,
     default: (slot, capitalCase) => capitalCase(slot),
@@ -64,6 +74,9 @@ function getId (slot) {
 </script>
 
 <script>
+/**
+ * Reusable component for displaying slot content based on a selected tab.
+ */
 export default {
   name: 'DtcTabPanel',
 };

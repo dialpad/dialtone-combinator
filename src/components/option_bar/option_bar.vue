@@ -5,7 +5,7 @@
         v-if="info.slots"
         heading="Slots"
       >
-        <dtc-option-bar-members
+        <dtc-option-bar-member-group
           :component="component"
           :members="info.slots"
           :values="options.slots"
@@ -17,7 +17,7 @@
         v-if="info.props"
         heading="Props"
       >
-        <dtc-option-bar-members
+        <dtc-option-bar-member-group
           :component="component"
           :members="info.props"
           :values="options.props"
@@ -29,7 +29,7 @@
         v-if="info.attributes"
         heading="Native HTML Attributes"
       >
-        <dtc-option-bar-members
+        <dtc-option-bar-member-group
           :component="component"
           :members="info.attributes"
           :values="options.attributes"
@@ -41,7 +41,7 @@
         v-if="info.events"
         heading="Events"
       >
-        <dtc-option-bar-members
+        <dtc-option-bar-member-group
           :component="component"
           :members="info.events"
           :values="options.events"
@@ -53,20 +53,29 @@
 </template>
 
 <script setup>
-import DtcOptionBarMembers from './option_bar_members';
+import DtcOptionBarMemberGroup from './option_bar_member_group';
 import DtcOptionBarSection from './option_bar_section';
 
 import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
 
 defineProps({
+  /**
+   * Component to render.
+   */
   component: {
     type: Object,
     required: true,
   },
+  /**
+   * Options data object.
+   */
   options: {
     type: Object,
     required: true,
   },
+  /**
+   * Info data object.
+   */
   info: {
     type: Object,
     required: true,
@@ -94,6 +103,10 @@ function updateAttributes (e) { updateMember('attributes', e); }
 </script>
 
 <script>
+/**
+ * The option bar is responsible for providing a user interface
+ * to interact and change the state of the target component.
+ */
 export default {
   name: 'DtcOptionBar',
 };

@@ -35,6 +35,9 @@ import { computedModel } from '@/src/lib/utils_vue';
 import { getComponentInfo } from '@/src/lib/info';
 
 const props = defineProps({
+  /**
+   * Target component.
+   */
   component: {
     type: Object,
     required: true,
@@ -109,6 +112,10 @@ const events = computed(() => {
 </script>
 
 <script>
+/**
+ * The root component that facilitates input and output with its child components.
+ * Holds the two central data objects 'info' and 'options'.
+ */
 export default {
   name: 'DtcCombinator',
 };

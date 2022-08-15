@@ -51,10 +51,14 @@ const component = computed(() => {
     default: return DtcEventConsoleValue;
   }
 });
-
 </script>
 
 <script>
+/**
+ * The pair represents a key-value pair and allows recursive exploration of objects.
+ * A pair contains a name (key) and a value.
+ * Based on the data type of the value it will display a component to represent a value.
+ */
 export default {
   name: 'DtcEventConsolePair',
 };
