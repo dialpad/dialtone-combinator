@@ -1,7 +1,7 @@
 <template>
   <dt-popover
-    :class="`dtc-theme-${theme}`"
-    content-class="dtc-code-editor-popover"
+    :class="`dtc-theme--${theme}`"
+    content-class="dtc-theme__popover"
     transition="fade"
     placement="top-end"
     initial-focus-element="dialog"
@@ -48,19 +48,28 @@
             </dt-radio>
           </dt-radio-group>
         </section>
+        <section class="d-p8">
+          <dt-checkbox
+            :checked="verbose"
+            @input="e => emit('update:verbose', e)"
+          >
+            Verbose
+          </dt-checkbox>
+        </section>
       </div>
     </template>
   </dt-popover>
 </template>
 
 <script setup>
-import IconSettings from '@dialpad/dialtone/lib/dist/vue/icons/IconSettings.vue';
+import IconSettings from 'dialtone-icons/IconSettings';
 
 import {
   DtButton,
   DtPopover,
   DtRadioGroup,
   DtRadio,
+  DtCheckbox,
 } from '@dialpad/dialtone-vue';
 
 defineProps({
@@ -72,16 +81,21 @@ defineProps({
     type: String,
     required: true,
   },
+  verbose: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 const emit = defineEmits([
   'update:theme',
   'update:scheme',
+  'update:verbose',
 ]);
 </script>
 
 <script>
 export default {
-  name: 'DtcCodeEditorSettings',
+  name: 'DtcCodePanelSettings',
 };
 </script>

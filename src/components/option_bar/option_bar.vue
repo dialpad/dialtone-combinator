@@ -1,68 +1,96 @@
 <template>
-  <div class="dtc-option-bar d-as-stretch d-w100p d-bgc-orange-200">
-    <section class="d-p16">
-      <h2>Slots</h2>
-      <dt-input
-        label="default"
-        class="d-r-none"
-        type="textarea"
-        spellcheck="false"
-        :value="options.slots.default"
-        @input="e => emitUpdate(options => {
-          options.slots.default = e;
-        })"
-      />
-    </section>
-    <section class="d-p16">
-      <h2>Props</h2>
-      <dt-checkbox
-        :checked="options.props.active"
-        @input="e => emitUpdate(options => {
-          options.props.active = e;
-        })"
+  <div class="dtc-option-bar d-as-stretch d-of-y-auto d-w100p">
+    <ul class="d-ls-reset">
+      <dtc-option-bar-section
+        v-if="info.slots"
+        heading="Slots"
       >
-        active
-      </dt-checkbox>
-    </section>
-    <section class="d-p16">
-      <h2>Events</h2>
-      <ul>
-        <li>click</li>
-        <li>focusin</li>
-        <li>focusout</li>
-      </ul>
-    </section>
-    <section class="d-p16">
-      <h2>Attributes</h2>
-      <dt-checkbox
-        :checked="options.attributes.disabled"
-        @input="e => emitUpdate(options => {
-          options.attributes.disabled = e;
-        })"
+        <dtc-option-bar-members
+          :component="component"
+          :members="info.slots"
+          :values="options.slots"
+          :control-selector="() => ['slot']"
+          @update:member="updateSlots"
+        />
+      </dtc-option-bar-section>
+      <dtc-option-bar-section
+        v-if="info.props"
+        heading="Props"
       >
-        disabled
-      </dt-checkbox>
-    </section>
+        <dtc-option-bar-members
+          :component="component"
+          :members="info.props"
+          :values="options.props"
+          :control-selector="prop => getPropTypes(prop.type.names)"
+          @update:member="updateProps"
+        />
+      </dtc-option-bar-section>
+      <dtc-option-bar-section
+        v-if="info.attributes"
+        heading="Native HTML Attributes"
+      >
+        <dtc-option-bar-members
+          :component="component"
+          :members="info.attributes"
+          :values="options.attributes"
+          :control-selector="attribute => attribute.type.names"
+          @update:member="updateAttributes"
+        />
+      </dtc-option-bar-section>
+      <dtc-option-bar-section
+        v-if="info.events"
+        heading="Events"
+      >
+        <dtc-option-bar-members
+          :component="component"
+          :members="info.events"
+          :values="options.events"
+          :control-selector="() => ['event']"
+        />
+      </dtc-option-bar-section>
+    </ul>
   </div>
 </template>
 
 <script setup>
-import { DtCheckbox, DtInput } from '@dialpad/dialtone-vue';
+import DtcOptionBarMembers from './option_bar_members';
+import DtcOptionBarSection from './option_bar_section';
+
+import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
 
 defineProps({
   component: {
     type: Object,
+    required: true,
   },
   options: {
     type: Object,
+    required: true,
+  },
+  info: {
+    type: Object,
+    required: true,
   },
 });
 
-const emit = defineEmits(['update:options']);
+const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
 
-function emitUpdate (args) {
-  emit('update:options', args);
+function getPropTypes (types) {
+  return [
+    ...types,
+    'null',
+  ];
 }
+
+function updateMember (memberType, { member, value }) {
+  emit(OPTIONS_UPDATE_EVENT, (options) => {
+    options[memberType][member] = value;
+  });
+}
+
+function updateSlots (e) { updateMember('slots', e); }
+function updateProps (e) { updateMember('props', e); }
+function updateAttributes (e) { updateMember('attributes', e); }
 </script>
 
 <script>
@@ -70,3 +98,9 @@ export default {
   name: 'DtcOptionBar',
 };
 </script>
+
+<style>
+  .dtc-option-bar {
+    background-color: #FCFCFC;
+  }
+</style>

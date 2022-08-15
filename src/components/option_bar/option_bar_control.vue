@@ -1,0 +1,160 @@
+<template>
+  <div>
+    <div class="d-pb2">
+      <dtc-option-bar-control-selector
+        :selected="control"
+        :controls="validControls"
+        :types="types"
+        @update:control="updateControl"
+      />
+    </div>
+    <component
+      :is="controlComponent"
+      :value="controlValue"
+      v-bind="bindArgs"
+      @update:value="updateValue"
+    >
+      <span>
+        <span class="d-pr6">
+          {{ label }}
+        </span>
+        <span
+          v-if="showModelTag"
+          class="d-ps-relative d-b2"
+        >
+          <dt-badge
+            text="v-model"
+            color="black-700"
+          />
+        </span>
+      </span>
+    </component>
+    <div class="d-description d-p1">
+      {{ controlDescription }}
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { DtBadge } from '@dialpad/dialtone-vue';
+import { CONTROL_UPDATE_EVENT, VALUE_UPDATE_EVENT } from '@/src/lib/constants';
+import { computed } from 'vue';
+import {
+  controlMap,
+  deserializeControlValue,
+  getControlComponent,
+  serializeControlValue,
+} from '@/src/lib/control';
+import { sentenceCase } from 'change-case';
+import DtcOptionBarControlSelector from '@/src/components/option_bar/option_bar_control_selector';
+
+const props = defineProps({
+  control: {
+    type: String,
+    required: true,
+  },
+  validControls: {
+    type: Array,
+    required: true,
+  },
+  value: {
+    type: undefined,
+    required: true,
+  },
+  validValues: {
+    type: Array,
+    default: undefined,
+  },
+  label: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    default: undefined,
+  },
+  types: {
+    type: Array,
+    default: undefined,
+  },
+  tags: {
+    type: Object,
+    default: undefined,
+  },
+
+  /**
+   * Optional args to bind directly to the control.
+   */
+  args: {
+    type: Object,
+    default: () => {},
+  },
+});
+
+const emit = defineEmits([VALUE_UPDATE_EVENT, CONTROL_UPDATE_EVENT]);
+
+const controlValue = computed(() => {
+  return controlMap[props.control].serialize
+    ? serializeControlValue(props.value)
+    : props.value;
+});
+
+const controlDescription = computed(() => {
+  return props.description
+    ? sentenceCase(props.description)
+    : null;
+});
+
+const controlComponent = computed(() => {
+  return getControlComponent(props.control, controlArgs.value);
+});
+
+const controlArgs = computed(() => {
+  return {
+    validValues: props.validValues,
+    tags: props.tags,
+    ...props.args,
+  };
+});
+
+/**
+ * Object containing only the args that are
+ * present on the control component props.
+ *
+ * @type {ComputedRef<Object>}
+ */
+const bindArgs = computed(() => {
+  const component = controlComponent.value;
+  if (!component.props) { return null; }
+  return Object.fromEntries(
+    Object.entries(controlArgs.value).filter(([arg, _]) => {
+      const controlProps = Object.keys(component.props);
+      return controlProps.includes(arg);
+    }),
+  );
+});
+
+const showModelTag = computed(() => {
+  const tags = props.tags;
+  return tags
+    ? 'model' in tags
+    : false;
+});
+
+function updateValue (e) {
+  const value = controlMap[props.control].serialize
+    ? deserializeControlValue(e)
+    : e;
+  emit(VALUE_UPDATE_EVENT, value);
+}
+
+function updateControl (e) {
+  emit(CONTROL_UPDATE_EVENT, e);
+}
+</script>
+
+<script>
+export default {
+  name: 'DtcOptionBarControl',
+};
+</script>

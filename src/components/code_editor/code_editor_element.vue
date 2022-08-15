@@ -15,8 +15,8 @@
 </template>
 
 <script setup>
-import DtcCodeEditorOpeningTag from './code_editor_opening_tag.vue';
-import DtcCodeEditorClosingTag from './code_editor_closing_tag.vue';
+import DtcCodeEditorOpeningTag from './code_editor_opening_tag';
+import DtcCodeEditorClosingTag from './code_editor_closing_tag';
 
 defineProps({
   tagName: {

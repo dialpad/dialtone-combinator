@@ -1,25 +1,27 @@
 <template>
-  <div v-if="members && info">
+  <div>
     <template
-      v-for="[attribute, value] in attributes"
-      :key="attribute"
+      v-for="[name, { value, getLabel }] in visibleMembers"
+      :key="name"
     >
       <div>
         <dtc-code-editor-indent />
         <span v-if="useBindOperator(value)">:</span>
-        <span class="dtc-code-editor__attribute">{{ attribute }}</span>
+        <span class="dtc-scheme__class">
+          {{ getLabel() }}
+        </span>
         <span v-if="!useShortSyntax(value)">
           <span>=</span>
-          <span class="dtc-code-editor__string">"</span>
+          <span class="dtc-scheme__string">"</span>
           <span
             :class="{
-              'dtc-fc-editor-string': !useBindOperator(value),
-              'dtc-fc-editor-value': useBindOperator(value),
+              'dtc-scheme__string': !useBindOperator(value),
+              'dtc-scheme__value': useBindOperator(value),
             }"
           >
-            {{ value }}
+            {{ stringifyValue(value) }}
           </span>
-          <span class="dtc-fc-editor-string">"</span>
+          <span class="dtc-scheme__string">"</span>
         </span>
       </div>
     </template>
@@ -27,10 +29,12 @@
 </template>
 
 <script setup>
-import DtcCodeEditorIndent from './code_editor_indent.vue';
-import { computed } from 'vue';
+import DtcCodeEditorIndent from './code_editor_indent';
 
-const internalProps = defineProps({
+import { computed } from 'vue';
+import { stringifyDocValue } from '@/src/lib/parse';
+
+const props = defineProps({
   info: {
     type: Object,
     required: true,
@@ -39,18 +43,39 @@ const internalProps = defineProps({
     type: Object,
     required: true,
   },
+  verbose: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-const attributes = computed(() => {
-  return Object.entries(internalProps.members).filter(([member, value]) => {
-    const matchingProp = internalProps.info.props.find(prop => {
-      return prop.name === member;
-    });
-    return matchingProp
-      ? matchingProp.defaultValue.value !== value.toString()
-      : value;
-  });
+const visibleMembers = computed(() => {
+  const members = mapMembers(props.members);
+  return members.filter(([name, member]) => visible(name, member));
 });
+
+const infoMembers = computed(() => {
+  return props.info.getMembers();
+});
+
+function mapMembers (members) {
+  return Object.entries(members).map(([name, value]) => {
+    const memberInfo = infoMembers.value.find(member => member.name === name);
+    return [name, {
+      ...memberInfo,
+      value,
+    }];
+  });
+}
+
+function visible (name, member) {
+  if (props.verbose) { return true; }
+
+  const defaultString = JSON.stringify(member.defaultValue);
+  const valueString = JSON.stringify(member.value);
+
+  return defaultString !== valueString;
+}
 
 function useShortSyntax (value) {
   return value === true;
@@ -58,6 +83,13 @@ function useShortSyntax (value) {
 
 function useBindOperator (value) {
   return !useShortSyntax(value) && typeof value !== 'string';
+}
+
+function stringifyValue (value) {
+  if (!value) { return `${value}`; }
+  return useBindOperator(value)
+    ? stringifyDocValue(value)
+    : value.toString();
 }
 </script>
 

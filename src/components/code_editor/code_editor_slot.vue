@@ -4,13 +4,11 @@
     tag-name="template"
   >
     <template #opening>
-      <span>&nbsp;#{{ name }}</span>
+      <span>&nbsp;</span>
+      <span class="dtc-scheme__class">#{{ name }}</span>
     </template>
     <template #default>
-      <dtc-code-editor-input
-        v-if="slots"
-        @input="onInput"
-      >
+      <dtc-code-editor-input @input="onInput">
         <slot />
       </dtc-code-editor-input>
     </template>
@@ -24,9 +22,9 @@
 </template>
 
 <script setup>
-import DtcCodeEditorElement from './code_editor_element.vue';
-import DtcCodeEditorInput from './code_editor_input.vue';
-import { DEFAULT_SLOT_NAME } from '@/src/constants';
+import DtcCodeEditorElement from './code_editor_element';
+import DtcCodeEditorInput from './code_editor_input';
+import { DEFAULT_SLOT_NAME } from '@/src/lib/constants';
 
 const props = defineProps({
   name: {

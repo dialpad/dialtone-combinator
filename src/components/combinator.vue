@@ -1,39 +1,38 @@
 <template>
-  <div
-    v-if="component && options"
-    class="dtc-root d-d-grid d-h100p"
-  >
-    <div class="dtc-root__top dtc-root-item d-grs1 d-ba d-bc-black">
-      <dc-renderer
+  <div class="dtc-root d-d-grid d-ba d-bc-black-900 d-h100p">
+    <div class="dtc-root__top d-grs1 d-bb d-bc-black-900">
+      <dtc-renderer
         :component="component"
         :options="options"
+        v-on="events"
       />
     </div>
-    <div class="dtc-root__bottom dtc-root-item d-grs2">
-      <dc-code-editor
+    <div class="dtc-root__bottom d-grs2">
+      <dtc-code-panel
+        ref="codePanel"
         v-model:options="options"
         :info="info"
       />
     </div>
-    <div class="dtc-root__sidebar dtc-root-item d-grs1 d-gr2">
-      <dc-option-bar
+    <div class="dtc-root__sidebar d-grs1 d-gr2 d-bl d-bc-black-900">
+      <dtc-option-bar
         v-model:options="options"
         :component="component"
+        :info="info"
       />
     </div>
   </div>
 </template>
 
 <script setup>
-import DcOptionBar from './option_bar/option_bar.vue';
-import DcRenderer from './renderer/renderer.vue';
-import DcCodeEditor from './code_editor/code_editor.vue';
-
-import documentation from '@dialpad/dialtone-vue/dist/component-documentation.json';
+import DtcOptionBar from './option_bar/option_bar';
+import DtcRenderer from './renderer/renderer';
+import DtcCodePanel from '@/src/components/code_panel/code_panel';
 
 import { paramCase } from 'change-case';
-import { computed, reactive } from 'vue';
-import { computedModel } from '@/src/lib/utils';
+import { computed, reactive, ref } from 'vue';
+import { computedModel } from '@/src/lib/utils_vue';
+import { getComponentInfo } from '@/src/lib/info';
 
 const props = defineProps({
   component: {
@@ -42,30 +41,71 @@ const props = defineProps({
   },
 });
 
-const info = computed(() => {
-  return documentation.find(componentInfo => componentInfo.displayName === props.component.name);
+const optionsRef = reactive({
+  slots: {
+    default: paramCase(props.component.name),
+  },
+  props: {},
+  attributes: {},
+  events: {},
+  getMembers () {
+    return {
+      ...(this.props || {}),
+      ...(this.attributes || {}),
+    };
+  },
 });
 
 const options = computedModel(
-  reactive({
-    slots: {
-      default: paramCase(props.component.name),
-    },
-    props: {
-      active: false,
-    },
-    attributes: {
-      disabled: false,
-    },
-    getMembers () {
-      return {
-        ...this?.props,
-        ...this?.attributes,
-      };
-    },
-  }),
+  optionsRef,
   (e, model) => e(model),
 );
+
+const info = computed(() => {
+  return {
+    ...initializeInfo(),
+    getMembers () {
+      return [
+        ...(this.props || []),
+        ...(this.attributes || []),
+      ];
+    },
+  };
+});
+
+function initializeInfo () {
+  const [info, defaults] = getComponentInfo(props.component);
+  Object.keys(defaults).forEach(key => {
+    setDefaults(defaults[key], optionsRef[key]);
+  });
+  return info;
+}
+
+function setDefaults (defaults, members) {
+  Object.keys(defaults).forEach(key => {
+    if (!(key in members)) {
+      members[key] = defaults[key];
+    }
+  });
+}
+
+const codePanel = ref();
+
+const eventHooks = ref([
+  (event, value) => codePanel.value.trigger(event, value),
+]);
+
+const events = computed(() => {
+  if (!info.value.events) { return {}; }
+  return Object.fromEntries(
+    info.value.events.map(({ name }) => {
+      return [
+        name,
+        e => eventHooks.value.forEach(hook => hook(name, e)),
+      ];
+    }),
+  );
+});
 </script>
 
 <script>
@@ -75,17 +115,18 @@ export default {
 </script>
 
 <style lang="less">
+@import "@/src/assets/themes/base.less";
+.dtc-theme--light { @import "@/src/assets/themes/light.less"; }
+.dtc-theme--dark { @import "@/src/assets/themes/dark.less"; }
+
 .dtc-root {
-  @import "@/src/assets/themes/default.less";
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  grid-template-rows: repeat(2, 1fr);
 }
 
-.dtc-theme-light { @import "@/src/assets/themes/light.less"; }
-.dtc-theme-dark { @import "@/src/assets/themes/dark.less"; }
-
-.dtc-root-item {
+.dtc-root > * {
   display: flex;
   align-items: flex-start;
-  overflow-y: auto;
+  overflow: hidden;
 }
 </style>
