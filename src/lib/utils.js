@@ -1,7 +1,11 @@
 import { DEFAULT_PREFIX } from '@/src/lib/constants';
 
-export const UNSET = Symbol('unset');
-
+/**
+ * Copy all the entries of an object into a new object.
+ *
+ * @param obj The target object.
+ * @returns {Object}
+ */
 export function flatten (obj) {
   const result = {};
   for (const key in obj) {
@@ -10,7 +14,20 @@ export function flatten (obj) {
   return result;
 }
 
+/**
+ * Map of prefixes with their current 'id' numbers.
+ * Used by `getUniqueString(...)`
+ *
+ * @type {Object}
+ */
 const UNIQUE_ID_MAP = {};
+
+/**
+ * Gets the next string value given a prefix.
+ *
+ * @param prefix
+ * @returns {String}
+ */
 export function getUniqueString (prefix = DEFAULT_PREFIX) {
   let id = UNIQUE_ID_MAP[prefix];
   if (!id) {
@@ -20,6 +37,12 @@ export function getUniqueString (prefix = DEFAULT_PREFIX) {
   return `${prefix}${UNIQUE_ID_MAP[prefix]++}`;
 }
 
+/**
+ * Gets specific type name from a value, intended to be used with value from a 'member'.
+ *
+ * @param value The value.
+ * @returns {String | null}
+ */
 export function typeOfMember (value) {
   if (value === undefined || value === null) {
     return null;

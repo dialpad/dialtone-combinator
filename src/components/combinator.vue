@@ -62,7 +62,7 @@ const options = computedModel(
 );
 
 const info = computed(() => {
-  return {
+  return Object.freeze({
     ...initializeInfo(),
     getMembers () {
       return [
@@ -70,7 +70,7 @@ const info = computed(() => {
         ...(this.attributes || []),
       ];
     },
-  };
+  });
 });
 
 function initializeInfo () {
