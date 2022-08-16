@@ -23,6 +23,9 @@ const emit = defineEmits([VALUE_UPDATE_EVENT]);
 </script>
 
 <script>
+/**
+ * Control that is used when no other controls are valid.
+ */
 export default {
   name: 'DtcControlBase',
 };

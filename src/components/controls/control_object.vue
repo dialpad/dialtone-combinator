@@ -75,6 +75,9 @@ function updateValue (e) {
 </script>
 
 <script>
+/**
+ * Control that is used to provide functionality to manipulate objects.
+ */
 export default {
   name: 'DtcControlObject',
 };

@@ -55,11 +55,6 @@ using the utility functions `serializeControlValue(...)` and `deserializeControl
 Controls that are used to set their respective data type value.
 Consists of an input that can be used to update the value.
 
-### Combo
-
-Control that is used to set a string value while providing a list of suggested valid values.
-A value can be typed or selected with the input. The list indicates the default value.
-
 ### Array / Object
 
 Controls that are used to provide functionality to manipulate complex objects.
@@ -75,13 +70,16 @@ Control that is used to set a string representing the slot content of a componen
 
 Control that is used to display an event of a component.
 
+### Suggestion
+
+Control that is used to set a string value while providing a list of suggested valid values.
+A value can be typed or selected with the input. The list indicates the default value.
+
 ### Selection
-_Internal_
 
 Control that is used to select any value from a list of values. 
 
 ### Iterable
-_Internal_
 
 Control that is used to provide an interface to modify generic iterable values. 
 The important parts of the functionality are abstracted to the parent to allow 
@@ -104,7 +102,6 @@ Since the value prop is a raw array, a custom `idMap` is used to keep the v-for 
 Any time an item is added or removed, it is mirrored in the `idMap`.
 
 ### Dynamic
-_Internal_
 
 Control that is used to set a value from a variety of data types.
 Contains a 'selection' control to select from a list of types or values.

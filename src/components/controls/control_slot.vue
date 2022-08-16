@@ -33,6 +33,9 @@ function updateValue (e) {
 </script>
 
 <script>
+/**
+ * Control that is used to set a string representing the slot content of a component.
+ */
 export default {
   name: 'DtcControlSlot',
 };

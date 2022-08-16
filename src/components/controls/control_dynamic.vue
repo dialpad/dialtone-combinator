@@ -104,6 +104,9 @@ function updateValue (e) {
 </script>
 
 <script>
+/**
+ * Control that is used to set a value from a variety of data types.
+ */
 export default {
   name: 'DtcControlDynamic',
 };

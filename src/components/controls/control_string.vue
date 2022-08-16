@@ -48,6 +48,9 @@ const messages = computed(() => {
 </script>
 
 <script>
+/**
+ * Control that is used to set 'string' value.
+ */
 export default {
   name: 'DtcControlString',
 };

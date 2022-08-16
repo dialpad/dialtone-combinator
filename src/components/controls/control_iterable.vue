@@ -62,6 +62,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+
+  /**
+   * Function that returns an item to append to list.
+   */
   generateItem: {
     type: Function,
     required: true,
@@ -71,6 +75,10 @@ const props = defineProps({
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
 const prefix = getUniqueString(`${DEFAULT_PREFIX}-control-iterable`);
+
+/**
+ * Id map is used to keep v-for keys in order when adding and removing new items.
+ */
 const { addId, removeId, getId } = idMap(`${prefix}-item`);
 
 function updateItem (index, item) {
@@ -108,6 +116,11 @@ function updateValue (e) {
 </script>
 
 <script>
+/**
+ * Control that is used to provide an interface to modify generic iterable values.
+ * The important parts of the functionality are abstracted to the parent to allow
+ * reuse of this control for any iterable value type.
+ */
 export default {
   name: 'DtcControlIterable',
 };

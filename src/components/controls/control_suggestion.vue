@@ -114,6 +114,9 @@ function onOpen (e) {
 </script>
 
 <script>
+/**
+ * Control that is used to set a string value while providing a list of suggested valid values.
+ */
 export default {
   name: 'DtcControlSuggestion',
 };

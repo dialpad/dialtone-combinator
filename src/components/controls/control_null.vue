@@ -45,6 +45,9 @@ function updateValue (e) {
 </script>
 
 <script>
+/**
+ * Control that is used to set nullish.
+ */
 export default {
   name: 'DtcControlNull',
 };

@@ -26,6 +26,9 @@ const emit = defineEmits([VALUE_UPDATE_EVENT]);
 </script>
 
 <script>
+/**
+ * Control that is used to set 'boolean' value.
+ */
 export default {
   name: 'DtcControlBoolean',
 };
