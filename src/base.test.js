@@ -1,8 +1,8 @@
 import { assert } from 'chai';
 
 describe('Base tests', function () {
-  describe('when running tests', function () {
-    it('asserts should work', function () {
+  describe('When running tests', function () {
+    it('Should correctly resolve asserts', function () {
       assert.isTrue(true);
     });
   });

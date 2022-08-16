@@ -4,11 +4,11 @@
   "scripts": {
     "dev": "vue-cli-service serve",
     "preview": "npm run build:preview; serve ./dist/preview",
-    "lint": "eslint ./",
+    "lint": "eslint src --ext .js,.vue; echo \"Linting complete\"",
     "build": "vue-cli-service build --target lib --dest ./dist/lib index.js; rm ./dist/lib/demo.html",
     "build:preview": "vue-cli-service build --dest ./dist/preview",
     "distribute": "rm ./dialtone-combinator-*.tgz; npm run build; npm pack",
-    "test": "vue-cli-service test:unit --timeout 100000 --colors src/base.test.js"
+    "test": "vue-cli-service test:unit --timeout 100000 --colors --recursive --glob *.test.js src"
   },
   "main": "./dist/lib/dialtone-combinator.umd.js",
   "files": [

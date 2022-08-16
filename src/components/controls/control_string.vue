@@ -3,6 +3,7 @@
     :value="value"
     :messages="messages"
     size="sm"
+    data-qa="dtc-control-string-input"
     @input="e => emit(VALUE_UPDATE_EVENT, e)"
   >
     <template #labelSlot>
