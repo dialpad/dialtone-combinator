@@ -25,4 +25,27 @@ module.exports = {
     'vue/no-v-html': 0,
     'vue/no-v-model-argument': 0,
   },
+  overrides: [
+    {
+      files: ['**/*.test.js'],
+      plugins: [
+        'mocha',
+      ],
+      extends: [
+        'plugin:mocha/recommended',
+      ],
+      env: {
+        browser: true,
+        node: true,
+        mocha: true,
+      },
+      rules: {
+        'max-lines': 'off',
+        // disabled to allow the use of shared example closures
+        'mocha/no-setup-in-describe': 'off',
+        'mocha/no-exclusive-tests': 'error',
+        'mocha/no-hooks-for-single-case': 'off',
+      },
+    },
+  ],
 };
