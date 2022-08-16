@@ -9,7 +9,7 @@
           :label="member.getLabel()"
           :control="member.control"
           :valid-controls="member.validControls"
-          :value="getMemberValue(key)"
+          :value="values[key]"
           :description="member.description"
           :types="member.type?.names"
           :tags="member.tags"
@@ -66,6 +66,13 @@ const props = defineProps({
 
 const emit = defineEmits([MEMBER_UPDATE_EVENT]);
 
+/**
+ * The member map is a reactive data object that wraps each member and
+ * provides additional data that the 'option bar control' component
+ * needs without affecting the original member data object.
+ *
+ * @type {Object}
+ */
 const memberMap = reactive({
   ...Object.fromEntries(
     props.members.map(member => {
@@ -74,17 +81,24 @@ const memberMap = reactive({
   ),
 });
 
+/**
+ * Used to match members in the 'member map' to their respective values.
+ *
+ * @returns {*}
+ */
 function getMemberKey (member) {
   return member.name;
 }
 
-function getMemberValue (key) {
-  return props.values[key];
-}
-
+/**
+ * Wraps a member with an object containing additional data about the member.
+ * This is used by the 'member map' to hold data about controls.
+ *
+ * @returns {Object}
+ */
 function extendMember (member) {
   const key = getMemberKey(member);
-  const value = getMemberValue(key);
+  const value = props.values[key];
 
   const validControls = props.controlSelector(member);
   const control = validControls?.find(control => controlMap[control]?.important) ?? getControlByValue(value);
@@ -96,6 +110,12 @@ function extendMember (member) {
   };
 }
 
+/**
+ * Emits an update to a member.
+ *
+ * @param key The member key
+ * @param e The updated value
+ */
 function updateMember (e, key) {
   emit(MEMBER_UPDATE_EVENT, {
     member: key,
@@ -103,12 +123,18 @@ function updateMember (e, key) {
   });
 }
 
+/**
+ * Updates the member's control in the 'member map'.
+ *
+ * @param e The updated control
+ * @param key The member key
+ */
 function updateControl (e, key) {
   const member = memberMap[key];
 
   let value;
   try {
-    value = convert(member.control, e, getMemberValue(key));
+    value = convert(member.control, e, props.values[key]);
   } catch {
     console.warn(`${member.name}: Unable to convert ${member.control} to ${e}`);
   }

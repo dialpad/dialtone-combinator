@@ -21,7 +21,7 @@
           :component="component"
           :members="info.props"
           :values="options.props"
-          :control-selector="prop => getPropTypes(prop.type.names)"
+          :control-selector="prop => getPropControls(prop.type.names)"
           @update:member="updateProps"
         />
       </dtc-option-bar-section>
@@ -84,16 +84,28 @@ defineProps({
 
 const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
 
-function getPropTypes (types) {
+/**
+ * Gets the controls for a prop member.
+ * @param types The valid types for the member
+ * @returns {Array}
+ */
+function getPropControls (types) {
   return [
     ...types,
     'null',
   ];
 }
 
-function updateMember (memberType, { member, value }) {
+/**
+ * Emits an update to a member in the 'options' data object.
+ *
+ * @param memberGroup The member group
+ * @param member The member
+ * @param value The updated value
+ */
+function updateMember (memberGroup, { member, value }) {
   emit(OPTIONS_UPDATE_EVENT, (options) => {
-    options[memberType][member] = value;
+    options[memberGroup][member] = value;
   });
 }
 

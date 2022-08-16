@@ -84,6 +84,11 @@ function getSelection (control) {
   }
 }
 
+/**
+ * Gets the styling of the button based on the status of the control.
+ *
+ * @returns {Object}
+ */
 function getStyling (control) {
   const isActive = control === props.selected;
   return {

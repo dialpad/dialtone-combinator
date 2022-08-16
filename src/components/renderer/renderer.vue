@@ -2,7 +2,7 @@
   <div class="dtc-renderer d-of-auto d-d-flex d-jc-center d-ai-center d-w100p d-h100p">
     <component
       :is="component"
-      v-bind="members"
+      v-bind="bindings"
     >
       <template
         v-for="(slot, name) in activeSlots"
@@ -35,6 +35,11 @@ const props = defineProps({
   },
 });
 
+/**
+ * Filtered slots that contain content.
+ *
+ * @type {ComputedRef<Object>}
+ */
 const activeSlots = computed(() => {
   if (!props.options.slots) { return null; }
   return Object.fromEntries(
@@ -42,7 +47,7 @@ const activeSlots = computed(() => {
   );
 });
 
-const members = computed(() => {
+const bindings = computed(() => {
   return props.options.getMembers();
 });
 </script>

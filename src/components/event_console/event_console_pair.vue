@@ -34,6 +34,11 @@ const props = defineProps({
   },
 });
 
+/**
+ * Component to render based on the 'value' prop.
+ *
+ * @type {ComputedRef<Object>}
+ */
 const component = computed(() => {
   const value = props.value;
 

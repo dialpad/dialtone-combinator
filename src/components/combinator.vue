@@ -44,6 +44,14 @@ const props = defineProps({
   },
 });
 
+function initializeInfo () {
+  const [info, defaults] = getComponentInfo(props.component);
+  Object.keys(defaults).forEach(key => {
+    setDefaults(defaults[key], optionsRef[key]);
+  });
+  return info;
+}
+
 const optionsRef = reactive({
   slots: {
     default: paramCase(props.component.name),
@@ -59,11 +67,21 @@ const optionsRef = reactive({
   },
 });
 
+/**
+ * The options data object is the main reactive object that allows interactivity with the target component.
+ *
+ * @type {WritableComputedRef<Object>}
+ */
 const options = computedModel(
   optionsRef,
   (e, model) => e(model),
 );
 
+/**
+ * Container for all extended component information for the target component.
+ *
+ * @type {ComputedRef<Object>}
+ */
 const info = computed(() => {
   return Object.freeze({
     ...initializeInfo(),
@@ -76,28 +94,35 @@ const info = computed(() => {
   });
 });
 
-function initializeInfo () {
-  const [info, defaults] = getComponentInfo(props.component);
+/**
+ * Sets the values for a given 'options' member group with the provided defaults.
+ *
+ * @param defaults default key-value map
+ * @param memberGroup options member group
+ */
+function setDefaults (defaults, memberGroup) {
   Object.keys(defaults).forEach(key => {
-    setDefaults(defaults[key], optionsRef[key]);
-  });
-  return info;
-}
-
-function setDefaults (defaults, members) {
-  Object.keys(defaults).forEach(key => {
-    if (!(key in members)) {
-      members[key] = defaults[key];
+    if (!(key in memberGroup)) {
+      memberGroup[key] = defaults[key];
     }
   });
 }
 
 const codePanel = ref();
 
+/**
+ * List of hooks that are triggered on emit of a target component event.
+ * @type {Ref<Array>}
+ */
 const eventHooks = ref([
   (event, value) => codePanel.value.trigger(event, value),
 ]);
 
+/**
+ * Object containing events and their respective handlers.
+ *
+ * @type {ComputedRef<Object>}
+ */
 const events = computed(() => {
   if (!info.value.events) { return {}; }
   return Object.fromEntries(

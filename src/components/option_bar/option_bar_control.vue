@@ -63,9 +63,6 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-  /**
-   * Value for underlying control.
-   */
   value: {
     type: undefined,
     required: true,
@@ -103,22 +100,44 @@ const props = defineProps({
 
 const emit = defineEmits([VALUE_UPDATE_EVENT, CONTROL_UPDATE_EVENT]);
 
+/**
+ * Value to pass to the underlying control.
+ * The value is serialized if needed.
+ *
+ * @type {ComputedRef<*>}
+ */
 const controlValue = computed(() => {
   return controlMap[props.control].serialize
     ? serializeControlValue(props.value)
     : props.value;
 });
 
+/**
+ * Prettified control description.
+ *
+ * @type {ComputedRef<String>}
+ */
 const controlDescription = computed(() => {
   return props.description
     ? sentenceCase(props.description)
     : null;
 });
 
+/**
+ * Actual component based on the value of the 'control' prop.
+ *
+ * @type {ComputedRef<Object>}
+ */
 const controlComponent = computed(() => {
   return getControlComponent(props.control, controlArgs.value);
 });
 
+/**
+ * Args that are conditionally passed to the
+ * underlying control props if the prop is present on the control.
+ *
+ * @type {ComputedRef<Object>}
+ */
 const controlArgs = computed(() => {
   return {
     tags: props.tags,
@@ -150,6 +169,12 @@ const showModelTag = computed(() => {
     : false;
 });
 
+/**
+ * Emits an update to the member value.
+ * The value is deserialized if needed.
+ *
+ * @param e The updated member value
+ */
 function updateValue (e) {
   const value = controlMap[props.control].serialize
     ? deserializeControlValue(e)
@@ -157,6 +182,11 @@ function updateValue (e) {
   emit(VALUE_UPDATE_EVENT, value);
 }
 
+/**
+ * Emits event to update member control.
+ *
+ * @param e The updated member control
+ */
 function updateControl (e) {
   emit(CONTROL_UPDATE_EVENT, e);
 }
