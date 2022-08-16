@@ -1,4 +1,4 @@
-import { parse, stringify } from 'json5-with-undefined';
+import JSON5 from 'json5-with-undefined';
 
 /**
  * Attempts to parse the documentation default value information.
@@ -29,7 +29,7 @@ export function parseDocDefault (defaultInfo) {
  * @returns {string}
  */
 export function stringifyDocValue (value) {
-  return stringify(value);
+  return JSON5.stringify(value);
 }
 
 /**
@@ -37,7 +37,7 @@ export function stringifyDocValue (value) {
  * @returns {*}
  */
 export function parseDocValue (value) {
-  return parse(value);
+  return JSON5.parse(value);
 }
 
 /**

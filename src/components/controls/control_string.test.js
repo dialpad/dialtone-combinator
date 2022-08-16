@@ -1,6 +1,7 @@
+import DtcControlString from './control_string';
+
 import { assert } from 'chai';
 import { mount } from '@vue/test-utils';
-import DtcControlString from './control_string';
 import { controlMap } from '@/src/lib/control';
 
 const inputSelector = '[data-qa=dtc-control-string-input]';
@@ -14,8 +15,8 @@ describe('control_string.vue tests', function () {
     wrapper = mount(DtcControlString);
   });
 
-  describe('When component is mounted', function () {
-    it('Should render the component', function () {
+  describe('When mounted', function () {
+    it('Should render successfully', function () {
       assert.exists(wrapper);
     });
   });

@@ -87,6 +87,17 @@ The system is designed with reactivity and extensibility in mind.
 
 See [SYSTEM](internal/SYSTEM.md)
 
+## Supported Components
+
+Currently, not all Dialtone Vue components are working with the Combinator.
+
+A supported component is a component that is intended to be working with full functionality in the Combinator.
+
+Supported components are listed in [supported_components.json](/src/supported_components.json).
+These components are used by various tests to ensure they are working and future updates do not break them.
+
+When adding a new component to this list make sure it is working with all tests afterwards.
+
 ## Docgen
 
 Documentation generated from the
