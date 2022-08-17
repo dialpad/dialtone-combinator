@@ -12,15 +12,24 @@
     </template>
     <template #item="{ item, update }">
       <div class="d-d-flex">
-        <dtc-control-string
-          :value="item[0]"
-          @update:value="e => updateEntry(e, item[1], update)"
-        />
+        <div
+          data-qa="dtc-control-object-item-key"
+        >
+          <dtc-control-string
+            :value="item[0]"
+
+            @update:value="e => updateEntry(e, item[1], update)"
+          />
+        </div>
         <span class="d-px6 d-ps-relative d-t6">:</span>
-        <dtc-control-dynamic
-          :value="serializeControlValue(item[1])"
-          @update:value="e => updateEntry(item[0], e, update)"
-        />
+        <div
+          data-qa="dtc-control-object-item-value"
+        >
+          <dtc-control-dynamic
+            :value="serializeControlValue(item[1])"
+            @update:value="e => updateEntry(item[0], e, update)"
+          />
+        </div>
       </div>
     </template>
     <template #suffix>

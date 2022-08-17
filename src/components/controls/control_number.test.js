@@ -4,15 +4,17 @@ import { assert } from 'chai';
 import { mount } from '@vue/test-utils';
 import { controlMap } from '@/src/lib/control';
 
-const inputSelector = '[data-qa=dtc-control-number-input]';
+const inputSelector = 'input';
 
 const inputValue = 5;
 const defaultValue = controlMap.number.default;
 
 describe('control_number.vue test', function () {
   let wrapper;
+  let inputWrapper;
   beforeEach(function () {
     wrapper = mount(DtcControlNumber);
+    inputWrapper = wrapper.find(inputSelector);
   });
 
   describe('When mounted', function () {
@@ -29,13 +31,13 @@ describe('control_number.vue test', function () {
     });
 
     it('Should set the native input to value', function () {
-      assert.equal(inputValue, wrapper.find(inputSelector).element.value);
+      assert.equal(inputValue, inputWrapper.element.value);
     });
   });
 
   describe('When a value is not provided', function () {
     it('Should set the native input to control default', function () {
-      assert.equal(defaultValue, wrapper.find(inputSelector).element.value);
+      assert.equal(defaultValue, inputWrapper.element.value);
     });
   });
 });

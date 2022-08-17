@@ -1,19 +1,20 @@
-import DtcControlString from './control_string';
+import DtcControlNull from './control_null';
 
 import { assert } from 'chai';
 import { mount } from '@vue/test-utils';
-import { controlMap } from '@/src/lib/control';
 
-const inputSelector = 'input';
+const inputSelector = 'select';
 
-const inputValue = 'string test';
-const defaultValue = controlMap.string.default;
+const inputValue = NaN;
 
-describe('control_string.vue test', function () {
+const inputString = 'NaN';
+const defaultString = 'null';
+
+describe('control_null.vue test', function () {
   let wrapper;
   let inputWrapper;
   beforeEach(function () {
-    wrapper = mount(DtcControlString);
+    wrapper = mount(DtcControlNull);
     inputWrapper = wrapper.find(inputSelector);
   });
 
@@ -31,13 +32,13 @@ describe('control_string.vue test', function () {
     });
 
     it('Should set the native input to value', function () {
-      assert.equal(inputValue, inputWrapper.element.value);
+      assert.equal(inputString, inputWrapper.element.value);
     });
   });
 
   describe('When a value is not provided', function () {
     it('Should set the native input to control default', function () {
-      assert.equal(defaultValue, inputWrapper.element.value);
+      assert.equal(defaultString, inputWrapper.element.value);
     });
   });
 });

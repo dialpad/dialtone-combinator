@@ -3,7 +3,6 @@
     :value="value"
     type="number"
     size="sm"
-    data-qa="dtc-control-number-input"
     @input="e => emit(VALUE_UPDATE_EVENT, parseInt(e))"
   >
     <template #labelSlot>

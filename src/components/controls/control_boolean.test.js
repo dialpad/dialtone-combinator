@@ -11,8 +11,10 @@ const defaultValue = controlMap.boolean.default;
 
 describe('control_boolean.vue test', function () {
   let wrapper;
+  let inputWrapper;
   beforeEach(function () {
     wrapper = mount(DtcControlBoolean);
+    inputWrapper = wrapper.find(inputSelector);
   });
 
   describe('When mounted', function () {
@@ -29,13 +31,13 @@ describe('control_boolean.vue test', function () {
     });
 
     it('Should set the native input to value', function () {
-      assert.equal(inputValue, wrapper.find(inputSelector).element.checked);
+      assert.equal(inputValue, inputWrapper.element.checked);
     });
   });
 
   describe('When a value is not provided', function () {
     it('Should set the native input to control default', function () {
-      assert.equal(defaultValue, wrapper.find(inputSelector).element.checked);
+      assert.equal(defaultValue, inputWrapper.element.checked);
     });
   });
 });

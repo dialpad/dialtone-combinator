@@ -4,7 +4,6 @@
     class="d-r-none"
     type="textarea"
     spellcheck="false"
-    data-qa="dtc-control-slot-input"
     @input="updateValue"
   >
     <template #labelSlot>

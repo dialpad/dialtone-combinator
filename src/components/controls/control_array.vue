@@ -11,10 +11,14 @@
       [
     </template>
     <template #item="{ item, update }">
-      <dtc-control-dynamic
-        :value="serializeControlValue(item)"
-        @update:value="e => update(deserializeControlValue(e))"
-      />
+      <div
+        data-qa="dtc-control-array-item"
+      >
+        <dtc-control-dynamic
+          :value="serializeControlValue(item)"
+          @update:value="e => update(deserializeControlValue(e))"
+        />
+      </div>
     </template>
     <template #suffix>
       ]
