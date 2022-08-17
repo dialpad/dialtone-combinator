@@ -27,7 +27,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/*.test.js'],
+      files: ['**/*.test.js', 'src/lib/test/*.js'],
       plugins: [
         'mocha',
       ],
@@ -41,10 +41,10 @@ module.exports = {
       },
       rules: {
         'max-lines': 'off',
-        // disabled to allow the use of shared example closures
         'mocha/no-setup-in-describe': 'off',
         'mocha/no-exclusive-tests': 'error',
         'mocha/no-hooks-for-single-case': 'off',
+        'mocha/no-exports': 0,
       },
     },
   ],

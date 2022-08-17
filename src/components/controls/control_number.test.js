@@ -1,18 +1,18 @@
-import DtcControlString from './control_string';
+import DtcControlNumber from './control_number';
 
 import { assert } from 'chai';
 import { mount } from '@vue/test-utils';
 import { controlMap } from '@/src/lib/control';
 
-const inputSelector = '[data-qa=dtc-control-string-input]';
+const inputSelector = '[data-qa=dtc-control-number-input]';
 
-const inputValue = 'string test';
-const defaultValue = controlMap.string.default;
+const inputValue = 5;
+const defaultValue = controlMap.number.default;
 
-describe('control_string.vue test', function () {
+describe('control_number.vue test', function () {
   let wrapper;
   beforeEach(function () {
-    wrapper = mount(DtcControlString);
+    wrapper = mount(DtcControlNumber);
   });
 
   describe('When mounted', function () {

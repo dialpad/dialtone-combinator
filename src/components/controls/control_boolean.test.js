@@ -1,18 +1,18 @@
-import DtcControlString from './control_string';
+import DtcControlBoolean from './control_boolean';
 
 import { assert } from 'chai';
 import { mount } from '@vue/test-utils';
 import { controlMap } from '@/src/lib/control';
 
-const inputSelector = '[data-qa=dtc-control-string-input]';
+const inputSelector = '[data-qa=dtc-control-boolean-input]';
 
-const inputValue = 'string test';
-const defaultValue = controlMap.string.default;
+const inputValue = true;
+const defaultValue = controlMap.boolean.default;
 
-describe('control_string.vue test', function () {
+describe('control_boolean.vue test', function () {
   let wrapper;
   beforeEach(function () {
-    wrapper = mount(DtcControlString);
+    wrapper = mount(DtcControlBoolean);
   });
 
   describe('When mounted', function () {
@@ -29,13 +29,13 @@ describe('control_string.vue test', function () {
     });
 
     it('Should set the native input to value', function () {
-      assert.equal(inputValue, wrapper.find(inputSelector).element.value);
+      assert.equal(inputValue, wrapper.find(inputSelector).element.checked);
     });
   });
 
   describe('When a value is not provided', function () {
     it('Should set the native input to control default', function () {
-      assert.equal(defaultValue, wrapper.find(inputSelector).element.value);
+      assert.equal(defaultValue, wrapper.find(inputSelector).element.checked);
     });
   });
 });

@@ -3,6 +3,7 @@
     <dt-checkbox
       label-class="dtc-control-boolean__label"
       :checked="value"
+      data-qa="dtc-control-boolean-input"
       @input="e => emit(VALUE_UPDATE_EVENT, e)"
     >
       <slot />
