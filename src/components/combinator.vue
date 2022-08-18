@@ -4,7 +4,7 @@
       <dtc-renderer
         :component="component"
         :options="options"
-        v-on="events"
+        v-on="triggerEvent"
       />
     </div>
     <div class="dtc-root__bottom d-grs2">
@@ -12,7 +12,12 @@
         ref="codePanel"
         v-model:options="options"
         :info="info"
-      />
+        :settings="settings"
+      >
+        <template #overlay>
+          <dtc-settings v-model:settings="settings" />
+        </template>
+      </dtc-code-panel>
     </div>
     <div class="dtc-root__sidebar d-grs1 d-gr2 d-bl d-bc-black-900">
       <dtc-option-bar
@@ -27,12 +32,15 @@
 <script setup>
 import DtcOptionBar from './option_bar/option_bar';
 import DtcRenderer from './renderer/renderer';
-import DtcCodePanel from '@/src/components/code_panel/code_panel';
+import DtcCodePanel from './code_panel/code_panel';
+import DtcSettings from './settings/settings';
 
 import { paramCase } from 'change-case';
 import { computed, reactive, ref } from 'vue';
-import { computedModel } from '@/src/lib/utils_vue';
+import { cachedRef, computedModel } from '@/src/lib/utils_vue';
 import { getComponentInfo } from '@/src/lib/info';
+import { CODE_EDITOR_SCHEME_KEY, CODE_EDITOR_THEME_KEY, CODE_EDITOR_VERBOSE_KEY } from '@/src/lib/constants';
+import settingsData from '@/src/settings.json';
 
 const props = defineProps({
   /**
@@ -47,12 +55,12 @@ const props = defineProps({
 function initializeInfo () {
   const [info, defaults] = getComponentInfo(props.component);
   Object.keys(defaults).forEach(key => {
-    setDefaults(defaults[key], optionsRef[key]);
+    setDefaults(defaults[key], optionsModel[key]);
   });
   return info;
 }
 
-const optionsRef = reactive({
+const optionsModel = reactive({
   slots: {
     default: paramCase(props.component.name),
   },
@@ -73,7 +81,7 @@ const optionsRef = reactive({
  * @type {WritableComputedRef<Object>}
  */
 const options = computedModel(
-  optionsRef,
+  optionsModel,
   (e, model) => e(model),
 );
 
@@ -123,7 +131,7 @@ const eventHooks = ref([
  *
  * @type {ComputedRef<Object>}
  */
-const events = computed(() => {
+const triggerEvent = computed(() => {
   if (!info.value.events) { return {}; }
   return Object.fromEntries(
     info.value.events.map(({ name }) => {
@@ -134,6 +142,17 @@ const events = computed(() => {
     }),
   );
 });
+
+const settings = computedModel(
+  reactive({
+    theme: cachedRef(CODE_EDITOR_THEME_KEY, settingsData['code-editor']['default-theme']),
+    scheme: cachedRef(CODE_EDITOR_SCHEME_KEY, settingsData['code-editor']['default-scheme']),
+    verbose: cachedRef(CODE_EDITOR_VERBOSE_KEY, false),
+  }),
+  function (e, model) {
+    const [key, value] = e;
+    model[key] = value;
+  });
 </script>
 
 <script>

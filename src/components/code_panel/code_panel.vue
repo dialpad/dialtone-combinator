@@ -2,9 +2,9 @@
   <div
     class="dtc-code-panel dtc-theme d-w100p d-h100p"
     :class="[
-      `dtc-theme--${theme}`,
-      `dtc-code-panel-scheme--${scheme}`,
-      `dtc-code-panel-scheme--${scheme}--${theme}`,
+      `dtc-theme--${settings.theme}`,
+      `dtc-code-panel-scheme--${settings.scheme}`,
+      `dtc-code-panel-scheme--${settings.scheme}--${settings.theme}`,
     ]"
   >
     <div class="dtc-theme__canvas">
@@ -16,8 +16,8 @@
           <dtc-code-editor
             :info="info"
             :options="options"
-            :theme="theme"
-            :verbose="verbose"
+            :theme="settings.theme"
+            :verbose="settings.verbose"
             @update:options="e => emit(OPTIONS_UPDATE_EVENT, e)"
           />
         </template>
@@ -28,11 +28,7 @@
     </div>
     <div class="d-d-flex d-ai-flex-end d-jc-flex-end d-pe-none">
       <div class="d-pr32 d-pb16 d-pe-auto">
-        <dtc-code-panel-settings
-          v-model:theme="theme"
-          v-model:scheme="scheme"
-          v-model:verbose="verbose"
-        />
+        <slot name="overlay" />
       </div>
     </div>
   </div>
@@ -40,19 +36,11 @@
 
 <script setup>
 import DtcTabPanel from '@/src/components/tools/tab_panel';
-import DtcCodePanelSettings from '@/src/components/code_panel/code_panel_settings';
 import DtcEventConsole from '@/src/components/event_console/event_console';
 import DtcCodeEditor from '@/src/components/code_editor/code_editor';
 
-import {
-  CODE_EDITOR_SCHEME_KEY,
-  CODE_EDITOR_THEME_KEY,
-  CODE_EDITOR_VERBOSE_KEY,
-  OPTIONS_UPDATE_EVENT,
-} from '@/src/lib/constants';
+import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
 import { ref } from 'vue';
-import settings from '@/src/settings.json';
-import { cachedRef } from '@/src/lib/utils_vue';
 
 defineProps({
   /**
@@ -69,6 +57,13 @@ defineProps({
     type: Object,
     required: true,
   },
+  /**
+   * Settings data object.
+   */
+  settings: {
+    type: Object,
+    required: true,
+  },
 });
 
 const emit = defineEmits([
@@ -79,10 +74,6 @@ const eventConsole = ref();
 defineExpose({
   trigger: (event, value) => eventConsole.value.trigger(event, value),
 });
-
-const theme = cachedRef(CODE_EDITOR_THEME_KEY, settings['code-editor']['default-theme']);
-const scheme = cachedRef(CODE_EDITOR_SCHEME_KEY, settings['code-editor']['default-scheme']);
-const verbose = cachedRef(CODE_EDITOR_VERBOSE_KEY, false);
 
 function generateLabel (slot, capitalCase) {
   const label = capitalCase(slot);
