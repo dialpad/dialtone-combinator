@@ -4,18 +4,22 @@
       v-for="(entry, index) in entries"
       :key="entry.key"
     >
-      <dtc-event-console-pair
-        :name="entry.event"
-        :value="index < cacheSize
-          ? entry.value
-          : undefined"
+      <div
+        data-qa="dtc-event-console-entry"
       >
-        <template #separator>
-          <IconArrowForward
-            class="d-fs10 d-px6 d-ps-relative d-t2"
-          />
-        </template>
-      </dtc-event-console-pair>
+        <dtc-event-console-pair
+          :name="entry.event"
+          :value="index < cacheSize
+            ? entry.value
+            : undefined"
+        >
+          <template #separator>
+            <IconArrowForward
+              class="d-fs10 d-px6 d-ps-relative d-t2"
+            />
+          </template>
+        </dtc-event-console-pair>
+      </div>
     </template>
   </div>
 </template>
@@ -38,26 +42,29 @@ defineProps({
 
 const entries = ref([]);
 
+/**
+ * Add a new event to the console.
+ *
+ * @param event The event name
+ * @param value The event value
+ */
+function trigger (event, value) {
+  entries.value.unshift({
+    event,
+    value,
+    key: currentId++,
+  });
+}
+
+/**
+ * Number of events currently in console.
+ */
+const entryCount = computed(() => entries.value.length);
+
 let currentId = 0;
 defineExpose({
-  /**
-   * Add a new event to the console.
-   *
-   * @param event The event name.
-   * @param value The event value.
-   */
-  trigger (event, value) {
-    entries.value.unshift({
-      event,
-      value,
-      key: currentId++,
-    });
-  },
-
-  /**
-   * Number of events currently in console.
-   */
-  entryCount: computed(() => entries.value.length),
+  trigger,
+  entryCount,
 });
 </script>
 

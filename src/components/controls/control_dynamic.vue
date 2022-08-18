@@ -1,5 +1,6 @@
 <template>
   <div>
+    <slot />
     <div data-qa="dtc-control-dynamic-selection">
       <dtc-control-selection
         :value="selectedControl"
