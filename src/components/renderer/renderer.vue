@@ -3,6 +3,7 @@
     <component
       :is="component"
       v-bind="bindings"
+      v-on="events"
     >
       <template
         v-for="(slot, name) in activeSlots"
@@ -27,6 +28,13 @@ const props = defineProps({
     required: true,
   },
   /**
+   * Info data object.
+   */
+  info: {
+    type: Object,
+    required: true,
+  },
+  /**
    * Options data object.
    */
   options: {
@@ -34,6 +42,10 @@ const props = defineProps({
     required: true,
   },
 });
+
+const emit = defineEmits([
+  'event',
+]);
 
 /**
  * Filtered slots that contain content.
@@ -49,6 +61,24 @@ const activeSlots = computed(() => {
 
 const bindings = computed(() => {
   return props.options.getMembers();
+});
+
+/**
+ * Object containing events and their respective handlers.
+ *
+ * @type {ComputedRef<Object>}
+ */
+const events = computed(() => {
+  if (!props.info.events) { return {}; }
+  return Object.fromEntries(
+    props.info.events.map(({ name }) => {
+      console.log(name);
+      return [
+        name,
+        e => emit('event', name, e),
+      ];
+    }),
+  );
 });
 </script>
 

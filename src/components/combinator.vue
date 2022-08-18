@@ -3,8 +3,9 @@
     <div class="dtc-root__top d-grs1 d-bb d-bc-black-900">
       <dtc-renderer
         :component="component"
+        :info="info"
         :options="options"
-        v-on="triggerEvent"
+        @event="(event, value) => triggerEvent(event, value)"
       />
     </div>
     <div class="dtc-root__bottom d-grs2">
@@ -118,30 +119,9 @@ function setDefaults (defaults, memberGroup) {
 
 const codePanel = ref();
 
-/**
- * List of hooks that are triggered on emit of a target component event.
- * @type {Ref<Array>}
- */
-const eventHooks = ref([
-  (event, value) => codePanel.value.trigger(event, value),
-]);
-
-/**
- * Object containing events and their respective handlers.
- *
- * @type {ComputedRef<Object>}
- */
-const triggerEvent = computed(() => {
-  if (!info.value.events) { return {}; }
-  return Object.fromEntries(
-    info.value.events.map(({ name }) => {
-      return [
-        name,
-        e => eventHooks.value.forEach(hook => hook(name, e)),
-      ];
-    }),
-  );
-});
+function triggerEvent (event, value) {
+  codePanel.value.trigger(event, value);
+}
 
 const settings = computedModel(
   reactive({
