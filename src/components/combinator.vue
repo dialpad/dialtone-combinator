@@ -1,7 +1,12 @@
 <template>
-  <div class="dtc-root d-d-grid d-ba d-bc-black-900 d-h100p">
+  <div
+    :class="`dtc-root
+    dtc-theme--${settings.root.theme}
+    d-d-grid d-ba d-bc-black-900 d-h100p`"
+  >
     <div class="dtc-root__top d-grs1 d-bb d-bc-black-900">
       <dtc-renderer
+        v-model:settings="settings"
         :component="component"
         :info="info"
         :options="options"
@@ -16,7 +21,7 @@
         :settings="settings"
       >
         <template #overlay>
-          <dtc-settings v-model:settings="settings" />
+          <dtc-settings-menu v-model:settings="settings" />
         </template>
       </dtc-code-panel>
     </div>
@@ -34,14 +39,20 @@
 import DtcOptionBar from './option_bar/option_bar';
 import DtcRenderer from './renderer/renderer';
 import DtcCodePanel from './code_panel/code_panel';
-import DtcSettings from './settings/settings';
+import DtcSettingsMenu from './settings_menu/settings_menu';
 
 import { paramCase } from 'change-case';
 import { computed, reactive, ref } from 'vue';
 import { cachedRef, computedModel } from '@/src/lib/utils_vue';
 import { getComponentInfo } from '@/src/lib/info';
-import { CODE_EDITOR_SCHEME_KEY, CODE_EDITOR_THEME_KEY, CODE_EDITOR_VERBOSE_KEY } from '@/src/lib/constants';
-import settingsData from '@/src/settings.json';
+import {
+  SETTINGS_SCHEME_KEY,
+  SETTINGS_THEME_KEY,
+  SETTINGS_VERBOSE_KEY,
+  SETTINGS_BACKGROUND_KEY,
+  SETTINGS_POSITIONING_KEY,
+} from '@/src/lib/constants';
+import defaultSettings from '@/src/settings.json';
 
 const props = defineProps({
   /**
@@ -125,14 +136,20 @@ function triggerEvent (event, value) {
 
 const settings = computedModel(
   reactive({
-    theme: cachedRef(CODE_EDITOR_THEME_KEY, settingsData['code-editor']['default-theme']),
-    scheme: cachedRef(CODE_EDITOR_SCHEME_KEY, settingsData['code-editor']['default-scheme']),
-    verbose: cachedRef(CODE_EDITOR_VERBOSE_KEY, false),
+    root: {
+      theme: cachedRef(SETTINGS_THEME_KEY, defaultSettings.root['default-theme']),
+    },
+    renderer: {
+      positioning: cachedRef(SETTINGS_POSITIONING_KEY, defaultSettings.renderer['default-positioning']),
+      background: cachedRef(SETTINGS_BACKGROUND_KEY, defaultSettings.renderer['default-background']),
+    },
+    code: {
+      scheme: cachedRef(SETTINGS_SCHEME_KEY, defaultSettings.code['default-scheme']),
+      verbose: cachedRef(SETTINGS_VERBOSE_KEY, defaultSettings.code['default-verbose']),
+    },
   }),
-  function (e, model) {
-    const [key, value] = e;
-    model[key] = value;
-  });
+  (e, model) => e(model),
+);
 </script>
 
 <script>

@@ -1,6 +1,13 @@
 {
-  "code-editor": {
-    "default-theme": "dark",
-    "default-scheme": "highlight"
+  "root": {
+    "default-theme": "dark"
+  },
+  "code": {
+    "default-scheme": "highlight",
+    "default-verbose": false
+  },
+  "renderer": {
+    "default-positioning": "center",
+    "default-background": "white"
   }
 }

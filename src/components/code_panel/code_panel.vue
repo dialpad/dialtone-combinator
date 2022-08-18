@@ -1,10 +1,9 @@
 <template>
   <div
-    class="dtc-code-panel dtc-theme d-w100p d-h100p"
+    class="dtc-code-panel d-w100p d-h100p"
     :class="[
-      `dtc-theme--${settings.theme}`,
-      `dtc-code-panel-scheme--${settings.scheme}`,
-      `dtc-code-panel-scheme--${settings.scheme}--${settings.theme}`,
+      `dtc-code-panel-scheme--${settings.code.scheme}`,
+      `dtc-code-panel-scheme--${settings.code.scheme}--${settings.root.theme}`,
     ]"
   >
     <div class="dtc-theme__canvas">
@@ -16,8 +15,8 @@
           <dtc-code-editor
             :info="info"
             :options="options"
-            :theme="settings.theme"
-            :verbose="settings.verbose"
+            :theme="settings.root.theme"
+            :verbose="settings.code.verbose"
             @update:options="e => emit(OPTIONS_UPDATE_EVENT, e)"
           />
         </template>

@@ -1,6 +1,6 @@
 <template>
   <dt-popover
-    :class="`dtc-theme--${settings.theme}`"
+    :class="`dtc-theme--${settings.root.theme}`"
     content-class="dtc-theme__popover"
     transition="fade"
     placement="top-end"
@@ -22,8 +22,8 @@
           <dt-radio-group
             name="theme-radio-group"
             legend="Theme"
-            :value="settings.theme"
-            @input="e => updateSetting('theme', e)"
+            :value="settings.root.theme"
+            @input="e => updateSettings('root', 'theme', e)"
           >
             <dt-radio value="light">
               Light
@@ -37,8 +37,8 @@
           <dt-radio-group
             name="scheme-radio-group"
             legend="Scheme"
-            :value="settings.scheme"
-            @input="e => updateSetting('scheme', e)"
+            :value="settings.code.scheme"
+            @input="e => updateSettings('code', 'scheme', e)"
           >
             <dt-radio value="mono">
               Mono
@@ -50,8 +50,8 @@
         </section>
         <section class="d-p8">
           <dt-checkbox
-            :checked="settings.verbose"
-            @input="e => updateSetting('verbose', e)"
+            :checked="settings.code.verbose"
+            @input="e => updateSettings('code', 'verbose', e)"
           >
             Verbose
           </dt-checkbox>
@@ -71,6 +71,7 @@ import {
   DtRadio,
   DtCheckbox,
 } from '@dialpad/dialtone-vue';
+import { SETTINGS_UPDATE_EVENT } from '@/src/lib/constants';
 
 defineProps({
   settings: {
@@ -79,10 +80,13 @@ defineProps({
   },
 });
 
-const emit = defineEmits(['update:settings']);
+const emit = defineEmits([SETTINGS_UPDATE_EVENT]);
 
-function updateSetting (setting, e) {
-  emit('update:settings', [setting, e]);
+function updateSettings (group, setting, e) {
+  emit(SETTINGS_UPDATE_EVENT, (model) => {
+    console.log(model);
+    model[group][setting] = e;
+  });
 }
 </script>
 
