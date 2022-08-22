@@ -29,9 +29,9 @@ const convertMap = {
  * Converts a 'value' 'from' one data type 'to' another if implemented.
  * Returns null if unable to convert.
  *
- * @param from The type name to convert from
- * @param to The type name to convert to
- * @param value The original value
+ * @param {*} from - The type name to convert from
+ * @param {*} to - The type name to convert to
+ * @param {*} value - The original value
  * @returns {*} The converted value or 'null'
  */
 export function convert (from, to, value) {

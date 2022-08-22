@@ -3,8 +3,8 @@ import { DEFAULT_PREFIX } from '@/src/lib/constants';
 /**
  * Copy all the entries of an object into a new object.
  *
- * @param obj The target object.
- * @returns {Object}
+ * @param {object} obj - The target object.
+ * @returns {object} The flattened object.
  */
 export function flatten (obj) {
   const result = {};
@@ -18,15 +18,15 @@ export function flatten (obj) {
  * Map of prefixes with their current 'id' numbers.
  * Used by `getUniqueString(...)`
  *
- * @type {Object}
+ * @type {object}
  */
 const UNIQUE_ID_MAP = {};
 
 /**
  * Gets the next string value given a prefix.
  *
- * @param prefix
- * @returns {String}
+ * @param {string} prefix - The prefix that will be uniquely incremented.
+ * @returns {string} The next unique string for given prefix.
  */
 export function getUniqueString (prefix = DEFAULT_PREFIX) {
   let id = UNIQUE_ID_MAP[prefix];
@@ -40,8 +40,8 @@ export function getUniqueString (prefix = DEFAULT_PREFIX) {
 /**
  * Gets specific type name from a value, intended to be used with value from a 'member'.
  *
- * @param value The value.
- * @returns {String | null}
+ * @param {*} value - The value.
+ * @returns {string|null} The specific member type.
  */
 export function typeOfMember (value) {
   if (value === undefined || value === null) {

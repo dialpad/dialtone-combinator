@@ -9,9 +9,9 @@ import { getUniqueString } from '@/src/lib/utils';
  *
  * Uses JSON serialization so values retain their true data types.
  *
- * @param key The local storage key.
- * @param defaultValue The default value when value is not in local storage.
- * @returns {WritableComputedRef<*>}
+ * @param {string} key - The local storage key.
+ * @param {*} defaultValue - The default value when value is not in local storage.
+ * @returns {WritableComputedRef<*>} The cached ref object.
  */
 export function cachedRef (key, defaultValue) {
   const reference = ref(JSON.parse(window.localStorage.getItem(key)) || defaultValue);
@@ -33,9 +33,9 @@ export function cachedRef (key, defaultValue) {
  *   and the second parameter is the wrapped object. Allows vue emit events to
  *   interact with the wrapped object.
  *
- * @param model The target object to wrap.
- * @param handler The handler function, should take an event value and use it to modify the wrapped object.
- * @returns {WritableComputedRef<*>}
+ * @param {object} model - The target object to wrap.
+ * @param {Function} handler - The handler function, should take an event value and use it to modify the wrapped object.
+ * @returns {WritableComputedRef<*>} The computed model object.
  */
 export function computedModel (model, handler) {
   return computed({
@@ -50,17 +50,10 @@ export function computedModel (model, handler) {
  *
  * addId: Generate and push 'id' string to array.
  * removeId: Remove 'id' string at index position, returns the 'id' string.
- * getId: Gets the 'id' string at index position,
- *   if 'id' string is not existent a new one will be generated
+ * getId: Gets the 'id' string at index position, if 'id' string is not existent a new one will be generated.
  *
- * @param prefix
- * @returns {
- *   {
- *     addId: (function(): String),
- *     removeId: (function(Number): String),
- *     getId: (function(Number): String),
- *   }
- * }
+ * @param {string} prefix - The prefix used to generate unique id values.
+ * @returns {{addId: addId, removeId: removeId, getId: getId}} The id map object.
  */
 export function idMap (prefix) {
   const map = [];

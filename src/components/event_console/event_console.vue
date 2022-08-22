@@ -43,8 +43,8 @@ defineExpose({
   /**
    * Add a new event to the console.
    *
-   * @param event The event name.
-   * @param value The event value.
+   * @param event - The event name.
+   * @param value - The event value.
    */
   trigger (event, value) {
     entries.value.unshift({
