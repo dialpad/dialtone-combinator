@@ -44,13 +44,6 @@ export function computedModel (model, handler) {
   });
 }
 
-export function relayModel (value, emit, name = 'value') {
-  return computed({
-    get: () => value,
-    set: (e) => emit(`update:${name}`, e),
-  });
-}
-
 /**
  * Interface for an array of unique 'id' strings where
  * the indexes represent their position in some external iterable.

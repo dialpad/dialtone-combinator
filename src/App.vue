@@ -1,32 +1,7 @@
 <template>
   <Combinator
     :component="component"
-    :variants="{
-      variant: {
-        props: {
-          circle: {
-            description: '123',
-            newProperty: 123,
-            defaultValue: true,
-          },
-          'iconPosition': {
-            description: 'ayo',
-          },
-        },
-        events: {
-          poggers: {
-            something: 123,
-          },
-        },
-      },
-      somethingElse: {
-        props: {
-          circle: {
-            wowowNewProp: 'abc',
-          },
-        },
-      },
-    }"
+    :variants="variants"
   />
 </template>
 
@@ -39,6 +14,34 @@ const component = computed(() => {
   const urlParams = new URLSearchParams(window.location.search);
   return components[urlParams.get('component')] ?? components.DtButton;
 });
+
+const variants = computed(() => {
+  switch (component.value.name) {
+    case 'DtButton': {
+      return {
+        variant: {
+          props: {
+            circle: {
+              description: 'Variant changed value',
+              defaultValue: true,
+              newProperty: 123,
+            },
+            iconPosition: {
+              description: 'Variant changed description',
+            },
+          },
+          events: {
+            poggers: {
+              something: 123,
+            },
+          },
+        },
+      };
+    }
+    default: return {};
+  }
+});
+
 </script>
 
 <style lang="less" src="./assets/dialtone.less" />

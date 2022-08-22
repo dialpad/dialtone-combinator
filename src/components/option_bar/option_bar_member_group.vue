@@ -8,11 +8,11 @@
         class="d-py6"
         data-qa="dtc-option-bar-member-group-control"
       >
-        <DtcOptionBarControl
+        <dtc-option-bar-control
+          :value="values[key]"
           :label="member.getLabel()"
           :control="member.control"
           :valid-controls="member.validControls"
-          :value="values[key]"
           :description="member.description"
           :types="member.type?.names"
           :tags="member.tags"

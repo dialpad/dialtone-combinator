@@ -189,6 +189,11 @@ const options = computedModel(
   (e, model) => e(model),
 );
 
+/**
+ * The settings data object used to read and write cached settings used in the combinator.
+ *
+ * @type {WritableComputedRef<Object>}
+ */
 const settings = computedModel(
   computed(() => {
     return reactive({

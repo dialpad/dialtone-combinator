@@ -86,7 +86,6 @@ const props = defineProps({
 const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
 
 const compOptions = computed(() => {
-  console.log(props.options);
   return props.options;
 });
 
