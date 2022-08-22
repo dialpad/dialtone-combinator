@@ -11,7 +11,7 @@ import { extendEvent, extendMember } from '@/src/lib/info_extend';
  * The 'info' object contains all the post-processed documentation data.
  * The 'defaults' object contains a map of default values for each member in 'info'.
  *
- * @param {Component} component - The target component.
+ * @param {Object} component - The target component.
  * @returns {Array} A newly instantiated info object.
  */
 export function getComponentInfo (component) {
