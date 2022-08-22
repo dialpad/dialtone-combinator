@@ -81,6 +81,6 @@ export default {
   }
 
   .dtc-header__variant {
-    background-color: var(--dtc-theme-color-background-lighten);
+    background-color: var(--dtc-theme-color-background-darken);
   }
 </style>

@@ -168,39 +168,43 @@ function getDefaultOptions (info) {
  * @type {WritableComputedRef<Object>}
  */
 const options = computedModel(
-  reactive({
-    ...getDefaultOptions(info.value),
-    bindings: {
-      get () {
-        const bindings = [];
-        this.enumerate((_, binding) => bindings.push(binding));
-        return Object.fromEntries(bindings);
+  computed(() => {
+    return reactive({
+      ...getDefaultOptions(info.value),
+      bindings: {
+        get () {
+          const bindings = [];
+          this.enumerate((_, binding) => bindings.push(binding));
+          return Object.fromEntries(bindings);
+        },
+        enumerate (handler) {
+          enumerateGroups(handler, {
+            props: Object.entries(options.value.props),
+            attributes: Object.entries(options.value.attributes),
+          });
+        },
       },
-      enumerate (handler) {
-        enumerateGroups(handler, {
-          props: Object.entries(options.value.props),
-          attributes: Object.entries(options.value.attributes),
-        });
-      },
-    },
+    });
   }),
   (e, model) => e(model),
 );
 
 const settings = computedModel(
-  reactive({
-    root: {
-      theme: cachedRef(SETTINGS_THEME_KEY, defaultSettings.root['default-theme']),
-      sidebar: cachedRef(SETTINGS_SIDEBAR_KEY, defaultSettings.root['default-sidebar']),
-    },
-    renderer: {
-      positioning: cachedRef(SETTINGS_POSITIONING_KEY, defaultSettings.renderer['default-positioning']),
-      background: cachedRef(SETTINGS_BACKGROUND_KEY, defaultSettings.renderer['default-background']),
-    },
-    code: {
-      scheme: cachedRef(SETTINGS_SCHEME_KEY, defaultSettings.code['default-scheme']),
-      verbose: cachedRef(SETTINGS_VERBOSE_KEY, defaultSettings.code['default-verbose']),
-    },
+  computed(() => {
+    return reactive({
+      root: {
+        theme: cachedRef(SETTINGS_THEME_KEY, defaultSettings.root['default-theme']),
+        sidebar: cachedRef(SETTINGS_SIDEBAR_KEY, defaultSettings.root['default-sidebar']),
+      },
+      renderer: {
+        positioning: cachedRef(SETTINGS_POSITIONING_KEY, defaultSettings.renderer['default-positioning']),
+        background: cachedRef(SETTINGS_BACKGROUND_KEY, defaultSettings.renderer['default-background']),
+      },
+      code: {
+        scheme: cachedRef(SETTINGS_SCHEME_KEY, defaultSettings.code['default-scheme']),
+        verbose: cachedRef(SETTINGS_VERBOSE_KEY, defaultSettings.code['default-verbose']),
+      },
+    });
   }),
   (e, model) => e(model),
 );
