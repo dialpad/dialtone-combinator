@@ -7,7 +7,8 @@ export const MEMBER_UPDATE_EVENT = 'update:member';
 export const OPTIONS_UPDATE_EVENT = 'update:options';
 export const SETTINGS_UPDATE_EVENT = 'update:settings';
 
-export const SETTINGS_THEME_KEY = 'dialtoneCombinatorRootTheme';
+export const SETTINGS_THEME_KEY = 'dialtoneCombinatorTheme';
+export const SETTINGS_SIDEBAR_KEY = 'dialtoneCombinatorSidebar';
 export const SETTINGS_SCHEME_KEY = 'dialtoneCombinatorCodeScheme';
 export const SETTINGS_VERBOSE_KEY = 'dialtoneCombinatorCodeVerbose';
 export const SETTINGS_POSITIONING_KEY = 'dialtoneCombinatorRendererPositioning';

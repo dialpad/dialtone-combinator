@@ -1,6 +1,7 @@
 {
   "root": {
-    "default-theme": "dark"
+    "default-theme": "dark",
+    "default-sidebar": "right"
   },
   "code": {
     "default-scheme": "highlight",

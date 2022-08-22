@@ -1,5 +1,33 @@
 <template>
-  <Combinator :component="component" />
+  <Combinator
+    :component="component"
+    :variants="{
+      variant: {
+        props: {
+          circle: {
+            description: '123',
+            newProperty: 123,
+            defaultValue: true,
+          },
+          'iconPosition': {
+            description: 'ayo',
+          },
+        },
+        events: {
+          poggers: {
+            something: 123,
+          },
+        },
+      },
+      somethingElse: {
+        props: {
+          circle: {
+            wowowNewProp: 'abc',
+          },
+        },
+      },
+    }"
+  />
 </template>
 
 <script setup>

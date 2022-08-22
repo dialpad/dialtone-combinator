@@ -20,7 +20,7 @@
         <dtc-option-bar-member-group
           :component="component"
           :members="info.props"
-          :values="options.props"
+          :values="compOptions.props"
           :control-selector="prop => getPropControls(prop.type.names)"
           @update:member="updateProps"
         />
@@ -57,8 +57,9 @@ import DtcOptionBarMemberGroup from './option_bar_member_group';
 import DtcOptionBarSection from './option_bar_section';
 
 import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
+import { computed } from 'vue';
 
-defineProps({
+const props = defineProps({
   /**
    * Component to render.
    */
@@ -83,6 +84,11 @@ defineProps({
 });
 
 const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
+
+const compOptions = computed(() => {
+  console.log(props.options);
+  return props.options;
+});
 
 /**
  * Gets the controls for a prop member.

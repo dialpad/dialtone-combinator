@@ -1,5 +1,7 @@
 <template>
-  <dt-button-group>
+  <dt-button-group
+    class="d-fw-wrap"
+  >
     <template
       v-for="(selection, control) in selections"
       :key="control"

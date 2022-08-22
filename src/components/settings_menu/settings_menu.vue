@@ -1,10 +1,11 @@
 <template>
   <dt-popover
-    :class="`dtc-theme--${settings.root.theme}`"
+    :dialog-class="`dtc-theme--${settings.root.theme}`"
     content-class="dtc-theme__popover"
     transition="fade"
     placement="top-end"
     initial-focus-element="dialog"
+    sticky
   >
     <template #anchor="{ attrs }">
       <dt-button
@@ -17,7 +18,7 @@
       </dt-button>
     </template>
     <template #content>
-      <div>
+      <div class="d-px8">
         <section class="d-p8">
           <dt-radio-group
             name="theme-radio-group"
@@ -45,6 +46,21 @@
             </dt-radio>
             <dt-radio value="highlight">
               Highlight
+            </dt-radio>
+          </dt-radio-group>
+        </section>
+        <section class="d-p8">
+          <dt-radio-group
+            name="sidebar-radio-group"
+            legend="Sidebar Position"
+            :value="settings.root.sidebar"
+            @input="e => updateSettings('root', 'sidebar', e)"
+          >
+            <dt-radio value="left">
+              Left
+            </dt-radio>
+            <dt-radio value="right">
+              Right
             </dt-radio>
           </dt-radio-group>
         </section>
@@ -84,7 +100,6 @@ const emit = defineEmits([SETTINGS_UPDATE_EVENT]);
 
 function updateSettings (group, setting, e) {
   emit(SETTINGS_UPDATE_EVENT, (model) => {
-    console.log(model);
     model[group][setting] = e;
   });
 }

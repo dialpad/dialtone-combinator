@@ -31,7 +31,7 @@
 <script setup>
 import DtcOptionBarControl from './option_bar_control';
 import { MEMBER_UPDATE_EVENT } from '@/src/lib/constants';
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
 import { controlMap, getControlByValue } from '@/src/lib/control';
 import { convert } from '@/src/lib/convert';
 
@@ -76,12 +76,14 @@ const emit = defineEmits([MEMBER_UPDATE_EVENT]);
  *
  * @type {Object}
  */
-const memberMap = reactive({
-  ...Object.fromEntries(
-    props.members.map(member => {
-      return [getMemberKey(member), extendMember(member)];
-    }),
-  ),
+const memberMap = computed(() => {
+  return reactive({
+    ...Object.fromEntries(
+      props.members.map(member => {
+        return [getMemberKey(member), extendMember(member)];
+      }),
+    ),
+  });
 });
 
 /**
@@ -133,7 +135,7 @@ function updateMember (e, key) {
  * @param key The member key
  */
 function updateControl (e, key) {
-  const member = memberMap[key];
+  const member = memberMap.value[key];
 
   let value;
   try {

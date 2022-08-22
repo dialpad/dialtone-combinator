@@ -26,33 +26,18 @@
     <div class="d-d-flex d-jc-flex-end d-pe-none">
       <div class="d-d-flex d-pt4 d-pe-auto">
         <dtc-renderer-menu
-          v-if="showMenu"
+          :theme="theme"
           :background="background"
           :positioning="positioning"
           @update:settings="updateSettings"
         />
-        <div>
-          <dt-button
-            class="d-mx4"
-            importance="clear"
-            :active="showMenu"
-            @click="toggleSettings"
-          >
-            <template #icon>
-              <icon-menu />
-            </template>
-          </dt-button>
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import IconMenu from 'dialtone-icons/IconMenuVertical';
-
-import { DtButton } from '@dialpad/dialtone-vue';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { SETTINGS_UPDATE_EVENT } from '@/src/lib/constants';
 import DtcRendererMenu from '@/src/components/renderer/renderer_menu';
 
@@ -92,20 +77,21 @@ const emit = defineEmits([
   'event',
 ]);
 
+const theme = computed(() => {
+  switch (background.value) {
+    case 'black': return 'dark';
+    case 'white': return 'light';
+    default: return props.settings.root.theme;
+  }
+});
 const background = computed(() => getSetting('background'));
 const positioning = computed(() => getSetting('positioning'));
 
 const backgroundColorMap = {
-  theme: `dtc-theme__canvas`,
   black: 'd-bgc-black-900',
   white: 'd-bgc-white',
+  theme: `dtc-theme__canvas`,
 };
-
-const showMenu = ref(false);
-
-function toggleSettings () {
-  showMenu.value = !showMenu.value;
-}
 
 function getSetting (setting) {
   return props.settings.renderer[setting];
@@ -130,7 +116,7 @@ const activeSlots = computed(() => {
 });
 
 const bindings = computed(() => {
-  return props.options.getMembers();
+  return props.options.bindings.get();
 });
 
 /**
