@@ -55,6 +55,10 @@ describe('option_bar_member_group.vue test', function () {
         _mountWrapper(component);
       });
 
+      afterEach(function () {
+        wrapper.unmount();
+      });
+
       it('Should render successfully', function () {
         assert.isTrue(wrapper.exists());
       });
