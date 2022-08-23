@@ -86,7 +86,8 @@ const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
 
 /**
  * Gets the controls for a prop member.
- * @param types The valid types for the member
+ *
+ * @param types - The valid types for the member
  * @returns {Array}
  */
 function getPropControls (types) {
@@ -99,9 +100,9 @@ function getPropControls (types) {
 /**
  * Emits an update to a member in the 'options' data object.
  *
- * @param memberGroup The member group
- * @param member The member
- * @param value The updated value
+ * @param memberGroup - The member group
+ * @param member - The member
+ * @param value - The updated value
  */
 function updateMember (memberGroup, { member, value }) {
   emit(OPTIONS_UPDATE_EVENT, (options) => {

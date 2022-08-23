@@ -5,8 +5,8 @@ import JSON5 from 'json5-with-undefined';
  *
  * If unsuccessful, will return 'undefined'.
  *
- * @param defaultInfo The documentation object containing default value data.
- * @returns {*}
+ * @param {object} defaultInfo - The documentation object containing default value data.
+ * @returns {*} The parsed default value.
  */
 export function parseDocDefault (defaultInfo) {
   if (!defaultInfo.value) { return defaultInfo.value; }
@@ -26,7 +26,9 @@ export function parseDocDefault (defaultInfo) {
 
 /**
  * Stringifies a documentation value using the docgen format.
- * @returns {string}
+ *
+ * @param {*} value - The value to stringify.
+ * @returns {string} Stringified value.
  */
 export function stringifyDocValue (value) {
   return JSON5.stringify(value);
@@ -34,7 +36,9 @@ export function stringifyDocValue (value) {
 
 /**
  * Parses a documentation value using the docgen format.
- * @returns {*}
+ *
+ * @param {string} value - The value to parse.
+ * @returns {*} The parsed value
  */
 export function parseDocValue (value) {
   return JSON5.parse(value);
@@ -45,7 +49,8 @@ export function parseDocValue (value) {
  *
  * TODO: Currently not implemented.
  *
- * @returns {undefined}
+ * @param {*} value - The unparsed documentation function string.
+ * @returns {undefined} The parsed value.
  */
 function parseDocFunc (value) {
   return undefined;

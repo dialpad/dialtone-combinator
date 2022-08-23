@@ -11,8 +11,8 @@ import { extendEvent, extendMember } from '@/src/lib/info_extend';
  * The 'info' object contains all the post-processed documentation data.
  * The 'defaults' object contains a map of default values for each member in 'info'.
  *
- * @param component The target component.
- * @returns {Array}
+ * @param {Object} component - The target component.
+ * @returns {Array} A newly instantiated info object.
  */
 export function getComponentInfo (component) {
   const info = {
@@ -32,12 +32,12 @@ export function getComponentInfo (component) {
  *
  * Example:
  * info.events = processMembers(info.events, extendEvent);
- *   * Each event member will have the custom `extendEvent(...)` function applied to it.
+ *   Each event member will have the custom `extendEvent(...)` function applied to it.
  *
  * If applicable defaults are set after the member group is fully extended.
  *
- * @param info The unprocessed info object.
- * @returns {Object} The object containing default values for members.
+ * @param {object} info - The unprocessed info object.
+ * @returns {object} The object containing default values for members.
  */
 function extendInfo (info) {
   renameModelProp(info);
@@ -70,7 +70,7 @@ function extendInfo (info) {
 /**
  * Renames the prop that contains the custom 'model' tag to its original name.
  *
- * @param info The unprocessed info object.
+ * @param {object} info - The unprocessed info object.
  */
 function renameModelProp (info) {
   const model = info.props.find(componentProp => {
@@ -88,8 +88,8 @@ function renameModelProp (info) {
  * Gets attribute members by finding custom attribute 'property' tags.
  * Creates a member object for each with name, type and default value.
  *
- * @param info The unprocessed info object.
- * @returns {Array}
+ * @param {object} info - The unprocessed info object.
+ * @returns {Array} - Array of attribute members.
  */
 function getAttributes (info) {
   const properties = info.tags.property;
@@ -117,8 +117,8 @@ function getAttributes (info) {
 /**
  * Gets an object of key-value pairs of each member and its default value.
  *
- * @param members The processed members.
- * @returns {Object}
+ * @param {Array} members - The processed members.
+ * @returns {object} Object containing default values for members
  */
 function getDefaults (members) {
   return Object.fromEntries(members.map(member => [member.name, member.defaultValue]));
@@ -137,8 +137,8 @@ function getDefaults (members) {
  * Multiple processor functions can be passed in after the 'members' parameter.
  * They are invoked in the order they are passed in.
  *
- * @param members The member group to process.
- * @param processors The optional, additional member processing functions.
+ * @param {Array} members - The member group to process.
+ * @param {Function} processors - The optional, additional member processing functions.
  * @returns {Array} The processed member group.
  */
 function processMembers (members, ...processors) {

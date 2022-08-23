@@ -70,7 +70,7 @@ const optionsRef = reactive({
 /**
  * The options data object is the main reactive object that allows interactivity with the target component.
  *
- * @type {WritableComputedRef<Object>}
+ * @type {WritableComputedRef<object>}
  */
 const options = computedModel(
   optionsRef,
@@ -80,7 +80,7 @@ const options = computedModel(
 /**
  * Container for all extended component information for the target component.
  *
- * @type {ComputedRef<Object>}
+ * @type {ComputedRef<object>}
  */
 const info = computed(() => {
   return Object.freeze({
@@ -112,6 +112,7 @@ const codePanel = ref();
 
 /**
  * List of hooks that are triggered on emit of a target component event.
+ *
  * @type {Ref<Array>}
  */
 const eventHooks = ref([
@@ -121,7 +122,7 @@ const eventHooks = ref([
 /**
  * Object containing events and their respective handlers.
  *
- * @type {ComputedRef<Object>}
+ * @type {ComputedRef<object>}
  */
 const events = computed(() => {
   if (!info.value.events) { return {}; }
