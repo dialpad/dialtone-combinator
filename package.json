@@ -50,5 +50,8 @@
     "serve": "^13.0.4",
     "vue": "^3.2.37",
     "vue-tsc": "^0.38.1"
+  },
+  "peerDependencies": {
+    "@dialpad/dialtone-vue": "^3.x"
   }
 }
