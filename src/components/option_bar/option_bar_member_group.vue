@@ -5,6 +5,7 @@
       :key="key"
     >
       <div
+        v-if="!member.hideControl"
         class="d-py6"
         data-qa="dtc-option-bar-member-group-control"
       >

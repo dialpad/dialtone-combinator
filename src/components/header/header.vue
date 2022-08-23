@@ -3,9 +3,9 @@
     <h1 class="d-headline32">
       {{ component.name }}
     </h1>
-    <div class="d-fl-grow1 d-ml12">
+    <div class="d-fl-grow1 d-ml12 d-bl">
       <div class="d-d-flex d-ai-center dtc-header__variant d-h100p">
-        <div class="d-fl-grow1">
+        <div class="d-pl6 d-pt2 d-fl-grow1">
           <dt-select-menu
             class="d-ba-none"
             select-class="dtc-header__select"

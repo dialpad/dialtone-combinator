@@ -20,6 +20,11 @@ const variants = computed(() => {
     case 'DtButton': {
       return {
         variant: {
+          slots: {
+            icon: {
+              description: 'Variant slot description',
+            },
+          },
           props: {
             circle: {
               description: 'Variant changed value',
@@ -29,10 +34,19 @@ const variants = computed(() => {
             iconPosition: {
               description: 'Variant changed description',
             },
+            importance: {
+              hideControl: true,
+            },
+            link: {
+              description: 'The `importance` control that is usually above is hidden here',
+            },
           },
           events: {
-            poggers: {
-              something: 123,
+            focusin: {
+              type: {
+                names: ['customvariantevent'],
+              },
+              description: 'I have a custom variant event type',
             },
           },
         },
