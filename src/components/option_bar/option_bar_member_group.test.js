@@ -33,20 +33,28 @@ describe('option_bar_member_group.vue test', function () {
   let wrapper;
   let controlWrappers;
 
+  const _mountWrapper = (component) => {
+    wrapper = mount(DtcOptionBarMemberGroup, {
+      props: {
+        component,
+        members: testMembers,
+        values: testValues,
+      },
+    });
+    _setChildWrappers();
+  };
+
+  const _setChildWrappers = () => {
+    controlWrappers = wrapper.findAll(controlWrapperSelector);
+  };
+
   const testComponents = getSupportedComponents();
   testComponents.forEach((component) => {
-    before(function () {
-      wrapper = mount(DtcOptionBarMemberGroup, {
-        props: {
-          component,
-          members: testMembers,
-          values: testValues,
-        },
-      });
-      controlWrappers = wrapper.findAll(controlWrapperSelector);
-    });
-
     describe(`When mounted with component '${component.name}'`, function () {
+      beforeEach(function () {
+        _mountWrapper(component);
+      });
+
       it('Should render successfully', function () {
         assert.isTrue(wrapper.exists());
       });

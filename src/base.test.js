@@ -10,15 +10,3 @@ describe('base.test.js', function () {
     });
   });
 });
-
-// const _mountWrapper = () => {
-//   wrapper = mount();
-//   _setChildWrappers();
-// };
-//
-// const _setChildWrappers = () => {
-// };
-//
-// before(function () {
-//   _mountWrapper();
-// });
