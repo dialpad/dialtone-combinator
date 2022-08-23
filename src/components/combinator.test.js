@@ -17,7 +17,7 @@ describe('combinator.vue test', function () {
 
       describe(`When mounted with component '${component.name}'`, function () {
         it('Should render successfully', function () {
-          assert.exists(wrapper);
+          assert.isTrue(wrapper.exists());
         });
       });
     });

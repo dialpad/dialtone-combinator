@@ -12,7 +12,7 @@ describe('event_console.vue test', function () {
 
   describe('When mounted', function () {
     it('Should render successfully', function () {
-      assert.exists(wrapper);
+      assert.isTrue(wrapper.exists());
     });
   });
 });

@@ -48,7 +48,7 @@ describe('option_bar_member_group.vue test', function () {
 
     describe(`When mounted with component '${component.name}'`, function () {
       it('Should render successfully', function () {
-        assert.exists(wrapper);
+        assert.isTrue(wrapper.exists());
       });
 
       it('Should render a control for each member', function () {

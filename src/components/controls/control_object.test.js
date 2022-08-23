@@ -18,25 +18,39 @@ const inputValues = {
 
 describe('control_object.vue test', function () {
   let wrapper;
-  beforeEach(function () {
+  let itemKeyWrappers;
+  let itemKeyInputWrappers;
+  let itemValueWrappers;
+  let itemValueInputWrappers;
+
+  const _mountWrapper = () => {
     wrapper = mount(DtcControlObject);
+    _setChildWrappers();
+  };
+
+  const _setChildWrappers = () => {
+    itemKeyWrappers = wrapper.findAll(itemKeySelector);
+    itemKeyInputWrappers = itemKeyWrappers.map(itemWrapper => itemWrapper.find(itemKeyInputSelector));
+    itemValueWrappers = wrapper.findAll(itemValueSelector);
+    itemValueInputWrappers = itemValueWrappers.map(itemWrapper => itemWrapper.find(itemValueInputSelector));
+  };
+
+  before(function () {
+    _mountWrapper();
   });
 
   describe('When mounted', function () {
     it('Should render successfully', function () {
-      assert.exists(wrapper);
+      assert.isTrue(wrapper.exists());
     });
   });
 
   describe('When a value is provided', function () {
-    let itemKeyWrappers;
-    let itemValueWrappers;
     beforeEach(async function () {
       await wrapper.setProps({
         value: inputValues,
       });
-      itemKeyWrappers = wrapper.findAll(itemKeySelector);
-      itemValueWrappers = wrapper.findAll(itemValueSelector);
+      _setChildWrappers();
     });
 
     it('Should generate a key control and a value control for each object entry', function () {
@@ -48,16 +62,16 @@ describe('control_object.vue test', function () {
     describe('Should have matching control and native input values', function () {
       Object.entries(inputValues).forEach(([inputKey, inputValue]) => {
         it(`Should have a matching native input for key '${inputKey}'`, function () {
-          const itemKeys = itemKeyWrappers.map(itemWrapper => {
-            return itemWrapper.find(itemKeyInputSelector).element.value;
+          const itemKeys = itemKeyInputWrappers.map(inputWrapper => {
+            return inputWrapper.element.value;
           });
 
           assert.isTrue(itemKeys.includes(inputKey));
         });
 
         it(`Should have a matching native input for value '${inputValue}'`, function () {
-          const itemValues = itemValueWrappers.map(itemWrapper => {
-            return itemWrapper.find(itemValueInputSelector).element.value;
+          const itemValues = itemValueInputWrappers.map(inputWrapper => {
+            return inputWrapper.element.value;
           });
           assert.isTrue(itemValues.includes(inputValue.toString()));
         });

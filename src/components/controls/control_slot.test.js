@@ -11,14 +11,23 @@ const defaultValue = '';
 describe('control_slot.vue test', function () {
   let wrapper;
   let inputWrapper;
-  beforeEach(function () {
+
+  const _mountWrapper = () => {
     wrapper = mount(DtcControlSlot);
+    _setChildWrappers();
+  };
+
+  const _setChildWrappers = () => {
     inputWrapper = wrapper.find(inputSelector);
+  };
+
+  before(function () {
+    _mountWrapper();
   });
 
   describe('When mounted', function () {
     it('Should render successfully', function () {
-      assert.exists(wrapper);
+      assert.isTrue(wrapper.exists());
     });
   });
 
@@ -27,6 +36,7 @@ describe('control_slot.vue test', function () {
       await wrapper.setProps({
         value: inputValue,
       });
+      _setChildWrappers();
     });
 
     it('Should set the native input to value', function () {
@@ -35,6 +45,10 @@ describe('control_slot.vue test', function () {
   });
 
   describe('When a value is not provided', function () {
+    beforeEach(function () {
+      _mountWrapper();
+    });
+
     it('Should set the native input to control default', function () {
       assert.equal(defaultValue, inputWrapper.element.value);
     });

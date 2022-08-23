@@ -1,4 +1,7 @@
 import { assert } from 'chai';
+import { enableAutoUnmount } from '@vue/test-utils';
+
+enableAutoUnmount(after);
 
 describe('base.test.js', function () {
   describe('When running test', function () {
@@ -7,3 +10,15 @@ describe('base.test.js', function () {
     });
   });
 });
+
+// const _mountWrapper = () => {
+//   wrapper = mount();
+//   _setChildWrappers();
+// };
+//
+// const _setChildWrappers = () => {
+// };
+//
+// before(function () {
+//   _mountWrapper();
+// });

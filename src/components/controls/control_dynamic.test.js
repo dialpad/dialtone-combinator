@@ -37,18 +37,32 @@ const defaultValue = undefined;
 
 describe('control_dynamic.vue test', function () {
   let wrapper;
+  let selectionWrapper;
+  let inputWrapper;
+
+  const _mountWrapper = () => {
+    wrapper = mount(DtcControlDynamic);
+    _setChildWrappers();
+  };
+
+  const _setChildWrappers = () => {
+    selectionWrapper = wrapper?.find(selectionSelector);
+    inputWrapper = selectionWrapper?.find(inputSelector);
+  };
+
+  before(function () {
+    _mountWrapper();
+  });
 
   describe('When mounted', function () {
-    before(function () {
-      wrapper = mount(DtcControlDynamic, {
-        props: {
-          value: defaultValue,
-        },
+    beforeEach(async function () {
+      await wrapper.setProps({
+        value: defaultValue,
       });
     });
 
     it('Should render successfully', function () {
-      assert.exists(wrapper);
+      assert.isTrue(wrapper.exists());
     });
   });
 
@@ -56,16 +70,17 @@ describe('control_dynamic.vue test', function () {
     describe(
       `When provided value is '${value === UNSET ? `${UNSET.toString()}` : value}' {${typeof value}}`,
       function () {
-        before(function () {
+        beforeEach(function () {
           wrapper = mount(DtcControlDynamic, {
             props: {
               value,
             },
           });
+          _setChildWrappers();
         });
 
         it(`Should set selection to '${control}'`, function () {
-          assert.equal(wrapper.find(selectionSelector).find(inputSelector).element.value, control);
+          assert.equal(inputWrapper.element.value, control);
         });
 
         if (component) {
