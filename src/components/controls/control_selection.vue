@@ -43,6 +43,9 @@ const options = computed(() => {
 </script>
 
 <script>
+/**
+ * Control that is used to select any value from a list of values.
+ */
 export default {
   name: 'DtcControlSelection',
 };

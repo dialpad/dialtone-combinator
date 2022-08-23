@@ -42,7 +42,7 @@ Each triggered event will create a console entry represented by a 'pair' compone
 
 ### Pair
 
-The 'pair' component represents a key-value pair and allows recursive exploration of objects.
+The pair component represents a key-value pair and allows recursive exploration of objects.
 A pair contains a name (key) and a value. Based on the data type of the value it will display a 
 component to represent a value.
 
@@ -59,7 +59,7 @@ Other components such as objects and array can render more 'pair' components all
 
 ### Lazy Load
 
-The 'lazy load' component provides generic functionality to not render content until the expand button is pressed.
+The lazy load component provides generic functionality to not render content until the expand button is pressed.
 It is used by the 'object', 'array' and 'element' components for two reasons:
 * Prevent visual clutter
 * Improve performance by preventing over-rendering

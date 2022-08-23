@@ -1,10 +1,19 @@
 import documentation from '@/src/assets/component-documentation.json';
 
-import { parseDocDefault, stringifyDocValue } from '@/src/lib/parse';
-import { typeOfMember } from '@/src/lib/utils';
+import { stringifyDocValue } from '@/src/lib/parse';
 import { controlMap } from '@/src/lib/control';
-import { paramCase } from 'change-case';
+import { extendEvent, extendMember } from '@/src/lib/info_extend';
 
+/**
+ * Gets component data from the documentation and processing on it
+ * to return a 'info' and 'defaults' object.
+ *
+ * The 'info' object contains all the post-processed documentation data.
+ * The 'defaults' object contains a map of default values for each member in 'info'.
+ *
+ * @param {Object} component - The target component.
+ * @returns {Array} A newly instantiated info object.
+ */
 export function getComponentInfo (component) {
   const info = {
     ...documentation.find(componentInfo => componentInfo.displayName === component.name),
@@ -14,10 +23,27 @@ export function getComponentInfo (component) {
   return [info, defaults];
 }
 
+/**
+ * Delegates the data processing for different member groups.
+ *
+ * The data processing extends the documentation for each member of a member group.
+ * Processing can be customized for each member group by passing in custom handlers
+ * to the `processMembers(members, ...handlers)` function.
+ *
+ * Example:
+ * info.events = processMembers(info.events, extendEvent);
+ *   Each event member will have the custom `extendEvent(...)` function applied to it.
+ *
+ * If applicable defaults are set after the member group is fully extended.
+ *
+ * @param {object} info - The unprocessed info object.
+ * @returns {object} The object containing default values for members.
+ */
 function extendInfo (info) {
   renameModelProp(info);
 
   const defaults = {};
+  const attributes = getAttributes(info);
 
   if (info.slots) {
     info.slots = processMembers(info.slots);
@@ -29,7 +55,6 @@ function extendInfo (info) {
     defaults.props = getDefaults(info.props);
   }
 
-  const attributes = getAttributes(info);
   if (attributes) {
     info.attributes = processMembers(attributes);
     defaults.attributes = getDefaults(info.attributes);
@@ -42,6 +67,30 @@ function extendInfo (info) {
   return defaults;
 }
 
+/**
+ * Renames the prop that contains the custom 'model' tag to its original name.
+ *
+ * @param {object} info - The unprocessed info object.
+ */
+function renameModelProp (info) {
+  const model = info.props.find(componentProp => {
+    const tags = componentProp.tags;
+    return tags
+      ? 'model' in tags
+      : false;
+  });
+  if (model) {
+    model.name = model.tags.model[0]?.description;
+  }
+}
+
+/**
+ * Gets attribute members by finding custom attribute 'property' tags.
+ * Creates a member object for each with name, type and default value.
+ *
+ * @param {object} info - The unprocessed info object.
+ * @returns {Array} - Array of attribute members.
+ */
 function getAttributes (info) {
   const properties = info.tags.property;
 
@@ -65,22 +114,33 @@ function getAttributes (info) {
   });
 }
 
+/**
+ * Gets an object of key-value pairs of each member and its default value.
+ *
+ * @param {Array} members - The processed members.
+ * @returns {object} Object containing default values for members
+ */
 function getDefaults (members) {
   return Object.fromEntries(members.map(member => [member.name, member.defaultValue]));
 }
 
-function renameModelProp (info) {
-  const model = info.props.find(componentProp => {
-    const tags = componentProp.tags;
-    return tags
-      ? 'model' in tags
-      : false;
-  });
-  if (model) {
-    model.name = model.tags.model[0]?.description;
-  }
-}
-
+/**
+ * Processes a member group by extending each member with the `extendMember(member)` function.
+ * Custom processing can be done on each member by passing a processing function as a parameter.
+ *
+ * Example:
+ * `processMembers(info.events, extendEvent)`
+ *
+ * Each event member will be processed with the default `extendMember(member)` function and also have the
+ * custom `extendEvent(member)` function applied after.
+ *
+ * Multiple processor functions can be passed in after the 'members' parameter.
+ * They are invoked in the order they are passed in.
+ *
+ * @param {Array} members - The member group to process.
+ * @param {Function} processors - The optional, additional member processing functions.
+ * @returns {Array} The processed member group.
+ */
 function processMembers (members, ...processors) {
   return members?.map(member => {
     extendMember(member);
@@ -89,51 +149,4 @@ function processMembers (members, ...processors) {
     });
     return member;
   });
-}
-
-function extendEvent (event) {
-  const types = event.type?.names?.[0];
-  if (types) {
-    event.type.names = extractMemberTypes(types);
-  }
-}
-
-function extendMember (member) {
-  let defaultValue = member.defaultValue
-    ? parseDocDefault(member.defaultValue)
-    : undefined;
-
-  let defaultType;
-  if (member.type?.name) {
-    defaultType = typeOfMember(defaultValue);
-    [defaultValue, defaultType] = extendMemberType(member, defaultValue, defaultType);
-  }
-
-  if (defaultValue !== undefined) { member.defaultValue = defaultValue; }
-  if (defaultType !== undefined) { member.defaultType = defaultType; }
-  if (member.name) {
-    member.getLabel = function () {
-      return paramCase(member.name);
-    };
-  }
-}
-
-function extendMemberType (member, defaultValue, defaultType) {
-  member.type.names = extractMemberTypes(member.type.name);
-  delete member.type.name;
-
-  if (
-    defaultType !== undefined &&
-    defaultType !== null &&
-    !member.type.names.includes(defaultType)
-  ) {
-    defaultValue = undefined;
-    defaultType = undefined;
-  }
-
-  return [defaultValue, defaultType];
-}
-
-function extractMemberTypes (typeString) {
-  return typeString.split('|').map(type => type.trim().toLowerCase());
 }

@@ -2,9 +2,9 @@
   <div>
     <dtc-code-editor-opening-tag
       :name="tagName"
-      :self-closing="selfClosing"
     >
       <slot name="opening" />
+      <span v-if="!selfClosing">/</span>
     </dtc-code-editor-opening-tag>
     <slot />
     <dtc-code-editor-closing-tag
@@ -23,6 +23,9 @@ defineProps({
     type: String,
     required: true,
   },
+  /**
+   * Exclude closing tag and append a '/' to end of opening tag.
+   */
   selfClosing: {
     type: Boolean,
     default: false,

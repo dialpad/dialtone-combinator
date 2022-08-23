@@ -5,7 +5,7 @@
         v-if="info.slots"
         heading="Slots"
       >
-        <dtc-option-bar-members
+        <dtc-option-bar-member-group
           :component="component"
           :members="info.slots"
           :values="options.slots"
@@ -17,11 +17,11 @@
         v-if="info.props"
         heading="Props"
       >
-        <dtc-option-bar-members
+        <dtc-option-bar-member-group
           :component="component"
           :members="info.props"
           :values="options.props"
-          :control-selector="prop => getPropTypes(prop.type.names)"
+          :control-selector="prop => getPropControls(prop.type.names)"
           @update:member="updateProps"
         />
       </dtc-option-bar-section>
@@ -29,7 +29,7 @@
         v-if="info.attributes"
         heading="Native HTML Attributes"
       >
-        <dtc-option-bar-members
+        <dtc-option-bar-member-group
           :component="component"
           :members="info.attributes"
           :values="options.attributes"
@@ -41,7 +41,7 @@
         v-if="info.events"
         heading="Events"
       >
-        <dtc-option-bar-members
+        <dtc-option-bar-member-group
           :component="component"
           :members="info.events"
           :values="options.events"
@@ -53,20 +53,29 @@
 </template>
 
 <script setup>
-import DtcOptionBarMembers from './option_bar_members';
+import DtcOptionBarMemberGroup from './option_bar_member_group';
 import DtcOptionBarSection from './option_bar_section';
 
 import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
 
 defineProps({
+  /**
+   * Component to render.
+   */
   component: {
     type: Object,
     required: true,
   },
+  /**
+   * Options data object.
+   */
   options: {
     type: Object,
     required: true,
   },
+  /**
+   * Info data object.
+   */
   info: {
     type: Object,
     required: true,
@@ -75,16 +84,29 @@ defineProps({
 
 const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
 
-function getPropTypes (types) {
+/**
+ * Gets the controls for a prop member.
+ *
+ * @param types - The valid types for the member
+ * @returns {Array}
+ */
+function getPropControls (types) {
   return [
     ...types,
     'null',
   ];
 }
 
-function updateMember (memberType, { member, value }) {
+/**
+ * Emits an update to a member in the 'options' data object.
+ *
+ * @param memberGroup - The member group
+ * @param member - The member
+ * @param value - The updated value
+ */
+function updateMember (memberGroup, { member, value }) {
   emit(OPTIONS_UPDATE_EVENT, (options) => {
-    options[memberType][member] = value;
+    options[memberGroup][member] = value;
   });
 }
 
@@ -94,6 +116,10 @@ function updateAttributes (e) { updateMember('attributes', e); }
 </script>
 
 <script>
+/**
+ * The option bar is responsible for providing a user interface
+ * to interact and change the state of the target component.
+ */
 export default {
   name: 'DtcOptionBar',
 };

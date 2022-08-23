@@ -43,6 +43,9 @@ function generateItem () {
 </script>
 
 <script>
+/**
+ * Control that is used to provide functionality to manipulate arrays.
+ */
 export default {
   name: 'DtcControlArray',
 };

@@ -43,6 +43,10 @@ function onInput (e) {
 </script>
 
 <script>
+/**
+ * The slot displays the content wrapped by 'template' tags that match the slot name.
+ * The default slot is not wrapped by 'template' tags.
+ */
 export default {
   name: 'DtcCodeEditorSlot',
 };

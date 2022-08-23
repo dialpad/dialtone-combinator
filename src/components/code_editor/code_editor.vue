@@ -82,18 +82,30 @@ import { ref, computed } from 'vue';
 import { paramCase } from 'change-case';
 
 const props = defineProps({
+  /**
+   * Options data object.
+   */
   options: {
     type: Object,
     required: true,
   },
+  /**
+   * Info data object.
+   */
   info: {
     type: Object,
     required: true,
   },
+  /**
+   * Popover theme setting.
+   */
   theme: {
     type: String,
     required: true,
   },
+  /**
+   * Attributes verbose setting.
+   */
   verbose: {
     type: Boolean,
     required: true,
@@ -122,6 +134,10 @@ async function copy () {
 </script>
 
 <script>
+/**
+ * The code editor displays the vue template code required to reproduce
+ * the component in its current state in an external project.
+ */
 export default {
   name: 'DtcCodeEditor',
 };

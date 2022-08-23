@@ -29,14 +29,23 @@ import { CONTROL_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
 
 const props = defineProps({
+  /**
+   * Selected control.
+   */
   selected: {
     type: String,
     required: true,
   },
+  /**
+   * Array of control selections.
+   */
   controls: {
     type: Array,
     required: true,
   },
+  /**
+   * Array of valid types.
+   */
   types: {
     type: Array,
     default: undefined,
@@ -75,6 +84,12 @@ function getSelection (control) {
   }
 }
 
+/**
+ * Gets the styling of the button based on the status of the control.
+ *
+ * @param {string} control - The name of the control.
+ * @returns {object} Object containing style settings.
+ */
 function getStyling (control) {
   const isActive = control === props.selected;
   return {

@@ -35,14 +35,23 @@ import { computed } from 'vue';
 import { stringifyDocValue } from '@/src/lib/parse';
 
 const props = defineProps({
+  /**
+   * Info data object.
+   */
   info: {
     type: Object,
     required: true,
   },
+  /**
+   * Members to display as tag attributes.
+   */
   members: {
     type: Object,
     required: true,
   },
+  /**
+   * Show all attributes regardless of default value.
+   */
   verbose: {
     type: Boolean,
     default: false,
@@ -94,6 +103,9 @@ function stringifyValue (value) {
 </script>
 
 <script>
+/**
+ * This component generates all the attribute fields to be included on the element tag.
+ */
 export default {
   name: 'DtcCodeEditorAttributes',
 };

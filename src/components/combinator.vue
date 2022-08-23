@@ -35,11 +35,22 @@ import { computedModel } from '@/src/lib/utils_vue';
 import { getComponentInfo } from '@/src/lib/info';
 
 const props = defineProps({
+  /**
+   * Target component.
+   */
   component: {
     type: Object,
     required: true,
   },
 });
+
+function initializeInfo () {
+  const [info, defaults] = getComponentInfo(props.component);
+  Object.keys(defaults).forEach(key => {
+    setDefaults(defaults[key], optionsRef[key]);
+  });
+  return info;
+}
 
 const optionsRef = reactive({
   slots: {
@@ -56,13 +67,23 @@ const optionsRef = reactive({
   },
 });
 
+/**
+ * The options data object is the main reactive object that allows interactivity with the target component.
+ *
+ * @type {WritableComputedRef<object>}
+ */
 const options = computedModel(
   optionsRef,
   (e, model) => e(model),
 );
 
+/**
+ * Container for all extended component information for the target component.
+ *
+ * @type {ComputedRef<object>}
+ */
 const info = computed(() => {
-  return {
+  return Object.freeze({
     ...initializeInfo(),
     getMembers () {
       return [
@@ -70,31 +91,39 @@ const info = computed(() => {
         ...(this.attributes || []),
       ];
     },
-  };
+  });
 });
 
-function initializeInfo () {
-  const [info, defaults] = getComponentInfo(props.component);
+/**
+ * Sets the values for a given 'options' member group with the provided defaults.
+ *
+ * @param defaults - default key-value map
+ * @param memberGroup - options member group
+ */
+function setDefaults (defaults, memberGroup) {
   Object.keys(defaults).forEach(key => {
-    setDefaults(defaults[key], optionsRef[key]);
-  });
-  return info;
-}
-
-function setDefaults (defaults, members) {
-  Object.keys(defaults).forEach(key => {
-    if (!(key in members)) {
-      members[key] = defaults[key];
+    if (!(key in memberGroup)) {
+      memberGroup[key] = defaults[key];
     }
   });
 }
 
 const codePanel = ref();
 
+/**
+ * List of hooks that are triggered on emit of a target component event.
+ *
+ * @type {Ref<Array>}
+ */
 const eventHooks = ref([
   (event, value) => codePanel.value.trigger(event, value),
 ]);
 
+/**
+ * Object containing events and their respective handlers.
+ *
+ * @type {ComputedRef<object>}
+ */
 const events = computed(() => {
   if (!info.value.events) { return {}; }
   return Object.fromEntries(
@@ -109,6 +138,10 @@ const events = computed(() => {
 </script>
 
 <script>
+/**
+ * The root component that facilitates input and output with its child components.
+ * Holds the two central data objects 'info' and 'options'.
+ */
 export default {
   name: 'DtcCombinator',
 };

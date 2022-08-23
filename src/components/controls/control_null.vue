@@ -12,8 +12,7 @@
 import DtcControlSelection from './control_selection';
 import { computed } from 'vue';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
-import { controlMap } from '@/src/lib/control';
-import { UNSET } from '@/src/lib/utils';
+import { controlMap, UNSET } from '@/src/lib/control';
 
 const props = defineProps({
   value: {
@@ -46,6 +45,9 @@ function updateValue (e) {
 </script>
 
 <script>
+/**
+ * Control that is used to set nullish.
+ */
 export default {
   name: 'DtcControlNull',
 };

@@ -35,6 +35,12 @@ const props = defineProps({
   },
 });
 
+/**
+ * Needs to be flattened to iterate through all prototype properties of the object.
+ * Not sure if there is a better way of doing this.
+ *
+ * @type {ComputedRef<object>}
+ */
 const clone = computed(() => {
   return flatten(props.value);
 });

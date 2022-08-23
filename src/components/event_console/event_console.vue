@@ -27,6 +27,9 @@ import DtcEventConsolePair from '@/src/components/event_console/event_console_pa
 import { computed, ref } from 'vue';
 
 defineProps({
+  /**
+   * Amount of objects that are stored for expansion.
+   */
   cacheSize: {
     type: Number,
     default: 10,
@@ -37,6 +40,12 @@ const entries = ref([]);
 
 let currentId = 0;
 defineExpose({
+  /**
+   * Add a new event to the console.
+   *
+   * @param event - The event name.
+   * @param value - The event value.
+   */
   trigger (event, value) {
     entries.value.unshift({
       event,
@@ -44,11 +53,18 @@ defineExpose({
       key: currentId++,
     });
   },
+
+  /**
+   * Number of events currently in console.
+   */
   entryCount: computed(() => entries.value.length),
 });
 </script>
 
 <script>
+/**
+ * The event console displays data about events captured from the target component.
+ */
 export default {
   name: 'DtcEventConsole',
 };

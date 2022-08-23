@@ -49,10 +49,16 @@ import { sentenceCase } from 'change-case';
 import DtcOptionBarControlSelector from '@/src/components/option_bar/option_bar_control_selector';
 
 const props = defineProps({
+  /**
+   * Control representing an entry in the 'control map'.
+   */
   control: {
     type: String,
     required: true,
   },
+  /**
+   * Array of valid controls in the 'control map'.
+   */
   validControls: {
     type: Array,
     required: true,
@@ -60,10 +66,6 @@ const props = defineProps({
   value: {
     type: undefined,
     required: true,
-  },
-  validValues: {
-    type: Array,
-    default: undefined,
   },
   label: {
     type: String,
@@ -73,15 +75,20 @@ const props = defineProps({
     type: String,
     default: undefined,
   },
+  /**
+   * Array of valid types for member.
+   */
   types: {
     type: Array,
     default: undefined,
   },
+  /**
+   * Map of member tags.
+   */
   tags: {
     type: Object,
     default: undefined,
   },
-
   /**
    * Optional args to bind directly to the control.
    */
@@ -93,25 +100,46 @@ const props = defineProps({
 
 const emit = defineEmits([VALUE_UPDATE_EVENT, CONTROL_UPDATE_EVENT]);
 
+/**
+ * Value to pass to the underlying control.
+ * The value is serialized if needed.
+ *
+ * @type {ComputedRef<*>}
+ */
 const controlValue = computed(() => {
   return controlMap[props.control].serialize
     ? serializeControlValue(props.value)
     : props.value;
 });
 
+/**
+ * Prettified control description.
+ *
+ * @type {ComputedRef<string>}
+ */
 const controlDescription = computed(() => {
   return props.description
     ? sentenceCase(props.description)
     : null;
 });
 
+/**
+ * Actual component based on the value of the 'control' prop.
+ *
+ * @type {ComputedRef<object>}
+ */
 const controlComponent = computed(() => {
   return getControlComponent(props.control, controlArgs.value);
 });
 
+/**
+ * Args that are conditionally passed to the
+ * underlying control props if the prop is present on the control.
+ *
+ * @type {ComputedRef<object>}
+ */
 const controlArgs = computed(() => {
   return {
-    validValues: props.validValues,
     tags: props.tags,
     ...props.args,
   };
@@ -121,7 +149,7 @@ const controlArgs = computed(() => {
  * Object containing only the args that are
  * present on the control component props.
  *
- * @type {ComputedRef<Object>}
+ * @type {ComputedRef<object>}
  */
 const bindArgs = computed(() => {
   const component = controlComponent.value;
@@ -141,6 +169,12 @@ const showModelTag = computed(() => {
     : false;
 });
 
+/**
+ * Emits an update to the member value.
+ * The value is deserialized if needed.
+ *
+ * @param e - The updated member value
+ */
 function updateValue (e) {
   const value = controlMap[props.control].serialize
     ? deserializeControlValue(e)
@@ -148,12 +182,21 @@ function updateValue (e) {
   emit(VALUE_UPDATE_EVENT, value);
 }
 
+/**
+ * Emits event to update member control.
+ *
+ * @param e - The updated member control
+ */
 function updateControl (e) {
   emit(CONTROL_UPDATE_EVENT, e);
 }
 </script>
 
 <script>
+/**
+ * The 'option bar control' component wraps an underlying 'control' component to provide extended functionality
+ * and decouple the reliance on the option bar and members from individual 'control' components.
+ */
 export default {
   name: 'DtcOptionBarControl',
 };

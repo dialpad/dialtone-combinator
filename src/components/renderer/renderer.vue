@@ -2,7 +2,7 @@
   <div class="dtc-renderer d-of-auto d-d-flex d-jc-center d-ai-center d-w100p d-h100p">
     <component
       :is="component"
-      v-bind="members"
+      v-bind="bindings"
     >
       <template
         v-for="(slot, name) in activeSlots"
@@ -19,16 +19,27 @@
 import { computed } from 'vue';
 
 const props = defineProps({
+  /**
+   * Component to render.
+   */
   component: {
     type: Object,
     required: true,
   },
+  /**
+   * Options data object.
+   */
   options: {
     type: Object,
     required: true,
   },
 });
 
+/**
+ * Filtered slots that contain content.
+ *
+ * @type {ComputedRef<object>}
+ */
 const activeSlots = computed(() => {
   if (!props.options.slots) { return null; }
   return Object.fromEntries(
@@ -36,12 +47,15 @@ const activeSlots = computed(() => {
   );
 });
 
-const members = computed(() => {
+const bindings = computed(() => {
   return props.options.getMembers();
 });
 </script>
 
 <script>
+/**
+ * The renderer is responsible for displaying the target component in its current state.
+ */
 export default {
   name: 'DtcRenderer',
 };

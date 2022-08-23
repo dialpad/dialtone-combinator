@@ -21,10 +21,9 @@
 <script setup>
 import DtcControlSelection from './control_selection';
 
-import { controlMap, getControlByValue } from '@/src/lib/control';
+import { controlMap, getControlByValue, UNSET } from '@/src/lib/control';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed, ref } from 'vue';
-import { UNSET } from '@/src/lib/utils';
 
 const props = defineProps({
   value: {
@@ -105,6 +104,9 @@ function updateValue (e) {
 </script>
 
 <script>
+/**
+ * Control that is used to set a value from a variety of data types.
+ */
 export default {
   name: 'DtcControlDynamic',
 };

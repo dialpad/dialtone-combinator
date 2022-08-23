@@ -55,10 +55,16 @@ import settings from '@/src/settings.json';
 import { cachedRef } from '@/src/lib/utils_vue';
 
 defineProps({
+  /**
+   * Options data object.
+   */
   options: {
     type: Object,
     required: true,
   },
+  /**
+   * Info data object.
+   */
   info: {
     type: Object,
     required: true,
@@ -88,6 +94,10 @@ function generateLabel (slot, capitalCase) {
 </script>
 
 <script>
+/**
+ * The code panel is responsible for providing technical information
+ * about the target component in its current state.
+ */
 export default {
   name: 'DtcCodePanel',
 };

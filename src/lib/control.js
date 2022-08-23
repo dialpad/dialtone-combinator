@@ -1,3 +1,7 @@
+/**
+ * See /.github/documentation/internal/CONTROLS.MD
+ * For in-depth information about controls.
+ */
 import DtcControlEvent from '@/src/components/controls/control_event';
 import DtcControlSlot from '@/src/components/controls/control_slot';
 import DtcControlDynamic from '@/src/components/controls/control_dynamic';
@@ -10,8 +14,22 @@ import DtcControlString from '@/src/components/controls/control_string';
 import DtcControlNull from '@/src/components/controls/control_null';
 import DtcControlBase from '@/src/components/controls/control_base';
 
-import { typeOfMember, UNSET } from '@/src/lib/utils';
+import { typeOfMember } from '@/src/lib/utils';
 
+/**
+ * Symbol representing a value that is "not set".
+ * The main usage is to indicate that a prop value should be 'undefined' instead of using its default value.
+ *
+ * @type {symbol}
+ */
+export const UNSET = Symbol('unset');
+
+/**
+ * Map of controls containing control component and related information.
+ * Controls must have the 'component(args)' and `get default()` fields.
+ *
+ * @type {object}
+ */
 export const controlMap = Object.freeze({
   event: {
     component: () => DtcControlEvent,
@@ -38,8 +56,8 @@ export const controlMap = Object.freeze({
     get default () { return []; },
   },
   string: {
-    component: ({ validValues } = {}) => {
-      return validValues
+    component: (args) => {
+      return args?.validValues
         ? DtcControlSelection
         : DtcControlString;
     },
@@ -64,8 +82,16 @@ export const controlMap = Object.freeze({
   },
 });
 
-export function getControlComponent (name, args) {
-  return controlMap[name]?.component(args) ?? controlMap.base.component(args);
+/**
+ * Gets the component for a control given the args
+ * If no control is found the base control component is returned.
+ *
+ * @param {string} control - The control in `controlMap`.
+ * @param {object} args - The control args.
+ * @returns {object} The control component.
+ */
+export function getControlComponent (control, args) {
+  return controlMap[control]?.component(args) ?? controlMap.base.component(args);
 }
 
 export function getControlByValue (value) {
@@ -78,12 +104,26 @@ export function getControlByValue (value) {
     : 'base';
 }
 
+/**
+ * Serializes a value before giving it to a control that requires a serialized value.
+ * Currently, this only converts between 'UNSET' and 'undefined'.
+ *
+ * @param {*} value - The value to serialize
+ * @returns {*} The serialized value
+ */
 export function serializeControlValue (value) {
   return value === undefined
     ? UNSET
     : value;
 }
 
+/**
+ * Deserializes a value after receiving it from a control that requires a serialized value.
+ * Currently, this only converts between 'UNSET' and 'undefined'.
+ *
+ * @param {*} value - The value to deserialize
+ * @returns {*} The deserialized value
+ */
 export function deserializeControlValue (value) {
   return value === UNSET
     ? undefined
