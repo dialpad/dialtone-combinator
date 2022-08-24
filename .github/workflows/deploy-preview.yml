@@ -3,10 +3,7 @@ name: Deploy Preview
 on: pull_request
 
 env:
-  # It is impossible to manually delete the cache, so if you are ever in a
-  # situation where you need to remove a previous cache just increment
-  # the version number
-  DEPLOY_PREVIEW_CACHE_VERSION: v1
+  NODE_MODULES_CACHE_VERSION: v1
 
 jobs:
   deploy:
@@ -31,7 +28,7 @@ jobs:
       with:
         path: |
           **/node_modules/
-        key: ${{ format('{0}-cache-node-modules-{1}-{2}', runner.os, env.DEPLOY_PREVIEW_CACHE_VERSION, hashFiles('**/package-lock.json')) }}
+        key: ${{ format('{0}-cache-node-modules-{1}-{2}', runner.os, env.NODE_MODULES_CACHE_VERSION, hashFiles('**/package-lock.json')) }}
 
     - name: Install dependencies
       if: steps.npm-cache.outputs.cache-hit != 'true'
