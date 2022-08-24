@@ -19,20 +19,28 @@ describe('control_selection.vue test', function () {
   let inputWrapper;
   let optionWrappers;
 
-  beforeEach(function () {
+  const _mountWrapper = () => {
     wrapper = mount(DtcControlSelection, {
       props: {
         value: inputValue,
         validValues: selections,
       },
     });
+    _setChildWrappers();
+  };
+
+  const _setChildWrappers = () => {
     inputWrapper = wrapper.find(inputSelector);
     optionWrappers = wrapper.findAll(optionSelector);
+  };
+
+  before(function () {
+    _mountWrapper();
   });
 
   describe('When mounted', function () {
     it('Should render successfully', function () {
-      assert.exists(wrapper);
+      assert.isTrue(wrapper.exists());
     });
   });
 

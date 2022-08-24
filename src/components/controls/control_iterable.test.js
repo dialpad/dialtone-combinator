@@ -5,7 +5,7 @@ import { mount } from '@vue/test-utils';
 
 describe('control_iterable.vue test', function () {
   let wrapper;
-  beforeEach(function () {
+  before(function () {
     wrapper = mount(DtcControlIterable, {
       props: {
         value: [],
@@ -16,7 +16,7 @@ describe('control_iterable.vue test', function () {
 
   describe('When mounted', function () {
     it('Should render successfully', function () {
-      assert.exists(wrapper);
+      assert.isTrue(wrapper.exists());
     });
   });
 });

@@ -20,7 +20,7 @@ import { typeOfMember } from '@/src/lib/utils';
  * Symbol representing a value that is "not set".
  * The main usage is to indicate that a prop value should be 'undefined' instead of using its default value.
  *
- * @type {Symbol}
+ * @type {symbol}
  */
 export const UNSET = Symbol('unset');
 
@@ -28,7 +28,7 @@ export const UNSET = Symbol('unset');
  * Map of controls containing control component and related information.
  * Controls must have the 'component(args)' and `get default()` fields.
  *
- * @type {Object}
+ * @type {object}
  */
 export const controlMap = Object.freeze({
   event: {
@@ -86,9 +86,9 @@ export const controlMap = Object.freeze({
  * Gets the component for a control given the args
  * If no control is found the base control component is returned.
  *
- * @param control The control in `controlMap`.
- * @param args The control args.
- * @returns {Object}
+ * @param {string} control - The control in `controlMap`.
+ * @param {object} args - The control args.
+ * @returns {object} The control component.
  */
 export function getControlComponent (control, args) {
   return controlMap[control]?.component(args) ?? controlMap.base.component(args);
@@ -108,7 +108,8 @@ export function getControlByValue (value) {
  * Serializes a value before giving it to a control that requires a serialized value.
  * Currently, this only converts between 'UNSET' and 'undefined'.
  *
- * @returns {*}
+ * @param {*} value - The value to serialize
+ * @returns {*} The serialized value
  */
 export function serializeControlValue (value) {
   return value === undefined
@@ -120,7 +121,8 @@ export function serializeControlValue (value) {
  * Deserializes a value after receiving it from a control that requires a serialized value.
  * Currently, this only converts between 'UNSET' and 'undefined'.
  *
- * @returns {*}
+ * @param {*} value - The value to deserialize
+ * @returns {*} The deserialized value
  */
 export function deserializeControlValue (value) {
   return value === UNSET

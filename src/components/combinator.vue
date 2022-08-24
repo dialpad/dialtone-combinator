@@ -95,7 +95,7 @@ function updateVariant (e) {
  * Gets a new instantiation of an info object.
  * Merges info from selected variant to the info object.
  *
- * @return {Object}
+ * @return {object}
  */
 function initializeInfo () {
   const info = getComponentInfo(props.component);
@@ -119,7 +119,7 @@ function initializeInfo () {
 /**
  * Container for all extended component information for the target component.
  *
- * @type {ComputedRef<Object>}
+ * @type {ComputedRef<object>}
  */
 const info = computed(() => {
   return Object.freeze({
@@ -165,7 +165,7 @@ function getDefaultOptions (info) {
 /**
  * The options data object is the main reactive object that allows interactivity with the target component.
  *
- * @type {WritableComputedRef<Object>}
+ * @type {WritableComputedRef<object>}
  */
 const options = computedModel(
   computed(() => {
@@ -192,7 +192,7 @@ const options = computedModel(
 /**
  * The settings data object used to read and write cached settings used in the combinator.
  *
- * @type {WritableComputedRef<Object>}
+ * @type {WritableComputedRef<object>}
  */
 const settings = computedModel(
   computed(() => {

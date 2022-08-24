@@ -122,7 +122,7 @@ const controlValue = computed(() => {
 /**
  * Prettified control description.
  *
- * @type {ComputedRef<String>}
+ * @type {ComputedRef<string>}
  */
 const controlDescription = computed(() => {
   return props.description
@@ -133,7 +133,7 @@ const controlDescription = computed(() => {
 /**
  * Actual component based on the value of the 'control' prop.
  *
- * @type {ComputedRef<Object>}
+ * @type {ComputedRef<object>}
  */
 const controlComponent = computed(() => {
   return getControlComponent(props.control, controlArgs.value);
@@ -143,7 +143,7 @@ const controlComponent = computed(() => {
  * Args that are conditionally passed to the
  * underlying control props if the prop is present on the control.
  *
- * @type {ComputedRef<Object>}
+ * @type {ComputedRef<object>}
  */
 const controlArgs = computed(() => {
   return {
@@ -156,7 +156,7 @@ const controlArgs = computed(() => {
  * Object containing only the args that are
  * present on the control component props.
  *
- * @type {ComputedRef<Object>}
+ * @type {ComputedRef<object>}
  */
 const bindArgs = computed(() => {
   const component = controlComponent.value;
@@ -180,7 +180,7 @@ const showModelTag = computed(() => {
  * Emits an update to the member value.
  * The value is deserialized if needed.
  *
- * @param e The updated member value
+ * @param e - The updated member value
  */
 function updateValue (e) {
   const value = controlMap[props.control].serialize
@@ -192,7 +192,7 @@ function updateValue (e) {
 /**
  * Emits event to update member control.
  *
- * @param e The updated member control
+ * @param e - The updated member control
  */
 function updateControl (e) {
   emit(CONTROL_UPDATE_EVENT, e);

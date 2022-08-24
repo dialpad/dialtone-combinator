@@ -2,48 +2,93 @@ import DtcControlDynamic from './control_dynamic';
 
 import { assert } from 'chai';
 import { mount } from '@vue/test-utils';
-import { UNSET } from '@/src/lib/control';
+import { controlMap, UNSET } from '@/src/lib/control';
+
+const selectionSelector = '[data-qa=dtc-control-dynamic-selection]';
+const inputSelector = 'select';
 
 const testControls = {
-  string: 'string test',
-  number: 17,
-  true: true,
-  false: false,
-  null: null,
-  undefined: UNSET,
-  NaN,
+  string: {
+    value: 'string test',
+    component: controlMap.string.component(),
+  },
+  number: {
+    value: 17,
+    component: controlMap.number.component(),
+  },
+  true: {
+    value: true,
+  },
+  false: {
+    value: false,
+  },
+  null: {
+    value: null,
+  },
+  undefined: {
+    value: undefined,
+  },
+  NaN: {
+    value: NaN,
+  },
 };
 
 const defaultValue = undefined;
 
 describe('control_dynamic.vue test', function () {
   let wrapper;
+  let selectionWrapper;
+  let inputWrapper;
+
+  const _mountWrapper = () => {
+    wrapper = mount(DtcControlDynamic);
+    _setChildWrappers();
+  };
+
+  const _setChildWrappers = () => {
+    selectionWrapper = wrapper?.find(selectionSelector);
+    inputWrapper = selectionWrapper?.find(inputSelector);
+  };
+
+  before(function () {
+    _mountWrapper();
+  });
 
   describe('When mounted', function () {
-    wrapper = mount(DtcControlDynamic, {
-      props: {
+    beforeEach(async function () {
+      await wrapper.setProps({
         value: defaultValue,
-      },
+      });
     });
 
     it('Should render successfully', function () {
-      assert.exists(wrapper);
+      assert.isTrue(wrapper.exists());
     });
   });
 
-  Object.entries(testControls).forEach(([controlKey, controlValue]) => {
-    describe(`When provided value is '${controlValue === UNSET ? `${UNSET.toString()}` : controlValue}'`, function () {
-      before(function () {
-        wrapper = mount(DtcControlDynamic, {
-          props: {
-            value: controlValue,
-          },
+  Object.entries(testControls).forEach(([control, { value, component }]) => {
+    describe(
+      `When provided value is '${value === UNSET ? `${UNSET.toString()}` : value}' {${typeof value}}`,
+      function () {
+        beforeEach(function () {
+          wrapper = mount(DtcControlDynamic, {
+            props: {
+              value,
+            },
+          });
+          _setChildWrappers();
         });
-      });
 
-      it(`Should use the '${controlKey}' control`, function () {
-        assert.isTrue(true);
-      });
-    });
+        it(`Should set selection to '${control}'`, function () {
+          assert.equal(inputWrapper.element.value, control);
+        });
+
+        if (component) {
+          it(`Should set the generated control to '${component.name}'`, function () {
+            assert.exists(wrapper.findComponent(component));
+          });
+        }
+      },
+    );
   });
 });

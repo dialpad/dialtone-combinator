@@ -106,7 +106,7 @@ function updateSettings (setting, e) {
 /**
  * Filtered slots that contain content.
  *
- * @type {ComputedRef<Object>}
+ * @type {ComputedRef<object>}
  */
 const activeSlots = computed(() => {
   if (!props.options.slots) { return null; }

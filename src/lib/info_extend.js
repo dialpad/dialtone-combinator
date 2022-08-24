@@ -8,7 +8,7 @@ import { paramCase } from 'change-case';
  * Sets a predetermined default value and default type for a member.
  * Also adds a getter for a label value.
  *
- * @param member The extended member.
+ * @param {object} member - The extended member.
  */
 export function extendMember (member) {
   let defaultValue = member.defaultValue
@@ -43,10 +43,10 @@ export function extendMember (member) {
  *
  * If it is not the default value and default type are set to 'undefined'
  *
- * @param member The member to extend.
- * @param defaultValue The default value of the member.
- * @param defaultType The default type of the member.
- * @returns {[*, String]}
+ * @param {object} member - The member to extend.
+ * @param {*} defaultValue - The default value of the member.
+ * @param {string} defaultType - The default type of the member.
+ * @returns {Array} The extended member.
  */
 function extendMemberType (member, defaultValue, defaultType) {
   member.type.names = extractMemberTypes(member.type.name);
@@ -66,8 +66,9 @@ function extendMemberType (member, defaultValue, defaultType) {
 
 /**
  * Splits a member type string into an array of type names.
- * @param typeString The member type string.
- * @returns {Array}
+ *
+ * @param {string} typeString - The member type string.
+ * @returns {Array} Array of types for member.
  */
 function extractMemberTypes (typeString) {
   return typeString.split('|').map(type => type.trim().toLowerCase());
@@ -81,7 +82,7 @@ function extractMemberTypes (typeString) {
  *
  * This corrects the type data to the same format.
  *
- * @param event
+ * @param {object} event - The event member.
  */
 export function extendEvent (event) {
   const types = event.type?.names?.[0];

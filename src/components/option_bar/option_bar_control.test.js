@@ -30,15 +30,15 @@ describe('option_bar_control.vue test', function () {
       });
 
       it('Should render successfully', function () {
-        assert.exists(wrapper);
+        assert.isTrue(wrapper.exists());
       });
 
       it('Should display label text', function () {
-        assert.equal(wrapper.find(labelSelector).element.textContent.toLowerCase(), testLabel);
+        assert.equal(wrapper.find(labelSelector).text().toLowerCase(), testLabel);
       });
 
       it('Should display description text', function () {
-        assert.equal(wrapper.find(descriptionSelector).element.textContent.toLowerCase(), testDescription);
+        assert.equal(wrapper.find(descriptionSelector).text().toLowerCase(), testDescription);
       });
     });
   });

@@ -75,7 +75,7 @@ const emit = defineEmits([MEMBER_UPDATE_EVENT]);
  * provides additional data that the 'option bar control' component
  * needs without affecting the original member data object.
  *
- * @type {Object}
+ * @type {object}
  */
 const memberMap = computed(() => {
   return reactive({
@@ -100,7 +100,7 @@ function getMemberKey (member) {
  * Wraps a member with an object containing additional data about the member.
  * This is used by the 'member map' to hold data about controls.
  *
- * @returns {Object}
+ * @returns {object}
  */
 function extendMember (member) {
   const key = getMemberKey(member);
@@ -119,8 +119,8 @@ function extendMember (member) {
 /**
  * Emits an update to a member.
  *
- * @param key The member key
- * @param e The updated value
+ * @param key - The member key
+ * @param e - The updated value
  */
 function updateMember (e, key) {
   emit(MEMBER_UPDATE_EVENT, {
@@ -132,8 +132,8 @@ function updateMember (e, key) {
 /**
  * Updates the member's control in the 'member map'.
  *
- * @param e The updated control
- * @param key The member key
+ * @param e - The updated control
+ * @param key - The member key
  */
 function updateControl (e, key) {
   const member = memberMap.value[key];

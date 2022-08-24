@@ -42,29 +42,26 @@ defineProps({
 
 const entries = ref([]);
 
-/**
- * Add a new event to the console.
- *
- * @param event The event name
- * @param value The event value
- */
-function trigger (event, value) {
-  entries.value.unshift({
-    event,
-    value,
-    key: currentId++,
-  });
-}
-
-/**
- * Number of events currently in console.
- */
-const entryCount = computed(() => entries.value.length);
-
 let currentId = 0;
 defineExpose({
-  trigger,
-  entryCount,
+  /**
+   * Add a new event to the console.
+   *
+   * @param event - The event name.
+   * @param value - The event value.
+   */
+  trigger (event, value) {
+    entries.value.unshift({
+      event,
+      value,
+      key: currentId++,
+    });
+  },
+
+  /**
+   * Number of events currently in console.
+   */
+  entryCount: computed(() => entries.value.length),
 });
 </script>
 
