@@ -102,8 +102,6 @@ function initializeInfo () {
 
   const variantInfo = props.variants?.[selectedVariant.value];
 
-  console.log(variantInfo);
-
   if (variantInfo) {
     Object.entries(variantInfo).forEach(([memberGroup, members]) => {
       Object.entries(members).forEach(([memberName, member]) => {
