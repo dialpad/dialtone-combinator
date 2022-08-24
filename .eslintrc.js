@@ -29,4 +29,27 @@ module.exports = {
     'jsdoc/no-undefined-types': 0,
     'jsdoc/require-hyphen-before-param-description': 1,
   },
+  overrides: [
+    {
+      files: ['**/*.test.js', 'src/lib/test/*.js'],
+      plugins: [
+        'mocha',
+      ],
+      extends: [
+        'plugin:mocha/recommended',
+      ],
+      env: {
+        browser: true,
+        node: true,
+        mocha: true,
+      },
+      rules: {
+        'max-lines': 'off',
+        'mocha/no-setup-in-describe': 'off',
+        'mocha/no-exclusive-tests': 'error',
+        'mocha/no-hooks-for-single-case': 'off',
+        'mocha/no-exports': 0,
+      },
+    },
+  ],
 };

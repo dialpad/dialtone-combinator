@@ -2,6 +2,7 @@
   <div>
     <div class="d-pb2">
       <dtc-option-bar-control-selector
+        v-if="types"
         :selected="control"
         :controls="validControls"
         :types="types"
@@ -15,7 +16,10 @@
       @update:value="updateValue"
     >
       <span>
-        <span class="d-pr6">
+        <span
+          class="d-pr6"
+          data-qa="dtc-option-bar-control-label"
+        >
           {{ label }}
         </span>
         <span
@@ -29,7 +33,10 @@
         </span>
       </span>
     </component>
-    <div class="d-description d-p1">
+    <div
+      class="d-description d-p1"
+      data-qa="dtc-option-bar-control-description"
+    >
       {{ controlDescription }}
     </div>
   </div>

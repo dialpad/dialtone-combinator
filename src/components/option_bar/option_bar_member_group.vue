@@ -4,7 +4,10 @@
       v-for="(member, key) in memberMap"
       :key="key"
     >
-      <div class="d-py6">
+      <div
+        class="d-py6"
+        data-qa="dtc-option-bar-member-group-control"
+      >
         <DtcOptionBarControl
           :label="member.getLabel()"
           :control="member.control"

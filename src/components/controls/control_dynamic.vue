@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div>
+    <slot />
+    <div data-qa="dtc-control-dynamic-selection">
       <dtc-control-selection
         :value="selectedControl"
         :valid-values="controlSelections"
@@ -34,6 +35,11 @@ const props = defineProps({
 
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
+/**
+ * Controls from the 'control map' to include in selections.
+ *
+ * @type {Array}
+ */
 const externalControls = [
   'string',
   'number',

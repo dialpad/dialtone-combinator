@@ -97,8 +97,8 @@ const info = computed(() => {
 /**
  * Sets the values for a given 'options' member group with the provided defaults.
  *
- * @param defaults - default key-value map
- * @param memberGroup - options member group
+ * @param defaults default key-value map
+ * @param memberGroup options member group
  */
 function setDefaults (defaults, memberGroup) {
   Object.keys(defaults).forEach(key => {
