@@ -64,7 +64,7 @@ export function typeOfMember (value) {
 
 export function enumerateGroups (handler, memberGroups) {
   Object.entries(memberGroups).forEach(([memberGroup, members]) => {
-    members.forEach(member => {
+    members?.forEach(member => {
       handler(memberGroup, member);
     });
   });

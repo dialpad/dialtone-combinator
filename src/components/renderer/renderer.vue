@@ -120,9 +120,9 @@ const bindings = computed(() => {
 });
 
 /**
- * Object containing events and their respective handlers.
+ * Map object containing events and their respective handlers.
  *
- * @type {ComputedRef<Object>}
+ * @returns {ComputedRef<object>} Event map.
  */
 const events = computed(() => {
   if (!props.info.events) { return {}; }

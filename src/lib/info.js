@@ -35,7 +35,6 @@ export function getComponentInfo (component) {
  * If applicable defaults are set after the member group is fully extended.
  *
  * @param {object} info - The unprocessed info object.
- * @returns {object} The object containing default values for members.
  */
 function extendInfo (info) {
   renameModelProp(info);
