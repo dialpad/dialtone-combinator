@@ -64,8 +64,6 @@ export default {
 </script>
 
 <style lang="less">
-  @import (reference) "@/src/assets/dialtone.less";
-
   .dtc-header__select > select {
     color: var(--dtc-theme-color-foreground) !important;
     background-color: transparent !important;

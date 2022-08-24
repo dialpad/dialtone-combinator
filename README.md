@@ -24,19 +24,6 @@ OR
 
 `git clone git@github.com:dialpad/dialtone-combinator.git`
 
-The authorization token for the dialtone-vue package is needed.
-Create a file named '.npmrc' in the root of the project with the following content:
-```
-//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
-```
-
-Add an environment variable name NPM_AUTH_TOKEN with the dialtone-vue auth token value.
-Make sure to 'source' the new environment variable
-
-```
-source TOKEN_PATH
-```
-
 Install dependencies
 
 ```
