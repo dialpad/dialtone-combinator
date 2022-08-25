@@ -29,7 +29,7 @@
           <dtc-control-dynamic
             :value="serializeControlValue(item[1])"
             :disabled="disabled"
-            @update:value="e => updateEntry(item[0], e, update)"
+            @update:value="e => updateEntry(item[0], deserializeControlValue(e), update)"
           />
         </div>
       </div>
@@ -81,7 +81,7 @@ function generateItem () {
 }
 
 function updateEntry (key, value, updateItem) {
-  updateItem([key, deserializeControlValue(value)]);
+  updateItem([key, value]);
 }
 
 function updateValue (e) {

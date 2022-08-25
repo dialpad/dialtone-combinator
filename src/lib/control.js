@@ -55,7 +55,7 @@ export const controlMap = Object.freeze({
   },
   string: {
     component: (args) => {
-      return args?.validValues
+      return args?.validValues && args.validValues.length > 0
         ? DtcControlSelection
         : DtcControlString;
     },
