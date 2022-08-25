@@ -1,8 +1,7 @@
 import documentation from '@/node_modules/@dialpad/dialtone-vue/dist/component-documentation.json';
 
-import { stringifyDocValue } from '@/src/lib/parse';
 import { controlMap } from '@/src/lib/control';
-import { extendEvent, extendMember } from '@/src/lib/info_extend';
+import { extendBinding, extendEvent, extendMember } from '@/src/lib/info_extend';
 import clone from 'just-clone';
 
 /**
@@ -16,8 +15,9 @@ import clone from 'just-clone';
  * @returns {Array} A newly instantiated info object.
  */
 export function getComponentInfo (component) {
+  console.log(component);
   const info = clone(documentation.find(componentInfo => componentInfo.displayName === component.name));
-  extendInfo(info);
+  extendInfo(info, component);
   return info;
 }
 
@@ -35,8 +35,9 @@ export function getComponentInfo (component) {
  * If applicable defaults are set after the member group is fully extended.
  *
  * @param {object} info - The unprocessed info object.
+ * @param {object} component - The target component.
  */
-function extendInfo (info) {
+function extendInfo (info, component) {
   renameModelProp(info);
 
   const attributes = getAttributes(info);
@@ -46,7 +47,8 @@ function extendInfo (info) {
   }
 
   if (info.props) {
-    info.props = processMembers(info.props);
+    const defaultCache = getComponentDefaults(component);
+    info.props = processMembers(info.props, binding => extendBinding(binding, defaultCache));
   }
 
   if (attributes) {
@@ -98,9 +100,7 @@ function getAttributes (info) {
       type: {
         name: type,
       },
-      defaultValue: {
-        value: stringifyDocValue(controlMap[type].default),
-      },
+      defaultValue: controlMap[type].default,
     };
   });
 }
@@ -130,4 +130,24 @@ function processMembers (members, ...processors) {
     });
     return member;
   });
+}
+
+function getComponentDefaults (component) {
+  const componentSearchPaths = [component.props];
+
+  // If the member type is function it should just return the default no matter what
+  // if it is not then it should invoke the default if the default is a function poggers
+  return {
+    ...Object.fromEntries(componentSearchPaths.filter(path => path).map(path => {
+      return Object.entries(path).map(([entryKey, entryValue]) => {
+        const entryDefault = entryValue.default;
+        return [
+          entryKey,
+          entryValue.type !== Function && typeof entryDefault === 'function'
+            ? entryDefault()
+            : entryDefault,
+        ];
+      });
+    }).flat()),
+  };
 }

@@ -1,6 +1,5 @@
-import { parseDocDefault } from '@/src/lib/parse';
-import { typeOfMember } from '@/src/lib/utils';
 import { paramCase, sentenceCase } from 'change-case';
+import { typeOfMember } from '@/src/lib/utils';
 
 /**
  * The default processing function that is applied to every member in a member group.
@@ -11,21 +10,9 @@ import { paramCase, sentenceCase } from 'change-case';
  * @param {object} member - The extended member.
  */
 export function extendMember (member) {
-  let defaultValue = member.defaultValue
-    ? parseDocDefault(member.defaultValue)
-    : undefined;
-
-  let defaultType;
   if (member.type?.name) {
-    defaultType = typeOfMember(defaultValue);
-    [defaultValue, defaultType] = extendMemberType(member, defaultValue, defaultType);
-  }
-
-  if (defaultValue !== undefined) {
-    member.defaultValue = defaultValue;
-  }
-  if (defaultType !== undefined) {
-    member.defaultType = defaultType;
+    member.type.names = extractMemberTypes(member.type.name);
+    delete member.type.name;
   }
   if (member.name) {
     member.label = paramCase(member.name);
@@ -35,34 +22,20 @@ export function extendMember (member) {
   }
 }
 
-/**
- * Extends a member's types by extracting each entry in the type string
- * and adding each to an array.
- *
- * The default type is validated to ensure it is included in the
- * array of valid types.
- *
- * If it is not the default value and default type are set to 'undefined'
- *
- * @param {object} member - The member to extend.
- * @param {*} defaultValue - The default value of the member.
- * @param {string} defaultType - The default type of the member.
- * @returns {Array} The extended member.
- */
-function extendMemberType (member, defaultValue, defaultType) {
-  member.type.names = extractMemberTypes(member.type.name);
-  delete member.type.name;
+export function extendBinding (member, defaults) {
+  const defaultValue = Object.entries(defaults).find(([name]) => {
+    return name === member.name;
+  })?.[1];
 
-  if (
-    defaultType !== undefined &&
-    defaultType !== null &&
-    !member.type.names.includes(defaultType)
-  ) {
-    defaultValue = undefined;
-    defaultType = undefined;
+  const defaultType = typeOfMember(defaultValue);
+
+  if (defaultValue !== undefined) {
+    member.defaultValue = defaultValue;
   }
 
-  return [defaultValue, defaultType];
+  if (defaultType) {
+    member.defaultType = defaultType;
+  }
 }
 
 /**
