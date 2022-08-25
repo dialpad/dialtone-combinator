@@ -18,7 +18,7 @@
         <div class="d-w16 d-h16 d-ba d-bc-black d-bgc-white" />
       </template>
     </dtc-button-bar>
-    <div class="dtc-preview-bar d-mb64">
+    <div class="d-mb64">
       <dtc-suggestion
         :value="component.name"
         :suggestions="options"
@@ -45,7 +45,7 @@
         </template>
       </dtc-suggestion>
     </div>
-    <div class="dtc-preview-combinator d-as-stretch d-d-flex d-hmn0">
+    <div class="d-d-flex d-as-stretch d-hmn0">
       <Combinator
         :component="component"
         :variants="variants"
