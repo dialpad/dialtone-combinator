@@ -2,8 +2,8 @@
   <div>
     <dt-recipe-combobox-with-popover
       ref="combobox"
-      content-width="anchor"
       list-aria-label="Valid values"
+      max-height="512px"
       @select="e => onUpdate(suggestions[e])"
       @opened="onOpen"
     >
@@ -36,15 +36,12 @@
             role="option"
             @click="onSelectInternal(i)"
           >
-            <template
-              v-if="item === defaultValue"
-              #right
+            <slot
+              name="item"
+              :value="item"
             >
-              <dt-badge color="purple-500">
-                default
-              </dt-badge>
-            </template>
-            {{ item }}
+              {{ item }}
+            </slot>
           </dt-list-item>
         </ul>
       </template>
@@ -56,7 +53,7 @@
 import DtcControlString from './control_string';
 import IconExpand from 'dialtone-icons/IconArrowKeyboardDown';
 import IconCollapse from 'dialtone-icons/IconArrowKeyboardUp';
-import { DtRecipeComboboxWithPopover, DtListItem, DtBadge } from '@dialpad/dialtone-vue';
+import { DtRecipeComboboxWithPopover, DtListItem } from '@dialpad/dialtone-vue';
 
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed, ref } from 'vue';
@@ -75,10 +72,6 @@ const props = defineProps({
   },
   suggestions: {
     type: Array,
-    required: true,
-  },
-  defaultValue: {
-    type: String,
     required: true,
   },
   warn: {

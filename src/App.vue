@@ -1,6 +1,6 @@
 <template>
   <div
-    class="dtc-preview d-d-flex d-fd-column d-ai-center d-pt16 d-pb64 d-w100p"
+    class="dtc-preview d-d-flex d-fd-column d-ai-center d-py64 d-w100p"
     :class="`d-bgc-${background}`"
   >
     <dtc-button-bar
@@ -19,12 +19,31 @@
       </template>
     </dtc-button-bar>
     <div class="dtc-preview-bar d-mb64">
-      <dt-select-menu
-        :options="options"
+      <dtc-suggestion
         :value="component.name"
-        label="Target Component"
-        @input="updateComponent"
-      />
+        :suggestions="options"
+        @update:value="updateComponent"
+      >
+        <span>Target Component</span>
+        <template #item="{ value }">
+          <span class="d-d-flex d-jc-space-between">
+            <span>{{ value }}</span>
+            <dt-badge
+              v-if="!isSupportedComponent(value)"
+              class="d-ml6"
+              color="yellow-300"
+            >
+              Unsupported
+            </dt-badge>
+            <dt-badge
+              v-if="value === DEFAULT_COMPONENT"
+              color="purple-500"
+            >
+              Default
+            </dt-badge>
+          </span>
+        </template>
+      </dtc-suggestion>
     </div>
     <div class="dtc-preview-combinator d-as-stretch d-d-flex d-hmn0">
       <Combinator
@@ -40,23 +59,31 @@ import * as modules from '@dialpad/dialtone-vue';
 import Combinator from './components/combinator';
 import { computed, markRaw, onMounted, ref } from 'vue';
 import { DIALTONE_PREFIX } from '@/src/lib/constants';
-import { DtSelectMenu } from '@dialpad/dialtone-vue';
+import { DtBadge } from '@dialpad/dialtone-vue';
 import DtcButtonBar from '@/src/components/tools/button_bar';
+import DtcSuggestion from '@/src/components/controls/control_suggestion';
+import supportedComponentData from '@/src/supported_components.json';
+
+const DEFAULT_COMPONENT = 'DtButton';
+
+function isSupportedComponent (componentName) {
+  return supportedComponentData.includes(componentName);
+}
 
 const components = computed(() => {
-  return Object.fromEntries(Object.entries(modules).filter(([exportName, exportValue]) => {
-    return typeof (exportValue) === 'object' && exportName.toLowerCase().startsWith(DIALTONE_PREFIX);
-  }));
+  return Object.entries(modules).filter(([exportName, exportValue]) => {
+    return typeof (exportValue) === 'object' &&
+      exportName.toLowerCase().startsWith(DIALTONE_PREFIX) &&
+      exportValue.name;
+  }).map(([_, exportValue]) => exportValue);
 });
 
 const options = computed(() => {
-  return Object.entries(components.value).map(([componentName]) => {
-    return { value: componentName, label: componentName };
-  });
+  return components.value.map(component => component.name);
 });
 
 function getComponentFromHash (hash) {
-  return markRaw(components.value[hash.substring(1)] ?? components.value.DtButton);
+  return markRaw(modules[hash.substring(1)] ?? modules.DtButton);
 }
 
 const component = ref(getComponentFromHash(window.location.hash));
