@@ -8,7 +8,10 @@
         @update:value="updateControl"
       />
     </div>
-    <div class="d-ta-right">
+    <div
+      class="d-ta-right"
+      data-qa="dtc-control-dynamic-value"
+    >
       <component
         :is="control"
         v-if="control"

@@ -63,13 +63,13 @@ const visibleMembers = computed(() => {
   return members.filter(([name, member]) => visible(name, member));
 });
 
-const infoMembers = computed(() => {
-  return props.info.getMembers();
+const bindings = computed(() => {
+  return props.info.bindings.get();
 });
 
 function mapMembers (members) {
   return Object.entries(members).map(([name, value]) => {
-    const memberInfo = infoMembers.value.find(member => member.name === name);
+    const memberInfo = bindings.value.find(member => member.name === name);
     return [name, {
       ...memberInfo,
       value,

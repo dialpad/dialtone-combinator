@@ -39,8 +39,8 @@ export function cachedRef (key, defaultValue) {
  */
 export function computedModel (model, handler) {
   return computed({
-    get: () => model,
-    set: (e) => handler(e, model),
+    get: () => model.value,
+    set: (e) => handler(e, model.value),
   });
 }
 

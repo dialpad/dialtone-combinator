@@ -5,14 +5,15 @@
       :key="key"
     >
       <div
+        v-if="!member.hideControl"
         class="d-py6"
         data-qa="dtc-option-bar-member-group-control"
       >
-        <DtcOptionBarControl
+        <dtc-option-bar-control
+          :value="values[key]"
           :label="member.getLabel()"
           :control="member.control"
           :valid-controls="member.validControls"
-          :value="values[key]"
           :description="member.description"
           :types="member.type?.names"
           :tags="member.tags"
@@ -31,7 +32,7 @@
 <script setup>
 import DtcOptionBarControl from './option_bar_control';
 import { MEMBER_UPDATE_EVENT } from '@/src/lib/constants';
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
 import { controlMap, getControlByValue } from '@/src/lib/control';
 import { convert } from '@/src/lib/convert';
 
@@ -76,12 +77,14 @@ const emit = defineEmits([MEMBER_UPDATE_EVENT]);
  *
  * @type {object}
  */
-const memberMap = reactive({
-  ...Object.fromEntries(
-    props.members.map(member => {
-      return [getMemberKey(member), extendMember(member)];
-    }),
-  ),
+const memberMap = computed(() => {
+  return reactive({
+    ...Object.fromEntries(
+      props.members.map(member => {
+        return [getMemberKey(member), extendMember(member)];
+      }),
+    ),
+  });
 });
 
 /**
@@ -133,7 +136,7 @@ function updateMember (e, key) {
  * @param key - The member key
  */
 function updateControl (e, key) {
-  const member = memberMap[key];
+  const member = memberMap.value[key];
 
   let value;
   try {

@@ -24,6 +24,12 @@ OR
 
 `git clone git@github.com:dialpad/dialtone-combinator.git`
 
+Install dependencies
+
+```
+npm i
+```
+
 ### Run
 
 `npm run dev`

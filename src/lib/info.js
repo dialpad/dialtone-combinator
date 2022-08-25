@@ -3,6 +3,7 @@ import documentation from '@/src/assets/component-documentation.json';
 import { stringifyDocValue } from '@/src/lib/parse';
 import { controlMap } from '@/src/lib/control';
 import { extendEvent, extendMember } from '@/src/lib/info_extend';
+import clone from 'just-clone';
 
 /**
  * Gets component data from the documentation and processing on it
@@ -11,16 +12,13 @@ import { extendEvent, extendMember } from '@/src/lib/info_extend';
  * The 'info' object contains all the post-processed documentation data.
  * The 'defaults' object contains a map of default values for each member in 'info'.
  *
- * @param {Object} component - The target component.
+ * @param {object} component - The target component.
  * @returns {Array} A newly instantiated info object.
  */
 export function getComponentInfo (component) {
-  const info = {
-    ...documentation.find(componentInfo => componentInfo.displayName === component.name),
-  };
-
-  const defaults = extendInfo(info);
-  return [info, defaults];
+  const info = clone(documentation.find(componentInfo => componentInfo.displayName === component.name));
+  extendInfo(info);
+  return info;
 }
 
 /**
@@ -37,34 +35,27 @@ export function getComponentInfo (component) {
  * If applicable defaults are set after the member group is fully extended.
  *
  * @param {object} info - The unprocessed info object.
- * @returns {object} The object containing default values for members.
  */
 function extendInfo (info) {
   renameModelProp(info);
 
-  const defaults = {};
   const attributes = getAttributes(info);
 
   if (info.slots) {
     info.slots = processMembers(info.slots);
-    defaults.slots = getDefaults(info.slots);
   }
 
   if (info.props) {
     info.props = processMembers(info.props);
-    defaults.props = getDefaults(info.props);
   }
 
   if (attributes) {
     info.attributes = processMembers(attributes);
-    defaults.attributes = getDefaults(info.attributes);
   }
 
   if (info.events) {
     info.events = processMembers(info.events, extendEvent);
   }
-
-  return defaults;
 }
 
 /**
@@ -112,16 +103,6 @@ function getAttributes (info) {
       },
     };
   });
-}
-
-/**
- * Gets an object of key-value pairs of each member and its default value.
- *
- * @param {Array} members - The processed members.
- * @returns {object} Object containing default values for members
- */
-function getDefaults (members) {
-  return Object.fromEntries(members.map(member => [member.name, member.defaultValue]));
 }
 
 /**

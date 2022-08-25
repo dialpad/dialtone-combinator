@@ -61,3 +61,11 @@ export function typeOfMember (value) {
     default: return type;
   }
 }
+
+export function enumerateGroups (handler, memberGroups) {
+  Object.entries(memberGroups).forEach(([memberGroup, members]) => {
+    members?.forEach(member => {
+      handler(memberGroup, member);
+    });
+  });
+}

@@ -1,6 +1,9 @@
 {
-  "name": "dialtone-combinator",
-  "version": "0.0.0",
+  "name": "@dialpad/dialtone-combinator",
+  "version": "0.1.1",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "vue-cli-service serve",
     "preview": "npm run build:preview; serve ./dist/preview",
@@ -41,11 +44,15 @@
     "eslint-plugin-vuejs-accessibility": "^1.2.0",
     "js-beautify": "^1.14.4",
     "json5-with-undefined": "^2.1.301",
+    "just-clone": "^6.1.1",
     "less": "^4.1.3",
     "less-loader": "^11.0.0",
     "npm-run-all": "^4.1.5",
     "serve": "^13.0.4",
     "vue": "^3.2.37",
     "vue-tsc": "^0.38.1"
+  },
+  "peerDependencies": {
+    "@dialpad/dialtone-vue": "^3.x"
   }
 }

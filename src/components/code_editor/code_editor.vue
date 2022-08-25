@@ -14,7 +14,7 @@
         <template #opening>
           <dtc-code-editor-attributes
             :info="info"
-            :members="options.getMembers()"
+            :members="options.bindings.get()"
             :verbose="verbose"
           />
         </template>

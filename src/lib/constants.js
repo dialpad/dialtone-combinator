@@ -5,7 +5,11 @@ export const VALUE_UPDATE_EVENT = 'update:value';
 export const CONTROL_UPDATE_EVENT = 'update:control';
 export const MEMBER_UPDATE_EVENT = 'update:member';
 export const OPTIONS_UPDATE_EVENT = 'update:options';
+export const SETTINGS_UPDATE_EVENT = 'update:settings';
 
-export const CODE_EDITOR_THEME_KEY = 'dialtoneCombinatorEditorTheme';
-export const CODE_EDITOR_SCHEME_KEY = 'dialtoneCombinatorEditorScheme';
-export const CODE_EDITOR_VERBOSE_KEY = 'dialtoneCombinatorEditorVerbose';
+export const SETTINGS_THEME_KEY = 'dialtoneCombinatorTheme';
+export const SETTINGS_SIDEBAR_KEY = 'dialtoneCombinatorSidebar';
+export const SETTINGS_SCHEME_KEY = 'dialtoneCombinatorCodeScheme';
+export const SETTINGS_VERBOSE_KEY = 'dialtoneCombinatorCodeVerbose';
+export const SETTINGS_POSITIONING_KEY = 'dialtoneCombinatorRendererPositioning';
+export const SETTINGS_BACKGROUND_KEY = 'dialtoneCombinatorRendererBackground';
