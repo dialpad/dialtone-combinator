@@ -185,8 +185,8 @@ const options = computedModel(
         },
         enumerate (handler) {
           enumerateGroups(handler, {
-            props: Object.entries(options.value.props),
-            attributes: Object.entries(options.value.attributes),
+            props: options.value.props ? Object.entries(options.value.props) : null,
+            attributes: options.value.attributes ? Object.entries(options.value.attributes) : null,
           });
         },
       },

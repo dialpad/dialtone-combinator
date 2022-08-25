@@ -1,6 +1,6 @@
 <template>
   <div
-    class="dtc-preview d-d-flex d-fd-column d-ai-center d-pt16 d-pb64"
+    class="dtc-preview d-d-flex d-fd-column d-ai-center d-pt16 d-pb64 d-w100p"
     :class="`d-bgc-${background}`"
   >
     <dtc-button-bar
@@ -38,7 +38,7 @@
 <script setup>
 import * as modules from '@dialpad/dialtone-vue';
 import Combinator from './components/combinator';
-import { computed, onMounted, ref, shallowRef } from 'vue';
+import { computed, markRaw, onMounted, ref } from 'vue';
 import { DIALTONE_PREFIX } from '@/src/lib/constants';
 import { DtSelectMenu } from '@dialpad/dialtone-vue';
 import DtcButtonBar from '@/src/components/tools/button_bar';
@@ -56,7 +56,7 @@ const options = computed(() => {
 });
 
 function getComponentFromHash (hash) {
-  return shallowRef(components.value[hash.substring(1)] ?? components.value.DtButton);
+  return markRaw(components.value[hash.substring(1)] ?? components.value.DtButton);
 }
 
 const component = ref(getComponentFromHash(window.location.hash));
