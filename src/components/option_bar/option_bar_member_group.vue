@@ -108,7 +108,9 @@ function extendMember (member) {
   const value = props.values[key];
 
   const validControls = props.controlSelector(member);
-  const control = validControls?.find(control => controlMap[control]?.important) ?? getControlByValue(value);
+  const desiredControl = getControlByValue(value);
+
+  const control = validControls.find(control => control === desiredControl) ?? validControls[0];
 
   return {
     ...member,

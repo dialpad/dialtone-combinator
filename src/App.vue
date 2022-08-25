@@ -26,7 +26,7 @@
         @input="updateComponent"
       />
     </div>
-    <div class="dtc-preview-combinator d-d-flex d-hmn0">
+    <div class="dtc-preview-combinator d-as-stretch d-d-flex d-hmn0">
       <Combinator
         :component="component"
         :variants="variants"

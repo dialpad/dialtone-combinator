@@ -34,12 +34,10 @@ export const controlMap = Object.freeze({
   event: {
     component: () => DtcControlEvent,
     get default () { return null; },
-    important: true,
   },
   slot: {
     component: () => DtcControlSlot,
     get default () { return null; },
-    important: true,
   },
   dynamic: {
     component: () => DtcControlDynamic,

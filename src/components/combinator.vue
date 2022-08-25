@@ -1,6 +1,6 @@
 <template>
   <div
-    class="dtc-combinator d-d-flex d-fd-column"
+    class="dtc-combinator d-d-flex d-fd-column d-w100p"
     :class="`dtc-theme--${settings.root.theme}`"
   >
     <div class="d-mb6">
@@ -19,7 +19,7 @@
         dtc-root--sidebar-${settings.root.sidebar}
         d-ba d-bar8
         d-of-hidden
-        d-d-grid`"
+        d-d-grid d-w100p`"
       >
         <div class="dtc-root__top">
           <dtc-renderer
@@ -192,7 +192,18 @@ const options = computedModel(
       },
     });
   }),
-  (e, model) => e(model),
+  /**
+   * Catch errors when updating member values,
+   * else vue can block the value from ever being changed,
+   * keeping the value permanently in an invalid state
+   */
+  (e, model) => {
+    try {
+      e(model);
+    } catch (exception) {
+      console.warn(exception);
+    }
+  },
 );
 
 /**

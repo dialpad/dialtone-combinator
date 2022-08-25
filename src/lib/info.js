@@ -1,4 +1,4 @@
-import documentation from '@/src/assets/component-documentation.json';
+import documentation from '@/node_modules/@dialpad/dialtone-vue/dist/component-documentation.json';
 
 import { stringifyDocValue } from '@/src/lib/parse';
 import { controlMap } from '@/src/lib/control';

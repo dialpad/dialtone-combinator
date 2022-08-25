@@ -10,7 +10,7 @@
       />
     </div>
     <div
-      class="d-ta-right"
+      class="d-ta-right d-ps-relative d-b1"
       data-qa="dtc-control-dynamic-value"
     >
       <component
