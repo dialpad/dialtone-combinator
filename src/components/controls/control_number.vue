@@ -1,6 +1,7 @@
 <template>
   <dt-input
     :value="value"
+    :disabled="disabled"
     type="number"
     size="sm"
     @input="e => emit(VALUE_UPDATE_EVENT, parseInt(e))"
@@ -20,6 +21,10 @@ defineProps({
   value: {
     type: Number,
     default: () => controlMap.number.default,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 });
 

@@ -1,6 +1,7 @@
 <template>
   <dtc-control-string
     :value="value?.toString()"
+    :disabled="disabled"
     @update:value="e => emit(VALUE_UPDATE_EVENT, e)"
   >
     <slot />
@@ -16,6 +17,10 @@ defineProps({
   value: {
     type: undefined,
     default: () => controlMap.base.default,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 });
 

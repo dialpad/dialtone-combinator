@@ -1,6 +1,7 @@
 <template>
   <dt-input
     :value="value"
+    :disabled="disabled"
     :messages="messages"
     size="sm"
     @input="e => emit(VALUE_UPDATE_EVENT, e)"
@@ -26,6 +27,10 @@ const props = defineProps({
   value: {
     type: String,
     default: () => controlMap.string.default,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
   warning: {
     type: String,

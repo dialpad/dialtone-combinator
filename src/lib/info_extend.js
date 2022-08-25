@@ -1,6 +1,6 @@
 import { parseDocDefault } from '@/src/lib/parse';
 import { typeOfMember } from '@/src/lib/utils';
-import { paramCase } from 'change-case';
+import { paramCase, sentenceCase } from 'change-case';
 
 /**
  * The default processing function that is applied to every member in a member group.
@@ -28,9 +28,10 @@ export function extendMember (member) {
     member.defaultType = defaultType;
   }
   if (member.name) {
-    member.getLabel = function () {
-      return paramCase(member.name);
-    };
+    member.label = paramCase(member.name);
+  }
+  if (member.description) {
+    member.description = sentenceCase(member.description);
   }
 }
 

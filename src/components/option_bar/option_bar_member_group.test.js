@@ -13,7 +13,6 @@ const booleanMemberKey = 'booleanMember';
 function createTestMember (key) {
   return {
     name: key,
-    getLabel () { return name; },
   };
 }
 

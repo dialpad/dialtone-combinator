@@ -24,9 +24,10 @@
             </dt-list-item>
           </div>
           <dt-button
-            class="d-p0"
+            class="dtc-option-bar-control__icon d-p0"
             importance="clear"
             size="xs"
+            :disabled="disabled"
             @click="() => removeItem(index)"
           >
             <IconRemove />
@@ -35,8 +36,9 @@
       </template>
       <div>
         <dt-button
-          class="d-p0 d-mt8"
+          class="dtc-option-bar-control__icon d-p0 d-mt8"
           importance="clear"
+          :disabled="disabled"
           @click="addItem"
         >
           <icon-add />
@@ -62,7 +64,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
   /**
    * Function that returns an item to append to list.
    */

@@ -1,6 +1,7 @@
 <template>
   <dt-input
     :value="value"
+    :disabled="disabled"
     class="d-r-none"
     type="textarea"
     spellcheck="false"
@@ -21,6 +22,10 @@ defineProps({
   value: {
     type: undefined,
     default: () => controlMap.slot.default,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 });
 

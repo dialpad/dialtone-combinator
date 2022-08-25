@@ -2,6 +2,7 @@
   <dtc-control-selection
     :value="selection"
     :valid-values="selections"
+    :disabled="disabled"
     @update:value="updateValue"
   >
     <slot />
@@ -18,6 +19,10 @@ const props = defineProps({
   value: {
     type: undefined,
     default: () => controlMap.null.default,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 });
 

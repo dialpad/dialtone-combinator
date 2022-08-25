@@ -1,6 +1,7 @@
 <template>
   <dtc-control-iterable
     :value="entries"
+    :disabled="disabled"
     :generate-item="generateItem"
     @update:value="updateValue"
   >
@@ -17,7 +18,7 @@
         >
           <dtc-control-string
             :value="item[0]"
-
+            :disabled="disabled"
             @update:value="e => updateEntry(e, item[1], update)"
           />
         </div>
@@ -27,6 +28,7 @@
         >
           <dtc-control-dynamic
             :value="serializeControlValue(item[1])"
+            :disabled="disabled"
             @update:value="e => updateEntry(item[0], e, update)"
           />
         </div>
@@ -50,6 +52,10 @@ const props = defineProps({
   value: {
     type: Object,
     default: () => controlMap.object.default,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 });
 

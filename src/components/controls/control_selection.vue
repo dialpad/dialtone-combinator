@@ -3,6 +3,7 @@
     label-class="d-fs16 d-fw-normal d-mb0"
     :value="value"
     :options="options"
+    :disabled="disabled"
     size="xs"
     @input="e => emit(VALUE_UPDATE_EVENT, e)"
   >
@@ -26,6 +27,10 @@ const props = defineProps({
   validValues: {
     type: Array,
     default: undefined,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
   generateLabel: {
     type: Function,

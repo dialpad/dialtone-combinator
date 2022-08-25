@@ -11,12 +11,13 @@
       >
         <dtc-option-bar-control
           :value="values[key]"
-          :label="member.getLabel()"
+          :label="member.label"
           :control="member.control"
           :valid-controls="member.validControls"
           :description="member.description"
           :types="member.type?.names"
           :tags="member.tags"
+          :locked="member.lockControl"
           :args="{
             defaultValue: member.defaultValue,
             validValues: member.values,

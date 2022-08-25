@@ -27,9 +27,10 @@ const variants = computed(() => {
           },
           props: {
             circle: {
-              description: 'Variant changed value',
+              description: 'Variant changed value and locked',
               defaultValue: true,
               newProperty: 123,
+              lockControl: true,
             },
             iconPosition: {
               description: 'Variant changed description',
@@ -39,6 +40,10 @@ const variants = computed(() => {
             },
             link: {
               description: 'The `importance` control that is usually above is hidden here',
+            },
+            labelClass: {
+              defaultValue: [2],
+              lockControl: true,
             },
           },
           events: {

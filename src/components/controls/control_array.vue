@@ -1,6 +1,7 @@
 <template>
   <dtc-control-iterable
     :value="value"
+    :disabled="disabled"
     :generate-item="generateItem"
     @update:value="e => emit(VALUE_UPDATE_EVENT, e)"
   >
@@ -16,6 +17,7 @@
       >
         <dtc-control-dynamic
           :value="serializeControlValue(item)"
+          :disabled="disabled"
           @update:value="e => update(deserializeControlValue(e))"
         />
       </div>
@@ -36,6 +38,10 @@ defineProps({
   value: {
     type: Array,
     default: () => controlMap.array.default,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 });
 

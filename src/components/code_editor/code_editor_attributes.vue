@@ -1,14 +1,14 @@
 <template>
   <div>
     <template
-      v-for="[name, { value, getLabel }] in visibleMembers"
+      v-for="[name, { value, label }] in visibleMembers"
       :key="name"
     >
       <div>
         <dtc-code-editor-indent />
         <span v-if="useBindOperator(value)">:</span>
         <span class="dtc-scheme__class">
-          {{ getLabel() }}
+          {{ label }}
         </span>
         <span v-if="!useShortSyntax(value)">
           <span>=</span>

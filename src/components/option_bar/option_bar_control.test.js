@@ -34,11 +34,11 @@ describe('option_bar_control.vue test', function () {
       });
 
       it('Should display label text', function () {
-        assert.equal(wrapper.find(labelSelector).text().toLowerCase(), testLabel);
+        assert.equal(wrapper.find(labelSelector).text(), testLabel);
       });
 
       it('Should display description text', function () {
-        assert.equal(wrapper.find(descriptionSelector).text().toLowerCase(), testDescription);
+        assert.equal(wrapper.find(descriptionSelector).text(), testDescription);
       });
     });
   });

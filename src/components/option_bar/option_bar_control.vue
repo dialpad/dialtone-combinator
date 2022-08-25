@@ -6,25 +6,29 @@
         :selected="control"
         :controls="validControls"
         :types="types"
+        :disabled="locked"
         @update:control="updateControl"
       />
     </div>
     <component
       :is="controlComponent"
-      :value="controlValue"
-      v-bind="bindArgs"
+      v-bind="bindings"
       @update:value="updateValue"
     >
       <span>
         <span
-          class="d-pr6"
+          class="d-pr4"
           data-qa="dtc-option-bar-control-label"
         >
           {{ label }}
         </span>
+        <icon-lock
+          v-if="locked"
+          class="d-pr4 d-fs10 d-ps-relative d-t1"
+        />
         <span
           v-if="showModelTag"
-          class="d-ps-relative d-b2"
+          class="d-pl2 d-ps-relative d-b2"
         >
           <dt-badge
             text="v-model"
@@ -37,12 +41,13 @@
       class="d-description d-p1"
       data-qa="dtc-option-bar-control-description"
     >
-      {{ controlDescription }}
+      {{ description }}
     </div>
   </div>
 </template>
 
 <script setup>
+import IconLock from 'dialtone-icons/IconLock';
 import { DtBadge } from '@dialpad/dialtone-vue';
 import { CONTROL_UPDATE_EVENT, VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
@@ -52,7 +57,6 @@ import {
   getControlComponent,
   serializeControlValue,
 } from '@/src/lib/control';
-import { sentenceCase } from 'change-case';
 import DtcOptionBarControlSelector from '@/src/components/option_bar/option_bar_control_selector';
 
 const props = defineProps({
@@ -97,6 +101,13 @@ const props = defineProps({
     default: undefined,
   },
   /**
+   * Prevent the control from being modified.
+   */
+  locked: {
+    type: Boolean,
+    default: false,
+  },
+  /**
    * Optional args to bind directly to the control.
    */
   args: {
@@ -120,17 +131,6 @@ const controlValue = computed(() => {
 });
 
 /**
- * Prettified control description.
- *
- * @type {ComputedRef<string>}
- */
-const controlDescription = computed(() => {
-  return props.description
-    ? sentenceCase(props.description)
-    : null;
-});
-
-/**
  * Actual component based on the value of the 'control' prop.
  *
  * @type {ComputedRef<object>}
@@ -147,6 +147,8 @@ const controlComponent = computed(() => {
  */
 const controlArgs = computed(() => {
   return {
+    value: controlValue.value,
+    disabled: props.locked,
     tags: props.tags,
     ...props.args,
   };
@@ -158,7 +160,7 @@ const controlArgs = computed(() => {
  *
  * @type {ComputedRef<object>}
  */
-const bindArgs = computed(() => {
+const bindings = computed(() => {
   const component = controlComponent.value;
   if (!component.props) { return null; }
   return Object.fromEntries(
@@ -183,6 +185,7 @@ const showModelTag = computed(() => {
  * @param e - The updated member value
  */
 function updateValue (e) {
+  if (props.locked) { return; }
   const value = controlMap[props.control].serialize
     ? deserializeControlValue(e)
     : e;
@@ -195,6 +198,7 @@ function updateValue (e) {
  * @param e - The updated member control
  */
 function updateControl (e) {
+  if (props.locked) { return; }
   emit(CONTROL_UPDATE_EVENT, e);
 }
 </script>
@@ -208,3 +212,14 @@ export default {
   name: 'DtcOptionBarControl',
 };
 </script>
+
+<style>
+.dtc-option-bar-control__button:not([control-active]) {
+  background-color: transparent !important;
+  border: currentColor 1px solid !important;
+}
+
+.dtc-option-bar-control__icon[disabled] {
+  background-color: transparent !important;
+}
+</style>

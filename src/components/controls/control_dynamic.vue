@@ -5,6 +5,7 @@
       <dtc-control-selection
         :value="selectedControl"
         :valid-values="controlSelections"
+        :disabled="disabled"
         @update:value="updateControl"
       />
     </div>
@@ -16,6 +17,7 @@
         :is="control"
         v-if="control"
         :value="value"
+        :disabled="disabled"
         @update:value="updateValue"
       />
     </div>
@@ -33,6 +35,10 @@ const props = defineProps({
   value: {
     type: undefined,
     default: () => controlMap.dynamic.default,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 });
 

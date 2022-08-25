@@ -12,6 +12,7 @@
           v-bind="inputProps"
           :value="value"
           :warning="warning"
+          :disabled="disabled"
           @input="e => onInputInternal(e, onInput)"
         >
           <template #default>
@@ -67,6 +68,10 @@ const props = defineProps({
   value: {
     type: String,
     default: () => controlMap.string.default,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
   suggestions: {
     type: Array,

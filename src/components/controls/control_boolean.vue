@@ -3,6 +3,7 @@
     <dt-checkbox
       label-class="dtc-control-boolean__label"
       :checked="value"
+      :disabled="disabled"
       data-qa="dtc-control-boolean-input"
       @input="e => emit(VALUE_UPDATE_EVENT, e)"
     >
@@ -20,6 +21,10 @@ defineProps({
   value: {
     type: Boolean,
     default: () => controlMap.boolean.default,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 });
 

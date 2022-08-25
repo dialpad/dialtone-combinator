@@ -12,7 +12,7 @@
       >
         <span class="d-pr4">
           <dt-button
-            class="d-px4 d-py1"
+            class="dtc-option-bar-control__button d-px4 d-py1"
             importance="outlined"
             v-bind="getStyling(control)"
             @click="() => updateControl(control)"
@@ -43,6 +43,13 @@ const props = defineProps({
    */
   controls: {
     type: Array,
+    required: true,
+  },
+  /**
+   * Prevent the control from changing.
+   */
+  disabled: {
+    type: Boolean,
     required: true,
   },
   /**
@@ -94,10 +101,18 @@ function getSelection (control) {
  */
 function getStyling (control) {
   const isActive = control === props.selected;
-  return {
-    kind: isActive ? 'default' : 'muted',
+
+  const styling = {
     active: isActive,
+    kind: isActive ? 'default' : 'muted',
+    disabled: props.disabled,
   };
+
+  if (isActive) {
+    styling['control-active'] = 'control-active';
+  }
+
+  return styling;
 }
 
 function updateControl (e) {
