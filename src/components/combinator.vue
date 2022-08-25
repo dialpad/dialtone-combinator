@@ -1,50 +1,54 @@
 <template>
   <div
-    class="dtc-combinator d-h100p"
+    class="dtc-combinator d-d-flex d-fd-column"
     :class="`dtc-theme--${settings.root.theme}`"
   >
-    <div class="d-mb6 d-ba d-bar8 d-of-hidden">
-      <dtc-header
-        :component="component"
-        :variants="variants"
-        :selected-variant="selectedVariant"
-        @update:variant="updateVariant"
-      />
+    <div class="d-mb6">
+      <div class="d-ba d-bar8 d-of-hidden">
+        <dtc-header
+          :component="component"
+          :variants="variants"
+          :selected-variant="selectedVariant"
+          @update:variant="updateVariant"
+        />
+      </div>
     </div>
-    <div
-      :class="`dtc-root
+    <div class="d-d-flex d-fl-grow1 d-hmn0">
+      <div
+        :class="`dtc-root
         dtc-root--sidebar-${settings.root.sidebar}
         d-ba d-bar8
         d-of-hidden
-        d-d-grid d-h100p`"
-    >
-      <div class="dtc-root__top">
-        <dtc-renderer
-          v-model:settings="settings"
-          :component="component"
-          :info="info"
-          :options="options"
-          @event="(event, value) => triggerEvent(event, value)"
-        />
-      </div>
-      <div class="dtc-root__bottom d-bt">
-        <dtc-code-panel
-          ref="codePanel"
-          v-model:options="options"
-          :info="info"
-          :settings="settings"
-        >
-          <template #overlay>
-            <dtc-settings-menu v-model:settings="settings" />
-          </template>
-        </dtc-code-panel>
-      </div>
-      <div class="dtc-root__sidebar">
-        <dtc-option-bar
-          v-model:options="options"
-          :component="component"
-          :info="info"
-        />
+        d-d-grid`"
+      >
+        <div class="dtc-root__top">
+          <dtc-renderer
+            v-model:settings="settings"
+            :component="component"
+            :info="info"
+            :options="options"
+            @event="(event, value) => triggerEvent(event, value)"
+          />
+        </div>
+        <div class="dtc-root__bottom d-bt">
+          <dtc-code-panel
+            ref="codePanel"
+            v-model:options="options"
+            :info="info"
+            :settings="settings"
+          >
+            <template #overlay>
+              <dtc-settings-menu v-model:settings="settings" />
+            </template>
+          </dtc-code-panel>
+        </div>
+        <div class="dtc-root__sidebar">
+          <dtc-option-bar
+            v-model:options="options"
+            :component="component"
+            :info="info"
+          />
+        </div>
       </div>
     </div>
   </div>

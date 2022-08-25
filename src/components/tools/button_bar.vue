@@ -38,6 +38,6 @@ const emit = defineEmits(['click']);
 
 <script>
 export default {
-  name: 'DtcRenderButtonBar',
+  name: 'DtcButtonBar',
 };
 </script>

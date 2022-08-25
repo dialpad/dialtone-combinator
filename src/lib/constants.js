@@ -1,4 +1,6 @@
 export const DEFAULT_PREFIX = 'dtc';
+export const DIALTONE_PREFIX = 'dt';
+
 export const DEFAULT_SLOT_NAME = 'default';
 
 export const VALUE_UPDATE_EVENT = 'update:value';
