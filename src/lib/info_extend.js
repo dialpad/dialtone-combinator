@@ -29,6 +29,7 @@ export function extendBinding (member, defaults) {
 
   const defaultType = typeOfMember(defaultValue);
 
+  delete member.defaultValue;
   if (defaultValue !== undefined) {
     member.defaultValue = defaultValue;
   }

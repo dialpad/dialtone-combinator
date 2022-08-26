@@ -132,13 +132,30 @@ function processMembers (members, ...processors) {
   });
 }
 
+/**
+ * Gets all the default values for each possible member of a component.
+ *
+ * @param {object} component - The target component.
+ * @returns {object} Default value map.
+ */
 function getComponentDefaults (component) {
-  const componentSearchPaths = [component.props];
+  /**
+   * Get all objects containing members to search for default values.
+   * Contains all the base props and props for each mixin.
+   *
+   * @type {Array}
+   */
+  const componentSearchObject = [
+    component.props,
+    ...(component.mixins?.map(mixin => mixin.props) ?? []),
+  ].filter(obj => obj);
 
-  // If the member type is function it should just return the default no matter what
-  // if it is not then it should invoke the default if the default is a function poggers
+  /**
+   * Searches each member in each object and returns an object of key-value
+   * pairs for each member and its default value respectively.
+   */
   return {
-    ...Object.fromEntries(componentSearchPaths.filter(path => path).map(path => {
+    ...Object.fromEntries(componentSearchObject.filter(path => path).map(path => {
       return Object.entries(path).map(([entryKey, entryValue]) => {
         const entryDefault = entryValue.default;
         return [
