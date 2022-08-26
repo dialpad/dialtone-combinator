@@ -10,9 +10,12 @@ import { typeOfMember } from '@/src/lib/utils';
  * @param {object} member - The extended member.
  */
 export function extendMember (member) {
-  if (member.type?.name) {
-    member.type.names = extractMemberTypes(member.type.name);
-    delete member.type.name;
+  if (member.type) {
+    const typeString = member.type.name ?? member.type.names?.[0];
+    delete member.type;
+    if (typeString) {
+      member.types = extractMemberTypes(typeString);
+    }
   }
   if (member.name) {
     member.label = paramCase(member.name);
@@ -61,7 +64,8 @@ function extractMemberTypes (typeString) {
  */
 export function extendEvent (event) {
   const types = event.type?.names?.[0];
+  delete event.type;
   if (types) {
-    event.type.names = extractMemberTypes(types);
+    event.types = extractMemberTypes(types);
   }
 }

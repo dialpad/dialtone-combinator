@@ -21,7 +21,7 @@
           :component="component"
           :members="info.props"
           :values="options.props"
-          :control-selector="prop => getPropControls(prop.type.names)"
+          :control-selector="prop => getPropControls(prop.types)"
           @update:member="updateProps"
         />
       </dtc-option-bar-section>
@@ -33,7 +33,7 @@
           :component="component"
           :members="info.attributes"
           :values="options.attributes"
-          :control-selector="attribute => attribute.type.names"
+          :control-selector="attribute => attribute.types"
           @update:member="updateAttributes"
         />
       </dtc-option-bar-section>

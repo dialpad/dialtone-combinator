@@ -15,7 +15,6 @@ import clone from 'just-clone';
  * @returns {Array} A newly instantiated info object.
  */
 export function getComponentInfo (component) {
-  console.log(component);
   const info = clone(documentation.find(componentInfo => componentInfo.displayName === component.name));
   extendInfo(info, component);
   return info;
@@ -145,7 +144,7 @@ function getComponentDefaults (component) {
    *
    * @type {Array}
    */
-  const componentSearchObject = [
+  const componentSearchObjects = [
     component.props,
     ...(component.mixins?.map(mixin => mixin.props) ?? []),
   ].filter(obj => obj);
@@ -155,7 +154,7 @@ function getComponentDefaults (component) {
    * pairs for each member and its default value respectively.
    */
   return {
-    ...Object.fromEntries(componentSearchObject.filter(path => path).map(path => {
+    ...Object.fromEntries(componentSearchObjects.filter(path => path).map(path => {
       return Object.entries(path).map(([entryKey, entryValue]) => {
         const entryDefault = entryValue.default;
         return [

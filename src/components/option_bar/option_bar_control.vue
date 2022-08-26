@@ -2,7 +2,6 @@
   <div>
     <div class="d-pb2">
       <dtc-option-bar-control-selector
-        v-if="types"
         :selected="control"
         :controls="validControls"
         :types="types"

@@ -15,7 +15,7 @@
           :control="member.control"
           :valid-controls="member.validControls"
           :description="member.description"
-          :types="member.type?.names"
+          :types="member.types"
           :tags="member.tags"
           :locked="member.lockControl"
           :args="{

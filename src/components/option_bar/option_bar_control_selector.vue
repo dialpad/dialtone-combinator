@@ -77,14 +77,9 @@ function getSelection (control) {
   switch (control) {
     case 'event': {
       const eventTypes = props.types;
+      const labels = eventTypes ?? ['event'];
       return {
-        labels: [
-          ...(eventTypes.map(type => {
-            return type && type !== 'undefined'
-              ? type
-              : 'event';
-          })),
-        ],
+        labels,
       };
     }
     default: return {
