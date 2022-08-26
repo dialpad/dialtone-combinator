@@ -37,7 +37,7 @@ import { serializeControlValue, deserializeControlValue } from '@/src/lib/contro
 defineProps({
   value: {
     type: Array,
-    default: () => [],
+    default: () => ([]),
   },
   disabled: {
     type: Boolean,

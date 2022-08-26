@@ -84,8 +84,8 @@ const props = defineProps({
     required: true,
   },
   variants: {
-    type: Object,
-    default: null,
+    type: undefined,
+    default: {},
   },
 });
 
@@ -104,7 +104,7 @@ function updateVariant (e) {
 function initializeInfo () {
   const info = getComponentInfo(props.component);
 
-  const variantInfo = props.variants?.[selectedVariant.value];
+  const variantInfo = props.variants[selectedVariant.value];
 
   if (variantInfo) {
     Object.entries(variantInfo).forEach(([memberGroup, members]) => {
@@ -154,8 +154,6 @@ const info = computed(() => {
     },
   });
 });
-
-console.log(info.value);
 
 /**
  * Gets the values for a given 'options' member group with the provided defaults.

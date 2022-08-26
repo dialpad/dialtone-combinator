@@ -41,7 +41,7 @@ const props = defineProps({
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
 const options = computed(() => {
-  return props.validValues.map(selection => {
+  return props.validValues?.map(selection => {
     return { value: selection, label: props.generateLabel(selection) };
   });
 });

@@ -40,6 +40,7 @@ describe('option_bar_member_group.vue test', function () {
           component,
           members: testMembers,
           values: testValues,
+          controlSelector: () => [['base'], 'base'],
         },
       });
       controlWrappers = wrapper.findAll(controlWrapperSelector);

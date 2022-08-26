@@ -40,27 +40,27 @@ export const controlMap = Object.freeze({
   slot: () => {
     return {
       component: DtcControlSlot,
-      get default () { return getControlDataDefault(this); },
+      get default () { return this.component.props.value.default(); },
     };
   },
   dynamic: () => {
     return {
       component: DtcControlDynamic,
-      get default () { return getControlDataDefault(this); },
+      get default () { return this.component.props.value.default(); },
       get defaultControl () { return 'undefined'; },
       serialize: true,
     };
   },
-  object: () => {
+  object: function () {
     return {
       component: DtcControlObject,
-      get default () { return getControlDataDefault(this); },
+      get default () { return this.component.props.value.default(); },
     };
   },
   array: () => {
     return {
       component: DtcControlArray,
-      get default () { return getControlDataDefault(this); },
+      get default () { return this.component.props.value.default(); },
     };
   },
   selection: ({ defaultValue } = {}) => {
@@ -72,51 +72,35 @@ export const controlMap = Object.freeze({
   string: () => {
     return {
       component: DtcControlString,
-      get default () { return getControlDataDefault(this); },
+      get default () { return this.component.props.value.default(); },
     };
   },
   number: () => {
     return {
       component: DtcControlNumber,
-      get default () { return getControlDataDefault(this); },
+      get default () { return this.component.props.value.default(); },
     };
   },
   boolean: () => {
     return {
       component: DtcControlBoolean,
-      get default () { return getControlDataDefault(this); },
+      get default () { return this.component.props.value.default(); },
     };
   },
   null: () => {
     return {
       component: DtcControlNull,
-      get default () { return getControlDataDefault(this); },
+      get default () { return this.component.props.value.default(); },
       serialize: true,
     };
   },
   base: () => {
     return {
       component: DtcControlBase,
-      get default () { return getControlDataDefault(this); },
+      get default () { return this.component.props.value.default(); },
     };
   },
 });
-
-function getControlDataDefault (controlData) {
-  controlData.component.props.value.default();
-}
-
-/**
- * Gets the component for a control given the args
- * If no control is found the base control component is returned.
- *
- * @param {string} control - The control in `controlMap`.
- * @param {object} args - The control args.
- * @returns {object} The control component.
- */
-export function getControlComponent (control, args) {
-  return controlMap[control]?.(args).component ?? controlMap.base().component;
-}
 
 export function getControlByValue (value) {
   const control = value === undefined || value === null || value === UNSET

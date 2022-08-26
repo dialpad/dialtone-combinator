@@ -51,7 +51,7 @@ import { serializeControlValue, deserializeControlValue } from '@/src/lib/contro
 const props = defineProps({
   value: {
     type: Object,
-    default: () => {},
+    default: () => ({}),
   },
   disabled: {
     type: Boolean,
@@ -62,7 +62,7 @@ const props = defineProps({
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
 const entries = computed(() => {
-  return Object.entries(props.value);
+  return props.value ? Object.entries(props.value) : [];
 });
 
 let currentId = 0;
