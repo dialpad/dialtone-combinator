@@ -4,7 +4,7 @@
     :class="`d-bgc-${background}`"
   >
     <dtc-button-bar
-      class="d-ps-absolute d-t0 d-r0"
+      class="d-ps-absolute d-m8 d-t0 d-r0"
       value="orange"
       @click="updateBackground"
     >

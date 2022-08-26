@@ -155,6 +155,8 @@ const info = computed(() => {
   });
 });
 
+console.log(info.value);
+
 /**
  * Gets the values for a given 'options' member group with the provided defaults.
  */

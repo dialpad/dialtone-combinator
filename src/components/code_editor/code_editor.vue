@@ -12,9 +12,9 @@
         :self-closing="hasSlotContent"
       >
         <template #opening>
-          <dtc-code-editor-attributes
-            :info="info"
-            :members="options.bindings.get()"
+          <dtc-code-editor-tag-attributes
+            :info-bindings="info.bindings.get()"
+            :option-bindings="options.bindings.get()"
             :verbose="verbose"
           />
         </template>
@@ -71,7 +71,7 @@
 </template>
 
 <script setup>
-import DtcCodeEditorAttributes from './code_editor_attributes';
+import DtcCodeEditorTagAttributes from './code_editor_tag_attributes';
 import DtcCodeEditorElement from './code_editor_element';
 import DtcCodeEditorSlot from './code_editor_slot';
 import IconCopy from 'dialtone-icons/IconContentCopy';

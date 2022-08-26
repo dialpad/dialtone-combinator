@@ -34,7 +34,7 @@
 import DtcOptionBarControl from './option_bar_control';
 import { MEMBER_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed, reactive } from 'vue';
-import { controlMap, getControlByValue } from '@/src/lib/control';
+import { controlMap } from '@/src/lib/control';
 import { convert } from '@/src/lib/convert';
 
 const props = defineProps({
@@ -65,7 +65,7 @@ const props = defineProps({
    */
   controlSelector: {
     type: Function,
-    default: (member) => [],
+    required: true,
   },
 });
 
@@ -107,14 +107,11 @@ function extendMember (member) {
   const key = getMemberKey(member);
   const value = props.values[key];
 
-  const validControls = props.controlSelector(member);
-  const desiredControl = getControlByValue(value);
-
-  const control = validControls.find(control => control === desiredControl) ?? validControls[0];
+  const [validControls, defaultControl] = props.controlSelector(member, value);
 
   return {
     ...member,
-    control,
+    control: defaultControl,
     validControls,
   };
 }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <template
-      v-for="[name, { value, label }] in visibleMembers"
+      v-for="[name, { value, label }] in bindingMap"
       :key="name"
     >
       <div>
@@ -38,19 +38,19 @@ const props = defineProps({
   /**
    * Info data object.
    */
-  info: {
-    type: Object,
+  infoBindings: {
+    type: Array,
     required: true,
   },
   /**
-   * Members to display as tag attributes.
+   * Binding members to be displayed as attributes.
    */
-  members: {
+  optionBindings: {
     type: Object,
     required: true,
   },
   /**
-   * Show all attributes regardless of default value.
+   * Show all bindings regardless of default value.
    */
   verbose: {
     type: Boolean,
@@ -58,24 +58,15 @@ const props = defineProps({
   },
 });
 
-const visibleMembers = computed(() => {
-  const members = mapMembers(props.members);
-  return members.filter(([name, member]) => visible(name, member));
-});
-
-const bindings = computed(() => {
-  return props.info.bindings.get();
-});
-
-function mapMembers (members) {
-  return Object.entries(members).map(([name, value]) => {
-    const memberInfo = bindings.value.find(member => member.name === name);
-    return [name, {
-      ...memberInfo,
+const bindingMap = computed(() => {
+  return Object.entries(props.optionBindings).map(([bindingName, value]) => {
+    const bindingInfo = props.infoBindings.find(infoBinding => infoBinding.name === bindingName);
+    return [bindingName, {
+      ...bindingInfo,
       value,
     }];
-  });
-}
+  }).filter(([name, member]) => visible(name, member));
+});
 
 function visible (name, member) {
   if (props.verbose) { return true; }
@@ -107,6 +98,6 @@ function stringifyValue (value) {
  * This component generates all the attribute fields to be included on the element tag.
  */
 export default {
-  name: 'DtcCodeEditorAttributes',
+  name: 'DtcCodeEditorTagAttributes',
 };
 </script>

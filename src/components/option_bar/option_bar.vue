@@ -9,7 +9,7 @@
           :component="component"
           :members="info.slots"
           :values="options.slots"
-          :control-selector="() => ['slot']"
+          :control-selector="getSlotControls"
           @update:member="updateSlots"
         />
       </dtc-option-bar-section>
@@ -21,7 +21,7 @@
           :component="component"
           :members="info.props"
           :values="options.props"
-          :control-selector="prop => getPropControls(prop.types)"
+          :control-selector="(prop, value) => getPropControls(prop.types, value)"
           @update:member="updateProps"
         />
       </dtc-option-bar-section>
@@ -33,7 +33,7 @@
           :component="component"
           :members="info.attributes"
           :values="options.attributes"
-          :control-selector="attribute => attribute.types"
+          :control-selector="(attribute, value) => getBindingControls(attribute.types, value)"
           @update:member="updateAttributes"
         />
       </dtc-option-bar-section>
@@ -45,7 +45,7 @@
           :component="component"
           :members="info.events"
           :values="options.events"
-          :control-selector="() => ['event']"
+          :control-selector="getEventControls"
         />
       </dtc-option-bar-section>
     </ul>
@@ -57,6 +57,7 @@ import DtcOptionBarMemberGroup from './option_bar_member_group';
 import DtcOptionBarSection from './option_bar_section';
 
 import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
+import { getControlByValue } from '@/src/lib/control';
 
 defineProps({
   /**
@@ -87,13 +88,37 @@ const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
 /**
  * Gets the controls for a prop member.
  *
- * @param types - The valid types for the member
- * @returns {Array}
+ * @param types - The prop member types.
+ * @param value - The prop member value.
+ * @returns {Array} Array of valid controls.
  */
-function getPropControls (types) {
-  return [
+function getPropControls (types, value) {
+  return getBindingControls([
     ...types,
     'null',
+  ], value);
+}
+
+function getBindingControls (types, value) {
+  const validControls = types;
+  return [
+    validControls,
+    validControls.find(control => control === getControlByValue(value)) ?? validControls[0],
+  ];
+}
+
+function getSlotControls () {
+  return getStaticControl('slot');
+}
+
+function getEventControls () {
+  return getStaticControl('event');
+}
+
+function getStaticControl (control) {
+  return [
+    [control],
+    control,
   ];
 }
 
