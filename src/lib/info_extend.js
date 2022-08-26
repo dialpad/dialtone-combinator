@@ -1,5 +1,5 @@
 import { paramCase, sentenceCase } from 'change-case';
-import { typeOfMember } from '@/src/lib/utils';
+import { typeOfMemberValue } from '@/src/lib/utils';
 
 /**
  * The default processing function that is applied to every member in a member group.
@@ -30,7 +30,7 @@ export function extendBinding (member, defaults) {
     return name === member.name;
   })?.[1];
 
-  const defaultType = typeOfMember(defaultValue);
+  const defaultType = typeOfMemberValue(defaultValue);
 
   delete member.defaultValue;
   if (defaultValue !== undefined) {

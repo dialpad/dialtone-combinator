@@ -21,7 +21,7 @@
           :component="component"
           :members="info.props"
           :values="options.props"
-          :control-selector="(prop, value) => getPropControls(prop.types, value)"
+          :control-selector="(prop, value) => getBindingControls(prop, value, 'null')"
           @update:member="updateProps"
         />
       </dtc-option-bar-section>
@@ -33,7 +33,7 @@
           :component="component"
           :members="info.attributes"
           :values="options.attributes"
-          :control-selector="(attribute, value) => getBindingControls(attribute.types, value)"
+          :control-selector="(attribute, value) => getBindingControls(attribute, value)"
           @update:member="updateAttributes"
         />
       </dtc-option-bar-section>
@@ -57,7 +57,7 @@ import DtcOptionBarMemberGroup from './option_bar_member_group';
 import DtcOptionBarSection from './option_bar_section';
 
 import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
-import { getControlByValue } from '@/src/lib/control';
+import { getControlByMemberType, getControlByValue } from '@/src/lib/control';
 
 defineProps({
   /**
@@ -85,22 +85,12 @@ defineProps({
 
 const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
 
-/**
- * Gets the controls for a prop member.
- *
- * @param types - The prop member types.
- * @param value - The prop member value.
- * @returns {Array} Array of valid controls.
- */
-function getPropControls (types, value) {
-  return getBindingControls([
-    ...types,
-    'null',
-  ], value);
-}
+function getBindingControls (binding, value, ...controls) {
+  const validControls = [
+    ...binding.types.map(type => getControlByMemberType(type, binding)),
+    ...controls,
+  ];
 
-function getBindingControls (types, value) {
-  const validControls = types;
   return [
     validControls,
     validControls.find(control => control === getControlByValue(value)) ?? validControls[0],

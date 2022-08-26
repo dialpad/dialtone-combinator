@@ -14,7 +14,7 @@ import DtcControlString from '@/src/components/controls/control_string';
 import DtcControlNull from '@/src/components/controls/control_null';
 import DtcControlBase from '@/src/components/controls/control_base';
 
-import { typeOfMember } from '@/src/lib/utils';
+import { typeOfMemberValue } from '@/src/lib/utils';
 
 /**
  * Symbol representing a value that is "not set".
@@ -31,52 +31,76 @@ export const UNSET = Symbol('unset');
  * @type {object}
  */
 export const controlMap = Object.freeze({
-  event: {
-    component: () => DtcControlEvent,
-    get default () { return null; },
+  event: () => {
+    return {
+      component: () => DtcControlEvent,
+      get default () { return null; },
+    };
   },
-  slot: {
-    component: () => DtcControlSlot,
-    get default () { return null; },
+  slot: () => {
+    return {
+      component: () => DtcControlSlot,
+      get default () { return null; },
+    };
   },
-  dynamic: {
-    component: () => DtcControlDynamic,
-    get default () { return UNSET; },
-    get defaultControl () { return 'undefined'; },
-    serialize: true,
+  dynamic: () => {
+    return {
+      component: () => DtcControlDynamic,
+      get default () { return UNSET; },
+      get defaultControl () { return 'undefined'; },
+      serialize: true,
+    };
   },
-  object: {
-    component: () => DtcControlObject,
-    get default () { return {}; },
+  object: () => {
+    return {
+      component: () => DtcControlObject,
+      get default () { return {}; },
+    };
   },
-  array: {
-    component: () => DtcControlArray,
-    get default () { return []; },
+  array: () => {
+    return {
+      component: () => DtcControlArray,
+      get default () {
+        return [];
+      },
+    };
   },
-  string: {
-    component: (args) => {
-      return args?.validValues && args.validValues.length > 0
-        ? DtcControlSelection
-        : DtcControlString;
-    },
-    get default () { return String(); },
+  selection: (args) => {
+    return {
+      component: () => DtcControlSelection,
+      get default () { return args.validValues[0]; },
+    };
   },
-  number: {
-    component: () => DtcControlNumber,
-    get default () { return Number(); },
+  string: () => {
+    return {
+      component: () => DtcControlString,
+      get default () { return String(); },
+    };
   },
-  boolean: {
-    component: () => DtcControlBoolean,
-    get default () { return Boolean(); },
+  number: () => {
+    return {
+      component: () => DtcControlNumber,
+      get default () { return Number(); },
+    };
   },
-  null: {
-    component: () => DtcControlNull,
-    get default () { return null; },
-    serialize: true,
+  boolean: () => {
+    return {
+      component: () => DtcControlBoolean,
+      get default () { return Boolean(); },
+    };
   },
-  base: {
-    component: () => DtcControlBase,
-    get default () { return null; },
+  null: () => {
+    return {
+      component: () => DtcControlNull,
+      get default () { return null; },
+      serialize: true,
+    };
+  },
+  base: () => {
+    return {
+      component: () => DtcControlBase,
+      get default () { return null; },
+    };
   },
 });
 
@@ -89,17 +113,28 @@ export const controlMap = Object.freeze({
  * @returns {object} The control component.
  */
 export function getControlComponent (control, args) {
-  return controlMap[control]?.component(args) ?? controlMap.base.component(args);
+  return controlMap[control]?.(args).component() ?? controlMap.base.component();
 }
 
 export function getControlByValue (value) {
   const control = value === undefined || value === null || value === UNSET
     ? 'null'
-    : typeOfMember(value);
+    : typeOfMemberValue(value);
 
   return control in controlMap
     ? control
     : 'base';
+}
+
+export function getControlByMemberType (type, args) {
+  switch (type) {
+    case 'string': {
+      return args?.values && args.values.length > 0
+        ? 'selection'
+        : 'string';
+    }
+    default: return type;
+  }
 }
 
 /**
