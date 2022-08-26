@@ -9,10 +9,19 @@
         class="d-py6"
         data-qa="dtc-option-bar-member-group-control"
       >
+        <div class="d-pb2">
+          <dtc-option-bar-control-selector
+            :selected="member.control"
+            :controls="member.validControls"
+            :types="member.types"
+            :disabled="member.lockControl"
+            @update:control="(e) => updateControl(e, key)"
+          />
+        </div>
         <dtc-option-bar-control
           :value="values[key]"
           :label="member.label"
-          :control="member.control"
+          :control-data="getMemberControlData(member)"
           :valid-controls="member.validControls"
           :description="member.description"
           :types="member.types"
@@ -31,11 +40,12 @@
 </template>
 
 <script setup>
+import DtcOptionBarControlSelector from '@/src/components/option_bar/option_bar_control_selector';
 import DtcOptionBarControl from './option_bar_control';
 import { MEMBER_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed, reactive } from 'vue';
-import { controlMap } from '@/src/lib/control';
 import { convert } from '@/src/lib/convert';
+import { controlMap } from '@/src/lib/control';
 
 const props = defineProps({
   /**
@@ -97,6 +107,10 @@ function getMemberKey (member) {
   return member.name;
 }
 
+function getMemberControlData (member) {
+  return controlMap[member.control](member);
+}
+
 /**
  * Wraps a member with an object containing additional data about the member.
  * This is used by the 'member map' to hold data about controls.
@@ -107,11 +121,11 @@ function extendMember (member) {
   const key = getMemberKey(member);
   const value = props.values[key];
 
-  const [validControls, defaultControl] = props.controlSelector(member, value);
+  const [validControls, control] = props.controlSelector(member, value);
 
   return {
     ...member,
-    control: defaultControl,
+    control,
     validControls,
   };
 }
@@ -146,7 +160,7 @@ function updateControl (e, key) {
   }
 
   member.control = e;
-  updateMember(value ?? controlMap[e]?.default, key);
+  updateMember(value ?? controlMap[e](member).default, key);
 }
 </script>
 

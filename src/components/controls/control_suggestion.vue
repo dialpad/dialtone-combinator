@@ -57,14 +57,13 @@ import { DtRecipeComboboxWithPopover, DtListItem } from '@dialpad/dialtone-vue';
 
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed, ref } from 'vue';
-import { controlMap } from '@/src/lib/control';
 
 const WARNING_MESSAGE = 'Unexpected value';
 
 const props = defineProps({
   value: {
     type: String,
-    default: () => controlMap.string.default,
+    required: true,
   },
   disabled: {
     type: Boolean,

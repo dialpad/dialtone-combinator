@@ -2,12 +2,11 @@ import DtcControlNumber from './control_number';
 
 import { assert } from 'chai';
 import { mount } from '@vue/test-utils';
-import { controlMap } from '@/src/lib/control';
 
 const inputSelector = 'input';
 
 const inputValue = 5;
-const defaultValue = controlMap.number.default;
+const defaultValue = DtcControlNumber.props.value.default();
 
 describe('control_number.vue test', function () {
   let wrapper;

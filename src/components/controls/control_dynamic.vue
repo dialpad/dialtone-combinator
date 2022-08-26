@@ -34,7 +34,7 @@ import { computed, ref } from 'vue';
 const props = defineProps({
   value: {
     type: undefined,
-    default: () => controlMap.dynamic.default,
+    default: () => UNSET,
   },
   disabled: {
     type: Boolean,
@@ -60,25 +60,45 @@ const controlSelectionMap = {
       return externalControls.includes(controlName);
     }),
   ),
-  true: {
-    component: () => null,
-    get default () { return true; },
+  true: () => {
+    return {
+      component: null,
+      get default () {
+        return true;
+      },
+    };
   },
-  false: {
-    component: () => null,
-    get default () { return false; },
+  false: () => {
+    return {
+      component: null,
+      get default () {
+        return false;
+      },
+    };
   },
-  NaN: {
-    component: () => null,
-    get default () { return NaN; },
+  NaN: () => {
+    return {
+      component: null,
+      get default () {
+        return NaN;
+      },
+    };
   },
-  null: {
-    component: () => null,
-    get default () { return null; },
+  null: () => {
+    return {
+      component: null,
+      get default () {
+        return null;
+      },
+    };
   },
-  undefined: {
-    component: () => null,
-    get default () { return UNSET; },
+  undefined: () => {
+    return {
+      component: null,
+      get default () {
+        return UNSET;
+      },
+    };
   },
 };
 
@@ -86,7 +106,7 @@ const controlSelections = computed(() => Object.keys(controlSelectionMap));
 const selectedControl = ref(getControl());
 
 const control = computed(() => {
-  return controlSelectionMap[selectedControl.value]?.component();
+  return controlSelectionMap[selectedControl.value]?.().component;
 });
 
 function getControl () {

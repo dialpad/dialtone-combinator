@@ -18,14 +18,16 @@ describe('option_bar_control.vue test', function () {
 
     describe(`When mounted with control '${control}'`, function () {
       before(function () {
+        const member = {
+          validControls: [control],
+          label: testLabel,
+          description: testDescription,
+        };
+        const controlData = controlMap[control](member);
+        member.controlData = controlData;
+        member.value = controlData.default;
         wrapper = mount(DtcOptionBarControl, {
-          props: {
-            control,
-            value: controlMap[control].default,
-            validControls: [control],
-            label: testLabel,
-            description: testDescription,
-          },
+          props: member,
         });
       });
 

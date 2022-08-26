@@ -50,7 +50,7 @@ const props = defineProps({
    */
   disabled: {
     type: Boolean,
-    required: true,
+    default: false,
   },
   /**
    * Array of valid types.

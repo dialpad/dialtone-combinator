@@ -2,12 +2,11 @@ import DtcControlString from './control_string';
 
 import { assert } from 'chai';
 import { mount } from '@vue/test-utils';
-import { controlMap } from '@/src/lib/control';
 
 const inputSelector = 'input';
 
 const inputValue = 'string test';
-const defaultValue = controlMap.string.default;
+const defaultValue = DtcControlString.props.value.default();
 
 describe('control_string.vue test', function () {
   let wrapper;

@@ -2,12 +2,11 @@ import DtcControlBoolean from './control_boolean';
 
 import { assert } from 'chai';
 import { mount } from '@vue/test-utils';
-import { controlMap } from '@/src/lib/control';
 
 const inputSelector = '[data-qa=dtc-control-boolean-input]';
 
 const inputValue = true;
-const defaultValue = controlMap.boolean.default;
+const defaultValue = DtcControlBoolean.props.value.default();
 
 describe('control_boolean.vue test', function () {
   let wrapper;

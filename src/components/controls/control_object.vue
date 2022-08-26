@@ -46,12 +46,12 @@ import DtcControlIterable from './control_iterable';
 import DtcControlDynamic from './control_dynamic';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
-import { controlMap, serializeControlValue, deserializeControlValue } from '@/src/lib/control';
+import { serializeControlValue, deserializeControlValue } from '@/src/lib/control';
 
 const props = defineProps({
   value: {
     type: Object,
-    default: () => controlMap.object.default,
+    default: () => {},
   },
   disabled: {
     type: Boolean,

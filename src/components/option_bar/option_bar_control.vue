@@ -1,17 +1,8 @@
 <template>
   <div>
-    <div class="d-pb2">
-      <dtc-option-bar-control-selector
-        :selected="control"
-        :controls="validControls"
-        :types="types"
-        :disabled="locked"
-        @update:control="updateControl"
-      />
-    </div>
     <component
       :is="controlComponent"
-      v-bind="bindings"
+      v-bind="controlBindings"
       @update:value="updateValue"
     >
       <span>
@@ -48,22 +39,16 @@
 <script setup>
 import IconLock from 'dialtone-icons/IconLock';
 import { DtBadge } from '@dialpad/dialtone-vue';
-import { CONTROL_UPDATE_EVENT, VALUE_UPDATE_EVENT } from '@/src/lib/constants';
+import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
-import {
-  controlMap,
-  deserializeControlValue,
-  getControlComponent,
-  serializeControlValue,
-} from '@/src/lib/control';
-import DtcOptionBarControlSelector from '@/src/components/option_bar/option_bar_control_selector';
+import { serializeControlValue, deserializeControlValue } from '@/src/lib/control';
 
 const props = defineProps({
   /**
-   * Control representing an entry in the 'control map'.
+   * Data of an entry in the 'control map'.
    */
-  control: {
-    type: String,
+  controlData: {
+    type: Object,
     required: true,
   },
   /**
@@ -115,27 +100,16 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits([VALUE_UPDATE_EVENT, CONTROL_UPDATE_EVENT]);
+const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
-/**
- * Value to pass to the underlying control.
- * The value is serialized if needed.
- *
- * @type {ComputedRef<*>}
- */
 const controlValue = computed(() => {
-  return controlMap[props.control].serialize
+  return props.controlData.serialize
     ? serializeControlValue(props.value)
     : props.value;
 });
 
-/**
- * Actual component based on the value of the 'control' prop.
- *
- * @type {ComputedRef<object>}
- */
 const controlComponent = computed(() => {
-  return getControlComponent(props.control, controlArgs.value);
+  return props.controlData.component;
 });
 
 /**
@@ -159,7 +133,7 @@ const controlArgs = computed(() => {
  *
  * @type {ComputedRef<object>}
  */
-const bindings = computed(() => {
+const controlBindings = computed(() => {
   const component = controlComponent.value;
   if (!component.props) { return null; }
   return Object.fromEntries(
@@ -185,20 +159,10 @@ const showModelTag = computed(() => {
  */
 function updateValue (e) {
   if (props.locked) { return; }
-  const value = controlMap[props.control].serialize
+  const value = props.controlData.serialize
     ? deserializeControlValue(e)
     : e;
   emit(VALUE_UPDATE_EVENT, value);
-}
-
-/**
- * Emits event to update member control.
- *
- * @param e - The updated member control
- */
-function updateControl (e) {
-  if (props.locked) { return; }
-  emit(CONTROL_UPDATE_EVENT, e);
 }
 </script>
 

@@ -16,12 +16,11 @@
 <script setup>
 import { DtInput } from '@dialpad/dialtone-vue';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
-import { controlMap } from '@/src/lib/control';
 
 defineProps({
   value: {
     type: undefined,
-    default: () => controlMap.slot.default,
+    default: () => null,
   },
   disabled: {
     type: Boolean,
@@ -32,7 +31,7 @@ defineProps({
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
 function updateValue (e) {
-  const value = e || controlMap.slot.default;
+  const value = e || null;
   emit(VALUE_UPDATE_EVENT, value);
 }
 </script>
