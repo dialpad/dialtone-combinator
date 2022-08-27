@@ -31,7 +31,6 @@ const emit = defineEmits([VALUE_UPDATE_EVENT]);
 const selectionMap = {
   undefined: UNSET,
   null: null,
-  NaN,
 };
 
 const selections = computed(() => {
@@ -54,6 +53,6 @@ function updateValue (e) {
  * Control that is used to set nullish values.
  */
 export default {
-  name: 'DtcControlNull',
+  name: 'DtcControlNullish',
 };
 </script>

@@ -1,4 +1,4 @@
-import DtcControlNull from './control_null';
+import DtcControlNullish from './control_nullish';
 
 import { assert } from 'chai';
 import { mount } from '@vue/test-utils';
@@ -10,12 +10,12 @@ const inputValue = NaN;
 const inputString = 'NaN';
 const defaultString = 'null';
 
-describe('control_null.vue test', function () {
+describe('control_nullish.vue test', function () {
   let wrapper;
   let inputWrapper;
 
   const _mountWrapper = () => {
-    wrapper = mount(DtcControlNull);
+    wrapper = mount(DtcControlNullish);
     _setChildWrappers();
   };
 

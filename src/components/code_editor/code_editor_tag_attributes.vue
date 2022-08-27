@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="isEmpty">
     <template
       v-for="[name, { value, label }] in bindingMap"
       :key="name"
@@ -91,6 +91,10 @@ function stringifyValue (value) {
     ? stringifyDocValue(value)
     : value.toString();
 }
+
+const isEmpty = computed(() => {
+  return bindingMap.value.length > 0;
+});
 </script>
 
 <script>

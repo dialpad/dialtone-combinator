@@ -76,14 +76,6 @@ const controlSelectionMap = {
       },
     };
   },
-  NaN: () => {
-    return {
-      component: null,
-      get default () {
-        return NaN;
-      },
-    };
-  },
   null: () => {
     return {
       component: null,
@@ -118,8 +110,6 @@ function getControl () {
     case false: return 'false';
     case true: return 'true';
   }
-
-  if (Number.isNaN(value)) { return 'NaN'; }
 
   const control = getControlByValue(value);
 
