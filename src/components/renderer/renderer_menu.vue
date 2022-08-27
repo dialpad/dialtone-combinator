@@ -32,15 +32,15 @@
           @click="e => updateSettings('background', e)"
         >
           <template #theme>
-            <div class="d-w16 d-h16 d-ba d-bc-black">
-              <span class="d-fs10 d-ps-relative d-t6">T</span>
+            <div class="d-w16 d-h16 d-ba">
+              <span class="d-fs12 d-ps-relative d-t6">T</span>
             </div>
           </template>
           <template #black>
-            <div class="d-w16 d-h16 d-ba d-bc-black d-bgc-black-800" />
+            <div class="d-w16 d-h16 d-ba d-bgc-black-800" />
           </template>
           <template #white>
-            <div class="d-w16 d-h16 d-ba d-bc-black d-bgc-white" />
+            <div class="d-w16 d-h16 d-ba d-bgc-white" />
           </template>
         </dtc-button-bar>
         <dtc-button-bar

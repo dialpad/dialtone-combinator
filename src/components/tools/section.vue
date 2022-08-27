@@ -49,6 +49,6 @@ function toggle () {
 
 <script>
 export default {
-  name: 'DtcOptionBarSection',
+  name: 'DtcSection',
 };
 </script>

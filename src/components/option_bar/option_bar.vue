@@ -1,7 +1,7 @@
 <template>
   <div class="dtc-option-bar d-as-stretch d-of-y-auto d-w100p">
     <ul class="d-ls-reset">
-      <dtc-option-bar-section
+      <dtc-section
         v-if="info.slots"
         heading="Slots"
       >
@@ -12,8 +12,8 @@
           :control-selector="getSlotControls"
           @update:member="updateSlots"
         />
-      </dtc-option-bar-section>
-      <dtc-option-bar-section
+      </dtc-section>
+      <dtc-section
         v-if="info.props"
         heading="Props"
       >
@@ -24,8 +24,8 @@
           :control-selector="(prop, value) => getBindingControls(prop, value, 'null')"
           @update:member="updateProps"
         />
-      </dtc-option-bar-section>
-      <dtc-option-bar-section
+      </dtc-section>
+      <dtc-section
         v-if="info.attributes"
         heading="Native HTML Attributes"
       >
@@ -36,8 +36,8 @@
           :control-selector="(attribute, value) => getBindingControls(attribute, value)"
           @update:member="updateAttributes"
         />
-      </dtc-option-bar-section>
-      <dtc-option-bar-section
+      </dtc-section>
+      <dtc-section
         v-if="info.events"
         heading="Events"
       >
@@ -47,14 +47,14 @@
           :values="options.events"
           :control-selector="getEventControls"
         />
-      </dtc-option-bar-section>
+      </dtc-section>
     </ul>
   </div>
 </template>
 
 <script setup>
 import DtcOptionBarMemberGroup from './option_bar_member_group';
-import DtcOptionBarSection from './option_bar_section';
+import DtcSection from '../tools/section';
 
 import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
 import { getControlByMemberType, getControlByValue } from '@/src/lib/control';

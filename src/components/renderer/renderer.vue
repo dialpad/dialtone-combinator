@@ -1,30 +1,32 @@
 <template>
-  <div class="dtc-renderer d-w100p d-h100p">
-    <div
-      class="d-of-auto d-d-flex"
-      :class="{
-        [backgroundColorMap[background]]: true,
-        'd-jc-center': positioning === 'center',
-        'd-ai-center': positioning === 'center',
-        'd-ai-flex-start': positioning === 'native',
-      }"
-    >
-      <component
-        :is="component"
-        v-bind="bindings"
-        v-on="events"
+  <dtc-overlay class="dtc-renderer">
+    <template #content>
+      <div
+        class="d-d-flex d-of-auto"
+        :class="{
+          [backgroundColorMap[background]]: true,
+          'd-jc-center': positioning === 'center',
+          'd-ai-center': positioning === 'center',
+          'd-ai-flex-start': positioning === 'native',
+        }"
       >
-        <template
-          v-for="(slot, name) in activeSlots"
-          :key="name"
-          #[name]
+        <component
+          :is="component"
+          v-bind="bindings"
+          v-on="events"
         >
-          <div v-html="slot" />
-        </template>
-      </component>
-    </div>
-    <div class="d-d-flex d-jc-flex-end d-pe-none">
-      <div class="d-d-flex d-pt4 d-pe-auto">
+          <template
+            v-for="(slot, name) in activeSlots"
+            :key="name"
+            #[name]
+          >
+            <div v-html="slot" />
+          </template>
+        </component>
+      </div>
+    </template>
+    <template #overlay>
+      <div class="d-d-flex d-jc-flex-end d-pt4">
         <dtc-renderer-menu
           :theme="theme"
           :background="background"
@@ -32,14 +34,15 @@
           @update:settings="updateSettings"
         />
       </div>
-    </div>
-  </div>
+    </template>
+  </dtc-overlay>
 </template>
 
 <script setup>
 import { computed } from 'vue';
 import { SETTINGS_UPDATE_EVENT } from '@/src/lib/constants';
 import DtcRendererMenu from '@/src/components/renderer/renderer_menu';
+import DtcOverlay from '@/src/components/tools/overlay';
 
 const props = defineProps({
   /**
