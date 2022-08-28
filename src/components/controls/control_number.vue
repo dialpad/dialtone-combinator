@@ -13,18 +13,19 @@
         </template>
       </dt-input>
     </div>
-    <div class="d-pl6 d-ta-center">
-      <span>NaN</span>
-      <dt-toggle
+    <div class="d-pl6">
+      <dt-checkbox
+        label="NaN"
         :checked="isNaN(value)"
-        @change="toggleNaN"
+        :disabled="disabled"
+        @input="toggleNaN"
       />
     </div>
   </div>
 </template>
 
 <script setup>
-import { DtInput, DtToggle } from '@dialpad/dialtone-vue';
+import { DtInput, DtCheckbox } from '@dialpad/dialtone-vue';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
 

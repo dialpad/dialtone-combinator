@@ -24,7 +24,7 @@
             </dt-list-item>
           </div>
           <dt-button
-            class="dtc-option-bar-control__icon d-p0"
+            class="dtc-icon d-p0"
             importance="clear"
             size="xs"
             :disabled="disabled"
@@ -36,7 +36,7 @@
       </template>
       <div>
         <dt-button
-          class="dtc-option-bar-control__icon d-p0 d-mt8"
+          class="dtc-icon d-p0 d-mt8"
           importance="clear"
           :disabled="disabled"
           @click="addItem"

@@ -158,7 +158,6 @@ const showModelTag = computed(() => {
  * @param e - The updated member value
  */
 function updateValue (e) {
-  if (props.locked) { return; }
   const value = props.controlData.serialize
     ? deserializeControlValue(e)
     : e;
@@ -175,14 +174,3 @@ export default {
   name: 'DtcOptionBarControl',
 };
 </script>
-
-<style>
-.dtc-option-bar-control__button:not([control-active]) {
-  background-color: transparent !important;
-  border: currentColor 1px solid !important;
-}
-
-.dtc-option-bar-control__icon[disabled] {
-  background-color: transparent !important;
-}
-</style>

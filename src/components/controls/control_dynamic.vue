@@ -120,7 +120,7 @@ function getControl () {
 
 function updateControl (e) {
   selectedControl.value = e;
-  updateValue(controlSelectionMap[e].default);
+  updateValue(controlSelectionMap[e]().default);
 }
 
 function updateValue (e) {

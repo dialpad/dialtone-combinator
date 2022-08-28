@@ -12,7 +12,7 @@
       >
         <span class="d-pr4">
           <dt-button
-            class="dtc-option-bar-control__button d-px4 d-py1"
+            class="dtc-control-selector__button d-px4 d-py1"
             importance="outlined"
             v-bind="getStyling(control)"
             @click="() => updateControl(control)"
@@ -121,3 +121,10 @@ export default {
   name: 'DtcOptionBarControlSelector',
 };
 </script>
+
+<style>
+.dtc-control-selector__button:not([control-active]) {
+  background-color: transparent !important;
+  border: currentColor 1px solid !important;
+}
+</style>

@@ -18,9 +18,11 @@
             @update:control="(e) => updateControl(e, key)"
           />
           <dt-button
-            class="d-p4"
+            v-if="hasDefaultValue(member)"
+            class="dtc-icon d-p4"
             importance="clear"
             size="sm"
+            :disabled="member.lockControl"
             @click="() => resetMember(key)"
           >
             <template #icon>
@@ -121,6 +123,10 @@ function getMemberKey (member) {
 
 function getMemberControlData (member) {
   return controlMap[member.control](member);
+}
+
+function hasDefaultValue (member) {
+  return 'defaultValue' in member;
 }
 
 /**

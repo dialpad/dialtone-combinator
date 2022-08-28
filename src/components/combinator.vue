@@ -314,4 +314,8 @@ export default {
   display: flex;
   overflow: hidden;
 }
+
+.dtc-icon[disabled] {
+  background-color: transparent !important;
+}
 </style>
