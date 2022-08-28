@@ -77,8 +77,8 @@ import DtcCodeEditorSlot from './code_editor_slot';
 import IconCopy from 'dialtone-icons/IconContentCopy';
 import { DtButton, DtPopover } from '@dialpad/dialtone-vue';
 
-import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
-import { ref, computed } from 'vue';
+import { OPTIONS_UPDATE_EVENT, SETTINGS_INDENT_KEY } from '@/src/lib/constants';
+import { ref, computed, provide } from 'vue';
 import { paramCase } from 'change-case';
 
 const props = defineProps({
@@ -110,11 +110,24 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+  /**
+   * Indent spaces setting.
+   */
+  indentSpaces: {
+    type: Number,
+    required: true,
+  },
 });
 
 const emit = defineEmits([
   OPTIONS_UPDATE_EVENT,
 ]);
+
+const indent = computed(() => {
+  return props.indentSpaces;
+});
+
+provide(SETTINGS_INDENT_KEY, indent);
 
 const tagName = computed(() => paramCase(props.info.displayName));
 

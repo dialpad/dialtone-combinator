@@ -9,15 +9,19 @@ import { SETTINGS_INDENT_KEY } from '@/src/lib/constants';
 const props = defineProps({
   level: {
     type: Number,
-    default: 2,
+    default: 1,
     validator (value) {
       return value > 0;
     },
   },
 });
 
+const spaces = computed(() => {
+  return inject(SETTINGS_INDENT_KEY).value;
+});
+
 const html = computed(() => {
-  return '&nbsp;'.repeat(props.level * inject(SETTINGS_INDENT_KEY).value);
+  return '&nbsp;'.repeat(props.level * spaces.value);
 });
 </script>
 

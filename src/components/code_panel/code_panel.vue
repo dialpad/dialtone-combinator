@@ -18,6 +18,7 @@
               :options="options"
               :theme="settings.root.theme"
               :verbose="settings.code.verbose"
+              :indent-spaces="settings.code.indent"
               @update:options="e => emit(OPTIONS_UPDATE_EVENT, e)"
             />
           </template>
@@ -43,10 +44,10 @@ import DtcEventConsole from '@/src/components/event_console/event_console';
 import DtcCodeEditor from '@/src/components/code_editor/code_editor';
 import DtcOverlay from '@/src/components/tools/overlay';
 
-import { OPTIONS_UPDATE_EVENT, SETTINGS_INDENT_KEY } from '@/src/lib/constants';
-import { computed, provide, ref } from 'vue';
+import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
+import { ref } from 'vue';
 
-const props = defineProps({
+defineProps({
   /**
    * Options data object.
    */
@@ -78,12 +79,6 @@ const eventConsole = ref();
 defineExpose({
   trigger: (event, value) => eventConsole.value.trigger(event, value),
 });
-
-const indent = computed(() => {
-  return props.settings.code.indent;
-});
-
-provide(SETTINGS_INDENT_KEY, indent);
 
 function generateLabel (slot, capitalCase) {
   const label = capitalCase(slot);
