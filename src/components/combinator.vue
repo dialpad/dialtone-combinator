@@ -13,6 +13,16 @@
         />
       </div>
     </div>
+    <dt-notice
+      v-if="showUnsupportedWarning"
+      class="d-wmx-unset"
+      title="Component unsupported"
+      kind="warning"
+      :close-button-props="{ ariaLabel: 'Close warning' }"
+      @close="hideUnsupportedMessage"
+    >
+      May have unexpected behaviour.
+    </dt-notice>
     <div class="d-d-flex d-fl-grow1 d-hmn0">
       <div
         :class="`dtc-root
@@ -60,6 +70,7 @@ import DtcRenderer from './renderer/renderer';
 import DtcCodePanel from './code_panel/code_panel';
 import DtcSettingsMenu from './settings_menu/settings_menu';
 import DtcHeader from '@/src/components/header/header';
+import { DtNotice } from '@dialpad/dialtone-vue';
 
 import { enumerateGroups } from '@/src/lib/utils';
 import { computed, reactive, ref } from 'vue';
@@ -75,6 +86,7 @@ import {
   SETTINGS_INDENT_KEY,
 } from '@/src/lib/constants';
 import defaultSettings from '@/src/settings.json';
+import supportedComponents from '@/src/supported_components.json';
 
 const props = defineProps({
   /**
@@ -233,6 +245,12 @@ const settings = computedModel(
   (e, model) => e(model),
 );
 
+const showUnsupportedWarning = ref(!supportedComponents.includes(props.component.name));
+
+function hideUnsupportedMessage () {
+  showUnsupportedWarning.value = false;
+}
+
 const codePanel = ref();
 
 function triggerEvent (event, value) {
@@ -293,8 +311,6 @@ export default {
 }
 
 .dtc-root > * {
-  display: flex;
-  align-items: flex-start;
   overflow: hidden;
 }
 </style>

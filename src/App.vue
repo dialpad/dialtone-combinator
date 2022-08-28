@@ -47,6 +47,7 @@
     </div>
     <div class="d-d-flex d-as-stretch d-hmn0">
       <Combinator
+        :key="componentKey"
         :component="component"
         :variants="variants"
       />
@@ -83,9 +84,11 @@ const options = computed(() => {
 });
 
 function getComponentFromHash (hash) {
+  componentKey.value += 1;
   return markRaw(modules[hash.substring(1)] ?? modules.DtButton);
 }
 
+const componentKey = ref(0);
 const component = ref(getComponentFromHash(window.location.hash));
 
 function updateComponent (e) {
