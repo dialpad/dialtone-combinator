@@ -14,12 +14,12 @@
             : undefined"
         >
           <template #separator>
-            <div>
+            <span>
               <IconArrowForward
                 v-if="entry.value"
                 class="d-fs10 d-px6 d-ps-relative d-t2"
               />
-            </div>
+            </span>
           </template>
         </dtc-event-console-pair>
       </div>

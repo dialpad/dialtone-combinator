@@ -29,7 +29,7 @@
     </template>
     <template #overlay>
       <div class="d-d-flex d-ai-flex-end d-jc-flex-end d-h100p">
-        <div class="d-pr32 d-pb16">
+        <div class="d-pr32 d-pb16 d-pe-auto">
           <slot name="overlay" />
         </div>
       </div>
@@ -43,10 +43,10 @@ import DtcEventConsole from '@/src/components/event_console/event_console';
 import DtcCodeEditor from '@/src/components/code_editor/code_editor';
 import DtcOverlay from '@/src/components/tools/overlay';
 
-import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
-import { ref } from 'vue';
+import { OPTIONS_UPDATE_EVENT, SETTINGS_INDENT_KEY } from '@/src/lib/constants';
+import { computed, provide, ref } from 'vue';
 
-defineProps({
+const props = defineProps({
   /**
    * Options data object.
    */
@@ -78,6 +78,12 @@ const eventConsole = ref();
 defineExpose({
   trigger: (event, value) => eventConsole.value.trigger(event, value),
 });
+
+const indent = computed(() => {
+  return props.settings.code.indent;
+});
+
+provide(SETTINGS_INDENT_KEY, indent);
 
 function generateLabel (slot, capitalCase) {
   const label = capitalCase(slot);

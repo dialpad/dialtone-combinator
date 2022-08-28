@@ -5,7 +5,8 @@
   },
   "code": {
     "default-scheme": "highlight",
-    "default-verbose": false
+    "default-verbose": false,
+    "default-indent-spaces": 2
   },
   "renderer": {
     "default-positioning": "center",

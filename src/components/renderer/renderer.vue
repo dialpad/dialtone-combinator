@@ -26,7 +26,7 @@
       </div>
     </template>
     <template #overlay>
-      <div class="d-d-flex d-jc-flex-end d-pt4">
+      <div class="d-d-flex d-jc-flex-end d-pt4 d-pe-auto">
         <dtc-renderer-menu
           :theme="theme"
           :background="background"

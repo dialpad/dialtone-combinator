@@ -3,10 +3,11 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
+import { SETTINGS_INDENT_KEY } from '@/src/lib/constants';
 
 const props = defineProps({
-  spaces: {
+  level: {
     type: Number,
     default: 2,
     validator (value) {
@@ -16,7 +17,7 @@ const props = defineProps({
 });
 
 const html = computed(() => {
-  return '&nbsp;'.repeat(props.spaces);
+  return '&nbsp;'.repeat(props.level * inject(SETTINGS_INDENT_KEY).value);
 });
 </script>
 

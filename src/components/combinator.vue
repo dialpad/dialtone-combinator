@@ -72,6 +72,7 @@ import {
   SETTINGS_BACKGROUND_KEY,
   SETTINGS_POSITIONING_KEY,
   SETTINGS_SIDEBAR_KEY,
+  SETTINGS_INDENT_KEY,
 } from '@/src/lib/constants';
 import defaultSettings from '@/src/settings.json';
 
@@ -225,6 +226,7 @@ const settings = computedModel(
       code: {
         scheme: cachedRef(SETTINGS_SCHEME_KEY, defaultSettings.code['default-scheme']),
         verbose: cachedRef(SETTINGS_VERBOSE_KEY, defaultSettings.code['default-verbose']),
+        indent: cachedRef(SETTINGS_INDENT_KEY, defaultSettings.code['default-indent-spaces']),
       },
     });
   }),
