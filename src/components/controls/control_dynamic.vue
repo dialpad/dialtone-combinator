@@ -14,8 +14,8 @@
       data-qa="dtc-control-dynamic-value"
     >
       <component
-        :is="control"
-        v-if="control"
+        :is="controlComponent"
+        v-if="controlComponent"
         :value="value"
         :disabled="disabled"
         @update:value="updateValue"
@@ -60,45 +60,29 @@ const controlSelectionMap = {
       return externalControls.includes(controlName);
     }),
   ),
-  true: () => {
-    return {
-      component: null,
-      get default () {
-        return true;
-      },
-    };
+  true: {
+    component: null,
+    default () { return true; },
   },
-  false: () => {
-    return {
-      component: null,
-      get default () {
-        return false;
-      },
-    };
+  false: {
+    component: null,
+    default () { return false; },
   },
-  null: () => {
-    return {
-      component: null,
-      get default () {
-        return null;
-      },
-    };
+  null: {
+    component: null,
+    default () { return null; },
   },
-  undefined: () => {
-    return {
-      component: null,
-      get default () {
-        return UNSET;
-      },
-    };
+  undefined: {
+    component: null,
+    default () { return UNSET; },
   },
 };
 
 const controlSelections = computed(() => Object.keys(controlSelectionMap));
 const selectedControl = ref(getControl());
 
-const control = computed(() => {
-  return controlSelectionMap[selectedControl.value]?.().component;
+const controlComponent = computed(() => {
+  return controlSelectionMap[selectedControl.value].component;
 });
 
 function getControl () {
@@ -114,13 +98,13 @@ function getControl () {
   const control = getControlByValue(value);
 
   return control === 'base'
-    ? controlMap.dynamic.defaultControl
+    ? controlMap.dynamic.defaultControl()
     : control;
 }
 
 function updateControl (e) {
   selectedControl.value = e;
-  updateValue(controlSelectionMap[e]().default);
+  updateValue(controlSelectionMap[e].default());
 }
 
 function updateValue (e) {

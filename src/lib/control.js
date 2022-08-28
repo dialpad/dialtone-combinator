@@ -31,74 +31,52 @@ export const UNSET = Symbol('unset');
  * @type {object}
  */
 export const controlMap = Object.freeze({
-  event: () => {
-    return {
-      component: DtcControlEvent,
-      get default () { return null; },
-    };
+  event: {
+    component: DtcControlEvent,
+    default () { return null; },
   },
-  slot: () => {
-    return {
-      component: DtcControlSlot,
-      get default () { return getControlDataDefault(this); },
-    };
+  slot: {
+    component: DtcControlSlot,
+    default () { return getControlDataDefault(this); },
   },
-  dynamic: () => {
-    return {
-      component: DtcControlDynamic,
-      get default () { return getControlDataDefault(this); },
-      get defaultControl () { return 'undefined'; },
-      serialize: true,
-    };
+  dynamic: {
+    component: DtcControlDynamic,
+    default () { return getControlDataDefault(this); },
+    defaultControl () { return 'undefined'; },
+    serialize: true,
   },
-  object: function () {
-    return {
-      component: DtcControlObject,
-      get default () { return getControlDataDefault(this); },
-    };
+  object: {
+    component: DtcControlObject,
+    default () { return getControlDataDefault(this); },
   },
-  array: () => {
-    return {
-      component: DtcControlArray,
-      get default () { return getControlDataDefault(this); },
-    };
+  array: {
+    component: DtcControlArray,
+    default () { return getControlDataDefault(this); },
   },
-  selection: ({ values } = {}) => {
-    return {
-      component: DtcControlSelection,
-      get default () { return values[0]; },
-    };
+  selection: {
+    component: DtcControlSelection,
+    default ({ values } = {}) { return values?.[0]; },
   },
-  string: () => {
-    return {
-      component: DtcControlString,
-      get default () { return getControlDataDefault(this); },
-    };
+  string: {
+    component: DtcControlString,
+    default () { return getControlDataDefault(this); },
   },
-  number: () => {
-    return {
-      component: DtcControlNumber,
-      get default () { return getControlDataDefault(this); },
-    };
+  number: {
+    component: DtcControlNumber,
+    default () { return getControlDataDefault(this); },
   },
-  boolean: () => {
-    return {
-      component: DtcControlBoolean,
-      get default () { return getControlDataDefault(this); },
-    };
+  boolean: {
+    component: DtcControlBoolean,
+    default () { return getControlDataDefault(this); },
   },
-  null: () => {
-    return {
-      component: DtcControlNullish,
-      get default () { return getControlDataDefault(this); },
-      serialize: true,
-    };
+  null: {
+    component: DtcControlNullish,
+    default () { return getControlDataDefault(this); },
+    serialize: true,
   },
-  base: () => {
-    return {
-      component: DtcControlBase,
-      get default () { return getControlDataDefault(this); },
-    };
+  base: {
+    component: DtcControlBase,
+    default () { return getControlDataDefault(this); },
   },
 });
 

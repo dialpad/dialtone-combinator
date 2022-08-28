@@ -99,7 +99,7 @@ function getAttributes (info) {
       type: {
         name: type,
       },
-      defaultValue: controlMap[type]().default,
+      defaultValue: controlMap[type].default(),
     };
   });
 }

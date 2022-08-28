@@ -24,9 +24,8 @@ describe('option_bar_control.vue test', function () {
           description: testDescription,
           values: ['test1', 'test2'],
         };
-        const controlData = controlMap[control](member);
-        member.controlData = controlData;
-        member.value = controlData.default;
+        member.controlData = controlMap[control];
+        member.value = member.controlData.default(member);
         wrapper = mount(DtcOptionBarControl, {
           props: member,
         });

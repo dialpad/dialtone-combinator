@@ -143,5 +143,6 @@ export default {
 <style>
   .dtc-option-bar {
     background-color: #FCFCFC;
+    color-scheme: light;
   }
 </style>
