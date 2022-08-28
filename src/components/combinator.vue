@@ -16,7 +16,7 @@
     <dt-notice
       v-if="showUnsupportedWarning"
       class="d-wmx-unset"
-      title="Component unsupported"
+      title="Unsupported component"
       kind="warning"
       :close-button-props="{ ariaLabel: 'Close warning' }"
       @close="hideUnsupportedMessage"
@@ -311,6 +311,7 @@ export default {
 }
 
 .dtc-root > * {
+  display: flex;
   overflow: hidden;
 }
 </style>

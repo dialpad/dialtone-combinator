@@ -5,7 +5,7 @@
   >
     <dtc-button-bar
       class="d-ps-absolute d-m8 d-t0 d-r0"
-      value="orange"
+      :value="background"
       @click="updateBackground"
     >
       <template #orange-200>
@@ -101,7 +101,7 @@ onMounted(() => {
   });
 });
 
-const background = ref('orange-200');
+const background = ref('white');
 
 function updateBackground (e) {
   background.value = e;
