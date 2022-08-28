@@ -30,9 +30,6 @@ const testControls = {
   undefined: {
     value: undefined,
   },
-  NaN: {
-    value: NaN,
-  },
 };
 
 const defaultValue = undefined;

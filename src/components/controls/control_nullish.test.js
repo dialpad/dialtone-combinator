@@ -2,12 +2,13 @@ import DtcControlNullish from './control_nullish';
 
 import { assert } from 'chai';
 import { mount } from '@vue/test-utils';
+import { UNSET } from '@/src/lib/control';
 
 const inputSelector = 'select';
 
-const inputValue = NaN;
+const inputValue = UNSET;
 
-const inputString = 'NaN';
+const inputString = 'undefined';
 const defaultString = 'null';
 
 describe('control_nullish.vue test', function () {

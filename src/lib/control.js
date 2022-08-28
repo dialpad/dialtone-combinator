@@ -26,7 +26,7 @@ export const UNSET = Symbol('unset');
 
 /**
  * Map of controls containing control component and related information.
- * Controls must have the 'component(args)' and `get default()` fields.
+ * Controls must have the 'component' and 'default' entries.
  *
  * @type {object}
  */

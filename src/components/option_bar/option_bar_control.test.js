@@ -22,6 +22,7 @@ describe('option_bar_control.vue test', function () {
           validControls: [control],
           label: testLabel,
           description: testDescription,
+          values: ['test1', 'test2'],
         };
         const controlData = controlMap[control](member);
         member.controlData = controlData;
