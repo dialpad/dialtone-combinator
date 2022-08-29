@@ -13,6 +13,7 @@
       >
         <template #opening>
           <dtc-code-editor-tag-attributes
+            class="dtc-code-editor__margin"
             :info-bindings="info.bindings.get()"
             :option-bindings="options.bindings.get()"
             :verbose="verbose"
@@ -164,3 +165,9 @@ export default {
   name: 'DtcCodeEditor',
 };
 </script>
+
+<style>
+.dtc-code-editor__margin {
+  border-left: var(--dtc-theme-color-background-darken) solid 1px;
+}
+</style>

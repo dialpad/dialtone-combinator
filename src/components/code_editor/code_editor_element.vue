@@ -6,7 +6,9 @@
       <slot name="opening" />
       <span v-if="selfClosing">/</span>
     </dtc-code-editor-opening-tag>
-    <div class="dtc-code-editor-element__slot">
+    <div
+      class="dtc-code-editor__margin"
+    >
       <slot />
     </div>
     <dtc-code-editor-closing-tag
@@ -40,9 +42,3 @@ export default {
   name: 'DtcCodeEditorElement',
 };
 </script>
-
-<style>
-.dtc-code-editor-element__slot {
-  border-left: var(--dtc-theme-color-background-darken) solid 1px;
-}
-</style>

@@ -12,8 +12,9 @@
       {
     </template>
     <template #item="{ item, update }">
-      <div class="d-d-flex">
+      <div class="d-d-grid d-g-cols2">
         <div
+          class="d-d-flex"
           data-qa="dtc-control-object-item-key"
         >
           <dtc-control-string
@@ -21,12 +22,15 @@
             :disabled="disabled"
             @update:value="e => updateEntry(e, item[1], update)"
           />
+          <span class="d-px6 d-ps-relative d-t6">:</span>
         </div>
-        <span class="d-px6 d-ps-relative d-t6">:</span>
         <div
+          class="dtc-control-object__contents"
           data-qa="dtc-control-object-item-value"
         >
           <dtc-control-dynamic
+            class="dtc-control-object__contents"
+            input-class="d-gc-full"
             :value="serializeControlValue(item[1])"
             :disabled="disabled"
             @update:value="e => updateEntry(item[0], deserializeControlValue(e), update)"
@@ -97,3 +101,9 @@ export default {
   name: 'DtcControlObject',
 };
 </script>
+
+<style>
+.dtc-control-object__contents {
+  display: contents;
+}
+</style>

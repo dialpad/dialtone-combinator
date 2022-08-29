@@ -10,14 +10,15 @@
       />
     </div>
     <div
-      class="d-ta-right d-ps-relative d-b1"
+      class="d-ps-relative d-b1"
+      :class="inputClass"
       data-qa="dtc-control-dynamic-value"
     >
       <component
         :is="controlComponent"
         v-if="controlComponent"
+        v-bind="bindings"
         :value="value"
-        :disabled="disabled"
         @update:value="updateValue"
       />
     </div>
@@ -40,9 +41,19 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  inputClass: {
+    type: String,
+    default: '',
+  },
 });
 
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
+
+const bindings = computed(() => {
+  return {
+    disabled: props.disabled,
+  };
+});
 
 /**
  * Controls from the 'control map' to include in selections.
@@ -52,6 +63,8 @@ const emit = defineEmits([VALUE_UPDATE_EVENT]);
 const externalControls = [
   'string',
   'number',
+  'array',
+  'object',
 ];
 
 const controlSelectionMap = {
