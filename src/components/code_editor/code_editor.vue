@@ -13,7 +13,6 @@
       >
         <template #opening>
           <dtc-code-editor-tag-attributes
-            class="dtc-code-editor__margin"
             :info-bindings="info.bindings.get()"
             :option-bindings="options.bindings.get()"
             :verbose="verbose"

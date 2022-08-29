@@ -1,5 +1,8 @@
 <template>
-  <div v-if="!isEmpty">
+  <div
+    v-if="!isEmpty"
+    class="dtc-code-editor__margin"
+  >
     <dtc-code-editor-indent>
       <div>
         <template
