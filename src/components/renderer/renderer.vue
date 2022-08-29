@@ -10,19 +10,20 @@
           'd-ai-flex-start': positioning === 'native',
         }"
       >
-        <component
-          :is="component"
-          v-bind="bindings"
-          v-on="events"
+        <dtc-renderer-target
+          :component="component"
+          :bindings="options.bindings.get()"
+          :events="info.events"
+          @event="(event, value) => emit('event', event, value)"
         >
           <template
-            v-for="(slot, name) in activeSlots"
+            v-for="(slot, name) in renderedSlots"
             :key="name"
             #[name]
           >
             <div v-html="slot" />
           </template>
-        </component>
+        </dtc-renderer-target>
       </div>
     </template>
     <template #overlay>
@@ -43,6 +44,7 @@ import { computed } from 'vue';
 import { SETTINGS_UPDATE_EVENT } from '@/src/lib/constants';
 import DtcRendererMenu from '@/src/components/renderer/renderer_menu';
 import DtcOverlay from '@/src/components/tools/overlay';
+import DtcRendererTarget from '@/src/components/renderer/renderer_target';
 
 const props = defineProps({
   /**
@@ -80,6 +82,18 @@ const emit = defineEmits([
   'event',
 ]);
 
+/**
+ * Filtered slots that contain content.
+ *
+ * @type {ComputedRef<object>}
+ */
+const renderedSlots = computed(() => {
+  if (!props.options.slots) { return null; }
+  return Object.fromEntries(
+    Object.entries(props.options.slots).filter(([_, slot]) => slot),
+  );
+});
+
 const theme = computed(() => {
   switch (background.value) {
     case 'black': return 'dark';
@@ -105,39 +119,6 @@ function updateSettings (setting, e) {
     model.renderer[setting] = e;
   });
 }
-
-/**
- * Filtered slots that contain content.
- *
- * @type {ComputedRef<object>}
- */
-const activeSlots = computed(() => {
-  if (!props.options.slots) { return null; }
-  return Object.fromEntries(
-    Object.entries(props.options.slots).filter(([_, slot]) => slot),
-  );
-});
-
-const bindings = computed(() => {
-  return props.options.bindings.get();
-});
-
-/**
- * Map object containing events and their respective handlers.
- *
- * @returns {ComputedRef<object>} Event map.
- */
-const events = computed(() => {
-  if (!props.info.events) { return {}; }
-  return Object.fromEntries(
-    props.info.events.map(({ name }) => {
-      return [
-        name,
-        e => emit('event', name, e),
-      ];
-    }),
-  );
-});
 </script>
 
 <script>

@@ -168,6 +168,8 @@ const info = computed(() => {
   });
 });
 
+console.log(info);
+
 /**
  * Gets the values for a given 'options' member group with the provided defaults.
  */
@@ -210,13 +212,7 @@ const options = computedModel(
    * else vue can block the value from ever being changed,
    * keeping the value permanently in an invalid state
    */
-  (e, model) => {
-    try {
-      e(model);
-    } catch (exception) {
-      console.warn(exception);
-    }
-  },
+  (e, model) => e(model),
 );
 
 /**
