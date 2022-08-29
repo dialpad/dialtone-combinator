@@ -1,30 +1,33 @@
 <template>
-  <div v-if="isEmpty">
-    <template
-      v-for="[name, { value, label }] in bindingMap"
-      :key="name"
-    >
+  <div v-if="!isEmpty">
+    <dtc-code-editor-indent>
       <div>
-        <dtc-code-editor-indent />
-        <span v-if="useBindOperator(value)">:</span>
-        <span class="dtc-scheme__class">
-          {{ label }}
-        </span>
-        <span v-if="!useShortSyntax(value)">
-          <span>=</span>
-          <span class="dtc-scheme__string">"</span>
-          <span
-            :class="{
-              'dtc-scheme__string': !useBindOperator(value),
-              'dtc-scheme__value': useBindOperator(value),
-            }"
-          >
-            {{ stringifyValue(value) }}
-          </span>
-          <span class="dtc-scheme__string">"</span>
-        </span>
+        <template
+          v-for="[name, { value, label }] in bindingMap"
+          :key="name"
+        >
+          <div>
+            <span v-if="useBindOperator(value)">:</span>
+            <span class="dtc-scheme__class">
+              {{ label }}
+            </span>
+            <span v-if="!useShortSyntax(value)">
+              <span>=</span>
+              <span class="dtc-scheme__string">"</span>
+              <span
+                :class="{
+                  'dtc-scheme__string': !useBindOperator(value),
+                  'dtc-scheme__value': useBindOperator(value),
+                }"
+              >
+                {{ stringifyValue(value) }}
+              </span>
+              <span class="dtc-scheme__string">"</span>
+            </span>
+          </div>
+        </template>
       </div>
-    </template>
+    </dtc-code-editor-indent>
   </div>
 </template>
 
@@ -93,7 +96,7 @@ function stringifyValue (value) {
 }
 
 const isEmpty = computed(() => {
-  return bindingMap.value.length > 0;
+  return bindingMap.value.length <= 0;
 });
 </script>
 

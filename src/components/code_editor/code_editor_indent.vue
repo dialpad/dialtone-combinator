@@ -1,5 +1,8 @@
 <template>
-  <span v-html="html" />
+  <div class="d-d-flex">
+    <span v-html="html" />
+    <slot />
+  </div>
 </template>
 
 <script setup>
@@ -11,7 +14,7 @@ const props = defineProps({
     type: Number,
     default: 1,
     validator (value) {
-      return value > 0;
+      return value >= 0;
     },
   },
 });

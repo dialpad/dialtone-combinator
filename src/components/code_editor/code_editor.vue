@@ -139,7 +139,16 @@ const code = ref();
 const showCopyPopover = ref(false);
 
 async function copy () {
-  await navigator.clipboard.writeText(code.value.innerText);
+  let text = code.value.innerText;
+
+  // Remove nbsp char
+  text = text.replace(/\xA0/g, '');
+
+  // Remove empty lines
+  text = text.replace(/^\s*[\r\n]/gm, '');
+
+  await navigator.clipboard.writeText(text);
+
   showCopyPopover.value = true;
   await new Promise(resolve => setTimeout(resolve, 1000));
   showCopyPopover.value = false;
