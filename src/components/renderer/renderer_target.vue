@@ -65,22 +65,18 @@ function nextContainer () {
 function renderTarget () {
   const container = nextContainer();
 
-  console.log(events.value);
-
   try {
     render(h(props.component, {
       ...props.bindings,
       ...events.value,
     }, slots), container);
   } catch (e) {
-    console.error(e);
+    console.warn('Rendering warning: \n', e);
     renderError(e, container);
   }
 }
 
 function renderError (exception, container) {
-  console.log('renderError');
-
   render(h(DtNotice, {
     kind: 'error',
     hideClose: true,

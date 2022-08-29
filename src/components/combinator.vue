@@ -73,7 +73,7 @@ import DtcHeader from '@/src/components/header/header';
 import { DtNotice } from '@dialpad/dialtone-vue';
 
 import { enumerateGroups } from '@/src/lib/utils';
-import { computed, reactive, ref } from 'vue';
+import { computed, onErrorCaptured, reactive, ref } from 'vue';
 import { cachedRef, computedModel } from '@/src/lib/utils_vue';
 import { getComponentInfo } from '@/src/lib/info';
 import {
@@ -87,6 +87,7 @@ import {
 } from '@/src/lib/constants';
 import defaultSettings from '@/src/settings.json';
 import supportedComponents from '@/src/supported_components.json';
+import { OrderedObject } from '@/src/lib/ordered_object';
 
 const props = defineProps({
   /**
@@ -132,6 +133,13 @@ function initializeInfo () {
 
   return info;
 }
+
+const test = new OrderedObject();
+
+test.set('1', '2');
+test.set('0', '3');
+
+console.log(Object.entries(test));
 
 /**
  * Container for all extended component information for the target component.
@@ -212,7 +220,13 @@ const options = computedModel(
    * else vue can block the value from ever being changed,
    * keeping the value permanently in an invalid state
    */
-  (e, model) => e(model),
+  (e, model) => {
+    try {
+      e(model);
+    } catch (exception) {
+      console.warn('Update options warning: \n', exception);
+    }
+  },
 );
 
 /**
@@ -238,7 +252,13 @@ const settings = computedModel(
       },
     });
   }),
-  (e, model) => e(model),
+  (e, model) => {
+    try {
+      e(model);
+    } catch (exception) {
+      console.warn('Update settings warning: \n', exception);
+    }
+  },
 );
 
 const showUnsupportedWarning = ref(!supportedComponents.includes(props.component.name));
@@ -252,6 +272,11 @@ const codePanel = ref();
 function triggerEvent (event, value) {
   codePanel.value.trigger(event, value);
 }
+
+onErrorCaptured((exception) => {
+  console.warn('Internal vue warning: \n', exception);
+  return false;
+});
 </script>
 
 <script>

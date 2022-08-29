@@ -20,7 +20,7 @@
           <dtc-control-string
             :value="item[0]"
             :disabled="disabled"
-            @update:value="e => updateEntry(e, item[1], update)"
+            @update:value="e => updateKey(e, item[1], update)"
           />
           <span class="d-px6 d-ps-relative d-t6">:</span>
         </div>
@@ -51,6 +51,7 @@ import DtcControlDynamic from './control_dynamic';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
 import { serializeControlValue, deserializeControlValue } from '@/src/lib/control';
+import { OrderedObject } from '@/src/lib/ordered_object';
 
 const props = defineProps({
   value: {
@@ -69,19 +70,31 @@ const entries = computed(() => {
   return props.value ? Object.entries(props.value) : [];
 });
 
+const keys = computed(() => {
+  return entries.value.map(([key]) => key);
+});
+
 let currentId = 0;
 function generateNextId () {
-  const keys = Object.keys(props.value);
-
-  while (keys.includes(currentId.toString())) {
+  while (keys.value.includes(currentId.toString())) {
     currentId++;
   }
 
-  return currentId;
+  return currentId.toString();
 }
 
 function generateItem () {
-  return [generateNextId().toString(), undefined];
+  return [generateNextId(), undefined];
+}
+
+function updateKey (key, value, updateItem) {
+  if (keys.value.includes(key)) {
+    const id = generateNextId();
+    console.log(`Object cannot contain duplicate key '${key}', key set to '${id}'`);
+    key = id;
+  }
+
+  updateEntry(key, value, updateItem);
 }
 
 function updateEntry (key, value, updateItem) {
@@ -89,7 +102,9 @@ function updateEntry (key, value, updateItem) {
 }
 
 function updateValue (e) {
-  emit(VALUE_UPDATE_EVENT, Object.fromEntries(e));
+  const orderedObject = OrderedObject.fromEntries(e);
+
+  emit(VALUE_UPDATE_EVENT, orderedObject);
 }
 </script>
 
