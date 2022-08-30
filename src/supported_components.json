@@ -10,6 +10,7 @@
   "DtKeyboardShortcut",
   "DtLazyShow",
   "DtLink",
+  "DtListItem", "ListItem",
   "DtNotice",
   "DtRadio",
   "DtSelectMenu",

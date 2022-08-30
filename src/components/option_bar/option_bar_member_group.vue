@@ -33,7 +33,7 @@
         <dtc-option-bar-control
           :value="values[key]"
           :label="member.label"
-          :control-data="controlMap[member.control]"
+          :control-data="getControlData(member)"
           :valid-controls="member.validControls"
           :description="member.description"
           :types="member.types"
@@ -126,6 +126,10 @@ function hasDefaultValue (member) {
   return 'defaultValue' in member;
 }
 
+function getControlData (member) {
+  return controlMap[member.control] ?? controlMap.base;
+}
+
 /**
  * Wraps a member with an object containing additional data about the member.
  * This is used by the 'member map' to hold data about controls.
@@ -181,7 +185,7 @@ function updateControl (e, key) {
   }
 
   member.control = e;
-  updateMember(value ?? controlMap[e].default(member), key);
+  updateMember(value ?? getControlData(member).default(member), key);
 }
 </script>
 

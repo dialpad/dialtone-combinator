@@ -67,8 +67,8 @@ import supportedComponentData from '@/src/supported_components.json';
 
 const DEFAULT_COMPONENT = 'DtButton';
 
-function isSupportedComponent (componentName) {
-  return supportedComponentData.includes(componentName);
+function isSupportedComponent (exportName) {
+  return supportedComponentData.includes(exportName);
 }
 
 const components = computed(() => {
@@ -76,11 +76,11 @@ const components = computed(() => {
     return typeof (exportValue) === 'object' &&
       exportName.toLowerCase().startsWith(DIALTONE_PREFIX) &&
       exportValue.name;
-  }).map(([_, exportValue]) => exportValue);
+  });
 });
 
 const options = computed(() => {
-  return components.value.map(component => component.name);
+  return components.value.map(([exportName]) => exportName);
 });
 
 function getComponentFromHash (hash) {

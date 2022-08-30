@@ -16,7 +16,7 @@
           <template #separator>
             <span>
               <IconArrowForward
-                v-if="entry.value"
+                v-if="entry.value !== undefined"
                 class="d-fs10 d-px6 d-ps-relative d-t2"
               />
             </span>
