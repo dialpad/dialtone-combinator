@@ -3,7 +3,10 @@
     class="dtc-combinator d-d-flex d-fd-column d-w100p"
     :class="`dtc-theme--${settings.root.theme}`"
   >
-    <div class="d-mb6">
+    <div
+      v-if="!blueprint"
+      class="d-mb6"
+    >
       <div class="d-ba d-bar8 d-of-hidden">
         <dtc-header
           :component="component"
@@ -25,11 +28,11 @@
     </dt-notice>
     <div class="d-d-flex d-fl-grow1 d-hmn0">
       <div
-        :class="`dtc-root
-        dtc-root--sidebar-${settings.root.sidebar}
-        d-ba d-bar8
-        d-of-hidden
-        d-d-grid d-w100p`"
+        class="dtc-root d-d-grid d-ba d-bar8 d-of-hidden d-w100p"
+        :class="{
+          [`dtc-root--sidebar-${settings.root.sidebar}`]: true,
+          'dtc-root--blueprint': blueprint,
+        }"
       >
         <div class="dtc-root__top">
           <dtc-renderer
@@ -47,12 +50,18 @@
             :info="info"
             :settings="settings"
           >
-            <template #overlay>
+            <template
+              v-if="!blueprint"
+              #overlay
+            >
               <dtc-settings-menu v-model:settings="settings" />
             </template>
           </dtc-code-panel>
         </div>
-        <div class="dtc-root__sidebar">
+        <div
+          v-if="!blueprint"
+          class="dtc-root__sidebar"
+        >
           <dtc-option-bar
             v-model:options="options"
             :component="component"
@@ -104,6 +113,14 @@ const props = defineProps({
   variants: {
     type: undefined,
     default: {},
+  },
+  /**
+   * Activate 'blueprint' mode, to use a simple version of the combinator.
+   * Used to display the component but provided limited options for interaction.
+   */
+  blueprint: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -242,8 +259,10 @@ const settings = computedModel(
       },
       code: {
         scheme: cachedRef(SETTINGS_SCHEME_KEY, defaultSettings.code['default-scheme']),
-        verbose: cachedRef(SETTINGS_VERBOSE_KEY, defaultSettings.code['default-verbose']),
         indent: cachedRef(SETTINGS_INDENT_KEY, defaultSettings.code['default-indent-spaces']),
+        verbose: props.blueprint
+          ? false
+          : cachedRef(SETTINGS_VERBOSE_KEY, defaultSettings.code['default-verbose']),
       },
     });
   }),
@@ -291,6 +310,18 @@ export default {
 
 .dtc-root {
   grid-template-rows: repeat(2, 1fr);
+}
+
+.dtc-root--blueprint {
+  grid-template-columns: 1fr !important;
+
+  .dtc-root__top {
+    grid-column-start: 1 !important;
+  }
+
+  .dtc-root__bottom {
+    grid-column-start: 1 !important;
+  }
 }
 
 .dtc-root--sidebar-right {
