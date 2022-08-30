@@ -89,18 +89,11 @@ const props = defineProps({
     default: undefined,
   },
   /**
-   * Array of valid types for member.
+   * If the member is a part of the v-model.
    */
-  types: {
-    type: Array,
-    default: undefined,
-  },
-  /**
-   * Map of member tags.
-   */
-  tags: {
-    type: Object,
-    default: undefined,
+  vModel: {
+    type: Boolean,
+    default: false,
   },
   /**
    * If the member is considered required.
@@ -167,13 +160,6 @@ const controlBindings = computed(() => {
       return controlProps.includes(arg);
     }),
   );
-});
-
-const showModelTag = computed(() => {
-  const tags = props.tags;
-  return tags
-    ? 'model' in tags
-    : false;
 });
 
 /**

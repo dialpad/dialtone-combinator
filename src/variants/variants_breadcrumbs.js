@@ -2,7 +2,7 @@ export default {
   default: {
     props: {
       breadcrumbs: {
-        defaultValue: [
+        initialValue: [
           { label: 'Root', href: '#' },
           { label: 'Section', href: '#' },
           { label: 'Section', href: '#' },

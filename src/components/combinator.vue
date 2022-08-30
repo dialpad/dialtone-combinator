@@ -205,11 +205,11 @@ const info = computed(() => {
 /**
  * Gets the values for a given 'options' member group with the provided defaults.
  */
-function getDefaultOptions (info) {
+function getInitialValues (info) {
   const options = {};
   info.members.enumerate((memberGroup, member) => {
     options[memberGroup] = options[memberGroup] || {};
-    options[memberGroup][member.name] = member.defaultValue;
+    options[memberGroup][member.name] = member.initialValue;
   });
   return options;
 }
@@ -223,7 +223,7 @@ function getDefaultOptions (info) {
 const options = computedModel(
   computed(() => {
     return reactive({
-      ...getDefaultOptions(info.value),
+      ...getInitialValues(info.value),
       bindings: {
         get () {
           const bindings = [];

@@ -104,8 +104,8 @@ function getAttributes (info) {
       type: {
         name: type,
       },
+      initialValue: defaultValue,
       defaultValue,
-      defaultDocumentationValue: defaultValue,
     };
   });
 }

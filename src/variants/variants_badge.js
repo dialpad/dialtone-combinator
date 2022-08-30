@@ -2,7 +2,7 @@ export default {
   default: {
     slots: {
       default: {
-        defaultValue: 'Badge',
+        initialValue: 'Badge',
       },
     },
   },
