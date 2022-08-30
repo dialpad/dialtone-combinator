@@ -26,7 +26,7 @@
           />
         </span>
         <span
-          v-if="showModelTag"
+          v-if="vModel"
           class="d-pl2 d-ps-relative d-b2"
         >
           <dt-badge
