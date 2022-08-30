@@ -7,7 +7,10 @@
       v-if="!blueprint"
       class="d-mb6"
     >
-      <div class="d-ba d-bar8 d-of-hidden">
+      <div
+        :class="headerClass"
+        class="d-of-hidden d-ba d-bar4"
+      >
         <dtc-header
           :component="component"
           :variants="variants"
@@ -28,8 +31,9 @@
     </dt-notice>
     <div class="d-d-flex d-fl-grow1 d-hmn0">
       <div
-        class="dtc-root d-d-grid d-ba d-bar8 d-of-hidden d-w100p"
+        class="dtc-root d-d-grid d-of-hidden d-ba d-bar4 d-w100p"
         :class="{
+          [rootClass]: true,
           [`dtc-root--sidebar-${settings.root.sidebar}`]: true,
           'dtc-root--blueprint': blueprint,
         }"
@@ -121,6 +125,14 @@ const props = defineProps({
   blueprint: {
     type: Boolean,
     default: false,
+  },
+  rootClass: {
+    type: String,
+    default: '',
+  },
+  headerClass: {
+    type: String,
+    default: '',
   },
 });
 
