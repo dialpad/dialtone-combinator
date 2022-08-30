@@ -4,6 +4,7 @@
       <dtc-section
         v-if="info.slots"
         heading="Slots"
+        content-class="d-px12"
       >
         <dtc-option-bar-member-group
           :component="component"
@@ -16,6 +17,7 @@
       <dtc-section
         v-if="info.props"
         heading="Props"
+        content-class="d-px12"
       >
         <dtc-option-bar-member-group
           :component="component"
@@ -28,6 +30,7 @@
       <dtc-section
         v-if="info.attributes"
         heading="Native HTML Attributes"
+        content-class="d-px12"
       >
         <dtc-option-bar-member-group
           :component="component"
@@ -40,6 +43,7 @@
       <dtc-section
         v-if="info.events"
         heading="Events"
+        content-class="d-px12"
       >
         <dtc-option-bar-member-group
           :component="component"

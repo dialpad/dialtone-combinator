@@ -18,7 +18,7 @@
     </dt-list-item>
     <div
       v-if="show"
-      class="d-px12"
+      :class="contentClass"
     >
       <slot />
     </div>
@@ -32,14 +32,22 @@ import { DtListItem } from '@dialpad/dialtone-vue';
 
 import { ref } from 'vue';
 
-defineProps({
+const props = defineProps({
   heading: {
     type: String,
     required: true,
   },
+  open: {
+    type: Boolean,
+    default: true,
+  },
+  contentClass: {
+    type: String,
+    default: '',
+  },
 });
 
-const show = ref(true);
+const show = ref(props.open);
 
 function toggle () {
   show.value = !show.value;
