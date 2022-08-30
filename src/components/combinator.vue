@@ -87,7 +87,6 @@ import {
 } from '@/src/lib/constants';
 import defaultSettings from '@/src/settings.json';
 import supportedComponents from '@/src/supported_components.json';
-import { OrderedObject } from '@/src/lib/ordered_object';
 
 const props = defineProps({
   /**
@@ -134,13 +133,6 @@ function initializeInfo () {
   return info;
 }
 
-const test = new OrderedObject();
-
-test.set('1', '2');
-test.set('0', '3');
-
-console.log(Object.entries(test));
-
 /**
  * Container for all extended component information for the target component.
  * Immutable.
@@ -169,14 +161,12 @@ const info = computed(() => {
       enumerate (handler) {
         enumerateGroups(handler, {
           props: info.value.props,
-          attributes: info.value.attributes,
+          attributes: info.value.attributes?.filter(attribute => attribute),
         });
       },
     },
   });
 });
-
-console.log(info);
 
 /**
  * Gets the values for a given 'options' member group with the provided defaults.
@@ -274,7 +264,7 @@ function triggerEvent (event, value) {
 }
 
 onErrorCaptured((exception) => {
-  console.warn('Internal vue warning: \n', exception);
+  console.error('Internal vue error: \n', exception);
   return false;
 });
 </script>

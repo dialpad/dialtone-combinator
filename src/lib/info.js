@@ -37,6 +37,10 @@ export function getComponentInfo (component) {
  * @param {object} component - The target component.
  */
 function extendInfo (info, component) {
+  if (!info) {
+    return;
+  }
+
   renameModelProp(info);
 
   const attributes = getAttributes(info);
@@ -65,7 +69,7 @@ function extendInfo (info, component) {
  * @param {object} info - The unprocessed info object.
  */
 function renameModelProp (info) {
-  const model = info.props.find(componentProp => {
+  const model = info.props?.find(componentProp => {
     const tags = componentProp.tags;
     return tags
       ? 'model' in tags
@@ -147,6 +151,7 @@ function getComponentDefaults (component) {
   const componentSearchObjects = [
     component.props,
     ...(component.mixins?.map(mixin => mixin.props) ?? []),
+    ...(component.extends?.mixins?.map(mixin => mixin.props) ?? []),
   ].filter(obj => obj);
 
   /**

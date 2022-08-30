@@ -87,7 +87,7 @@ const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
 
 function getBindingControls (binding, value, ...controls) {
   const validControls = [
-    ...binding.types.map(type => getControlByMemberType(type, binding)),
+    ...(binding.types?.map(type => getControlByMemberType(type, binding)) ?? []),
     ...controls,
   ];
 

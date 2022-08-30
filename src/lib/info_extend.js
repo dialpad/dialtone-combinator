@@ -1,5 +1,6 @@
-import { paramCase, sentenceCase } from 'change-case';
+import { paramCase } from 'change-case';
 import { typeOfMemberValue } from '@/src/lib/utils';
+import { capitalize } from 'vue';
 
 /**
  * The default processing function that is applied to every member in a member group.
@@ -21,7 +22,7 @@ export function extendMember (member) {
     member.label = paramCase(member.name);
   }
   if (member.description) {
-    member.description = sentenceCase(member.description);
+    member.description = capitalize(member.description);
   }
 }
 

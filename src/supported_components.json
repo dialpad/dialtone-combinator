@@ -1,5 +1,20 @@
 [
   "DtAvatar",
   "DtBadge",
-  "DtButton"
+  "DtButton",
+  "DtButtonGroup",
+  "DtBreadcrumbs",
+  "DtCheckbox",
+  "DtChip",
+  "DtInput",
+  "DtKeyboardShortcut",
+  "DtLazyShow",
+  "DtLink",
+  "DtNotice",
+  "DtRadio",
+  "DtSelectMenu",
+  "DtToast",
+  "DtToggle",
+  "DtTooltip",
+  "DtValidationMessages"
 ]

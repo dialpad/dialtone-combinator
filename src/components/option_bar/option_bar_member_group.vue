@@ -38,6 +38,7 @@
           :description="member.description"
           :types="member.types"
           :tags="member.tags"
+          :required="member.required"
           :locked="member.lockControl"
           :args="{
             defaultValue: member.defaultValue,

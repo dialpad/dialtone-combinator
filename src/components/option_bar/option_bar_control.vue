@@ -17,6 +17,15 @@
           class="d-pr4 d-fs10 d-ps-relative d-t1"
         />
         <span
+          v-if="required"
+          class="d-pl2 d-ps-relative d-b2"
+        >
+          <dt-badge
+            text="required"
+            color="black-700"
+          />
+        </span>
+        <span
           v-if="showModelTag"
           class="d-pl2 d-ps-relative d-b2"
         >
@@ -83,6 +92,10 @@ const props = defineProps({
   tags: {
     type: Object,
     default: undefined,
+  },
+  required: {
+    type: Boolean,
+    default: false,
   },
   /**
    * Prevent the control from being modified.

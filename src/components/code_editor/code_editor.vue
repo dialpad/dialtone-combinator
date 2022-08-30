@@ -132,7 +132,9 @@ provide(SETTINGS_INDENT_KEY, indent);
 const tagName = computed(() => paramCase(props.info.displayName));
 
 const hasSlotContent = computed(() => {
-  return Object.values(props.options.slots).every(slot => !slot);
+  return props.options.slots
+    ? Object.values(props.options.slots).every(slot => !slot)
+    : false;
 });
 
 const code = ref();

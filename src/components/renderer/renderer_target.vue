@@ -3,9 +3,8 @@
 </template>
 
 <script setup>
-import { computed, h, onMounted, onUpdated, ref, render, useSlots } from 'vue';
+import { capitalize, computed, h, onMounted, onUpdated, ref, render, useSlots } from 'vue';
 import { DtNotice } from '@dialpad/dialtone-vue';
-import { capitalCase } from 'change-case';
 
 const ERROR_MESSAGE = 'Error rendering component';
 
@@ -43,7 +42,7 @@ const events = computed(() => {
   return Object.fromEntries(
     props.events.map(({ name }) => {
       return [
-        `on${capitalCase(name)}`,
+        `on${capitalize(name)}`,
         e => emit('event', name, e),
       ];
     }),
