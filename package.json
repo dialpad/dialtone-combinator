@@ -1,6 +1,6 @@
 {
   "name": "@dialpad/dialtone-combinator",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "publishConfig": {
     "access": "public"
   },
