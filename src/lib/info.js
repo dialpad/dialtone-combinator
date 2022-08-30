@@ -98,12 +98,14 @@ function getAttributes (info) {
     return property.description === 'attribute';
   }).map(property => {
     const type = property.type.name.toLowerCase();
+    const defaultValue = controlMap[type].default();
     return {
       name: property.name,
       type: {
         name: type,
       },
-      defaultValue: controlMap[type].default(),
+      defaultValue,
+      defaultDocumentationValue: defaultValue,
     };
   });
 }

@@ -1,6 +1,6 @@
 {
   "root": {
-    "default-theme": "dark",
+    "default-theme": "light",
     "default-sidebar": "right"
   },
   "code": {

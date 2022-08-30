@@ -92,7 +92,7 @@ const bindingMap = computed(() => {
 function isMemberVisible (name, member) {
   if (props.verbose) { return true; }
 
-  const defaultString = JSON.stringify(member.defaultValue);
+  const defaultString = JSON.stringify(member.defaultDocumentationValue);
   const valueString = JSON.stringify(member.value);
 
   return defaultString !== valueString;
