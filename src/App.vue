@@ -64,6 +64,7 @@ import { DtBadge } from '@dialpad/dialtone-vue';
 import DtcButtonBar from '@/src/components/tools/button_bar';
 import DtcSuggestion from '@/src/components/controls/control_suggestion';
 import supportedComponentData from '@/src/supported_components.json';
+import variantBank from '@/src/variants/variants';
 
 const DEFAULT_COMPONENT = 'DtButton';
 
@@ -83,13 +84,21 @@ const options = computed(() => {
   return components.value.map(([exportName]) => exportName);
 });
 
-function getComponentFromHash (hash) {
+function getComponentFromHash () {
   componentKey.value += 1;
-  return markRaw(modules[hash.substring(1)] ?? modules.DtButton);
+  const hash = window.location.hash.substring(1);
+  return markRaw(modules[hash] ?? modules.DtButton);
+}
+
+function getVariantFromHash () {
+  const hash = window.location.hash.substring(1);
+  console.log(variantBank()[hash]);
+  return variantBank()[hash] ?? {};
 }
 
 const componentKey = ref(0);
-const component = ref(getComponentFromHash(window.location.hash));
+const component = ref(getComponentFromHash());
+const variants = ref(getVariantFromHash());
 
 function updateComponent (e) {
   window.location.hash = e;
@@ -97,7 +106,8 @@ function updateComponent (e) {
 
 onMounted(() => {
   addEventListener('hashchange', () => {
-    component.value = getComponentFromHash(window.location.hash);
+    component.value = getComponentFromHash();
+    variants.value = getVariantFromHash();
   });
 });
 
@@ -106,52 +116,6 @@ const background = ref('white');
 function updateBackground (e) {
   background.value = e;
 }
-
-const variants = computed(() => {
-  switch (component.value.name) {
-    case 'DtButton': {
-      return {
-        variant: {
-          slots: {
-            icon: {
-              description: 'Variant slot description',
-            },
-          },
-          props: {
-            circle: {
-              description: 'Variant changed value and locked',
-              defaultValue: true,
-              newProperty: 123,
-              lockControl: true,
-            },
-            iconPosition: {
-              description: 'Variant changed description',
-            },
-            importance: {
-              hideControl: true,
-            },
-            link: {
-              description: 'The `importance` control that is usually above is hidden here',
-            },
-            labelClass: {
-              defaultValue: [2],
-              lockControl: true,
-            },
-          },
-          events: {
-            focusin: {
-              type: {
-                names: ['customvariantevent'],
-              },
-              description: 'I have a custom variant event type',
-            },
-          },
-        },
-      };
-    }
-    default: return {};
-  }
-});
 
 </script>
 
