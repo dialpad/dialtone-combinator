@@ -122,10 +122,21 @@ function getMemberKey (member) {
   return member.name;
 }
 
+/**
+ * Determines if the member has a default value.
+ *
+ * @returns {boolean} If the member has default value.
+ */
 function hasDefaultValue (member) {
   return 'defaultValue' in member;
 }
 
+/**
+ * Attempts to get the control data for a given control.
+ * If the control does not exist, gets the 'base' control data.
+ *
+ * @returns {object} The control data from the 'control map'.
+ */
 function getControlData (member) {
   return controlMap[member.control] ?? controlMap.base;
 }
@@ -149,6 +160,9 @@ function extendMember (member) {
   };
 }
 
+/**
+ * Resets the control to default value.
+ */
 function resetMember (key) {
   const member = memberMap.value[key];
 

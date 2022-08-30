@@ -64,6 +64,12 @@ const props = defineProps({
   },
 });
 
+/**
+ * Merges binding info with the actual binding values to conditionally
+ * display them in the tag.
+ *
+ * @type {ComputedRef<object>}
+ */
 const bindingMap = computed(() => {
   return Object.entries(props.optionBindings).map(([bindingName, value]) => {
     const bindingInfo = props.infoBindings.find(infoBinding => infoBinding.name === bindingName);
@@ -71,10 +77,19 @@ const bindingMap = computed(() => {
       ...bindingInfo,
       value,
     }];
-  }).filter(([name, member]) => visible(name, member));
+  }).filter(([name, member]) => isMemberVisible(name, member));
 });
 
-function visible (name, member) {
+/**
+ * Determines if the member is visible.
+ * Compares the current value of the member to the default value.
+ * All members are considered visible if the verbose setting is on.
+ *
+ * @param name - The member name.
+ * @param member - The member info.
+ * @returns {boolean} If the member is visible.
+ */
+function isMemberVisible (name, member) {
   if (props.verbose) { return true; }
 
   const defaultString = JSON.stringify(member.defaultValue);
@@ -83,10 +98,23 @@ function visible (name, member) {
   return defaultString !== valueString;
 }
 
+/**
+ * If the value is boolean it should only show the member and not the value.
+ *
+ * @param value - The member value.
+ * @returns {boolean} - If the member should be displayed using short syntax.
+ */
 function useShortSyntax (value) {
   return value === true;
 }
 
+/**
+ * If the value is not a string it should use the ':' operator
+ * to indicate the true value is being passed in.
+ *
+ * @param value - The member value.
+ * @returns {boolean} If the member should be displayed using the bind operator.
+ */
 function useBindOperator (value) {
   return !useShortSyntax(value) && typeof value !== 'string';
 }

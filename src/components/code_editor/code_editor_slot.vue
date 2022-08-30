@@ -38,10 +38,16 @@ import { DEFAULT_SLOT_NAME } from '@/src/lib/constants';
 import DtcCodeEditorIndent from '@/src/components/code_editor/code_editor_indent';
 
 const props = defineProps({
+  /**
+   * Name of slot in template tag.
+   */
   name: {
     type: String,
     default: DEFAULT_SLOT_NAME,
   },
+  /**
+   * Indent level of slot.
+   */
   indentLevel: {
     type: Number,
     default: 1,

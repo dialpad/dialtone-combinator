@@ -96,6 +96,11 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  /**
+   * The variants to select.
+   * All keys will be displayed to choose from in the variant picker.
+   * Pass a variant with the key 'default' to override the default variant.
+   */
   variants: {
     type: undefined,
     default: {},

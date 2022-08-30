@@ -16,10 +16,16 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  /**
+   * Members to bind to the target component.
+   */
   bindings: {
     type: undefined,
     required: true,
   },
+  /**
+   * Events to bind to the target component.
+   */
   events: {
     type: undefined,
     required: true,
@@ -53,6 +59,14 @@ onMounted(renderTarget);
 onUpdated(renderTarget);
 
 const wrapper = ref();
+
+/**
+ * Destroys any old containers in the wrapper and appends a new one.
+ * Not completely sure why this has to be done, but it is buggy
+ * if this method is not used.
+ *
+ * @returns {HTMLDivElement} Instantiated container for rendering.
+ */
 function nextContainer () {
   wrapper.value.replaceChildren();
   return wrapper.value.appendChild(document.createElement('div'));
@@ -60,6 +74,10 @@ function nextContainer () {
 
 /**
  * Need to render manually to catch DOM exception errors.
+ *
+ * Attempts to render the target component, if there is
+ * an error a warning will be logged and a 'notice' component
+ * will be rendered to inform the user.
  */
 function renderTarget () {
   const container = nextContainer();
@@ -75,6 +93,12 @@ function renderTarget () {
   }
 }
 
+/**
+ * Renders the error 'notice' component.
+ *
+ * @param exception - The exception.
+ * @param container - The container to render in.
+ */
 function renderError (exception, container) {
   render(h(DtNotice, {
     kind: 'error',

@@ -10,6 +10,9 @@ import { computed, inject } from 'vue';
 import { SETTINGS_INDENT_KEY } from '@/src/lib/constants';
 
 const props = defineProps({
+  /**
+   * Current indentation level, multiplied by number of spaces.
+   */
   level: {
     type: Number,
     default: 1,

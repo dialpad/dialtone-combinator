@@ -61,20 +61,29 @@ const props = defineProps({
     required: true,
   },
   /**
-   * Array of valid controls in the 'control map'.
+   * Array of valid controls that are keys in the 'control map'.
    */
   validControls: {
     type: Array,
     required: true,
   },
+  /**
+   * The member value.
+   */
   value: {
     type: undefined,
     required: true,
   },
+  /**
+   * The member label.
+   */
   label: {
     type: String,
     required: true,
   },
+  /**
+   * The member description.
+   */
   description: {
     type: String,
     default: undefined,
@@ -93,6 +102,9 @@ const props = defineProps({
     type: Object,
     default: undefined,
   },
+  /**
+   * If the member is considered required.
+   */
   required: {
     type: Boolean,
     default: false,

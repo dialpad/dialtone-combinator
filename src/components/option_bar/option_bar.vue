@@ -85,6 +85,18 @@ defineProps({
 
 const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
 
+/**
+ * Gets an array of controls for a binding.
+ * Calls the utility function `getControlByMemberType(...)` which converts
+ * each type for a member to a given control.
+ *
+ * Extra controls can be passed in as parameters.
+ *
+ * @param binding - The binding member.
+ * @param value - The binding member value.
+ * @param controls - The extra controls to allow.
+ * @returns {Array} Array of a default control and valid controls.
+ */
 function getBindingControls (binding, value, ...controls) {
   const validControls = [
     ...(binding.types?.map(type => getControlByMemberType(type, binding)) ?? []),
@@ -105,6 +117,12 @@ function getEventControls () {
   return getStaticControl('event');
 }
 
+/**
+ * Forces a singular default control and valid control.
+ *
+ * @param control - The control to enforce.
+ * @returns {Array} Array of a default control and valid control.
+ */
 function getStaticControl (control) {
   return [
     [control],
