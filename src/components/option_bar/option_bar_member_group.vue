@@ -18,7 +18,7 @@
             @update:control="(e) => updateControl(e, key)"
           />
           <dt-button
-            v-if="hasDefaultValue(member)"
+            v-if="hasDefaultDocumentationValue(member)"
             class="dtc-icon d-p4"
             importance="clear"
             size="sm"
@@ -127,8 +127,8 @@ function getMemberKey (member) {
  *
  * @returns {boolean} If the member has default value.
  */
-function hasDefaultValue (member) {
-  return 'defaultValue' in member;
+function hasDefaultDocumentationValue (member) {
+  return 'defaultDocumentationValue' in member;
 }
 
 /**
@@ -166,7 +166,7 @@ function extendMember (member) {
 function resetMember (key) {
   const member = memberMap.value[key];
 
-  updateMember(member.defaultValue, key);
+  updateMember(member.defaultDocumentationValue, key);
 }
 
 /**
