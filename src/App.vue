@@ -51,8 +51,7 @@
         :component="component"
         :variants="variants"
         :documentation="documentation"
-        :component-library="components"
-        :icon-library="icons"
+        :library="library"
       />
     </div>
   </div>
@@ -115,6 +114,13 @@ function updateBackground (e) {
 }
 
 const icons = ref();
+
+const library = computed(() => {
+  return {
+    ...components.value,
+    ...icons.value,
+  };
+});
 
 onMounted(async () => {
   addEventListener('hashchange', () => {

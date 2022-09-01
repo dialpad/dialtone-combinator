@@ -120,14 +120,7 @@ const props = defineProps({
   /**
    * Library of components that can be displayed in the renderer through slots.
    */
-  componentLibrary: {
-    type: Object,
-    default: () => {},
-  },
-  /**
-   * Library of icon components that can be displayed in the renderer through slots.
-   */
-  iconLibrary: {
+  library: {
     type: Object,
     default: () => {},
   },
@@ -156,13 +149,6 @@ const props = defineProps({
     type: String,
     default: '',
   },
-});
-
-const library = computed(() => {
-  return {
-    ...props.componentLibrary,
-    ...props.iconLibrary,
-  };
 });
 
 const selectedVariant = ref('default');
