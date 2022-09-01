@@ -44,6 +44,7 @@
             :component="component"
             :info="info"
             :options="options"
+            :library="library"
             @event="(event, value) => triggerEvent(event, value)"
           />
         </div>
@@ -78,7 +79,6 @@
 </template>
 
 <script setup>
-import documentation from '@/node_modules/@dialpad/dialtone-vue/dist/component-documentation.json';
 import DtcOptionBar from './option_bar/option_bar';
 import DtcRenderer from './renderer/renderer';
 import DtcCodePanel from './code_panel/code_panel';
@@ -115,7 +115,21 @@ const props = defineProps({
    */
   documentation: {
     type: Object,
-    default: documentation,
+    required: true,
+  },
+  /**
+   * Library of components that can be displayed in the renderer through slots.
+   */
+  componentLibrary: {
+    type: Object,
+    default: () => {},
+  },
+  /**
+   * Library of icon components that can be displayed in the renderer through slots.
+   */
+  iconLibrary: {
+    type: Object,
+    default: () => {},
   },
   /**
    * The variants to select.
@@ -123,8 +137,8 @@ const props = defineProps({
    * Pass a variant with the key 'default' to override the default variant.
    */
   variants: {
-    type: undefined,
-    default: {},
+    type: Object,
+    default: () => {},
   },
   /**
    * Activate 'blueprint' mode, to use a simple version of the combinator.
@@ -142,6 +156,13 @@ const props = defineProps({
     type: String,
     default: '',
   },
+});
+
+const library = computed(() => {
+  return {
+    ...props.componentLibrary,
+    ...props.iconLibrary,
+  };
 });
 
 const selectedVariant = ref('default');

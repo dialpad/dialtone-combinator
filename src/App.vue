@@ -51,6 +51,8 @@
         :component="component"
         :variants="variants"
         :documentation="documentation"
+        :component-library="components"
+        :icon-library="icons"
       />
     </div>
   </div>
@@ -67,6 +69,7 @@ import DtcButtonBar from '@/src/components/tools/button_bar';
 import DtcSuggestion from '@/src/components/controls/control_suggestion';
 import supportedComponentData from '@/src/supported_components.json';
 import variantBank from '@/src/variants/variants';
+import { getIcons } from '@/src/lib/utils';
 
 const DEFAULT_COMPONENT = 'DtButton';
 
@@ -75,15 +78,15 @@ function isSupportedComponent (exportName) {
 }
 
 const components = computed(() => {
-  return Object.entries(modules).filter(([exportName, exportValue]) => {
+  return Object.fromEntries(Object.entries(modules).filter(([exportName, exportValue]) => {
     return typeof (exportValue) === 'object' &&
       exportName.toLowerCase().startsWith(DIALTONE_PREFIX) &&
       exportValue.name;
-  });
+  }));
 });
 
 const options = computed(() => {
-  return components.value.map(([exportName]) => exportName);
+  return Object.keys(components.value);
 });
 
 function getComponentFromHash () {
@@ -105,18 +108,28 @@ function updateComponent (e) {
   window.location.hash = e;
 }
 
-onMounted(() => {
-  addEventListener('hashchange', () => {
-    component.value = getComponentFromHash();
-    variants.value = getVariantFromHash();
-  });
-});
-
 const background = ref('white');
 
 function updateBackground (e) {
   background.value = e;
 }
+
+const icons = ref();
+
+onMounted(async () => {
+  addEventListener('hashchange', () => {
+    component.value = getComponentFromHash();
+    variants.value = getVariantFromHash();
+  });
+
+  const promises = [];
+  getIcons().forEach(icon => {
+    promises.push(import(`../node_modules/@dialpad/dialtone/lib/dist/vue/icons/${icon}.vue`).then(module => {
+      return [icon, module.default];
+    }));
+  });
+  icons.value = Object.fromEntries(await Promise.all(promises));
+});
 
 </script>
 

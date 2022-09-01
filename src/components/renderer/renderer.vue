@@ -23,6 +23,7 @@
           >
             <dtc-node
               :template="slot"
+              :library="library"
             />
           </template>
         </dtc-renderer-target>
@@ -75,6 +76,10 @@ const props = defineProps({
    * Settings data object.
    */
   settings: {
+    type: Object,
+    required: true,
+  },
+  library: {
     type: Object,
     required: true,
   },

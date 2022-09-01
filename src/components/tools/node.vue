@@ -1,20 +1,21 @@
 <script>
 import { h } from 'vue';
-import { DtAvatar } from '@dialpad/dialtone-vue';
 
 export default {
   name: 'DtcNode',
   props: {
     template: {
-      required: true,
       type: String,
+      required: true,
+    },
+    library: {
+      type: Object,
+      default: () => {},
     },
   },
   render (props) {
     return h({
-      components: {
-        DtAvatar,
-      },
+      components: props.library,
       template: props.template,
     });
   },

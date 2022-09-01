@@ -82,3 +82,36 @@ export function enumerateGroups (handler, groups) {
     });
   });
 }
+
+/**
+ * Gets the full list of icon component names from the dialtone package.
+ *
+ * @returns {Array} icon components.
+ */
+export function getIcons () {
+  const requireContext = require.context(
+    '../../node_modules/@dialpad/dialtone/lib/dist/vue/icons',
+    false,
+    /[A-Z]\w+\.(vue|js)$/,
+  );
+
+  return getComponentFilesFromDir(requireContext).map(item => item.componentName);
+}
+
+/**
+ * Extracts filename and component name from all files in a directory.
+ *
+ * @param {object} requireContext - a requireContext containing the path of the
+ * directory you would like to read files from.
+ * @returns {Array} arr of objects containing both the
+ * filename and component name in PascalCase.
+ */
+export const getComponentFilesFromDir = (requireContext) => {
+  const files = [];
+  requireContext.keys().forEach(fileName => {
+    // Get PascalCase name of component
+    const componentName = fileName.split('/').pop().replace(/\.\w+$/, '');
+    files.push({ fileName, componentName });
+  });
+  return files;
+};
