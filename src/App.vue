@@ -94,7 +94,6 @@ function getComponentFromHash () {
 
 function getVariantFromHash () {
   const hash = window.location.hash.substring(1);
-  console.log(variantBank()[hash]);
   return variantBank()[hash] ?? {};
 }
 
