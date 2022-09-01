@@ -78,6 +78,7 @@
 </template>
 
 <script setup>
+import documentation from '@/node_modules/@dialpad/dialtone-vue/dist/component-documentation.json';
 import DtcOptionBar from './option_bar/option_bar';
 import DtcRenderer from './renderer/renderer';
 import DtcCodePanel from './code_panel/code_panel';
@@ -108,6 +109,13 @@ const props = defineProps({
   component: {
     type: Object,
     required: true,
+  },
+  /**
+   * The dialtone-vue component documentation.
+   */
+  documentation: {
+    type: Object,
+    default: documentation,
   },
   /**
    * The variants to select.
@@ -149,7 +157,7 @@ function updateVariant (e) {
  * @returns {object} The newly instantiated info object.
  */
 function initializeInfo () {
-  const info = getComponentInfo(props.component);
+  const info = getComponentInfo(props.component, props.documentation);
 
   const variantInfo = props.variants[selectedVariant.value];
 

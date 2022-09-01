@@ -50,12 +50,14 @@
         :key="componentKey"
         :component="component"
         :variants="variants"
+        :documentation="documentation"
       />
     </div>
   </div>
 </template>
 
 <script setup>
+import documentation from '@/node_modules/@dialpad/dialtone-vue/dist/component-documentation.json';
 import * as modules from '@dialpad/dialtone-vue';
 import Combinator from './components/combinator';
 import { computed, markRaw, onMounted, ref } from 'vue';

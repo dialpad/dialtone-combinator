@@ -1,5 +1,3 @@
-import documentation from '@/node_modules/@dialpad/dialtone-vue/dist/component-documentation.json';
-
 import { controlMap } from '@/src/lib/control';
 import { extendBinding, extendEvent, extendMember } from '@/src/lib/info_extend';
 import clone from 'just-clone';
@@ -12,9 +10,10 @@ import clone from 'just-clone';
  * The 'defaults' object contains a map of default values for each member in 'info'.
  *
  * @param {object} component - The target component.
+ * @param {object} documentation - The component documentation.
  * @returns {Array} A newly instantiated info object.
  */
-export function getComponentInfo (component) {
+export function getComponentInfo (component, documentation) {
   const info = clone(documentation.find(componentInfo => componentInfo.displayName === component.name));
   extendInfo(info, component);
   return info;
