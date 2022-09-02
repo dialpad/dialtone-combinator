@@ -14,6 +14,7 @@ Documentation for maintaining the project.
 
 [README](/README.md) \
 [CONTRIBUTING](CONTRIBUTING.md) \
+[RELEASING](RELEASING.md) \
 [COMMIT_CONVENTION](COMMIT_CONVENTION.md)
 
 ### Internal

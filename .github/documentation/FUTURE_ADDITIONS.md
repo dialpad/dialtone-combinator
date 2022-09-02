@@ -58,6 +58,11 @@ This can be implemented using `getBindingControls()` in option_bar.vue, possibly
 a new `getPropControls()` could be implemented to abstract the logic since
 this will only be possible for props.
 
+## Semantic Versioning (CI)
+
+Currently, releases have to be manually categorized. A semantic version
+implementation similar to Dialtone or Dialtone Vue would be good.
+
 ## Sidebar Theming
 
 Currently, the theming only affects the code panel area and the renderer area.
