@@ -44,6 +44,7 @@
             :component="component"
             :info="info"
             :options="options"
+            :library="library"
             @event="(event, value) => triggerEvent(event, value)"
           />
         </div>
@@ -110,13 +111,27 @@ const props = defineProps({
     required: true,
   },
   /**
+   * The dialtone-vue component documentation.
+   */
+  documentation: {
+    type: Object,
+    required: true,
+  },
+  /**
+   * Library of components that can be displayed in the renderer through slots.
+   */
+  library: {
+    type: Object,
+    default: () => {},
+  },
+  /**
    * The variants to select.
    * All keys will be displayed to choose from in the variant picker.
    * Pass a variant with the key 'default' to override the default variant.
    */
   variants: {
-    type: undefined,
-    default: {},
+    type: Object,
+    default: () => {},
   },
   /**
    * Activate 'blueprint' mode, to use a simple version of the combinator.
@@ -149,7 +164,7 @@ function updateVariant (e) {
  * @returns {object} The newly instantiated info object.
  */
 function initializeInfo () {
-  const info = getComponentInfo(props.component);
+  const info = getComponentInfo(props.component, props.documentation);
 
   const variantInfo = props.variants[selectedVariant.value];
 
@@ -205,11 +220,11 @@ const info = computed(() => {
 /**
  * Gets the values for a given 'options' member group with the provided defaults.
  */
-function getDefaultOptions (info) {
+function getInitialValues (info) {
   const options = {};
   info.members.enumerate((memberGroup, member) => {
     options[memberGroup] = options[memberGroup] || {};
-    options[memberGroup][member.name] = member.defaultValue;
+    options[memberGroup][member.name] = member.initialValue;
   });
   return options;
 }
@@ -223,7 +238,7 @@ function getDefaultOptions (info) {
 const options = computedModel(
   computed(() => {
     return reactive({
-      ...getDefaultOptions(info.value),
+      ...getInitialValues(info.value),
       bindings: {
         get () {
           const bindings = [];

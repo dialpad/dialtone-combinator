@@ -21,7 +21,10 @@
             :key="name"
             #[name]
           >
-            <div v-html="slot" />
+            <dtc-node
+              :template="slot"
+              :library="library"
+            />
           </template>
         </dtc-renderer-target>
       </div>
@@ -45,6 +48,7 @@ import { SETTINGS_UPDATE_EVENT } from '@/src/lib/constants';
 import DtcRendererMenu from '@/src/components/renderer/renderer_menu';
 import DtcOverlay from '@/src/components/tools/overlay';
 import DtcRendererTarget from '@/src/components/renderer/renderer_target';
+import DtcNode from '@/src/components/tools/node';
 
 const props = defineProps({
   /**
@@ -72,6 +76,10 @@ const props = defineProps({
    * Settings data object.
    */
   settings: {
+    type: Object,
+    required: true,
+  },
+  library: {
     type: Object,
     required: true,
   },

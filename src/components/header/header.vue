@@ -1,6 +1,6 @@
 <template>
   <div class="dtc-theme__canvas d-d-flex d-ai-stretch d-pl12">
-    <h1 class="d-headline32">
+    <h1 class="d-headline32 d-as-center">
       {{ component.name }}
     </h1>
     <div class="d-fl-grow1 d-ml12 d-bl">

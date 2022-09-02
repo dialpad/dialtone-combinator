@@ -36,13 +36,14 @@
           :control-data="getControlData(member)"
           :valid-controls="member.validControls"
           :description="member.description"
-          :types="member.types"
-          :tags="member.tags"
+          :v-model="isVModel(member)"
           :required="member.required"
           :locked="member.lockControl"
           :args="{
             defaultValue: member.defaultValue,
             validValues: member.values,
+            validTypes: member.types,
+            tags: member.tags,
           }"
           @update:value="e => updateMember(e, key)"
           @update:control="e => updateControl(e, key)"
@@ -139,6 +140,13 @@ function hasDefaultValue (member) {
  */
 function getControlData (member) {
   return controlMap[member.control] ?? controlMap.base;
+}
+
+function isVModel (member) {
+  const tags = member.tags;
+  return tags
+    ? 'model' in tags
+    : false;
 }
 
 /**

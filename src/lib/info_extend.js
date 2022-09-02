@@ -35,8 +35,8 @@ export function extendBinding (member, defaults) {
 
   delete member.defaultValue;
   if (defaultValue !== undefined) {
+    member.initialValue = defaultValue;
     member.defaultValue = defaultValue;
-    member.defaultDocumentationValue = defaultValue;
   }
 
   if (defaultType) {

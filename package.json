@@ -1,6 +1,6 @@
 {
   "name": "@dialpad/dialtone-combinator",
-  "version": "0.2.5",
+  "version": "0.3.1",
   "publishConfig": {
     "access": "public"
   },
@@ -52,8 +52,5 @@
     "serve": "^13.0.4",
     "vue": "^3.2.37",
     "vue-tsc": "^0.38.1"
-  },
-  "peerDependencies": {
-    "@dialpad/dialtone-vue": "^3.x"
   }
 }
