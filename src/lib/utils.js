@@ -39,11 +39,12 @@ export function getUniqueString (prefix = DEFAULT_PREFIX) {
 
 /**
  * Gets specific type name from a value, intended to be used with value from a 'member'.
+ * Gives some more specific type names such as 'array' etc...
  *
  * @param {*} value - The value.
  * @returns {string|null} The specific member type.
  */
-export function typeOfMember (value) {
+export function typeOfMemberValue (value) {
   if (value === undefined || value === null) {
     return null;
   }
@@ -62,10 +63,22 @@ export function typeOfMember (value) {
   }
 }
 
-export function enumerateGroups (handler, memberGroups) {
-  Object.entries(memberGroups).forEach(([memberGroup, members]) => {
-    members?.forEach(member => {
-      handler(memberGroup, member);
+/**
+ * Enumerates an object that contains key-value pairs, each containing an array.
+ * A handler is called for each item in each array.
+ *
+ * The first parameter for the handler is the key for the array that the item is in.
+ * The second parameter for the handler is the item in the array.
+ *
+ * Used to make enumerating through the 'options' and 'info' members easier.
+ *
+ * @param {Function} handler - The handler called for each entry.
+ * @param {object} groups - Object that contains key-value pairs, each containing an array.
+ */
+export function enumerateGroups (handler, groups) {
+  Object.entries(groups).forEach(([group, entries]) => {
+    entries?.forEach(entry => {
+      handler(group, entry);
     });
   });
 }

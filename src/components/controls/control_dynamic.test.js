@@ -1,8 +1,10 @@
 import DtcControlDynamic from './control_dynamic';
+import DtcControlNumber from '@/src/components/controls/control_number';
+import DtcControlString from '@/src/components/controls/control_string';
 
 import { assert } from 'chai';
 import { mount } from '@vue/test-utils';
-import { controlMap, UNSET } from '@/src/lib/control';
+import { UNSET } from '@/src/lib/control';
 
 const selectionSelector = '[data-qa=dtc-control-dynamic-selection]';
 const inputSelector = 'select';
@@ -10,11 +12,11 @@ const inputSelector = 'select';
 const testControls = {
   string: {
     value: 'string test',
-    component: controlMap.string.component(),
+    component: DtcControlString,
   },
   number: {
     value: 17,
-    component: controlMap.number.component(),
+    component: DtcControlNumber,
   },
   true: {
     value: true,
@@ -27,9 +29,6 @@ const testControls = {
   },
   undefined: {
     value: undefined,
-  },
-  NaN: {
-    value: NaN,
   },
 };
 

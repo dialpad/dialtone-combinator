@@ -18,14 +18,16 @@ describe('option_bar_control.vue test', function () {
 
     describe(`When mounted with control '${control}'`, function () {
       before(function () {
+        const member = {
+          validControls: [control],
+          label: testLabel,
+          description: testDescription,
+          values: ['test1', 'test2'],
+        };
+        member.controlData = controlMap[control];
+        member.value = member.controlData.default(member);
         wrapper = mount(DtcOptionBarControl, {
-          props: {
-            control,
-            value: controlMap[control].default,
-            validControls: [control],
-            label: testLabel,
-            description: testDescription,
-          },
+          props: member,
         });
       });
 
@@ -34,11 +36,11 @@ describe('option_bar_control.vue test', function () {
       });
 
       it('Should display label text', function () {
-        assert.equal(wrapper.find(labelSelector).text().toLowerCase(), testLabel);
+        assert.equal(wrapper.find(labelSelector).text(), testLabel);
       });
 
       it('Should display description text', function () {
-        assert.equal(wrapper.find(descriptionSelector).text().toLowerCase(), testDescription);
+        assert.equal(wrapper.find(descriptionSelector).text(), testDescription);
       });
     });
   });

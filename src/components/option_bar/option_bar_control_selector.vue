@@ -12,7 +12,7 @@
       >
         <span class="d-pr4">
           <dt-button
-            class="d-px4 d-py1"
+            class="dtc-control-selector__button d-px4 d-py1"
             importance="outlined"
             v-bind="getStyling(control)"
             @click="() => updateControl(control)"
@@ -46,6 +46,13 @@ const props = defineProps({
     required: true,
   },
   /**
+   * Prevent the control from changing.
+   */
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  /**
    * Array of valid types.
    */
   types: {
@@ -70,14 +77,9 @@ function getSelection (control) {
   switch (control) {
     case 'event': {
       const eventTypes = props.types;
+      const labels = eventTypes ?? ['event'];
       return {
-        labels: [
-          ...(eventTypes.map(type => {
-            return type && type !== 'undefined'
-              ? type
-              : 'event';
-          })),
-        ],
+        labels,
       };
     }
     default: return {
@@ -94,10 +96,18 @@ function getSelection (control) {
  */
 function getStyling (control) {
   const isActive = control === props.selected;
-  return {
-    kind: isActive ? 'default' : 'muted',
+
+  const styling = {
     active: isActive,
+    kind: isActive ? 'default' : 'muted',
+    disabled: props.disabled,
   };
+
+  if (isActive) {
+    styling['control-active'] = 'control-active';
+  }
+
+  return styling;
 }
 
 function updateControl (e) {
@@ -111,3 +121,10 @@ export default {
   name: 'DtcOptionBarControlSelector',
 };
 </script>
+
+<style>
+.dtc-control-selector__button:not([control-active]) {
+  background-color: transparent !important;
+  border: currentColor 1px solid !important;
+}
+</style>

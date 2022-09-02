@@ -3,6 +3,7 @@
     label-class="d-fs16 d-fw-normal d-mb0"
     :value="value"
     :options="options"
+    :disabled="disabled"
     size="xs"
     @input="e => emit(VALUE_UPDATE_EVENT, e)"
   >
@@ -27,6 +28,10 @@ const props = defineProps({
     type: Array,
     default: undefined,
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
   generateLabel: {
     type: Function,
     default: (value) => value.toString(),
@@ -36,7 +41,7 @@ const props = defineProps({
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
 const options = computed(() => {
-  return props.validValues.map(selection => {
+  return props.validValues?.map(selection => {
     return { value: selection, label: props.generateLabel(selection) };
   });
 });

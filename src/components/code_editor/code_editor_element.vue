@@ -4,9 +4,13 @@
       :name="tagName"
     >
       <slot name="opening" />
-      <span v-if="!selfClosing">/</span>
+      <span v-if="selfClosing"> /</span>
     </dtc-code-editor-opening-tag>
-    <slot />
+    <div
+      class="dtc-code-editor__margin"
+    >
+      <slot />
+    </div>
     <dtc-code-editor-closing-tag
       v-if="!selfClosing"
       :name="tagName"

@@ -11,10 +11,10 @@ import DtcControlBoolean from '@/src/components/controls/control_boolean';
 import DtcControlNumber from '@/src/components/controls/control_number';
 import DtcControlSelection from '@/src/components/controls/control_selection';
 import DtcControlString from '@/src/components/controls/control_string';
-import DtcControlNull from '@/src/components/controls/control_null';
+import DtcControlNullish from '@/src/components/controls/control_nullish';
 import DtcControlBase from '@/src/components/controls/control_base';
 
-import { typeOfMember } from '@/src/lib/utils';
+import { typeOfMemberValue } from '@/src/lib/utils';
 
 /**
  * Symbol representing a value that is "not set".
@@ -26,82 +26,83 @@ export const UNSET = Symbol('unset');
 
 /**
  * Map of controls containing control component and related information.
- * Controls must have the 'component(args)' and `get default()` fields.
+ * Controls must have the 'component' and 'default' entries.
  *
  * @type {object}
  */
 export const controlMap = Object.freeze({
   event: {
-    component: () => DtcControlEvent,
-    get default () { return null; },
-    important: true,
+    component: DtcControlEvent,
+    default () { return null; },
   },
   slot: {
-    component: () => DtcControlSlot,
-    get default () { return null; },
-    important: true,
+    component: DtcControlSlot,
+    default () { return getControlDataDefault(this); },
   },
   dynamic: {
-    component: () => DtcControlDynamic,
-    get default () { return UNSET; },
-    get defaultControl () { return 'undefined'; },
+    component: DtcControlDynamic,
+    default () { return getControlDataDefault(this); },
+    defaultControl () { return 'undefined'; },
     serialize: true,
   },
   object: {
-    component: () => DtcControlObject,
-    get default () { return {}; },
+    component: DtcControlObject,
+    default () { return getControlDataDefault(this); },
   },
   array: {
-    component: () => DtcControlArray,
-    get default () { return []; },
+    component: DtcControlArray,
+    default () { return getControlDataDefault(this); },
+  },
+  selection: {
+    component: DtcControlSelection,
+    default ({ values } = {}) { return values?.[0]; },
   },
   string: {
-    component: (args) => {
-      return args?.validValues
-        ? DtcControlSelection
-        : DtcControlString;
-    },
-    get default () { return String(); },
+    component: DtcControlString,
+    default () { return getControlDataDefault(this); },
   },
   number: {
-    component: () => DtcControlNumber,
-    get default () { return Number(); },
+    component: DtcControlNumber,
+    default () { return getControlDataDefault(this); },
   },
   boolean: {
-    component: () => DtcControlBoolean,
-    get default () { return Boolean(); },
+    component: DtcControlBoolean,
+    default () { return getControlDataDefault(this); },
   },
   null: {
-    component: () => DtcControlNull,
-    get default () { return null; },
+    component: DtcControlNullish,
+    default () { return getControlDataDefault(this); },
     serialize: true,
   },
   base: {
-    component: () => DtcControlBase,
-    get default () { return null; },
+    component: DtcControlBase,
+    default () { return getControlDataDefault(this); },
   },
 });
 
-/**
- * Gets the component for a control given the args
- * If no control is found the base control component is returned.
- *
- * @param {string} control - The control in `controlMap`.
- * @param {object} args - The control args.
- * @returns {object} The control component.
- */
-export function getControlComponent (control, args) {
-  return controlMap[control]?.component(args) ?? controlMap.base.component(args);
+function getControlDataDefault (controlData) {
+  return controlData.component.props.value.default();
 }
 
 export function getControlByValue (value) {
   const control = value === undefined || value === null || value === UNSET
     ? 'null'
-    : typeOfMember(value);
+    : typeOfMemberValue(value);
 
   return control in controlMap
     ? control
     : 'base';
+}
+
+export function getControlByMemberType (type, args) {
+  switch (type) {
+    case 'string': {
+      return args?.values && args.values.length > 0
+        ? 'selection'
+        : 'string';
+    }
+    default: return type;
+  }
 }
 
 /**

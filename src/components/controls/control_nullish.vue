@@ -2,6 +2,7 @@
   <dtc-control-selection
     :value="selection"
     :valid-values="selections"
+    :disabled="disabled"
     @update:value="updateValue"
   >
     <slot />
@@ -12,12 +13,16 @@
 import DtcControlSelection from './control_selection';
 import { computed } from 'vue';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
-import { controlMap, UNSET } from '@/src/lib/control';
+import { UNSET } from '@/src/lib/control';
 
 const props = defineProps({
   value: {
     type: undefined,
-    default: () => controlMap.null.default,
+    default: () => null,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -26,7 +31,6 @@ const emit = defineEmits([VALUE_UPDATE_EVENT]);
 const selectionMap = {
   undefined: UNSET,
   null: null,
-  NaN,
 };
 
 const selections = computed(() => {
@@ -49,6 +53,6 @@ function updateValue (e) {
  * Control that is used to set nullish values.
  */
 export default {
-  name: 'DtcControlNull',
+  name: 'DtcControlNullish',
 };
 </script>

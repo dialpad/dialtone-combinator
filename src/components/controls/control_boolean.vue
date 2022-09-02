@@ -3,6 +3,7 @@
     <dt-checkbox
       label-class="dtc-control-boolean__label"
       :checked="value"
+      :disabled="disabled"
       data-qa="dtc-control-boolean-input"
       @input="e => emit(VALUE_UPDATE_EVENT, e)"
     >
@@ -14,12 +15,15 @@
 <script setup>
 import { DtCheckbox } from '@dialpad/dialtone-vue';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
-import { controlMap } from '@/src/lib/control';
 
 defineProps({
   value: {
     type: Boolean,
-    default: () => controlMap.boolean.default,
+    default: () => false,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 });
 

@@ -65,6 +65,15 @@
           </dt-radio-group>
         </section>
         <section class="d-p8">
+          <dt-input
+            :key="indentKey"
+            type="number"
+            label="Indent Spaces"
+            :value="settings.code.indent"
+            @input="updateIndent"
+          />
+        </section>
+        <section class="d-p8">
           <dt-checkbox
             :checked="settings.code.verbose"
             @input="e => updateSettings('code', 'verbose', e)"
@@ -86,8 +95,10 @@ import {
   DtRadioGroup,
   DtRadio,
   DtCheckbox,
+  DtInput,
 } from '@dialpad/dialtone-vue';
 import { SETTINGS_UPDATE_EVENT } from '@/src/lib/constants';
+import { ref } from 'vue';
 
 defineProps({
   settings: {
@@ -102,6 +113,17 @@ function updateSettings (group, setting, e) {
   emit(SETTINGS_UPDATE_EVENT, (model) => {
     model[group][setting] = e;
   });
+}
+
+const indentKey = ref(0);
+function updateIndent (e) {
+  const value = parseInt(e);
+
+  if (!Number.isNaN(value) && value >= 0) {
+    updateSettings('code', 'indent', value);
+  } else {
+    indentKey.value += 1;
+  }
 }
 </script>
 

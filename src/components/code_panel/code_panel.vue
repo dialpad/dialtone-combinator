@@ -1,42 +1,48 @@
 <template>
-  <div
-    class="dtc-code-panel d-w100p d-h100p"
+  <dtc-overlay
+    class="dtc-code-panel"
     :class="[
       `dtc-code-panel-scheme--${settings.code.scheme}`,
       `dtc-code-panel-scheme--${settings.code.scheme}--${settings.root.theme}`,
     ]"
   >
-    <div class="dtc-theme__canvas">
-      <dtc-tab-panel
-        selected="code"
-        :generate-label="generateLabel"
-      >
-        <template #code>
-          <dtc-code-editor
-            :info="info"
-            :options="options"
-            :theme="settings.root.theme"
-            :verbose="settings.code.verbose"
-            @update:options="e => emit(OPTIONS_UPDATE_EVENT, e)"
-          />
-        </template>
-        <template #events>
-          <dtc-event-console ref="eventConsole" />
-        </template>
-      </dtc-tab-panel>
-    </div>
-    <div class="d-d-flex d-ai-flex-end d-jc-flex-end d-pe-none">
-      <div class="d-pr32 d-pb16 d-pe-auto">
-        <slot name="overlay" />
+    <template #content>
+      <div class="dtc-theme__canvas">
+        <dtc-tab-panel
+          selected="code"
+          :generate-label="generateLabel"
+        >
+          <template #code>
+            <dtc-code-editor
+              :info="info"
+              :options="options"
+              :theme="settings.root.theme"
+              :verbose="settings.code.verbose"
+              :indent-spaces="settings.code.indent"
+              @update:options="e => emit(OPTIONS_UPDATE_EVENT, e)"
+            />
+          </template>
+          <template #events>
+            <dtc-event-console ref="eventConsole" />
+          </template>
+        </dtc-tab-panel>
       </div>
-    </div>
-  </div>
+    </template>
+    <template #overlay>
+      <div class="d-d-flex d-ai-flex-end d-jc-flex-end d-h100p">
+        <div class="d-pr32 d-pb16 d-pe-auto">
+          <slot name="overlay" />
+        </div>
+      </div>
+    </template>
+  </dtc-overlay>
 </template>
 
 <script setup>
 import DtcTabPanel from '@/src/components/tools/tab_panel';
 import DtcEventConsole from '@/src/components/event_console/event_console';
 import DtcCodeEditor from '@/src/components/code_editor/code_editor';
+import DtcOverlay from '@/src/components/tools/overlay';
 
 import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
 import { ref } from 'vue';

@@ -1,50 +1,77 @@
 <template>
   <div
-    class="dtc-combinator d-h100p"
+    class="dtc-combinator d-d-flex d-fd-column d-w100p"
     :class="`dtc-theme--${settings.root.theme}`"
   >
-    <div class="d-mb6 d-ba d-bar8 d-of-hidden">
-      <dtc-header
-        :component="component"
-        :variants="variants"
-        :selected-variant="selectedVariant"
-        @update:variant="updateVariant"
-      />
-    </div>
     <div
-      :class="`dtc-root
-        dtc-root--sidebar-${settings.root.sidebar}
-        d-ba d-bar8
-        d-of-hidden
-        d-d-grid d-h100p`"
+      v-if="!blueprint"
+      class="d-mb6"
     >
-      <div class="dtc-root__top">
-        <dtc-renderer
-          v-model:settings="settings"
+      <div
+        :class="headerClass"
+        class="d-of-hidden d-ba d-bar4"
+      >
+        <dtc-header
           :component="component"
-          :info="info"
-          :options="options"
-          @event="(event, value) => triggerEvent(event, value)"
+          :variants="variants"
+          :selected-variant="selectedVariant"
+          @update:variant="updateVariant"
         />
       </div>
-      <div class="dtc-root__bottom d-bt">
-        <dtc-code-panel
-          ref="codePanel"
-          v-model:options="options"
-          :info="info"
-          :settings="settings"
+    </div>
+    <dt-notice
+      v-if="showUnsupportedWarning"
+      class="d-wmx-unset"
+      title="Unsupported component"
+      kind="warning"
+      :close-button-props="{ ariaLabel: 'Close warning' }"
+      @close="hideUnsupportedMessage"
+    >
+      May have unexpected behaviour.
+    </dt-notice>
+    <div class="d-d-flex d-fl-grow1 d-hmn0">
+      <div
+        class="dtc-root d-d-grid d-of-hidden d-ba d-bar4 d-w100p"
+        :class="{
+          [rootClass]: true,
+          [`dtc-root--sidebar-${settings.root.sidebar}`]: true,
+          'dtc-root--blueprint': blueprint,
+        }"
+      >
+        <div class="dtc-root__top">
+          <dtc-renderer
+            v-model:settings="settings"
+            :component="component"
+            :info="info"
+            :options="options"
+            @event="(event, value) => triggerEvent(event, value)"
+          />
+        </div>
+        <div class="dtc-root__bottom d-bt">
+          <dtc-code-panel
+            ref="codePanel"
+            v-model:options="options"
+            :info="info"
+            :settings="settings"
+          >
+            <template
+              v-if="!blueprint"
+              #overlay
+            >
+              <dtc-settings-menu v-model:settings="settings" />
+            </template>
+          </dtc-code-panel>
+        </div>
+        <div
+          v-if="!blueprint"
+          class="dtc-root__sidebar"
         >
-          <template #overlay>
-            <dtc-settings-menu v-model:settings="settings" />
-          </template>
-        </dtc-code-panel>
-      </div>
-      <div class="dtc-root__sidebar">
-        <dtc-option-bar
-          v-model:options="options"
-          :component="component"
-          :info="info"
-        />
+          <dtc-option-bar
+            v-model:options="options"
+            :component="component"
+            :info="info"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -56,9 +83,10 @@ import DtcRenderer from './renderer/renderer';
 import DtcCodePanel from './code_panel/code_panel';
 import DtcSettingsMenu from './settings_menu/settings_menu';
 import DtcHeader from '@/src/components/header/header';
+import { DtNotice } from '@dialpad/dialtone-vue';
 
 import { enumerateGroups } from '@/src/lib/utils';
-import { computed, reactive, ref } from 'vue';
+import { computed, onErrorCaptured, reactive, ref } from 'vue';
 import { cachedRef, computedModel } from '@/src/lib/utils_vue';
 import { getComponentInfo } from '@/src/lib/info';
 import {
@@ -68,8 +96,10 @@ import {
   SETTINGS_BACKGROUND_KEY,
   SETTINGS_POSITIONING_KEY,
   SETTINGS_SIDEBAR_KEY,
+  SETTINGS_INDENT_KEY,
 } from '@/src/lib/constants';
 import defaultSettings from '@/src/settings.json';
+import supportedComponents from '@/src/supported_components.json';
 
 const props = defineProps({
   /**
@@ -79,9 +109,30 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  /**
+   * The variants to select.
+   * All keys will be displayed to choose from in the variant picker.
+   * Pass a variant with the key 'default' to override the default variant.
+   */
   variants: {
-    type: Object,
-    default: null,
+    type: undefined,
+    default: {},
+  },
+  /**
+   * Activate 'blueprint' mode, to use a simple version of the combinator.
+   * Used to display the component but provided limited options for interaction.
+   */
+  blueprint: {
+    type: Boolean,
+    default: false,
+  },
+  rootClass: {
+    type: String,
+    default: '',
+  },
+  headerClass: {
+    type: String,
+    default: '',
   },
 });
 
@@ -100,7 +151,7 @@ function updateVariant (e) {
 function initializeInfo () {
   const info = getComponentInfo(props.component);
 
-  const variantInfo = props.variants?.[selectedVariant.value];
+  const variantInfo = props.variants[selectedVariant.value];
 
   if (variantInfo) {
     Object.entries(variantInfo).forEach(([memberGroup, members]) => {
@@ -144,7 +195,7 @@ const info = computed(() => {
       enumerate (handler) {
         enumerateGroups(handler, {
           props: info.value.props,
-          attributes: info.value.attributes,
+          attributes: info.value.attributes?.filter(attribute => attribute),
         });
       },
     },
@@ -181,14 +232,25 @@ const options = computedModel(
         },
         enumerate (handler) {
           enumerateGroups(handler, {
-            props: Object.entries(options.value.props),
-            attributes: Object.entries(options.value.attributes),
+            props: options.value.props ? Object.entries(options.value.props) : null,
+            attributes: options.value.attributes ? Object.entries(options.value.attributes) : null,
           });
         },
       },
     });
   }),
-  (e, model) => e(model),
+  /**
+   * Catch errors when updating member values,
+   * else vue can block the value from ever being changed,
+   * keeping the value permanently in an invalid state
+   */
+  (e, model) => {
+    try {
+      e(model);
+    } catch (exception) {
+      console.warn('Update options warning: \n', exception);
+    }
+  },
 );
 
 /**
@@ -209,18 +271,38 @@ const settings = computedModel(
       },
       code: {
         scheme: cachedRef(SETTINGS_SCHEME_KEY, defaultSettings.code['default-scheme']),
-        verbose: cachedRef(SETTINGS_VERBOSE_KEY, defaultSettings.code['default-verbose']),
+        indent: cachedRef(SETTINGS_INDENT_KEY, defaultSettings.code['default-indent-spaces']),
+        verbose: props.blueprint
+          ? false
+          : cachedRef(SETTINGS_VERBOSE_KEY, defaultSettings.code['default-verbose']),
       },
     });
   }),
-  (e, model) => e(model),
+  (e, model) => {
+    try {
+      e(model);
+    } catch (exception) {
+      console.warn('Update settings warning: \n', exception);
+    }
+  },
 );
+
+const showUnsupportedWarning = ref(!supportedComponents.includes(props.component.name));
+
+function hideUnsupportedMessage () {
+  showUnsupportedWarning.value = false;
+}
 
 const codePanel = ref();
 
 function triggerEvent (event, value) {
   codePanel.value.trigger(event, value);
 }
+
+onErrorCaptured((exception) => {
+  console.error('Internal vue error: \n', exception);
+  return false;
+});
 </script>
 
 <script>
@@ -240,6 +322,18 @@ export default {
 
 .dtc-root {
   grid-template-rows: repeat(2, 1fr);
+}
+
+.dtc-root--blueprint {
+  grid-template-columns: 1fr !important;
+
+  .dtc-root__top {
+    grid-column-start: 1 !important;
+  }
+
+  .dtc-root__bottom {
+    grid-column-start: 1 !important;
+  }
 }
 
 .dtc-root--sidebar-right {
@@ -277,7 +371,10 @@ export default {
 
 .dtc-root > * {
   display: flex;
-  align-items: flex-start;
   overflow: hidden;
+}
+
+.dtc-icon[disabled] {
+  background-color: transparent !important;
 }
 </style>

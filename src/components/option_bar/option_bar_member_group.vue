@@ -9,14 +9,37 @@
         class="d-py6"
         data-qa="dtc-option-bar-member-group-control"
       >
+        <div class="d-d-flex d-ai-center d-jc-space-between d-pb2">
+          <dtc-option-bar-control-selector
+            :selected="member.control"
+            :controls="member.validControls"
+            :types="member.types"
+            :disabled="member.lockControl"
+            @update:control="(e) => updateControl(e, key)"
+          />
+          <dt-button
+            v-if="hasDefaultValue(member)"
+            class="dtc-icon d-p4"
+            importance="clear"
+            size="sm"
+            :disabled="member.lockControl"
+            @click="() => resetMember(key)"
+          >
+            <template #icon>
+              <icon-reset />
+            </template>
+          </dt-button>
+        </div>
         <dtc-option-bar-control
           :value="values[key]"
-          :label="member.getLabel()"
-          :control="member.control"
+          :label="member.label"
+          :control-data="getControlData(member)"
           :valid-controls="member.validControls"
           :description="member.description"
-          :types="member.type?.names"
+          :types="member.types"
           :tags="member.tags"
+          :required="member.required"
+          :locked="member.lockControl"
           :args="{
             defaultValue: member.defaultValue,
             validValues: member.values,
@@ -30,11 +53,14 @@
 </template>
 
 <script setup>
+import DtcOptionBarControlSelector from '@/src/components/option_bar/option_bar_control_selector';
 import DtcOptionBarControl from './option_bar_control';
+import IconReset from 'dialtone-icons/IconRefresh';
+import { DtButton } from '@dialpad/dialtone-vue';
 import { MEMBER_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed, reactive } from 'vue';
-import { controlMap, getControlByValue } from '@/src/lib/control';
 import { convert } from '@/src/lib/convert';
+import { controlMap } from '@/src/lib/control';
 
 const props = defineProps({
   /**
@@ -64,7 +90,7 @@ const props = defineProps({
    */
   controlSelector: {
     type: Function,
-    default: (member) => [],
+    required: true,
   },
 });
 
@@ -97,6 +123,25 @@ function getMemberKey (member) {
 }
 
 /**
+ * Determines if the member has a default value.
+ *
+ * @returns {boolean} If the member has default value.
+ */
+function hasDefaultValue (member) {
+  return 'defaultValue' in member;
+}
+
+/**
+ * Attempts to get the control data for a given control.
+ * If the control does not exist, gets the 'base' control data.
+ *
+ * @returns {object} The control data from the 'control map'.
+ */
+function getControlData (member) {
+  return controlMap[member.control] ?? controlMap.base;
+}
+
+/**
  * Wraps a member with an object containing additional data about the member.
  * This is used by the 'member map' to hold data about controls.
  *
@@ -106,14 +151,22 @@ function extendMember (member) {
   const key = getMemberKey(member);
   const value = props.values[key];
 
-  const validControls = props.controlSelector(member);
-  const control = validControls?.find(control => controlMap[control]?.important) ?? getControlByValue(value);
+  const [validControls, control] = props.controlSelector(member, value);
 
   return {
     ...member,
     control,
     validControls,
   };
+}
+
+/**
+ * Resets the control to default value.
+ */
+function resetMember (key) {
+  const member = memberMap.value[key];
+
+  updateMember(member.defaultValue, key);
 }
 
 /**
@@ -146,7 +199,7 @@ function updateControl (e, key) {
   }
 
   member.control = e;
-  updateMember(value ?? controlMap[e]?.default, key);
+  updateMember(value ?? getControlData(member).default(member), key);
 }
 </script>
 

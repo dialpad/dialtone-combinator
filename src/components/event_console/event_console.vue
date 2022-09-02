@@ -14,9 +14,12 @@
             : undefined"
         >
           <template #separator>
-            <IconArrowForward
-              class="d-fs10 d-px6 d-ps-relative d-t2"
-            />
+            <span>
+              <IconArrowForward
+                v-if="entry.value !== undefined"
+                class="d-fs10 d-px6 d-ps-relative d-t2"
+              />
+            </span>
           </template>
         </dtc-event-console-pair>
       </div>

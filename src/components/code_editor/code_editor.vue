@@ -12,9 +12,9 @@
         :self-closing="hasSlotContent"
       >
         <template #opening>
-          <dtc-code-editor-attributes
-            :info="info"
-            :members="options.bindings.get()"
+          <dtc-code-editor-tag-attributes
+            :info-bindings="info.bindings.get()"
+            :option-bindings="options.bindings.get()"
             :verbose="verbose"
           />
         </template>
@@ -71,14 +71,14 @@
 </template>
 
 <script setup>
-import DtcCodeEditorAttributes from './code_editor_attributes';
+import DtcCodeEditorTagAttributes from './code_editor_tag_attributes';
 import DtcCodeEditorElement from './code_editor_element';
 import DtcCodeEditorSlot from './code_editor_slot';
 import IconCopy from 'dialtone-icons/IconContentCopy';
 import { DtButton, DtPopover } from '@dialpad/dialtone-vue';
 
-import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
-import { ref, computed } from 'vue';
+import { OPTIONS_UPDATE_EVENT, SETTINGS_INDENT_KEY } from '@/src/lib/constants';
+import { ref, computed, provide } from 'vue';
 import { paramCase } from 'change-case';
 
 const props = defineProps({
@@ -110,23 +110,47 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+  /**
+   * Indent spaces setting.
+   */
+  indentSpaces: {
+    type: Number,
+    required: true,
+  },
 });
 
 const emit = defineEmits([
   OPTIONS_UPDATE_EVENT,
 ]);
 
+const indent = computed(() => {
+  return props.indentSpaces;
+});
+
+provide(SETTINGS_INDENT_KEY, indent);
+
 const tagName = computed(() => paramCase(props.info.displayName));
 
 const hasSlotContent = computed(() => {
-  return Object.values(props.options.slots).every(slot => !slot);
+  return props.options.slots
+    ? Object.values(props.options.slots).every(slot => !slot)
+    : false;
 });
 
 const code = ref();
 const showCopyPopover = ref(false);
 
 async function copy () {
-  await navigator.clipboard.writeText(code.value.innerText);
+  let text = code.value.innerText;
+
+  // Remove nbsp char
+  text = text.replace(/\xA0/g, '');
+
+  // Remove empty lines
+  text = text.replace(/^\s*[\r\n]/gm, '');
+
+  await navigator.clipboard.writeText(text);
+
   showCopyPopover.value = true;
   await new Promise(resolve => setTimeout(resolve, 1000));
   showCopyPopover.value = false;
@@ -142,3 +166,9 @@ export default {
   name: 'DtcCodeEditor',
 };
 </script>
+
+<style>
+.dtc-code-editor__margin {
+  border-left: var(--dtc-theme-color-background-darken) solid 1px;
+}
+</style>

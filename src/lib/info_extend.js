@@ -1,6 +1,6 @@
-import { parseDocDefault } from '@/src/lib/parse';
-import { typeOfMember } from '@/src/lib/utils';
 import { paramCase } from 'change-case';
+import { typeOfMemberValue } from '@/src/lib/utils';
+import { capitalize } from 'vue';
 
 /**
  * The default processing function that is applied to every member in a member group.
@@ -11,57 +11,37 @@ import { paramCase } from 'change-case';
  * @param {object} member - The extended member.
  */
 export function extendMember (member) {
-  let defaultValue = member.defaultValue
-    ? parseDocDefault(member.defaultValue)
-    : undefined;
-
-  let defaultType;
-  if (member.type?.name) {
-    defaultType = typeOfMember(defaultValue);
-    [defaultValue, defaultType] = extendMemberType(member, defaultValue, defaultType);
-  }
-
-  if (defaultValue !== undefined) {
-    member.defaultValue = defaultValue;
-  }
-  if (defaultType !== undefined) {
-    member.defaultType = defaultType;
+  if (member.type) {
+    const typeString = member.type.name ?? member.type.names?.[0];
+    delete member.type;
+    if (typeString) {
+      member.types = extractMemberTypes(typeString);
+    }
   }
   if (member.name) {
-    member.getLabel = function () {
-      return paramCase(member.name);
-    };
+    member.label = paramCase(member.name);
+  }
+  if (member.description) {
+    member.description = capitalize(member.description);
   }
 }
 
-/**
- * Extends a member's types by extracting each entry in the type string
- * and adding each to an array.
- *
- * The default type is validated to ensure it is included in the
- * array of valid types.
- *
- * If it is not the default value and default type are set to 'undefined'
- *
- * @param {object} member - The member to extend.
- * @param {*} defaultValue - The default value of the member.
- * @param {string} defaultType - The default type of the member.
- * @returns {Array} The extended member.
- */
-function extendMemberType (member, defaultValue, defaultType) {
-  member.type.names = extractMemberTypes(member.type.name);
-  delete member.type.name;
+export function extendBinding (member, defaults) {
+  const defaultValue = Object.entries(defaults).find(([name]) => {
+    return name === member.name;
+  })?.[1];
 
-  if (
-    defaultType !== undefined &&
-    defaultType !== null &&
-    !member.type.names.includes(defaultType)
-  ) {
-    defaultValue = undefined;
-    defaultType = undefined;
+  const defaultType = typeOfMemberValue(defaultValue);
+
+  delete member.defaultValue;
+  if (defaultValue !== undefined) {
+    member.defaultValue = defaultValue;
+    member.defaultDocumentationValue = defaultValue;
   }
 
-  return [defaultValue, defaultType];
+  if (defaultType) {
+    member.defaultType = defaultType;
+  }
 }
 
 /**
@@ -86,7 +66,8 @@ function extractMemberTypes (typeString) {
  */
 export function extendEvent (event) {
   const types = event.type?.names?.[0];
+  delete event.type;
   if (types) {
-    event.type.names = extractMemberTypes(types);
+    event.types = extractMemberTypes(types);
   }
 }

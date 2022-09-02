@@ -1,20 +1,15 @@
 <template>
-  <span>
-    <dtc-code-editor-indent />
-    <span
-      class="dtc-code-editor-input d-ws-pre-wrap"
-      spellcheck="false"
-      contenteditable
-      @input="e => emit('input', e)"
-    >
-      <slot />
-    </span>
+  <span
+    class="dtc-code-editor-input d-ws-pre-wrap"
+    spellcheck="false"
+    contenteditable
+    @input="e => emit('input', e)"
+  >
+    <slot />
   </span>
 </template>
 
 <script setup>
-import DtcCodeEditorIndent from './code_editor_indent';
-
 const emit = defineEmits(['input']);
 </script>
 

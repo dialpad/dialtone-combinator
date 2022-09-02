@@ -1,6 +1,6 @@
 {
   "name": "@dialpad/dialtone-combinator",
-  "version": "0.1.1",
+  "version": "0.2.5",
   "publishConfig": {
     "access": "public"
   },
@@ -11,7 +11,8 @@
     "build": "vue-cli-service build --target lib --dest ./dist/lib index.js; rm ./dist/lib/demo.html",
     "build:preview": "vue-cli-service build --dest ./dist/preview",
     "distribute": "rm ./dialtone-combinator-*.tgz; npm run build; npm pack",
-    "test": "vue-cli-service test:unit --timeout 100000 --colors --recursive --glob *.test.js src"
+    "test": "vue-cli-service test:unit --timeout 100000 --colors --recursive --glob *.test.js src",
+    "release": "./release.sh"
   },
   "main": "./dist/lib/dialtone-combinator.umd.js",
   "files": [
@@ -19,7 +20,7 @@
   ],
   "devDependencies": {
     "@dialpad/dialtone": "^6.32.2",
-    "@dialpad/dialtone-vue": "^3.6.0",
+    "@dialpad/dialtone-vue": "^3.13.0",
     "@types/node": "^16.11.41",
     "@typescript-eslint/eslint-plugin": "^5.30.0",
     "@typescript-eslint/parser": "^5.30.0",

@@ -6,7 +6,7 @@
     <div class="d-fs18">
       <slot name="prefix" />
     </div>
-    <div class="d-pl16">
+    <div>
       <template
         v-for="(item, index) in value"
         :key="getId(index)"
@@ -14,7 +14,9 @@
         <div class="d-d-flex d-my1">
           <div class="d-fl-grow1">
             <dt-list-item
+              class="d-p6 d-pl0"
               navigation-type="tab"
+              type="custom"
             >
               <slot
                 name="item"
@@ -23,20 +25,24 @@
               />
             </dt-list-item>
           </div>
-          <dt-button
-            class="d-p0"
-            importance="clear"
-            size="xs"
-            @click="() => removeItem(index)"
-          >
-            <IconRemove />
-          </dt-button>
+          <div>
+            <dt-button
+              class="dtc-icon d-px0 d-py6 d-ps-relative d-t6"
+              importance="clear"
+              size="xs"
+              :disabled="disabled"
+              @click="() => removeItem(index)"
+            >
+              <IconRemove />
+            </dt-button>
+          </div>
         </div>
       </template>
       <div>
         <dt-button
-          class="d-p0 d-mt8"
+          class="dtc-icon d-p0 d-mt8"
           importance="clear"
+          :disabled="disabled"
           @click="addItem"
         >
           <icon-add />
@@ -62,7 +68,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
   /**
    * Function that returns an item to append to list.
    */

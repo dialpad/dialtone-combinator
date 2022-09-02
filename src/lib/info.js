@@ -1,8 +1,7 @@
-import documentation from '@/src/assets/component-documentation.json';
+import documentation from '@/node_modules/@dialpad/dialtone-vue/dist/component-documentation.json';
 
-import { stringifyDocValue } from '@/src/lib/parse';
 import { controlMap } from '@/src/lib/control';
-import { extendEvent, extendMember } from '@/src/lib/info_extend';
+import { extendBinding, extendEvent, extendMember } from '@/src/lib/info_extend';
 import clone from 'just-clone';
 
 /**
@@ -17,7 +16,7 @@ import clone from 'just-clone';
  */
 export function getComponentInfo (component) {
   const info = clone(documentation.find(componentInfo => componentInfo.displayName === component.name));
-  extendInfo(info);
+  extendInfo(info, component);
   return info;
 }
 
@@ -35,8 +34,13 @@ export function getComponentInfo (component) {
  * If applicable defaults are set after the member group is fully extended.
  *
  * @param {object} info - The unprocessed info object.
+ * @param {object} component - The target component.
  */
-function extendInfo (info) {
+function extendInfo (info, component) {
+  if (!info) {
+    return;
+  }
+
   renameModelProp(info);
 
   const attributes = getAttributes(info);
@@ -46,7 +50,8 @@ function extendInfo (info) {
   }
 
   if (info.props) {
-    info.props = processMembers(info.props);
+    const defaultCache = getComponentDefaults(component);
+    info.props = processMembers(info.props, binding => extendBinding(binding, defaultCache));
   }
 
   if (attributes) {
@@ -64,7 +69,7 @@ function extendInfo (info) {
  * @param {object} info - The unprocessed info object.
  */
 function renameModelProp (info) {
-  const model = info.props.find(componentProp => {
+  const model = info.props?.find(componentProp => {
     const tags = componentProp.tags;
     return tags
       ? 'model' in tags
@@ -93,14 +98,14 @@ function getAttributes (info) {
     return property.description === 'attribute';
   }).map(property => {
     const type = property.type.name.toLowerCase();
+    const defaultValue = controlMap[type].default();
     return {
       name: property.name,
       type: {
         name: type,
       },
-      defaultValue: {
-        value: stringifyDocValue(controlMap[type].default),
-      },
+      defaultValue,
+      defaultDocumentationValue: defaultValue,
     };
   });
 }
@@ -130,4 +135,42 @@ function processMembers (members, ...processors) {
     });
     return member;
   });
+}
+
+/**
+ * Gets all the default values for each possible member of a component.
+ *
+ * @param {object} component - The target component.
+ * @returns {object} Default value map.
+ */
+function getComponentDefaults (component) {
+  /**
+   * Get all objects containing members to search for default values.
+   * Contains all the base props and props for each mixin.
+   *
+   * @type {Array}
+   */
+  const componentSearchObjects = [
+    component.props,
+    ...(component.mixins?.map(mixin => mixin.props) ?? []),
+    ...(component.extends?.mixins?.map(mixin => mixin.props) ?? []),
+  ].filter(obj => obj);
+
+  /**
+   * Searches each member in each object and returns an object of key-value
+   * pairs for each member and its default value respectively.
+   */
+  return {
+    ...Object.fromEntries(componentSearchObjects.filter(path => path).map(path => {
+      return Object.entries(path).map(([entryKey, entryValue]) => {
+        const entryDefault = entryValue.default;
+        return [
+          entryKey,
+          entryValue.type !== Function && typeof entryDefault === 'function'
+            ? entryDefault()
+            : entryDefault,
+        ];
+      });
+    }).flat()),
+  };
 }

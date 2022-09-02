@@ -1,62 +1,67 @@
 <template>
   <div class="dtc-option-bar d-as-stretch d-of-y-auto d-w100p">
     <ul class="d-ls-reset">
-      <dtc-option-bar-section
+      <dtc-section
         v-if="info.slots"
         heading="Slots"
+        content-class="d-px12"
       >
         <dtc-option-bar-member-group
           :component="component"
           :members="info.slots"
           :values="options.slots"
-          :control-selector="() => ['slot']"
+          :control-selector="getSlotControls"
           @update:member="updateSlots"
         />
-      </dtc-option-bar-section>
-      <dtc-option-bar-section
+      </dtc-section>
+      <dtc-section
         v-if="info.props"
         heading="Props"
+        content-class="d-px12"
       >
         <dtc-option-bar-member-group
           :component="component"
           :members="info.props"
           :values="options.props"
-          :control-selector="prop => getPropControls(prop.type.names)"
+          :control-selector="(prop, value) => getBindingControls(prop, value, 'null')"
           @update:member="updateProps"
         />
-      </dtc-option-bar-section>
-      <dtc-option-bar-section
+      </dtc-section>
+      <dtc-section
         v-if="info.attributes"
         heading="Native HTML Attributes"
+        content-class="d-px12"
       >
         <dtc-option-bar-member-group
           :component="component"
           :members="info.attributes"
           :values="options.attributes"
-          :control-selector="attribute => attribute.type.names"
+          :control-selector="(attribute, value) => getBindingControls(attribute, value)"
           @update:member="updateAttributes"
         />
-      </dtc-option-bar-section>
-      <dtc-option-bar-section
+      </dtc-section>
+      <dtc-section
         v-if="info.events"
         heading="Events"
+        content-class="d-px12"
       >
         <dtc-option-bar-member-group
           :component="component"
           :members="info.events"
           :values="options.events"
-          :control-selector="() => ['event']"
+          :control-selector="getEventControls"
         />
-      </dtc-option-bar-section>
+      </dtc-section>
     </ul>
   </div>
 </template>
 
 <script setup>
 import DtcOptionBarMemberGroup from './option_bar_member_group';
-import DtcOptionBarSection from './option_bar_section';
+import DtcSection from '../tools/section';
 
 import { OPTIONS_UPDATE_EVENT } from '@/src/lib/constants';
+import { getControlByMemberType, getControlByValue } from '@/src/lib/control';
 
 defineProps({
   /**
@@ -85,15 +90,47 @@ defineProps({
 const emit = defineEmits([OPTIONS_UPDATE_EVENT]);
 
 /**
- * Gets the controls for a prop member.
+ * Gets an array of controls for a binding.
+ * Calls the utility function `getControlByMemberType(...)` which converts
+ * each type for a member to a given control.
  *
- * @param types - The valid types for the member
- * @returns {Array}
+ * Extra controls can be passed in as parameters.
+ *
+ * @param binding - The binding member.
+ * @param value - The binding member value.
+ * @param controls - The extra controls to allow.
+ * @returns {Array} Array of a default control and valid controls.
  */
-function getPropControls (types) {
+function getBindingControls (binding, value, ...controls) {
+  const validControls = [
+    ...(binding.types?.map(type => getControlByMemberType(type, binding)) ?? []),
+    ...controls,
+  ];
+
   return [
-    ...types,
-    'null',
+    validControls,
+    validControls.find(control => control === getControlByValue(value)) ?? validControls[0],
+  ];
+}
+
+function getSlotControls () {
+  return getStaticControl('slot');
+}
+
+function getEventControls () {
+  return getStaticControl('event');
+}
+
+/**
+ * Forces a singular default control and valid control.
+ *
+ * @param control - The control to enforce.
+ * @returns {Array} Array of a default control and valid control.
+ */
+function getStaticControl (control) {
+  return [
+    [control],
+    control,
   ];
 }
 
@@ -128,5 +165,6 @@ export default {
 <style>
   .dtc-option-bar {
     background-color: #FCFCFC;
+    color-scheme: light;
   }
 </style>

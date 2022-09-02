@@ -5,16 +5,19 @@
       <dtc-control-selection
         :value="selectedControl"
         :valid-values="controlSelections"
+        :disabled="disabled"
         @update:value="updateControl"
       />
     </div>
     <div
-      class="d-ta-right"
+      class="d-ps-relative d-b1"
+      :class="inputClass"
       data-qa="dtc-control-dynamic-value"
     >
       <component
-        :is="control"
-        v-if="control"
+        :is="controlComponent"
+        v-if="controlComponent"
+        v-bind="bindings"
         :value="value"
         @update:value="updateValue"
       />
@@ -32,11 +35,25 @@ import { computed, ref } from 'vue';
 const props = defineProps({
   value: {
     type: undefined,
-    default: () => controlMap.dynamic.default,
+    default: () => UNSET,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  inputClass: {
+    type: String,
+    default: '',
   },
 });
 
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
+
+const bindings = computed(() => {
+  return {
+    disabled: props.disabled,
+  };
+});
 
 /**
  * Controls from the 'control map' to include in selections.
@@ -46,6 +63,8 @@ const emit = defineEmits([VALUE_UPDATE_EVENT]);
 const externalControls = [
   'string',
   'number',
+  'array',
+  'object',
 ];
 
 const controlSelectionMap = {
@@ -55,32 +74,28 @@ const controlSelectionMap = {
     }),
   ),
   true: {
-    component: () => null,
-    get default () { return true; },
+    component: null,
+    default () { return true; },
   },
   false: {
-    component: () => null,
-    get default () { return false; },
-  },
-  NaN: {
-    component: () => null,
-    get default () { return NaN; },
+    component: null,
+    default () { return false; },
   },
   null: {
-    component: () => null,
-    get default () { return null; },
+    component: null,
+    default () { return null; },
   },
   undefined: {
-    component: () => null,
-    get default () { return UNSET; },
+    component: null,
+    default () { return UNSET; },
   },
 };
 
 const controlSelections = computed(() => Object.keys(controlSelectionMap));
 const selectedControl = ref(getControl());
 
-const control = computed(() => {
-  return controlSelectionMap[selectedControl.value]?.component();
+const controlComponent = computed(() => {
+  return controlSelectionMap[selectedControl.value].component;
 });
 
 function getControl () {
@@ -93,18 +108,16 @@ function getControl () {
     case true: return 'true';
   }
 
-  if (Number.isNaN(value)) { return 'NaN'; }
-
   const control = getControlByValue(value);
 
   return control === 'base'
-    ? controlMap.dynamic.defaultControl
+    ? controlMap.dynamic.defaultControl()
     : control;
 }
 
 function updateControl (e) {
   selectedControl.value = e;
-  updateValue(controlSelectionMap[e].default);
+  updateValue(controlSelectionMap[e].default());
 }
 
 function updateValue (e) {

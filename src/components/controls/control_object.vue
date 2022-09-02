@@ -1,6 +1,7 @@
 <template>
   <dtc-control-iterable
     :value="entries"
+    :disabled="disabled"
     :generate-item="generateItem"
     @update:value="updateValue"
   >
@@ -11,23 +12,28 @@
       {
     </template>
     <template #item="{ item, update }">
-      <div class="d-d-flex">
+      <div class="d-d-grid d-g-cols2">
         <div
+          class="d-d-flex"
           data-qa="dtc-control-object-item-key"
         >
           <dtc-control-string
             :value="item[0]"
-
-            @update:value="e => updateEntry(e, item[1], update)"
+            :disabled="disabled"
+            @update:value="e => updateKey(e, item[1], update)"
           />
+          <span class="d-px6 d-ps-relative d-t6">:</span>
         </div>
-        <span class="d-px6 d-ps-relative d-t6">:</span>
         <div
+          class="dtc-control-object__contents"
           data-qa="dtc-control-object-item-value"
         >
           <dtc-control-dynamic
+            class="dtc-control-object__contents"
+            input-class="d-gc-full"
             :value="serializeControlValue(item[1])"
-            @update:value="e => updateEntry(item[0], e, update)"
+            :disabled="disabled"
+            @update:value="e => updateEntry(item[0], deserializeControlValue(e), update)"
           />
         </div>
       </div>
@@ -44,42 +50,61 @@ import DtcControlIterable from './control_iterable';
 import DtcControlDynamic from './control_dynamic';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
-import { controlMap, serializeControlValue, deserializeControlValue } from '@/src/lib/control';
+import { serializeControlValue, deserializeControlValue } from '@/src/lib/control';
+import { OrderedObject } from '@/src/lib/ordered_object';
 
 const props = defineProps({
   value: {
     type: Object,
-    default: () => controlMap.object.default,
+    default: () => ({}),
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 });
 
 const emit = defineEmits([VALUE_UPDATE_EVENT]);
 
 const entries = computed(() => {
-  return Object.entries(props.value);
+  return props.value ? Object.entries(props.value) : [];
+});
+
+const keys = computed(() => {
+  return entries.value.map(([key]) => key);
 });
 
 let currentId = 0;
 function generateNextId () {
-  const keys = Object.keys(props.value);
-
-  while (keys.includes(currentId.toString())) {
+  while (keys.value.includes(currentId.toString())) {
     currentId++;
   }
 
-  return currentId;
+  return currentId.toString();
 }
 
 function generateItem () {
-  return [generateNextId().toString(), undefined];
+  return [generateNextId(), undefined];
+}
+
+function updateKey (key, value, updateItem) {
+  if (keys.value.includes(key)) {
+    const id = generateNextId();
+    console.log(`Object cannot contain duplicate key '${key}', key set to '${id}'`);
+    key = id;
+  }
+
+  updateEntry(key, value, updateItem);
 }
 
 function updateEntry (key, value, updateItem) {
-  updateItem([key, deserializeControlValue(value)]);
+  updateItem([key, value]);
 }
 
 function updateValue (e) {
-  emit(VALUE_UPDATE_EVENT, Object.fromEntries(e));
+  const orderedObject = OrderedObject.fromEntries(e);
+
+  emit(VALUE_UPDATE_EVENT, orderedObject);
 }
 </script>
 
@@ -91,3 +116,9 @@ export default {
   name: 'DtcControlObject',
 };
 </script>
+
+<style>
+.dtc-control-object__contents {
+  display: contents;
+}
+</style>

@@ -1,6 +1,7 @@
 <template>
   <dt-input
     :value="value"
+    :disabled="disabled"
     :messages="messages"
     size="sm"
     @input="e => emit(VALUE_UPDATE_EVENT, e)"
@@ -20,12 +21,15 @@
 import { DtInput, VALIDATION_MESSAGE_TYPES } from '@dialpad/dialtone-vue';
 import { VALUE_UPDATE_EVENT } from '@/src/lib/constants';
 import { computed } from 'vue';
-import { controlMap } from '@/src/lib/control';
 
 const props = defineProps({
   value: {
     type: String,
-    default: () => controlMap.string.default,
+    default: () => String(),
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
   warning: {
     type: String,

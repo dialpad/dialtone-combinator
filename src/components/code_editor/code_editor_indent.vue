@@ -1,22 +1,33 @@
 <template>
-  <span v-html="html" />
+  <div class="d-d-flex">
+    <span v-html="html" />
+    <slot />
+  </div>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
+import { SETTINGS_INDENT_KEY } from '@/src/lib/constants';
 
 const props = defineProps({
-  spaces: {
+  /**
+   * Current indentation level, multiplied by number of spaces.
+   */
+  level: {
     type: Number,
-    default: 2,
+    default: 1,
     validator (value) {
-      return value > 0;
+      return value >= 0;
     },
   },
 });
 
+const spaces = computed(() => {
+  return inject(SETTINGS_INDENT_KEY).value;
+});
+
 const html = computed(() => {
-  return '&nbsp;'.repeat(props.spaces);
+  return '&nbsp;'.repeat(props.level * spaces.value);
 });
 </script>
 
