@@ -84,6 +84,81 @@ Since dialtone icons are not exported in a bundle, there is some sorcery require
 to provide them as a library. For implementing this, check out 'App.vue' (using require) or
 the dialtone project 'client.js' vuepress config file (import from internal dialtone icon data).
 
+## Variants
+
+Variants can be used to customize the data for members of a component.
+
+This is passed to the combinator through the `variants` prop.
+
+The default variant will always exist, even if not declared. However, it can be
+overridden by declaring it and setting custom data on members.
+
+<details>
+<summary>Format</summary>
+<pre>
+<code>
+{
+    VARIANT_NAME: 
+    {
+        MEMBER_GROUP: 
+        {
+            MEMBER: 
+            {
+                MEMBER_FIELD: VALUE,
+                ...
+            },
+            ...
+        },
+        ...
+    },
+    ...
+}
+</code>
+</pre>
+</details>
+
+<details>
+<summary>Example</summary>
+<pre>
+<code>
+{
+    default: {
+        slots: {
+            default: {
+                initialValue: 'Place call',
+            },
+        },
+    },
+    primary: {
+        slots: {
+            default: {
+                initialValue: 'Primary',
+            },
+        },
+        props: {
+            importance: {
+                initialValue: 'primary',
+                lockControl: true,
+            },
+        },
+    },
+}
+</code>
+</pre>
+<i>The 'default' and 'primary' variants for 'DtButton'</i>
+</details>
+
+Any data provided will be set on the 'info' object for the member it is provided for.
+Most of the time this is overriding data generated from the Dialtone Vue documentation.
+
+There are some special fields that are intended to be used just by variants:
+* hideControl: Hides the control for the member in the sidebar
+* lockControl: Locks the control for the member in the sidebar
+
+A good place to look to see many of the fields that are used by a member is
+'option_bar_member_group.vue', this is where the member data is exposed to the
+underlying control.
+
 ## Variant Bank
 _Optional_
 

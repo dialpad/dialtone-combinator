@@ -6,7 +6,7 @@ Add communication between the target component and the 'node' components in thei
 when scoped slot data is present.
 
 There should be some sort of way to modify the renderer_target.vue `renderTarget()` 
-hyper-script function (`h(...)`) to provide the scoped slot data to slots containing
+hyper-script function `h(...)` to provide the scoped slot data to slots containing
 dtc-node components.
 
 There is some 
