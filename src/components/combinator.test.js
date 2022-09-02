@@ -3,6 +3,7 @@ import DtcCombinator from './combinator';
 import { assert } from 'chai';
 import { shallowMount } from '@vue/test-utils';
 import { getSupportedComponents } from '@/src/lib/test/utils_test';
+import documentation from '@/node_modules/@dialpad/dialtone-vue/dist/component-documentation.json';
 
 describe('combinator.vue test', function () {
   const testComponents = getSupportedComponents();
@@ -16,6 +17,8 @@ describe('combinator.vue test', function () {
           wrapper = shallowMount(DtcCombinator, {
             props: {
               component,
+              documentation,
+              variants: {},
             },
           });
         });
