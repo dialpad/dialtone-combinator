@@ -40,14 +40,12 @@ _Immutable_
         {
             name: 'disabled',
             defaultValue: false,
+            initialValue: false,
             defaultType: 'boolean',
-            type: 
-            {
-                names: 
-                [
-                    'boolean',
-                ],
-            },
+            types: 
+            [
+                'boolean',
+            ],
         },
         ...
     ],
@@ -55,16 +53,14 @@ _Immutable_
     [
         {
             name: 'circle',
-            defaultValue: false,
-            defaultType: 'boolean',
             description: 'Whether the button is a circle or not.',
-            type: 
-            {
-                names: 
-                [
-                    'boolean',
-                ],
-            },
+            defaultValue: false,
+            initialValue: false,
+            defaultType: 'boolean',
+            types: 
+            [
+                'boolean',
+            ],
             values: 
             [
                 true, 
@@ -73,16 +69,14 @@ _Immutable_
         },
         {
             name: 'iconPosition',
-            defaultValue: 'left',
-            defaultType: 'string',
             description: 'The position of the icon slot within the button.',
-            type: 
-            {
-                names: 
-                [
-                    'string',
-                ],
-            },
+            defaultValue: 'left',
+            initialValue: 'left',
+            defaultType: 'string',
+            types: 
+            [
+                'string',
+            ],
             values: 
             [
                 'left', 
@@ -93,18 +87,16 @@ _Immutable_
         },
         {
             name: 'labelClass',
-            defaultValue: '',
-            defaultType: 'string',
             description: 'Used to customize the label container',
-            type: 
-            {
-                names: 
-                [
-                    'string', 
-                    'array', 
-                    'object',
-                ],
-            },
+            defaultValue: '',
+            initialValue: '',
+            defaultType: 'string',
+            types: 
+            [
+                'string', 
+                'array', 
+                'object',
+            ],
         },
         ...
     ],
@@ -121,14 +113,11 @@ _Immutable_
         {
             name: 'click',
             description: 'Native button click event',
-            type: 
-            {
-                names: 
-                [
-                    'pointerevent', 
-                    'keyboardevent',
-                ],
-            },
+            types: 
+            [
+                'pointerevent', 
+                'keyboardevent',
+            ],
         },
         ...
     ],
@@ -233,4 +222,5 @@ function onInput (e) {
 ```
 _Code editor update options slot value on input_
 
-After **info** is initialized, the `defaultValue` fields for each member are used to set the initial values in **options**.
+After **info** is initialized, the  `initialValue` fields for each member 
+are used to set the initial values in **options**. 
