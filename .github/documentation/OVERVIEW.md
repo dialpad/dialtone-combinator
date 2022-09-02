@@ -14,7 +14,10 @@ Documentation for maintaining the project.
 
 [README](/README.md) \
 [CONTRIBUTING](CONTRIBUTING.md) \
-[COMMIT_CONVENTION](COMMIT_CONVENTION.md)
+[RELEASING](RELEASING.md) \
+[COMMIT_CONVENTION](COMMIT_CONVENTION.md) \
+[FUTURE_ADDITIONS](FUTURE_ADDITIONS.md) \
+[KNOWN_ISSUES](KNOWN_ISSUES.md) \
 
 ### Internal
 
@@ -69,6 +72,8 @@ Documentation instructing how to implement into external projects.
   <b>⎣____/renderer</b> The folder containing components for the renderer
 
   <b>⎣__/lib</b> The main library folder for files containing utility functions in plain js
+
+  <b>⎣__/variants</b> The folder containing variants for specific components for the 'variantBank' export
 </pre>
 
 ## Root System
@@ -84,6 +89,8 @@ The Dialtone Combinator uses two main data objects:
 
 Data central to the system is stored in the root component and is communicated between child components.
 The system is designed with reactivity and extensibility in mind.
+
+The settings data object is also used to dictate global settings for the combinator.
 
 See [SYSTEM](internal/SYSTEM.md)
 

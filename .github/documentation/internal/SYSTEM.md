@@ -40,14 +40,12 @@ _Immutable_
         {
             name: 'disabled',
             defaultValue: false,
+            initialValue: false,
             defaultType: 'boolean',
-            type: 
-            {
-                names: 
-                [
-                    'boolean',
-                ],
-            },
+            types: 
+            [
+                'boolean',
+            ],
         },
         ...
     ],
@@ -55,16 +53,14 @@ _Immutable_
     [
         {
             name: 'circle',
-            defaultValue: false,
-            defaultType: 'boolean',
             description: 'Whether the button is a circle or not.',
-            type: 
-            {
-                names: 
-                [
-                    'boolean',
-                ],
-            },
+            defaultValue: false,
+            initialValue: false,
+            defaultType: 'boolean',
+            types: 
+            [
+                'boolean',
+            ],
             values: 
             [
                 true, 
@@ -73,16 +69,14 @@ _Immutable_
         },
         {
             name: 'iconPosition',
-            defaultValue: 'left',
-            defaultType: 'string',
             description: 'The position of the icon slot within the button.',
-            type: 
-            {
-                names: 
-                [
-                    'string',
-                ],
-            },
+            defaultValue: 'left',
+            initialValue: 'left',
+            defaultType: 'string',
+            types: 
+            [
+                'string',
+            ],
             values: 
             [
                 'left', 
@@ -93,18 +87,16 @@ _Immutable_
         },
         {
             name: 'labelClass',
-            defaultValue: '',
-            defaultType: 'string',
             description: 'Used to customize the label container',
-            type: 
-            {
-                names: 
-                [
-                    'string', 
-                    'array', 
-                    'object',
-                ],
-            },
+            defaultValue: '',
+            initialValue: '',
+            defaultType: 'string',
+            types: 
+            [
+                'string', 
+                'array', 
+                'object',
+            ],
         },
         ...
     ],
@@ -121,14 +113,11 @@ _Immutable_
         {
             name: 'click',
             description: 'Native button click event',
-            type: 
-            {
-                names: 
-                [
-                    'pointerevent', 
-                    'keyboardevent',
-                ],
-            },
+            types: 
+            [
+                'pointerevent', 
+                'keyboardevent',
+            ],
         },
         ...
     ],
@@ -151,11 +140,10 @@ Essential documentation processing actions:
 * Generate custom members from the [attribute tag](../OVERVIEW.md#attribute)
 * Member 'type string' is parsed into an array of type names
 * Parse default values
-* Validate and correct improper default values
 * ...
 
 It is best to put data in **info** when you want to use it in multiple places. For example `defaultType` is added
-to **info** for each member based on some validation logic using `defaultType` and `type.names`. This ensures a
+to **info** for each member based on some validation logic using `defaultType` and `types`. This ensures a
 singular, predetermined value is provided to both the option bar and code editor.
 
 Additional data can be added to info in two ways:
@@ -233,4 +221,5 @@ function onInput (e) {
 ```
 _Code editor update options slot value on input_
 
-After **info** is initialized, the `defaultValue` fields for each member are used to set the initial values in **options**.
+After **info** is initialized, the  `initialValue` fields for each member 
+are used to set the initial values in **options**. 
