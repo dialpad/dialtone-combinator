@@ -1,5 +1,16 @@
 # Future Additions
 
+## Add Supported Components
+
+A recent feature was added that allows Dialtone Vue components
+to be used in slots.
+
+[Pull Request](https://github.com/dialpad/dialtone-combinator/pull/14)
+
+This should allow some components to work as intended such as 'DtDropdown'.
+Any component that requires nesting of Dialtone Vue components now has the potential to
+be 'supported'.
+
 ## Renderer Node Scoped Slots
 
 Add communication between the target component and the 'node' components in their slots
