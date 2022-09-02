@@ -140,11 +140,10 @@ Essential documentation processing actions:
 * Generate custom members from the [attribute tag](../OVERVIEW.md#attribute)
 * Member 'type string' is parsed into an array of type names
 * Parse default values
-* Validate and correct improper default values
 * ...
 
 It is best to put data in **info** when you want to use it in multiple places. For example `defaultType` is added
-to **info** for each member based on some validation logic using `defaultType` and `type.names`. This ensures a
+to **info** for each member based on some validation logic using `defaultType` and `types`. This ensures a
 singular, predetermined value is provided to both the option bar and code editor.
 
 Additional data can be added to info in two ways:

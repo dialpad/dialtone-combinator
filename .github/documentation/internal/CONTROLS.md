@@ -7,21 +7,22 @@ They have no designation about the option bar or members and simply receive valu
 
 ## Control Map
 
-The control map provides a directory of controls that can be used and necessary
+The control map provides a directory of controls that can be used by members and the necessary
 data required to use them. The control map can be found in [control.js](/src/lib/control.js) 
 along with the control utility functions.
 
-Each control map entry must contain a `component(...)` function that returns the control component, it can optionally
-use an args object to resolve this as seen in the 'string' control.
+Each control map entry must contain a `component` entry that returns the control component
 
-Each control map entry must contain a `default()` accessor that provides a default value which is used by the
-option bar when switching control type.
+Each control map entry must contain a `default(...)` function that provides a default value which is used by the
+option bar when switching control type. It can optionally use an args object to resolve this 
+as seen in the 'selection' control.
 
 ## Extending
 
 The process of adding a new control can be done in two steps:
 1. Create the component in '/src/components/controls/..'
 2. Add an entry to the control map in '/src/lib/control.js'
+   * Does not need an entry if the control is 'internal' (only used by other controls)
 
 ### Implement in Option Bar
 A new control may need some additional logic for it to be used in the option bar.
@@ -42,7 +43,6 @@ It can be seen in use for 'func' member types where there is no current control 
 Control that is used to set some nullish values:
 * undefined
 * null
-* NaN
 
 Sending the raw value `undefined` results in the value prop using its default value (null). The special
 symbol `UNSET` is used to represent an intentional `undefined` value.
@@ -54,6 +54,8 @@ using the utility functions `serializeControlValue(...)` and `deserializeControl
 
 Controls that are used to set their respective data type value.
 Consists of an input that can be used to update the value.
+
+The number control can also be used to set the 'NaN' value.
 
 ### Array / Object
 
