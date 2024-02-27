@@ -1,3 +1,7 @@
+# ⚠️ This repository is now part of a monorepo
+
+This repository has been deprecated and the files have been moved to [Dialtone monorepo](https://github.com/dialpad/dialtone/tree/staging/packages/dialtone-combinator) on Feb. 27th, 2024.
+
 # Dialtone Combinator
 
 Dialtone Combinator is a component that provides an interface for users to interact with Dialtone Vue components. 
